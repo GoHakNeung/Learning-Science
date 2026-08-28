@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 10: Analyzing Collaboration</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .split-layout {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1rem; width: 100%; align-items: stretch;
+    }
+
+    .image-box {
+      background: var(--bg-secondary); border: 1px solid var(--border-color);
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 0.5rem; cursor: pointer;
+      position: relative;
+    }
+    .image-box img {
+      max-width: 100%; max-height: 380px; object-fit: contain; border-radius: 8px;
+    }
+    .image-caption {
+      font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;
+    }
+
+    .table-container {
+      width: 100%; overflow-x: auto; margin-top: 0.5rem;
+    }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .styled-table th {
+      background: var(--bg-secondary); color: var(--accent-blue);
+      padding: 0.6rem 0.8rem; text-align: left; border-bottom: 2px solid var(--border-color);
+    }
+    .styled-table td {
+      padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .styled-table tr:hover td { background: rgba(56, 189, 248, 0.05); }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Modal for Image Zoom */
+    #modal {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
+      z-index: 200; display: none; justify-content: center; align-items: center; cursor: zoom-out;
+    }
+    #modal.active { display: flex; }
+    #modal img { max-width: 92vw; max-height: 92vh; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 10 · Part II Methodologies</span>
+      <h1 class="slide-title">Analyzing Collaboration</h1>
+      <p class="slide-subtitle">협력 상호작용 분석: 담화(Talk), 제스처(Gesture), 시선(Gaze), 그리고 다중모달 분석</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Noel Enyedy</strong> (Vanderbilt) & <strong>Reed Stevens</strong> (Northwestern)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 197–218)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다</h3>
+          <ul>
+            <li><strong>협력 연구 4대 접근법 (Table 10.1)</strong>: 창 ➔ 맥락 ➔ 조율 ➔ 학습 자체</li>
+            <li><strong>제퍼슨 전사 체계 (Table 10.2 & Figure 10.2)</strong>: 겹침, 래칭, 침묵</li>
+            <li><strong>체화된 다중모달 분석 (Figure 10.3)</strong>: 언어, 지시 제스처, 공동 시선</li>
+            <li><strong>미래 지평</strong>: 다중모달 학습분석학(MMLA)과 AI 비디오 분석</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 학습과학 연구의 가장 핵심적인 미시 분석 방법론인 '상호작용 분석(Interaction Analysis)'과 '대화분석(Conversation Analysis)'의 이론적 스펙트럼과 전사 툴킷을 탐구합니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>노엘 에니디(Noel Enyedy)와 리드 스티븐스(Reed Stevens)는 교실 담화 분석, 체화된 다중모달 상호작용(Embodied Interaction), 전문직 실천 분석 분야를 이끌어 온 대표적 학습과학자들입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"두 학생이 짝 프로그래밍을 할 때, 0.5초의 침묵이나 손가락으로 화면을 가리키는 동작이 왜 언어보다 더 중요한 학습의 증거가 될까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 4 Methodological Approaches (Table 10.1) -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">패러다임 스펙트럼 · Table 10.1</span>
+      <h2 class="slide-title">협력 상호작용 분석의 4대 방법론적 접근 (Table 10.1)</h2>
+      <p class="slide-subtitle">인지주의에서 사회인지, 상호작용주의, 사회문화적 실천으로의 확장</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>🧭 4대 접근법의 학문적 지형도</h3>
+          <ul>
+            <li><strong>1. 사고의 창</strong>: 대화는 개인 뇌 속 멘탈 모델의 투사 (인지주의)</li>
+            <li><strong>2. 학습 촉진 맥락</strong>: 협력은 개인의 인지 갈등을 유발하는 배경 (사회인지)</li>
+            <li><strong>3. 근접 성과 조율</strong>: 턴 단위로 상호주관성을 공동 구축 (상호작용주의)</li>
+            <li><strong>4. 협력=학습 자체</strong>: 실천 공동체 참여 양식의 질적 변혁 (사회문화주의)</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/tab10_1.png')">
+          <img src="images/tab10_1.png" alt="Table 10.1 4 Approaches">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Table 10.1)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Table 10.1을 통해 협력 학습을 바라보는 4가지 상이한 인식론적·방법론적 패러다임을 대조 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>1번과 2번 접근법은 학습의 위치를 '개인 머릿속'에 두는 반면, 3번과 4번 접근법은 학습을 '사람들 사이의 상호작용과 집단적 실천' 그 자체로 규정합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신의 연구가 이 4가지 접근법 중 어디에 기반하고 있는지 성찰해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Approach 1 - Window onto Thinking -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">접근법 ① · Section 10.1.1</span>
+      <h2 class="slide-title">접근법 1: 사고를 엿보는 창 (Window-onto-Thinking)</h2>
+      <p class="slide-subtitle">대화 데이터를 통해 개인의 뇌 속 멘탈 모델과 인지 구조를 추론한다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🧠 인지주의적 전제</h3>
+          <ul>
+            <li>학습은 개인의 두뇌 속 지식 구조(스키마)의 획득 및 수정</li>
+            <li>대화는 머릿속 생각을 외부로 보여주는 **'투명한 창문'**</li>
+            <li>Ericsson & Simon (1984)의 언어 프로토콜 분석(Think-aloud)</li>
+          </ul>
+        </div>
+        <div class="card highlight-card">
+          <h3>📊 정량적 코딩 스킴 (Coding Schemes)</h3>
+          <ul>
+            <li>발화를 문장 단위로 쪼개어 사전 정의된 범주(질문, 설명, 반박)로 분류</li>
+            <li>카테고리 빈도를 통계적으로 검증하여 개인의 인지 상태 추정</li>
+            <li>(Chi, 1997의 정성적 언어 데이터의 정량화 분석법)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>접근법 1의 이론적 전제와 분석 기법(언어 프로토콜 분석, 정량 코딩 스킴)을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이 접근법은 개인의 인지적 성장을 측정하기에 유용하지만, 대화가 상대방의 반응에 따라 유동적으로 변화하는 '상호작용적 본질'을 포착하지 못하는 한계가 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>코딩 테스트 시 '소리 내어 생각하기(Think-aloud)'가 어떻게 이 접근법의 전형인지 설명하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Approach 2 - Context for Learning -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">접근법 ② · Section 10.1.2</span>
+      <h2 class="slide-title">접근법 2: 학습을 촉진하는 맥락으로서의 협력</h2>
+      <p class="slide-subtitle">동료와의 대화가 어떻게 개인의 인지 갈등과 개념 변화를 유발하는가?</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>👥 사회인지적 갈등론 (Socio-cognitive)</h3>
+          <ul>
+            <li>피아제와 비고츠키의 결합: 동료의 반론(반례)이 인지 갈등 유발</li>
+            <li>동료 간 상호 스캐폴딩(Peer Scaffolding)을 통한 ZPD 확장</li>
+            <li>개인의 학습 성장을 위한 **'최적의 외적 촉진 맥락(Context)'**</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🎭 표준 연극 대본식 전사 (Play-script)</h3>
+          <ul>
+            <li>누가 무슨 발화를 했는가에 집중하는 희곡 대본 형식 (Figure 10.1)</li>
+            <li>발화의 내용적 의미와 논증 구조(Claim, Evidence, Counter-evidence) 분석</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>접근법 2의 사회인지적 갈등 메커니즘과 연극 대본식 전사(Play-script)의 특징을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이 접근법은 동료 간의 피드백과 설명하기(Explaining) 활동이 개인의 개념 변화를 어떻게 돕는지를 밝혀내는 데 주로 사용됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 슬라이드에서 실제 연극 대본식 전사 사례(Figure 10.1)를 살펴보겠습니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Figure 10.1 Play-script Transcript -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">전사 사례 · Figure 10.1</span>
+      <h2 class="slide-title">표준 연극 대본식(Play-script) 전사 분석 (Figure 10.1)</h2>
+      <p class="slide-subtitle">통계 학습에서 증거와 반증을 주고받는 학생들의 담화 분석 (Enyedy & Mukhopadhyay, 2007)</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>📝 담화의 논증적 구조 분석</h3>
+          <ul>
+            <li><strong>주장 (Claim)</strong>: Gwen이 5가 더 많이 나왔다는 표면적 패턴 주장</li>
+            <li><strong>반증 (Counterevidence)</strong>: Leo가 주사위의 독립 사건 속성을 제시하며 반박</li>
+            <li>➔ 동료의 반론이 학생의 소박 직관을 흔드는 인지적 갈등 유발 과정 확인</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig10_1.png')">
+          <img src="images/fig10_1.png" alt="Figure 10.1 Play-script Transcript">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 10.1)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 10.1을 통해 표준 연극 대본식 전사가 학생 간의 인지적 갈등과 개념 발달을 어떻게 표현하는지 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>연극 대본식 전사는 읽기 쉽고 논증 구조를 파악하기 용이하지만, 말의 타이밍, 망설임, 신체 제스처 등의 미세 상호작용 정보는 유실된다는 한계가 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>이 대화에서 "Gwen의 표정이 어땠을지, 몇 초 동안 머뭇거렸을지"가 왜 중요한지 다음 단계로 연결하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Approach 3 - Coordinated Collective Outcomes -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">접근법 ③ · Section 10.1.3</span>
+      <h2 class="slide-title">접근법 3: 근접 집단 성과와 조율되는 상호작용</h2>
+      <p class="slide-subtitle">턴 단위(Turn-by-turn)로 구축되는 상호주관성(Intersubjectivity)과 공동의 지식 구성</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔄 상호작용주의 (Interactionism)</h3>
+          <ul>
+            <li>학습은 개인 머릿속이 아니라 **참여자들 사이의 대화 턴(Turn) 속에 존재**</li>
+            <li>앞 화자의 발화가 다음 화자의 반응을 규정하는 순차적 구조(Sequentiality)</li>
+            <li>공통의 이해를 점진적으로 맞춰가는 **상호주관성(Intersubjectivity)** 형성</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🔬 대화분석(CA)과 제퍼슨 전사 체계</h3>
+          <ul>
+            <li>0.1초의 침묵, 말의 겹침, 억양의 미세한 떨림까지 정밀 기록</li>
+            <li>개념이 '언제, 어떤 상호작용적 계기로 공유되었는지'를 가시화</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>접근법 3의 핵심인 대화분석(Conversation Analysis)과 상호작용주의의 이론적 전환을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>상호작용주의자들에게 지식은 고정된 물질이 아니라, 참여자들이 대화를 주고받으며 협상하고 정교화해 나가는 '동적 과정(Interactional Achievement)'입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>대화에서 "아..." 하고 0.5초 멈추는 순간이 왜 깨달음의 결정적 순간인지를 강조하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Table 10.2 Jeffersonian Conventions -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">미세 전사 표기 · Table 10.2</span>
+      <h2 class="slide-title">제퍼슨 전사 체계 6대 핵심 기호 (Table 10.2)</h2>
+      <p class="slide-subtitle">게일 제퍼슨(Gail Jefferson, 1984)의 대화분석 표준 전사 표기법</p>
+      <div class="split-layout">
+        <div class="table-container">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>기호</th>
+                <th>명칭</th>
+                <th>의미 및 기능</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>[ ]</code></td>
+                <td><strong>발화 겹침 (Overlap)</strong></td>
+                <td>두 사람이 동시에 말하기 시작한 정확한 지점</td>
+              </tr>
+              <tr>
+                <td><code>=</code></td>
+                <td><strong>래칭 (Latching)</strong></td>
+                <td>두 발화 사이에 아무런 휴지(공백) 없이 찰나에 연결</td>
+              </tr>
+              <tr>
+                <td><code>(0.5)</code></td>
+                <td><strong>초 단위 침묵 (Pause)</strong></td>
+                <td>0.5초 동안 대화가 멈춘 침묵의 시간</td>
+              </tr>
+              <tr>
+                <td><code>(.)</code></td>
+                <td><strong>미세 휴지 (Micro-pause)</strong></td>
+                <td>0.1초 미만의 찰나의 망설임/멈춤</td>
+              </tr>
+              <tr>
+                <td><code>:::</code></td>
+                <td><strong>말 늘임 (Extension)</strong></td>
+                <td>해당 음절을 길게 늘여서 발음함</td>
+              </tr>
+              <tr>
+                <td><code>CAPS</code></td>
+                <td><strong>강조 (Emphasis)</strong></td>
+                <td>주변보다 유의미하게 크고 강한 목소리</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="image-box" onclick="openModal('images/tab10_2.png')">
+          <img src="images/tab10_2.png" alt="Table 10.2 Jeffersonian Conventions">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Table 10.2)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Table 10.2의 제퍼슨 전사 기호 6종의 의미와 상호작용적 분석 기능을 명확히 숙지시킵니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>예를 들어 `(0.8)`초의 침묵 후 나오는 발화는 상대방의 의견에 대한 거절이나 인지적 혼란을 의미하며, `=` 래칭은 즉각적인 동의나 가로채기를 의미합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>수강생들과 함께 간단한 대화 음성을 제퍼슨 기호로 직접 전사해보는 실습을 진행하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Figure 10.2 Jeffersonian Transcript Excerpt -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">실전 분석 · Figure 10.2</span>
+      <h2 class="slide-title">제퍼슨 전사 체계를 적용한 실전 담화 분석 (Figure 10.2)</h2>
+      <p class="slide-subtitle">타이밍, 발화 겹침, 래칭을 통한 상호작용적 턴 조율의 순간 (Enyedy, 2003)</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>🔍 미세 인과 메커니즘 포착</h3>
+          <ul>
+            <li><strong>말의 수정 (Self-repair)</strong>: Derek이 말을 하려다 멈추고 표현을 바꿈</li>
+            <li><strong>발화 겹침 (`[ ]`)</strong>: 상대방이 결론을 예측하고 끼어듦</li>
+            <li>➔ 두 학생이 동일한 멘탈 모델을 공유하고 있음을 증명하는 결정적 언어적 증거</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig10_2.png')">
+          <img src="images/fig10_2.png" alt="Figure 10.2 Modified Jeffersonian Transcript">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 10.2)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 10.2를 통해 제퍼슨 전사가 실제 연구에서 개념의 상호주관적 일치를 어떻게 증명하는지 실증합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>단순한 연극 대본으로는 두 학생이 '동시에 같은 생각에 도달했는지' 알 수 없지만, 겹침(`[` `]`)과 래칭(`=`)은 두 학생의 인지가 실시간으로 완벽히 동기화되었음을 입증합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>대화의 미세한 타이밍이 주는 풍부한 인지적 정보를 눈으로 확인해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Multimodal Interaction Analysis -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">다중모달 확장 · Section 10.1.3</span>
+      <h2 class="slide-title">다중모달 상호작용 분석(Multimodal Interaction)</h2>
+      <p class="slide-subtitle">언어를 넘어: 신체 배치, 지시 제스처, 공동 시선(Joint Gaze)의 통합 (Goodwin, 2000)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 발화 (Talk)</h3>
+          <p>언어적 설명, 질문, 음조와 억양의 변화</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 신체 제스처 (Gesture)</h3>
+          <p>손가락 지시(Deictic), 형태 묘사(Iconic), 은유적 손동작</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">3. 시선과 인공물 (Gaze & Media)</h3>
+          <p>동료의 눈맞춤, 모니터 화면의 특정 코드 줄 응시, 마우스 조작</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>찰스 굿윈(Charles Goodwin, 2000)의 '체화된 상호작용(Embodied Interaction)'과 다중모달 분석의 필요성을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>"이거를 저기로 옮겨"라는 말은 텍스트만 보면 무의미하지만, 손가락으로 화면의 특정 변수를 짚고 마우스로 드래그하는 제스처와 결합될 때 완벽한 의미를 갖습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>화상 회의(Zoom)에서 '손가락 지시'와 '시선 공유'가 제한될 때 협업 효율이 떨어지는 이유를 다중모달 관점에서 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Figure 10.3 Multimodal Transcript -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">다중모달 전사 · Figure 10.3</span>
+      <h2 class="slide-title">발화·제스처·시선·인공물의 공조율 분석 (Figure 10.3)</h2>
+      <p class="slide-subtitle">컴퓨터 모니터 앞에서 일어나는 체화된 개념 구축 궤적 (Enyedy, 2005)</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>🌐 4개 트랙의 다중모달 동기화</h3>
+          <ul>
+            <li><strong>트랙 1 (Talk)</strong>: "이 선을 여기로 연결해야 돼"</li>
+            <li><strong>트랙 2 (Gaze)</strong>: 모니터 좌상단 ➔ 동료의 얼굴 ➔ 결선 지점</li>
+            <li><strong>트랙 3 (Gesture)</strong>: 검지로 화면을 탭하며 선 긋기 궤적 시연</li>
+            <li><strong>트랙 4 (Artifact)</strong>: 마우스 커서의 실시간 이동과 UI 반응</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig10_3.png')">
+          <img src="images/fig10_3.png" alt="Figure 10.3 Multimodal Coordination Transcript">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 10.3)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 10.3을 통해 다중모달 전사(Multimodal Transcription)가 4개 트랙을 어떻게 시각적으로 정렬하여 분석하는지 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>스티븐스와 홀(Stevens & Hall, 1998)은 이를 '훈련된 지각(Disciplined Perception)'이라고 불렀습니다. 전문가가 된다는 것은 특정 도구와 표상을 보며 동료와 시선을 일치시키는 법을 배우는 것입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>페어 프로그래밍 시 화면을 가리키는 제스처의 타이밍을 분석해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Approach 4 - Collaboration as Learning -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">접근법 ④ · Section 10.1.4</span>
+      <h2 class="slide-title">접근법 4: 협력 그 자체가 곧 학습인 관점</h2>
+      <p class="slide-subtitle">민속방법론(Ethnomethodology)과 참여 양식의 질적 변혁 (Transformation of Participation)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🏛️ 민속방법론 (Garfinkel)</h3>
+          <ul>
+            <li>외부 연구자의 인위적 코딩 범주를 배제</li>
+            <li>참여자 스스로가 상호작용 속에서 직접 만들어내는 **내생적 질서(Endogenous Order)** 규명</li>
+            <li>멤버십 범주화(Membership Categorization) 분석</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">🌟 학습의 사회문화적 재정의</h3>
+          <ul>
+            <li>학습은 뇌 속의 지식 축적이 아님!</li>
+            <li><strong>"공동체 실천에 참여하는 방식과 책임의 질적 변혁(Transformation of Participation)"</strong></li>
+            <li>소외된 방관자에서 핵심 실천가로의 정체성 진화 (Lave & Wenger)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>접근법 4의 민속방법론적 인식론과 '참여의 변혁(Transformation of Participation)'으로서의 학습 정의를 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이 관점에서 협력은 학습의 '도구'나 '수단'이 아닙니다. 타인과 함께 의미를 협상하고 공동체의 실천을 변화시키는 협력 행위 그 자체가 바로 가장 숭고한 형태의 '학습'입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"시험 점수는 그대로인데 동료와의 토론 태도가 성숙해진 학생"을 어떻게 평가할 것인가를 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Comparison of the 4 Approaches -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">종합 대조 · Section 10.1</span>
+      <h2 class="slide-title">협력 상호작용 4대 연구 접근법 전면 비교</h2>
+      <p class="slide-subtitle">연구 목적에 따른 최적의 방법론 선택 가이드</p>
+      <div class="table-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>접근법</th>
+              <th>학습의 위치</th>
+              <th>주요 데이터</th>
+              <th>핵심 분석 도구</th>
+              <th>대표 학자</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. 사고의 창</strong></td>
+              <td>개인 두뇌 스키마</td>
+              <td>언어 발화 텍스트</td>
+              <td>프로토콜 분석, 정량 코딩</td>
+              <td>Ericsson, Simon, Chi</td>
+            </tr>
+            <tr>
+              <td><strong>2. 학습 촉진 맥락</strong></td>
+              <td>개인 인지 갈등</td>
+              <td>대화 내용 (Content)</td>
+              <td>연극 대본식 전사 (Play-script)</td>
+              <td>Piaget, Vygotsky, Enyedy</td>
+            </tr>
+            <tr>
+              <td><strong>3. 근접 성과 조율</strong></td>
+              <td>발화 턴 간 상호주관성</td>
+              <td>미세 타이밍, 다중모달</td>
+              <td>제퍼슨 전사, 비디오 IA</td>
+              <td>Jefferson, Goodwin, Stevens</td>
+            </tr>
+            <tr>
+              <td><strong>4. 협력=학습 자체</strong></td>
+              <td>공동체 참여 실천</td>
+              <td>문화적 활동 루틴</td>
+              <td>민속방법론, 미시 민족지학</td>
+              <td>Garfinkel, Lave, Wenger</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 10의 핵심인 4대 접근법을 분석 단위, 데이터, 도구, 대표 학자 차원에서 완벽히 대조 정리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>현대 학습과학은 이 4가지 접근법을 상호 배타적으로 보지 않고, 연구 질문에 따라 거시적 코딩(1~2번)과 미시적 다중모달 분석(3~4번)을 유기적으로 결합하는 '혼합 방법론'으로 발전하고 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신의 석·박사 연구 질문에는 4가지 중 어떤 조합이 최적일지 선정해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: MMLA and AI in Analyzing Collaboration -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">미래 지평 · Section 10.2</span>
+      <h2 class="slide-title">다중모달 학습분석학(MMLA)과 AI 자동화</h2>
+      <p class="slide-subtitle">비전 AI, 시선 추적기, 음성 NLP를 결합한 차세대 상호작용 분석</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🤖 AI 기반 상호작용 자동 분석</h3>
+          <ul>
+            <li><strong>컴퓨터 비전</strong>: OpenPose 기반 신체 자세, 손가락 지시 궤적 자동 추출</li>
+            <li><strong>음성 NLP (Whisper)</strong>: 제퍼슨 전사 수준의 음소 타이밍 및 억양 자동 전사</li>
+            <li><strong>공동 시선(Joint Gaze) 추적</strong>: 시선 일치도(Gaze Synchrony) 실시간 계산</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">📊 대규모 확장성 (Scalability)</h3>
+          <ul>
+            <li>과거 수백 시간이 걸리던 비디오 수작업 전사를 수분 만에 완료</li>
+            <li>수십 개 모둠의 협업 패턴을 실시간 대시보드로 교사에게 피드백</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>다중모달 학습분석학(MMLA)과 생성형 AI 기술이 상호작용 분석의 수작업 한계를 어떻게 극복하고 있는지 조망합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>MMLA는 질적 미시 분석의 깊이(Depth)와 빅데이터 정량 분석의 규모(Breadth)를 동시에 달성하는 21세기 학습과학의 최첨단 개척지입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>AI가 상호작용을 분석할 때 놓칠 수 있는 '맥락적 의미와 뉘앙스'를 인간 연구자가 어떻게 보완해야 할지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Methodological Rigor and Ethics -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">연구 윤리 · Section 10.2</span>
+      <h2 class="slide-title">비디오 연구의 방법론적 엄밀성과 연구 윤리</h2>
+      <p class="slide-subtitle">카메라의 관찰자 효과, 주관성 극복, 그리고 프라이버시 보호</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 관찰자 효과 극복</h3>
+          <p>카메라 설치 후 충분한 적응 기간(Habituation)을 두어 일상적 자연스러움 확보</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 공동 비디오 뷰잉</h3>
+          <p><strong>Collaborative Data Sessions</strong>: 다학제 연구자들이 모여 비디오를 함께 보며 다각적 해석 교차 검증</p>
+        </div>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">3. 데이터 거버넌스 & 윤리</h3>
+          <p>학생 얼굴 및 음성 생체 데이터의 비식별화와 엄격한 IRB 동의 체계 준수</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>비디오 상호작용 연구에서 필수적인 관찰자 효과 완화, 공동 데이터 세션(Data Sessions), 연구 윤리 지침을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>조던과 헨더슨(Jordan & Henderson, 1995)은 단 한 명의 연구자가 비디오를 해석하면 편향에 빠지기 쉬우므로, 연구팀 전체가 모여 1초 단위로 재생/정지하며 토론하는 '데이터 세션'을 표준 실천으로 정립했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>연구실에서 '비디오 데이터 세션'을 운영하는 실천적 팁을 공유하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Application to CS Pair Programming -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 10</span>
+      <h2 class="slide-title">컴퓨터교육 협력 코딩(Pair Programming) 상호작용 분석</h2>
+      <p class="slide-subtitle">드라이버와 내비게이터 간의 발화 턴, 화면 지시 제스처, 그리고 코드 공유</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>⌨️ 성공적인 짝 프로그래밍 패턴</h3>
+          <ul>
+            <li>내비게이터의 잦은 **지시 제스처(Deictic Gesture)**와 드라이버의 즉각적인 수용 래칭(`=`)</li>
+            <li>에러 발생 시 두 사람의 시선이 콘솔 에러 로그로 완벽히 일치(Joint Gaze)</li>
+            <li>"왜 이 함수를 썼어?"라는 명료화 질문과 대안 제시 발화 빈번</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 실패하는 짝 프로그래밍 패턴</h3>
+          <ul>
+            <li>드라이버 혼자 키보드를 독점하고 침묵 속에서 코딩</li>
+            <li>내비게이터의 시선 이탈(스마트폰 확인, 멍때리기)</li>
+            <li>발화의 단절과 긴 침묵(`(5.0)`초 이상)의 지속</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 10의 다중모달 상호작용 분석 기법을 소프트웨어 교육의 짝 프로그래밍(Pair Programming) 현장에 구체적으로 적용합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>짝 프로그래밍의 성패는 코딩 실력이 아니라, 두 사람 간의 '턴 테이킹 빈도'와 '화면 지시 제스처의 공조율'에 달려있음을 상호작용 분석이 명쾌하게 실증합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들의 짝 코딩 상호작용을 개선하기 위해 어떤 '대화 규범'을 세워줄지 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 16: Summary & Core Insights -->
+    <section class="slide" data-index="15">
+      <span class="slide-badge">총괄 요약 · Chapter 10</span>
+      <h2 class="slide-title">협력 상호작용 분석의 핵심 통찰 총괄</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 3대 미시 분석 원리</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>미세 턴의 인과성</h3>
+          <p>0.5초의 침묵과 겹침 속에 깃든 상호주관성 형성 메커니즘</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>체화된 다중모달</h3>
+          <p>언어, 손짓, 눈맞춤, 도구 조작이 엮어내는 전인적 개념 구성</p>
+        </div>
+        <div class="card">
+          <h3>참여의 질적 변혁</h3>
+          <p>공동체 실천 속에서 주체적 전문가로 진화하는 학습의 본질</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 10의 모든 핵심 교훈을 3대 통찰(미세 턴 인과성, 체화된 다중모달, 참여의 변혁)로 압축 정리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>상호작용 분석은 거시적 통계가 보지 못하는 '학습이 살아 숨 쉬는 찰나의 순간'을 우리 눈앞에 보여주는 가장 아름다운 현미경입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"여러분의 연구에 제퍼슨 전사나 다중모달 비디오 분석을 도입한다면 어떤 새로운 진실을 발견할 수 있을까요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 17: Looking Ahead to Chapter 11 -->
+    <section class="slide" data-index="16">
+      <span class="slide-badge">다음 챕터 예고 · Part II</span>
+      <h2 class="slide-title">다음 여정: Chapter 11 미시발생적 방법 (Microgenetic Methods)</h2>
+      <p class="slide-subtitle">순간순간의 개념 변화 궤적을 초고밀도로 추적하는 Bruce Sherin & Clark Chinn의 연구</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 10 vs Ch 11 연계성</h3>
+          <ul>
+            <li><strong>Ch 10 상호작용 분석</strong>: 참여자 간의 사회적 담화와 제스처의 조율에 집중</li>
+            <li><strong>Ch 11 미시발생적 방법</strong>: 개념이 변화하는 결정적 순간(In-flight)의 고밀도 인지 궤적 추적</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 Part II 방법론의 심화</h3>
+          <p>DBR(거시 설계) ➔ 상호작용 분석(사회적 미시) ➔ 미시발생(인지적 초정밀 추적)으로 이어지는 완벽한 방법론적 사다리</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 10을 마무리하고, 다음 챕터인 Chapter 11(Microgenetic Methods)과의 유기적 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>상호작용 분석이 참여자 간의 '사회적 턴'을 본다면, 미시발생 연구는 학습자의 머릿속 지식 조각(p-prims)이 재조직화되는 '순간순간의 인지적 궤적'을 고밀도로 관찰합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 11을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 10: Analyzing Collaboration (Noel Enyedy & Reed Stevens)</div>
+    <div class="footer-center" id="slide-counter">01 / 17</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Image Modal -->
+  <div id="modal" onclick="closeModal()">
+    <img id="modal-img" src="" alt="확대 도판">
+  </div>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch10_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function openModal(src) {
+      modalImg.src = src;
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 10: Analyzing Collaboration - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter10_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        closeModal();
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 01: An Introduction to the Learning Sciences</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .split-layout {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1rem; width: 100%; align-items: stretch;
+    }
+
+    .image-box {
+      background: var(--bg-secondary); border: 1px solid var(--border-color);
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 0.5rem; cursor: pointer;
+      position: relative;
+    }
+    .image-box img {
+      max-width: 100%; max-height: 380px; object-fit: contain; border-radius: 8px;
+    }
+    .image-caption {
+      font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;
+    }
+
+    /* Structured Table Styling */
+    .table-container {
+      width: 100%; overflow-x: auto; margin-top: 0.5rem;
+    }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .styled-table th {
+      background: var(--bg-secondary); color: var(--accent-blue);
+      padding: 0.6rem 0.8rem; text-align: left; border-bottom: 2px solid var(--border-color);
+    }
+    .styled-table td {
+      padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .styled-table tr:hover td { background: rgba(56, 189, 248, 0.05); }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Modal for Image Zoom */
+    #modal {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
+      z-index: 200; display: none; justify-content: center; align-items: center; cursor: zoom-out;
+    }
+    #modal.active { display: flex; }
+    #modal img { max-width: 92vw; max-height: 92vh; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 01 · Part I Foundations</span>
+      <h1 class="slide-title">An Introduction to the Learning Sciences</h1>
+      <p class="slide-subtitle">학습과학 개론: 21세기 지식 경제 시대의 새로운 학습 패러다임</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👤 저자 및 출처</h3>
+          <p><strong>R. Keith Sawyer</strong> (Univ. of North Carolina at Chapel Hill)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 제3판 (2022, pp. 20–42)</p>
+          <p>학습과학의 창시적 이론가이자 창의성·협업 연구의 세계적 석학</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다</h3>
+          <ul>
+            <li><strong>지시주의(Instructionism) 비판</strong>: 산업화 시대 암기 교육의 붕괴</li>
+            <li><strong>깊은 학습(Deeper Learning)</strong>: 개념적 이해와 유연한 전이</li>
+            <li><strong>학습의 6대 인지 메커니즘</strong>: 스캐폴딩, 외재화, 성찰 등</li>
+            <li><strong>사회문화·사회정의·에듀테크·DBR</strong>: 학습 환경의 총체적 재설계</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 『The Cambridge Handbook of the Learning Sciences』 3판의 문을 여는 총괄 개론입니다. 19세기 산업화 공장 모델에 기반한 '지시주의(Instructionism)'의 한계를 해체하고, 21세기 지식 경제 사회에서 왜 '깊은 학습(Deeper Learning)'이 필수적인지 규명하며, 33개 챕터 전체의 학문적 지형도를 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>1. <strong>학습과학의 탄생 배경</strong>: 1991년 최초의 학술대회(ICLS)와 학술지(JLS) 창간으로 공식 출범한 학습과학은 인지과학, 컴퓨터과학, 교육심리학, 사회문화인류학을 아우르는 다학제간 융합 학문입니다.</p>
+        <p>2. <strong>교육의 위기</strong>: 1900년에는 일자리의 95%가 단순 저숙련 노동이었지만 2020년에는 10% 미만으로 감소했습니다. 그러나 학교는 여전히 사실과 절차를 암기시키는 지시주의에 머물러 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"우리가 학교에서 배운 지식 중 실생활 문제 해결에 직접 쓰이지 못했던 경험은 무엇인가?"라는 질문으로 지시주의와 깊은 학습의 차이를 청중이 자각하도록 유도하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: Definition of Learning Sciences -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">학문적 정체성 · Section 1.0</span>
+      <h2 class="slide-title">학습과학(The Learning Sciences)이란 무엇인가?</h2>
+      <p class="slide-subtitle">단일 분과를 넘어선 학제간 융합 실증 과학 (Interdisciplinary Field)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>🔬 학제간 융합 (Interdisciplinary)</h3>
+          <p>명칭의 <strong>'s'</strong>가 의미하듯 인지과학, 컴퓨터과학, 교육심리학, 인류학, 사회학, 디자인학, 교수설계의 유기적 결합</p>
+        </div>
+        <div class="card">
+          <h3>🌐 전방위적 학습 환경 연구</h3>
+          <p>학교 교실뿐 아니라 가정, 가족 및 지역사회, 직장 현장, 모바일 앱, 웹 브라우저 등 <strong>비형식적 학습 환경</strong> 전수 탐구</p>
+        </div>
+        <div class="card">
+          <h3>🛠️ 환경 재설계 (Redesign)</h3>
+          <p>인지적·사회적 과정을 과학적으로 규명하여 사람들이 더 깊고 효과적으로 배우도록 <strong>학습 생태계를 전면 재설계</strong></p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학의 정의, 다학제적(Interdisciplinary) 성격, 그리고 연구 대상 환경의 포괄성을 명확히 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>1980년대와 90년대, 개별 학문(예: 인지심리학의 탈맥락적 실험실 연구, 컴퓨터과학의 초기 AI 모델)의 한계를 깨달은 연구자들이 학제간 협력을 시작했습니다. 학습과학은 이론 연구에 그치지 않고 실제 교실과 디지털 학습 환경을 '재설계(Redesign)'하는 실천 지향적 학문입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>전통 교육학과 학습과학의 가장 큰 차이점(학제간 접근, 테크놀로지 결합, 실제 학습 환경 재설계)을 강조하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Commonsense Assumptions of Instructionism -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">전통 학교 모델 비판 · Section 1.0</span>
+      <h2 class="slide-title">지시주의(Instructionism)의 5대 상식적 가정</h2>
+      <p class="slide-subtitle">과학적 검증 없이 19~20세기 관료제 학교에 정착된 암묵적 도그마</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">1. 지식 = 사실과 절차</h3>
+          <p>지식은 세상에 관한 고립된 사실(Fact)과 정형화된 문제 해결 절차(Procedure)의 목록이다.</p>
+        </div>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">2. 학교의 목표 = 머리에 주입</h3>
+          <p>교육의 목적은 학생의 머릿속에 사실과 절차를 집어넣는 것이며, 많이 외운 자가 유능하다.</p>
+        </div>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">3. 교사 = 일방적 지식 전달자</h3>
+          <p>교사는 정답을 소유한 권위자이며, 학생은 빈 그릇(Tabula Rasa)으로서 수동적으로 수용한다.</p>
+        </div>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">4. 선형적 순차성</h3>
+          <p>단순 사실을 먼저 완벽히 외워야 복잡한 사고가 가능하다는 성인 중심의 자의적 위계관.</p>
+        </div>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">5. 암기력 측정 평가</h3>
+          <p>교육 성패는 표준화된 지필 시험에서 얼마나 많은 사실과 절차를 회상(Recall)하는가로 판별.</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">⚠️ 비판적 귀결</h3>
+          <p>실제 아동의 인지 발달 연구 없이 <strong>전문가 성인의 편의</strong>에 따라 설계된 비과학적 시스템.</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전통 학교가 딛고 선 5가지 비과학적 '상식적 가정'을 조목조목 분석하여 지시주의의 구조적 한계를 폭로합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>소이어(Sawyer)는 1920년대 대규모 학교 제도가 형성될 당시 인간 학습에 대한 과학적 연구가 전무했음을 지적합니다. 교육과정의 순서('단순'에서 '복잡')조차 아동이 어떻게 배우는가가 아니라 교과서 저자나 학자들의 자의적 판단으로 결정되었습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"기초 사실을 다 외우기 전에는 창의적 프로젝트를 할 수 없다"는 명제가 왜 인지과학적으로 오류인지 토론해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Banking Concept & Knowledge Economy -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">패러다임 전환 · Section 1.0</span>
+      <h2 class="slide-title">은행 저축식 교육 vs 21세기 창의적 지식 경제</h2>
+      <p class="slide-subtitle">프레이리(Freire)와 파퍼트(Papert)의 비판과 산업 생태계의 대변혁</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🏦 은행 저축식 교육 (Freire, 1968)</h3>
+          <ul>
+            <li>지식을 은행 계좌에 입금하듯 학생 머리에 예치</li>
+            <li><strong>시모어 파퍼트(Papert, 1993)</strong>: 이를 '지시주의(Instructionism)'로 명명</li>
+            <li>1900년 95%의 공장형 저숙련 반복 노동자 양성 모델</li>
+            <li>암기가 곧 교양이었던 과거 통신 단절 시대의 유물</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">💡 창의적 지식 경제 시대 (Bereiter; Drucker)</h3>
+          <ul>
+            <li>2020년 단순 반복 일자리 10% 미만으로 급감 (자동화·AI)</li>
+            <li>인터넷 검색으로 모든 단순 사실은 즉각 확인 가능</li>
+            <li><strong>필수 역량</strong>: 복합 개념의 심층 이해, 창의적 지식 창출, 비판적 사료 평가, 평생 학습 자기조절력</li>
+            <li>지식은 탐구와 재발명(Re-invention)을 통해서만 발생</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>파울로 프레이리의 '은행 저축식 교육' 비판과 시모어 파퍼트의 '지시주의' 명명을 학습과학의 시대적 배경과 연결합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>피터 드러커(Drucker, 1993)와 칼 베라이터(Bereiter, 2002)가 지적하듯, 현대 경제는 '지식 작업(Knowledge Work)'에 의해 주도됩니다. 단순 사실 암기는 자동화에 의해 가치를 상실했으며, 고차적 개념적 사고와 협력적 지식 생성이 생존의 조건이 되었습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>생성형 AI 시대에 검색을 넘어선 '지식 창조(Knowledge Creation)'가 교육에서 왜 더 중요해졌는지 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: 7 Consensus Points on Learning -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">학습과학 합의 · Section 1.0</span>
+      <h2 class="slide-title">학습과학이 밝혀낸 학습의 7대 기본 원칙</h2>
+      <p class="slide-subtitle">지난 30년간의 실증 인지·사회 연구가 도출한 핵심 합의 (Sawyer, 2019)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 심층 개념 이해</h3>
+          <p>지식의 조건화: 어떤 상황에 적용하고 어떻게 수정할지 아는 전이(Transfer) 역량</p>
+        </div>
+        <div class="card">
+          <h3>2. 연결된 학습</h3>
+          <p>파편화된 목록이 아닌 학문 내·학문 간 상호 연결된 거대한 스키마 네트워크</p>
+        </div>
+        <div class="card">
+          <h3>3. 학습 과정에 집중</h3>
+          <p>교사의 일방 강의가 아닌 학습자가 능동적으로 참여할 때만 깊은 이해 획득</p>
+        </div>
+        <div class="card">
+          <h3>4. 학습 환경 설계</h3>
+          <p>물리적 배치, 디지털 도구, 사회적 상호작용을 포괄하는 전방위적 비계 설계</p>
+        </div>
+        <div class="card">
+          <h3>5. 집단과 맥락</h3>
+          <p>동료 및 교사와의 협력적 지식 구축과 사회적 담화에 참여할 때 학습 극대화</p>
+        </div>
+        <div class="card">
+          <h3>6. 선행 지식 & 성찰</h3>
+          <p>직관적 오개념을 출발점으로 삼는 개념 변화 + 메타인지적 성찰 기회 제공</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학계가 20여 년간의 실증 연구를 통해 도출한 7대 기본 합의 사항을 일목요연하게 조망합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이 7가지 합의는 인지심리학, 컴퓨터과학, 사회문화이론의 연구 결과들이 하나로 수렴된 결론입니다. 특히 지식이 고립된 사실이 아니라 '연결된 네트워크(Connected Learning)'로 조직될 때 비로소 장기 파지와 실생활 전이가 가능합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>7대 원칙 중 현재 교육 현장에서 가장 구현하기 어려운 요소가 무엇인지 청중과 토론해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Nature of Knowledge (Logical Empiricism vs Epistemic Practices) -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">지식관의 전환 · Section 1.1</span>
+      <h2 class="slide-title">지식의 본질: 논리 실증주의에서 인식적 실천으로</h2>
+      <p class="slide-subtitle">"지식은 명제와 연산의 집합인가, 학문 공동체의 살아있는 실천인가?"</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🏛️ 20세기 전반: 논리 실증주의 (Logical Empiricism)</h3>
+          <ul>
+            <li>지식 = 세상에 대한 명제적 진술(사실) + 논리적 연산(절차)</li>
+            <li>행동주의 심리학과 결합 ➔ <strong>지시주의 교육관 정당화</strong></li>
+            <li>교육 = 교사가 학생에게 사실과 절차를 일방 전달하는 과정</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🔬 현대 학습과학: 인식적 실천 (Epistemic Practices)</h3>
+          <ul>
+            <li>실제 과학자들이 지식을 창조하는 현장 분석 (1960년대 이후)</li>
+            <li>지식 = <strong>"과학을 해나가는 방법"</strong> + 통합된 설명 모델</li>
+            <li>가설 설정, 실험, 논쟁, 동료 평가, 주장의 정당화 실천에 참여</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전통 지시주의의 철학적 뿌리인 '논리 실증주의(Logical Empiricism)'를 비판하고, 학습과학이 지향하는 '인식적 실천(Epistemological Practices)' 개념을 확립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>맥과이어(McGuire, 1992)와 수페(Suppe, 1974)가 설명하듯, 논리 실증주의는 지식을 탈맥락화된 명제들의 정적 집합으로 환원했습니다. 그러나 실제 과학 활동은 사회적 논증, 모델링, 비판적 평가가 얽힌 역동적 실천입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>과학 교과서의 실험 따라하기(Recipe Lab)가 왜 진정한 과학적 탐구(Epistemic Practice)가 될 수 없는지 설명해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Table 1.1 Full Comparison -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">핵심 비교 · Table 1.1</span>
+      <h2 class="slide-title">전통적 교실 관행 vs 깊은 학습 전면 비교 (Table 1.1)</h2>
+      <p class="slide-subtitle">지시주의(Instructionism)와 학습과학(Learning Sciences)의 패러다임 대비</p>
+      <div class="split-layout">
+        <div class="table-container">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>비교 차원</th>
+                <th>전통 교실 (지시주의)</th>
+                <th>깊은 학습 (학습과학)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>선행 지식</strong></td>
+                <td>학습 내용과 무관한 것으로 취급</td>
+                <td>이전 지식 및 경험과 능동적 연계</td>
+              </tr>
+              <tr>
+                <td><strong>지식 구조</strong></td>
+                <td>파편화된 단편 정보 조각</td>
+                <td>상호 연결된 개념 체계로 통합</td>
+              </tr>
+              <tr>
+                <td><strong>원리 탐색</strong></td>
+                <td>이유 모른 채 사실/절차 암기</td>
+                <td>기저 원리 및 시스템 패턴 탐색</td>
+              </tr>
+              <tr>
+                <td><strong>새 아이디어</strong></td>
+                <td>교과서 밖 아이디어 수용 곤란</td>
+                <td>새 아이디어 비판적 평가 및 연계</td>
+              </tr>
+              <tr>
+                <td><strong>권위와 대화</strong></td>
+                <td>권위자가 하달한 고정된 정답</td>
+                <td>지식 생성 대화 및 논리적 검토</td>
+              </tr>
+              <tr>
+                <td><strong>성찰</strong></td>
+                <td>목적/전략에 대한 성찰 부재</td>
+                <td>자신의 이해 및 학습 과정 자체 성찰</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="image-box" onclick="openModal('images/tab1_1.png')">
+          <img src="images/tab1_1.png" alt="Table 1.1 Full Comparison">
+          <div class="image-caption">🔍 클릭하여 원문 도판 확대 (Table 1.1)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Table 1.1의 6대 비교 차원을 분석하여 학습 패러다임의 전면적 전환을 선명하게 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Table 1.1은 핸드북 전체를 관통하는 핵심 프레임워크입니다. 지식관, 선행지식, 패턴탐색, 권위, 성찰의 모든 차원이 유기적으로 연결되어 있으며, 어느 한 차원만 바꾸어서는 진정한 깊은 학습이 일어나지 않습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>슬라이드의 표를 보며 "학습자에게 가장 큰 인지적 도약을 요구하는 차원은 무엇인가?"를 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Situativity & Authentic Practices -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">상황 인지 · Section 1.1</span>
+      <h2 class="slide-title">상황성(Situativity)과 실제적 실천(Authentic Practices)</h2>
+      <p class="slide-subtitle">"지식은 머릿속 데이터가 아니라 맥락·도구·사람과의 상호작용이다"</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🌍 상황성(Situativity) 관점</h3>
+          <ul>
+            <li>지식은 고립된 두뇌 속 정적 구조물이 아님</li>
+            <li><strong>행위자 + 도구 + 타인 + 활동 환경</strong>의 역동적 결합 과정 (Engeström; Rogoff)</li>
+            <li>학습이란 협력적 활동에의 참여 패턴이 시간에 따라 변화하는 것</li>
+          </ul>
+        </div>
+        <div class="card highlight-card">
+          <h3>🎯 발달적으로 적합한 실제적 실천</h3>
+          <ul>
+            <li><strong>역사 교육</strong>: 연도 암기가 아닌 1차 사료 비판과 역사적 논증 (Carretero)</li>
+            <li><strong>과학교육(NGSS)</strong>: 설명 구축, 증거 기반 논증, 소통과 정당화 (NRC, 2012)</li>
+            <li>전문가의 실천을 아동의 <strong>발달 단계에 맞게 재설계(Developmentally Appropriate)</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>상황 인지(Situated Cognition) 관점과 교과 교육에서의 '실제적 실천(Authentic Practices)' 개념을 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>로고프(Rogoff, 1990)가 밝혔듯 학습은 사회적 실천 참여의 질적 변화입니다. 학생들에게 전문가와 동일한 작업을 강요하는 것이 아니라, 전문가의 핵심 실천 양식을 발달 수준에 맞게 스캐폴딩된 형태로 제공하는 것이 학습과학 설계의 요체입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>소프트웨어 교육에서 단순 문법 타이핑 대신 '오픈소스 기여'나 '페어 프로그래밍'이 왜 실제적 실천에 해당하는지 연결해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Learning Styles Myth & Equity -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">형평성과 보편성 · Section 1.1</span>
+      <h2 class="slide-title">"학습 스타일" 신화의 타파와 글로벌 보편적 형평성</h2>
+      <p class="slide-subtitle">학습과학 기반 교수법은 모든 문화권과 소외 계층에 보편 타당하다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 '학습 스타일(Learning Styles)'의 허구성</h3>
+          <ul>
+            <li>학생마다 고유한 학습 스타일이 있어 맞춤형으로 가르쳐야 한다는 통념</li>
+            <li><strong>실증적 근거 전무한 대중적 신화(Myth)</strong>로 판명 (Pashler et al., 2008)</li>
+            <li>지시주의를 정당화하는 구실로 악용되는 것을 경계</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">⚖️ 성취도 격차 축소 (Narrowing Gaps)</h3>
+          <ul>
+            <li>미국, 중국, 일본, 유럽 등 전 세계 다양한 문화권에서 동일한 효과 입증</li>
+            <li>미국 대학 STEM 연구: 학습과학 기반 능동 수업이 <strong>소수자·취약계층의 성취도 격차를 대폭 축소</strong> (Haak et al., 2011; Theobald et al., 2020)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>'학습 스타일' 신화를 과학적으로 반증하고, 학습과학 교수법이 교육 형평성에 기여하는 보편적 가치를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>패슐러 등(Pashler et al., 2008)의 대규모 메타분석은 학습 스타일 맞춤 지도가 효과가 없음을 밝혔습니다. 반면 능동적 구성주의 기반의 학습과학 교수법은 전 세계 모든 문화권에서 작동하며, 특히 소외 계층의 학업 성취를 끌어올려 사회 정의에 기여합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"소외 계층 학생들은 기초 지식부터 외워야 한다"는 편견이 왜 위험한 교육적 차별인지 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Novice to Expert & Prior Knowledge -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">인지 과정 · Section 1.2</span>
+      <h2 class="slide-title">전문가 이행과 선행 지식의 활용 (Section 1.2.1~1.2.2)</h2>
+      <p class="slide-subtitle">초보자의 직관적 오개념을 레버리지하는 개념 변화(Conceptual Change)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>♟️ 1.2.1 초보자 ➔ 전문가 이행</h3>
+          <ul>
+            <li>초기 AI 전문가 시스템 연구에서 발원</li>
+            <li>전문가는 표면 특징이 아닌 <strong>핵심 원리 중심 스키마</strong>로 사고</li>
+            <li>발달심리학(Piaget, Vygotsky)과 융합하여 초보자의 심적 발달 단계 규명</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🌱 1.2.2 선행 지식과 소박 이론</h3>
+          <ul>
+            <li>아동은 빈 머리가 아닌 <strong>소박 물리·생물학적 오개념</strong>을 지니고 입학</li>
+            <li>선행 지식을 무시하면 시험 후 즉시 원래 오개념으로 회귀</li>
+            <li>오개념을 출발점으로 삼아 재구성하는 <strong>개념 변화(Conceptual Change)</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전문가-초보자 연구의 유산과 선행 지식 및 오개념을 활용한 개념 변화 메커니즘을 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>디세사(diSessa, Chapter 6)가 강조하듯, 아동의 일상적 직관(p-prims)은 잘못된 것이 아니라 새로운 지식을 구축하는 인지적 자원(Resources)입니다. 교육은 이를 억압하는 것이 아니라 세련된 과학적 멘탈 모델로 진화시키는 과정입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>프로그래밍 초보자가 겪는 변수(`x = x + 1`) 오개념이 어떻게 수학적 선행 지식과의 충돌에서 비롯되는지 예시를 들어보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Scaffolding & Fading -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">교수 비계 · Section 1.2.3</span>
+      <h2 class="slide-title">스캐폴딩(Scaffolding)과 페이딩(Fading) 메커니즘</h2>
+      <p class="slide-subtitle">정답을 대신 주는 것이 아니라 스스로 답을 찾도록 유도하는 지능형 지원</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>🏗️ 맞춤형 인지 지원</h3>
+          <p>학습자의 현재 ZPD(근접발달영역) 필요에 정밀하게 맞춰진 임시적 인지 비계 제공</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>💡 프롬프트와 힌트의 힘</h3>
+          <p>정답을 직접 알려주지 않고, <strong>아동이 능동적으로 지식을 구성하도록 유도</strong>하는 힌트 제공</p>
+        </div>
+        <div class="card">
+          <h3>📉 점진적 페이딩 (Fading)</h3>
+          <p>건물이 완공되면 비계를 철거하듯, 학습자의 역량 성장에 따라 비계를 점진적으로 제거</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>스캐폴딩(비계 설정)의 진정한 정의와 좋은 비계 vs 나쁜 비계의 기준, 그리고 페이딩(Fading)의 원리를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>타박과 라이저(Tabak & Reiser, Chapter 3)가 설명하듯, 대신 과제를 해결해 주는 것은 아동의 주체적 인지 구성을 가로막습니다. 좋은 비계는 인지적 프롬프트를 통해 아동이 자기 조절 능력을 발달시키도록 돕고 궁극적으로 비계 없이 자립하게 만듭니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교사가 교실에서 흔히 범하는 "과도한 개입(Over-scaffolding)"의 부작용을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Externalization, Articulation & Reflection -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">인지적 메타작용 · Section 1.2.4~1.2.5</span>
+      <h2 class="slide-title">외재화(Articulation)와 성찰(Reflection)의 상승 작용</h2>
+      <p class="slide-subtitle">"다 배운 후 표현하는 것이 아니라, 표현하는 과정 속에서 비로소 배운다"</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🗣️ 1.2.4 외재화와 명시화 (Articulation)</h3>
+          <ul>
+            <li>불완전한 생각을 소리 내어 말하고 글/그림으로 표현</li>
+            <li><strong>비고츠키 내면화 이론</strong>: 사회적 상호작용 ➔ 개인 내적 사고</li>
+            <li>사고를 언어화하는 과정 자체가 학습을 촉진하는 상호 강화 루프</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🪞 1.2.5 성찰과 메타인지 (Reflection)</h3>
+          <ul>
+            <li>학습하면서 자신의 학습 과정과 이해 수준을 모니터링 (Winne & Azevedo)</li>
+            <li>외재화된 자신의 사고를 눈앞에서 객관적으로 검토</li>
+            <li>사고에 대해 생각하는 메타 담화 스캐폴딩 필수</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>외재화(Articulation)와 성찰(Reflection)이 맺는 인지적 선순환 피드백 루프를 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>비고츠키(1978)는 모든 고차 정신 기능이 사람들 사이의 외적 상호작용에서 출발해 내면화된다고 보았습니다. 생각을 소리 내어 말하는 씽크 얼라우드(Think-aloud)나 산출물 제작은 암묵적 인지를 외현화하여 메타인지적 점검을 가능케 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>프로그래밍에서 '고무오리 디버깅'이 어떻게 Articulation과 Reflection의 대표 사례가 되는지 연결해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Concrete to Abstract via Technology -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">표상과 도구 · Section 1.2.6</span>
+      <h2 class="slide-title">구체물에서 추상화로: 시각화 테크놀로지의 비계</h2>
+      <p class="slide-subtitle">피아제(Piaget)의 교구 조작 통찰을 디지털 인터페이스로 확장</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🧩 피아제의 구체적 조작 통찰</h3>
+          <ul>
+            <li>학습의 자연스러운 발달: <strong>구체적 조작물 ➔ 추상적 개념</strong></li>
+            <li>1960~70년대 수학 교구(Manipulatives, 컬러 바)의 확산</li>
+            <li>물리적 교구만으로는 고차원 추상 지식 표상에 한계</li>
+          </ul>
+        </div>
+        <div class="card highlight-card">
+          <h3>💻 디지털 시각화의 혁신적 어포던스</h3>
+          <ul>
+            <li>고도의 추상적 개념을 동적·시각적 형태로 가시화</li>
+            <li><strong>과학적 논증 구조 시각화</strong> (Andriessen & Baker, Ch 21)</li>
+            <li>시각·공간적 이해가 언어적 이해에 선행하여 강력한 인지적 비계 역할 수행</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>피아제의 구체물 조작 이론이 현대 컴퓨터 그래픽스와 시각화 소프트웨어로 어떻게 진화했는지 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>컴퓨터는 물리적 블록으로 표현 불가능한 복잡계 시뮬레이션, 알고리즘 제어 흐름, 과학적 논증의 연결망을 시각적 아티팩트로 만들어 줍니다. 이는 추상적 사고의 문턱을 획기적으로 낮춰 줍니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>블록 코딩(Scratch)과 메모리 상태 시각화 도구(Python Tutor)의 인지적 비계 효과를 예시로 들어보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Sociocultural Studies & Distributed Cognition -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">사회문화적 확장 · Section 1.3</span>
+      <h2 class="slide-title">사회문화적 관점과 분산 인지(Distributed Cognition)</h2>
+      <p class="slide-subtitle">1980년대 'AI의 겨울' 극복과 학교 밖 4대 비형식 학습 연구</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card">
+          <h3>🚢 4대 초기 사회문화 연구 갈래</h3>
+          <ul>
+            <li><strong>문화적 사회화</strong>: 공동체 규범 습득</li>
+            <li><strong>비서구 도제 학습</strong>: Lave, Rogoff, Saxe</li>
+            <li><strong>사회적 분산 인지</strong>: 해군 함선 항해(Hutchins), 런던 지하철 관제실(Heath & Luff)</li>
+            <li><strong>박물관 비형식 학습</strong>: Pierroux et al.</li>
+          </ul>
+        </div>
+        <div class="card highlight-card">
+          <h3>🤝 CSCL과 이중 수준 분석</h3>
+          <ul>
+            <li><strong>개별 인지(Elemental)</strong>: 개인의 내적 멘탈 모델</li>
+            <li><strong>사회문화(Systemic)</strong>: 소집단 담화 및 커뮤니티 실천</li>
+            <li>개별 인지와 문화를 분리하지 않는 <strong>상황적 사회 실천(Situated Practice)</strong> 연구</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>사회문화적 접근, 분산 인지 이론, 그리고 CSCL의 학문적 발전 과정을 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>허친스(Hutchins, 1995)의 해군 항해 연구는 지능이 한 사람의 머리가 아니라 여러 사람과 차트, 계측 도구 등 환경 전체에 '분산(Distributed)'되어 있음을 보였습니다. 학습과학은 개인 인지와 집단 담화를 아우르는 이중 수준 분석을 핵심 방법론으로 삼습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>항공기 조종실이나 수술실 팀의 협업에서 '분산 인지'가 어떻게 작동하는지 사례를 들어 설명해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Social Justice & Funds of Knowledge -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">사회 정의 · Section 1.4</span>
+      <h2 class="slide-title">사회 정의(Social Justice)와 문화적 지식 기금</h2>
+      <p class="slide-subtitle">교육 불평등 구조의 해체와 소외 계층의 문화적 자원 통합</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🌾 지식 기금 (Funds of Knowledge)</h3>
+          <ul>
+            <li>가정과 지역사회에서 체득한 문화적 지식 저장소</li>
+            <li>소외 계층의 문화적 실천을 배제하고 동화만 강요하는 것은 불평등 재생산 (Vossoughi & Gutierrez)</li>
+            <li><strong>사례</strong>: 아이티 청소년의 <em>bay odyans</em> 담화 관행을 과학 수업에 접목하여 성취도 향상</li>
+          </ul>
+        </div>
+        <div class="card highlight-card">
+          <h3>🏛️ ISLS 사회 정의 연구의 발전</h3>
+          <ul>
+            <li>2014 JLS 특별호: "Social Justice Research in LS"</li>
+            <li>2017 『Power and Privilege in the Learning Sciences』</li>
+            <li>2020 ISLS **"Equity and Justice Committee"** 공식 발족</li>
+            <li>탐구형 고급 교육은 모든 학생의 권리임을 천명</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>사회 정의와 교육 형평성 연구가 학습과학의 핵심 연구 영역으로 자리잡게 된 역사와 원리를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>나시르 등(Nasir et al., Chapter 29)이 강조하듯, 소외 계층 학생들의 부진은 인지적 결함이 아니라 학교 문화와 가정 문화 간의 단절에서 기인합니다. 학습과학은 학생들의 고유한 문화적 실천을 지적 자원으로 활용하여 형평성을 달성합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학습자들의 다양한 일상 언어와 경험을 컴퓨터/과학 수업에 끌어들이는 수업 설계 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 16: Educational Technology Affordances -->
+    <section class="slide" data-index="15">
+      <span class="slide-badge">교육공학 · Section 1.5</span>
+      <h2 class="slide-title">에듀테크의 재개념화: 4대 핵심 인지적 어포던스</h2>
+      <p class="slide-subtitle">단순 지식 전달 튜터를 넘어선 사고의 확장 도구 (Mindtools)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card">
+          <h3>1. 추상 지식의 구체적 표상</h3>
+          <p>눈에 보이지 않는 분자 운동, 알고리즘 실행 상태, 복잡계 상호작용을 동적 모델로 시각화</p>
+        </div>
+        <div class="card">
+          <h3>2. 외재화와 성찰의 매개</h3>
+          <p>자신의 생각과 가설을 시각적·언어적으로 표현하고 다각도로 검토할 수 있는 인터페이스</p>
+        </div>
+        <div class="card">
+          <h3>3. 지식의 능동적 조작·수정</h3>
+          <p>설계(Design) 과정을 통해 프로그래밍, 시뮬레이션 변수 조작 등 지식을 지속적으로 개정</p>
+        </div>
+        <div class="card">
+          <h3>4. 네트워크 기반 협력 학습</h3>
+          <p>지식 포럼(Knowledge Forum), CSCL 플랫폼을 통해 동료들과 아이디어를 통합·발전</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학이 규명한 컴퓨터 테크놀로지의 4대 인지적 어포던스(Affordances)를 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>전통 에듀테크는 객관식 자동 채점이나 동영상 강의 송출 등 지시주의적 틀에 머물렀습니다. 반면 학습과학은 컴퓨터를 학습자의 고차원적 인지를 지원하고 촉진하는 비계이자 마인드툴(Mindtools)로 위치시킵니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>현재 학교에 보급된 에듀테크 소프트웨어 중 '지시주의적'인 것과 '학습과학적'인 것을 구분해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 17: Methodologies (DBR & Interaction Analysis) -->
+    <section class="slide" data-index="16">
+      <span class="slide-badge">연구 방법론 · Section 1.6</span>
+      <h2 class="slide-title">학습과학 고유의 실천 지향 연구 방법론</h2>
+      <p class="slide-subtitle">단순 실험실 비교를 넘어 교실의 미시적 상호작용 메커니즘을 밝힌다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🔄 디자인 기반 연구 (DBR, Barab)</h3>
+          <ul>
+            <li>실제 교실 현장에서 교사와 함께 혁신적 환경 설계</li>
+            <li><strong>설계 ➔ 적용 ➔ 분석 ➔ 재설계</strong>의 반복적 순환</li>
+            <li>현장의 실천적 개선과 교육 이론 발전을 동시 달성</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>📹 상호작용 분석 (Interaction Analysis)</h3>
+          <ul>
+            <li>대규모 비디오 녹화 데이터를 분 단위로 정밀 분석</li>
+            <li>(1) 학습자 간 관계 변화, (2) 문제 해결 실천 양식 진화, (3) 개별 인지 변화를 <strong>동시에 추적</strong></li>
+            <li>미시발생적 방법(Microgenetic Methods)과의 융합</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>디자인 기반 연구(DBR)와 상호작용 분석(Interaction Analysis) 등 학습과학의 독창적 연구 방법론을 소개합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>바랍(Barab, Chapter 9)의 DBR은 생태학적 타당도(Ecological Validity)를 지닌 현장 중심 연구입니다. 무작위 통제 실험(RCT)이 '블랙박스'로 남겨두었던 교실 내 분 단위 인과 메커니즘을 비디오 분석을 통해 낱낱이 밝혀냅니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>연구실 안에서의 통제 실험과 실제 교실 기반 DBR의 장단점을 비교 토론해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 18: History of Learning Sciences -->
+    <section class="slide" data-index="17">
+      <span class="slide-badge">학문 발전사 · Section 1.7</span>
+      <h2 class="slide-title">학습과학 30년의 역사적 발전 연표 (1987~2022)</h2>
+      <p class="slide-subtitle">인지과학과 컴퓨터과학의 만남에서 글로벌 통합 학술 공동체로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>📅 태동 및 정립기 (1987~2002)</h3>
+          <ul>
+            <li><strong>1987</strong>: IRL(Palo Alto) 및 노스웨스턴 ILS 설립</li>
+            <li><strong>1991</strong>: <em>JLS</em> 창간 & 제1회 ICLS 학술대회 개최</li>
+            <li><strong>1991</strong>: Roy Pea, 최초의 학습과학 PhD 과정 개설</li>
+            <li><strong>2002</strong>: 국제학습과학회(ISLS) 공식 창립 (LS + CSCL)</li>
+          </ul>
+        </div>
+        <div class="card highlight-card">
+          <h3>🌍 글로벌 확장기 (2006~현재)</h3>
+          <ul>
+            <li><strong>2006</strong>: 『핸드북』 초판(1st Ed.) & <em>ijCSCL</em> 창간</li>
+            <li><strong>2008</strong>: 최초의 미국 외 ICLS 개최 (네덜란드)</li>
+            <li><strong>2014</strong>: 제2판 발간 (중국어·일본어 번역 출간)</li>
+            <li><strong>2021/2022</strong>: ICLS-CSCL 단일 통합 & 제3판 발간</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>1987년부터 2022년 제3판 발간에 이르는 학습과학 30여 년의 역사적 이정표를 정리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>로이 피(Roy Pea, 2016)가 회고하듯, 학습과학은 인공지능과 인지심리학의 접점에서 출발하여 사회문화이론과 테크놀로지를 통합하며 급성장했습니다. 30년 만에 전 세계 주요 대학원에 학위 과정이 개설된 성숙한 독립 학문으로 정착했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학습과학의 역사가 컴퓨터 테크놀로지 발전사(PC ➔ 인터넷 ➔ 모바일 ➔ AI)와 어떻게 궤를 같이하는지 조망해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 19: Conclusion -->
+    <section class="slide" data-index="18">
+      <span class="slide-badge">결론 및 미래 비전 · Section 1.8</span>
+      <h2 class="slide-title">미래 교육의 나침반: 학습과학 기반 학교 혁신</h2>
+      <p class="slide-subtitle">"정치는 문제를 단순화하지만, 과학은 진정한 복합성을 드러낸다"</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 과학적 근거의 개혁</h3>
+          <p>정치적 유행이나 이념적 구호가 아닌 실증적 학습과학 연구에 뿌리내린 교육 개혁</p>
+        </div>
+        <div class="card">
+          <h3>2. 학습 환경 전면 재설계</h3>
+          <p>수업, 교재, 에듀테크, 평가 체제, 정책이 일관되게 '깊은 학습'을 지원하는 생태계 구축</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>3. 모든 학습자의 성공</h3>
+          <p>공립·사립, 대면·온라인을 막론하고 인간 학습의 보편적 법칙을 통해 삶을 변화시키는 과학</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 01의 결론을 맺으며 앞으로 전개될 33개 챕터의 지적 여정에 대한 기대와 비전을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>소이어는 "이 핸드북의 연구는 삶을 변화시킬 수 있다(The research in this handbook can change lives)"는 문장으로 서론을 맺습니다. 학습과학은 이론에 머무르지 않고, 복잡한 교실 현장의 문제를 과학적으로 해결하는 강력한 실천적 도구입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"오늘 살펴본 학습과학의 비전 중 여러분의 교육 철학을 가장 근본적으로 뒤흔든 명제는 무엇인가?"를 마지막 발문으로 제시하세요.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 01: An Introduction to the Learning Sciences (Sawyer)</div>
+    <div class="footer-center" id="slide-counter">01 / 19</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Image Modal -->
+  <div id="modal" onclick="closeModal()">
+    <img id="modal-img" src="" alt="확대 도판">
+  </div>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 HTML 또는 마크다운 형식으로 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch01_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote(); // exit edit mode on slide switch
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function openModal(src) {
+      modalImg.src = src;
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        // Save
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 01: An Introduction to the Learning Sciences - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter01_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        closeModal();
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

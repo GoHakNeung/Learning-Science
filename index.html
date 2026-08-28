@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Cambridge Handbook of the Learning Sciences (3rd Ed.) 강의용 인터랙티브 슬라이드 포털">
+  <title>학습과학 (Learning Sciences) 강의용 슬라이드 포털</title>
+  <style>
+    :root {
+      --bg-primary: #090d16;
+      --bg-secondary: #111827;
+      --bg-card: rgba(17, 24, 39, 0.85);
+      --bg-card-hover: rgba(31, 41, 55, 0.95);
+      --border-color: #1f2937;
+      --border-accent: #38bdf8;
+      --text-primary: #f9fafb;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --accent-blue: #38bdf8;
+      --accent-cyan: #06b6d4;
+      --accent-indigo: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+      --card-hover-shadow: 0 20px 35px -5px rgba(56, 189, 248, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --bg-card-hover: #ffffff;
+      --border-color: #e2e8f0;
+      --border-accent: #0284c7;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-cyan: #0891b2;
+      --accent-indigo: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+      --card-hover-shadow: 0 20px 35px -5px rgba(2, 132, 199, 0.15), 0 10px 15px -5px rgba(0, 0, 0, 0.05);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(129, 140, 248, 0.08) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    header {
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo));
+      color: #000;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--text-primary) 40%, var(--accent-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .ctrl-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .ctrl-btn:hover {
+      background: var(--border-color);
+      border-color: var(--accent-blue);
+      transform: translateY(-1px);
+    }
+
+    main {
+      flex: 1;
+      max-width: 1380px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem 1rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid var(--accent-blue);
+      color: var(--accent-blue);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      max-width: 900px;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 70%, var(--accent-indigo) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 750px;
+      line-height: 1.6;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 0.45rem 1rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+    }
+    .stat-number { font-weight: 800; color: var(--accent-blue); font-size: 1rem; }
+
+    /* Search & Filter Bar */
+    .filter-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: var(--card-shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .search-box {
+      width: 100%;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 0.75rem 1rem 0.75rem 2.8rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .pills-container {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+      scrollbar-width: none;
+    }
+    .pills-container::-webkit-scrollbar { display: none; }
+
+    .pill-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 0.4rem 0.85rem;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .pill-btn:hover {
+      background: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .pill-btn.active {
+      background: var(--accent-blue);
+      color: #000;
+      font-weight: 700;
+      border-color: var(--accent-blue);
+    }
+
+    /* Chapter Grid */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .chapter-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .chapter-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--card-hover-shadow);
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+    }
+
+    .chapter-card.ready {
+      border-left: 4px solid var(--accent-emerald);
+    }
+
+    .chapter-card.upcoming {
+      opacity: 0.65;
+      border-left: 4px solid var(--border-color);
+    }
+    .chapter-card.upcoming:hover { opacity: 0.9; }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+    }
+
+    .card-part-tag {
+      font-weight: 700;
+      color: var(--accent-indigo);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-badge {
+      padding: 0.2rem 0.55rem;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .status-badge.badge-ready {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid var(--accent-emerald);
+    }
+
+    .status-badge.badge-upcoming {
+      background: rgba(156, 163, 175, 0.15);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .chapter-num {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+    }
+
+    .chapter-title-en {
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: var(--text-primary);
+    }
+
+    .chapter-title-ko {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .chapter-author {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+    }
+
+    .tag {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 6px;
+    }
+
+    .card-footer {
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .slide-link-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo));
+      color: #000;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+    }
+
+    .slide-link-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(56, 189, 248, 0.4);
+      filter: brightness(1.08);
+    }
+
+    .disabled-btn {
+      width: 100%;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      text-align: center;
+      cursor: not-allowed;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .footer-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-link:hover { color: var(--accent-blue); }
+
+    @media (max-width: 768px) {
+      header { padding: 1rem 1.25rem; }
+      main { padding: 1.5rem 1rem; }
+      .hero-title { font-size: 1.85rem; }
+      .grid-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="#" class="brand">
+      <span class="brand-badge">LS 3rd Ed.</span>
+      <span class="brand-title">Learning Sciences Interactive Slides</span>
+    </a>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (다크/라이트)">🌓 테마</button>
+      <a href="https://github.com" target="_blank" class="ctrl-btn">💻 GitHub 저장소</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-badge">🎓 The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+      <h1 class="hero-title">학습과학(Learning Sciences) 강의용 인터랙티브 슬라이드 포털</h1>
+      <p class="hero-subtitle">
+        R. Keith Sawyer 편저 『The Cambridge Handbook of the Learning Sciences』(3판, 2022) 전 33개 챕터의 
+        원서 완벽 정합 슬라이드, 발표자 노트 편집/저장, 고해상도 도판 모달 및 컴퓨터교육 융합 분석 포털입니다.
+      </p>
+
+      <div class="stats-bar">
+        <div class="stat-item">📚 총 <span class="stat-number">33</span>개 챕터 (6개 Part)</div>
+        <div class="stat-item">✨ 현재 <span class="stat-number" id="ready-count">10</span>개 슬라이드 배포 완료</div>
+        <div class="stat-item">📝 발표자 노트 실시간 편집 & 로컬 저장 지원</div>
+        <div class="stat-item">🔍 300 DPI 원서 도판 내장</div>
+      </div>
+    </section>
+
+    <!-- Filter & Search Section -->
+    <section class="filter-section">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" class="search-input" placeholder="챕터 번호, 제목, 저자명, 키워드(예: Scaffolding, DBR, 피아제)를 검색하세요...">
+      </div>
+
+      <div class="pills-container">
+        <button class="pill-btn active" data-filter="all">전체 보기 (33)</button>
+        <button class="pill-btn" data-filter="ready">배포 완료 (10)</button>
+        <button class="pill-btn" data-filter="part1">Part I: 기초 이론 (Ch 01~08)</button>
+        <button class="pill-btn" data-filter="part2">Part II: 연구 방법론 (Ch 09~13)</button>
+        <button class="pill-btn" data-filter="part3">Part III: 테크놀로지 (Ch 14~18)</button>
+        <button class="pill-btn" data-filter="part4">Part IV: 협력과 공동체 (Ch 19~22)</button>
+        <button class="pill-btn" data-filter="part5">Part V: 교과 지식 (Ch 23~28)</button>
+        <button class="pill-btn" data-filter="part6">Part VI: 현장 적용 (Ch 29~33)</button>
+      </div>
+    </section>
+
+    <!-- Chapter Grid -->
+    <section class="grid-container" id="chapter-grid">
+      <!-- Generated via JS -->
+    </section>
+
+  </main>
+
+  <footer>
+    <div>The Cambridge Handbook of the Learning Sciences (3rd Edition, 2022) Interactive Slide Portal</div>
+    <div style="font-size: 0.78rem; color: var(--text-muted);">
+      단축키 안내: 슬라이드 내에서 <code>←</code>/<code>→</code> (이동), <code>N</code> (발표자 노트), <code>F</code> (전체화면), <code>🌓</code> (테마)
+    </div>
+    <div class="footer-links">
+      <a href="#" class="footer-link">상단으로 이동</a>
+      <span>·</span>
+      <a href="https://www.cambridge.org" target="_blank" class="footer-link">Cambridge University Press</a>
+    </div>
+  </footer>
+
+  <script>
+    const chaptersData = [
+      // Introduction
+      {
+        id: "ch01",
+        num: "Chapter 01",
+        part: "part1",
+        partLabel: "Introduction",
+        titleEn: "An Introduction to the Learning Sciences",
+        titleKo: "학습과학 개론: 깊은 학습과 학제적 융합",
+        author: "R. Keith Sawyer",
+        tags: ["Instructionism", "Deep Learning", "Authentic Practice", "Scaffolding"],
+        ready: true,
+        slidePath: "slide/ch01/index.html"
+      },
+      // Part I: Foundations
+      {
+        id: "ch02",
+        num: "Chapter 02",
+        part: "part1",
+        partLabel: "Part I Foundations",
+        titleEn: "Foundations of the Learning Sciences",
+        titleKo: "학습과학의 학문적 기초",
+        author: "Mitchell J. Nathan & R. Keith Sawyer",
+        tags: ["Constructivism", "Socio-cultural", "Cognitive Load", "Situated Learning"],
+        ready: true,
+        slidePath: "slide/ch02/index.html"
+      },
+      {
+        id: "ch03",
+        num: "Chapter 03",
+        part: "part1",
+        partLabel: "Part I Foundations",
+        titleEn: "Scaffolding",
+        titleKo: "비계 설정 (스캐폴딩): 원리와 실제",
+        author: "Iris Tabak & Brian J. Reiser",
+        tags: ["Scaffolding Guidelines", "Synergistic Scaffolds", "ZPD", "Fading"],
+        ready: true,
+        slidePath: "slide/ch03/index.html"
+      },
+      {
+        id: "ch04",
+        num: "Chapter 04",
+        part: "part1",
+        partLabel: "Part I Foundations",
+        titleEn: "Project-Based Learning",
+        titleKo: "프로젝트 기반 학습 (PBL)",
+        author: "Joseph S. Krajcik & Namsoo Shin",
+        tags: ["Driving Question", "Learning Technologies", "CER Framework", "3D Learning"],
+        ready: true,
+        slidePath: "slide/ch04/index.html"
+      },
+      {
+        id: "ch05",
+        num: "Chapter 05",
+        part: "part1",
+        partLabel: "Part I Foundations",
+        titleEn: "Metacognition and Self-Regulated Learning",
+        titleKo: "메타인지와 자기조절학습",
+        author: "Philip H. Winne & Roger Azevedo",
+        tags: ["COPES Model", "SRL", "Metacognitive Monitoring", "MMLA", "Trace Data"],
+        ready: true,
+        slidePath: "slide/ch05/index.html"
+      },
+      {
+        id: "ch06",
+        num: "Chapter 06",
+        part: "part1",
+        partLabel: "Part I Foundations",
+        titleEn: "A History of Conceptual Change Research",
+        titleKo: "개념 변화 연구의 역사: 학파와 단층선",
+        author: "Andrea A. diSessa",
+        tags: ["p-prims", "Knowledge in Pieces", "Theory-Theory", "Resources View"],
+        ready: true,
+        slidePath: "slide/ch06/index.html"
+      },
+      {
+        id: "ch07",
+        num: "Chapter 07",
+        part: "part1",
+        partLabel: "Part I Foundations",
+        titleEn: "Learning in Activity",
+        titleKo: "활동 이론과 학습: 문화역사적 활동이론",
+        author: "Yrjö Engeström",
+        tags: ["Activity System Triangle", "Expansive Learning", "Contradictions", "Change Lab"],
+        ready: true,
+        slidePath: "slide/ch07/index.html"
+      },
+      {
+        id: "ch08",
+        num: "Chapter 08",
+        part: "part1",
+        partLabel: "Part I Foundations",
+        titleEn: "Cognitive Apprenticeship",
+        titleKo: "인지적 도제 이론과 생산적 실패",
+        author: "Allan Collins & Manu Kapur",
+        tags: ["Making Thinking Visible", "6 Methods", "Productive Failure", "LPP"],
+        ready: true,
+        slidePath: "slide/ch08/index.html"
+      },
+      // Part II: Methodologies
+      {
+        id: "ch09",
+        num: "Chapter 09",
+        part: "part2",
+        partLabel: "Part II Methodologies",
+        titleEn: "Design-Based Research",
+        titleKo: "디자인 기반 연구: 학습과학자를 위한 툴킷",
+        author: "Sasha Barab",
+        tags: ["DBR", "Pasteur's Quadrant", "Conjecture Mapping", "Theory of Impact"],
+        ready: true,
+        slidePath: "slide/ch09/index.html"
+      },
+      {
+        id: "ch10",
+        num: "Chapter 10",
+        part: "part2",
+        partLabel: "Part II Methodologies",
+        titleEn: "Analyzing Collaboration",
+        titleKo: "협력 상호작용 분석: 담화, 제스처, 다중모달",
+        author: "Noel Enyedy & Reed Stevens",
+        tags: ["Interaction Analysis", "Conversation Analysis", "Jeffersonian", "Joint Gaze"],
+        ready: true,
+        slidePath: "slide/ch10/index.html"
+      },
+      {
+        id: "ch11",
+        num: "Chapter 11",
+        part: "part2",
+        partLabel: "Part II Methodologies",
+        titleEn: "Microgenetic Methods",
+        titleKo: "미시발생적 방법: 개념 진화의 초정밀 추적",
+        author: "Bruce L. Sherin & Clark A. Chinn",
+        tags: ["Microgenetic Design", "High-Density Observations", "Moment-by-Moment"],
+        ready: false
+      },
+      {
+        id: "ch12",
+        num: "Chapter 12",
+        part: "part2",
+        partLabel: "Part II Methodologies",
+        titleEn: "Assessment in Education",
+        titleKo: "학습과학 관점의 교육 평가 설계",
+        author: "James W. Pellegrino",
+        tags: ["Assessment Triangle", "ECD", "Formative Assessment"],
+        ready: false
+      },
+      {
+        id: "ch13",
+        num: "Chapter 13",
+        part: "part2",
+        partLabel: "Part II Methodologies",
+        titleEn: "Learning Analytics and Educational Data Mining",
+        titleKo: "학습분석학 및 교육데이터마이닝",
+        author: "Ryan S. Baker & George Siemens",
+        tags: ["Learning Analytics (LA)", "EDM", "Knowledge Tracing", "MMLA"],
+        ready: false
+      },
+      // Part III: Technology
+      {
+        id: "ch14",
+        num: "Chapter 14",
+        part: "part3",
+        partLabel: "Part III Technology",
+        titleEn: "Video Games and Learning",
+        titleKo: "비디오 게임과 학습: 체화된 놀이와 인식적 게임",
+        author: "Constance Steinkuehler & Kurt Squire",
+        tags: ["Game-Based Learning", "Epistemic Games", "Situated Play"],
+        ready: false
+      },
+      {
+        id: "ch15",
+        num: "Chapter 15",
+        part: "part3",
+        partLabel: "Part III Technology",
+        titleEn: "Embodiment and Embodied Design",
+        titleKo: "체화 인지와 체화 설계",
+        author: "Dor Abrahamson & Robb Lindgren",
+        tags: ["Embodied Cognition", "Sensorimotor", "Embodied Design"],
+        ready: false
+      },
+      {
+        id: "ch16",
+        num: "Chapter 16",
+        part: "part3",
+        partLabel: "Part III Technology",
+        titleEn: "Tangible and Full-Body Interfaces",
+        titleKo: "탠저블 및 전신 인터페이스",
+        author: "Narcis Parés & Michael Eisenberg",
+        tags: ["TUI", "Full-Body Interaction", "Physical Computing"],
+        ready: false
+      },
+      {
+        id: "ch17",
+        num: "Chapter 17",
+        part: "part3",
+        partLabel: "Part III Technology",
+        titleEn: "Augmented Reality in Learning Sciences",
+        titleKo: "증강현실(AR)과 학습과학",
+        author: "Bertrand Schneider & Iulian Radu",
+        tags: ["AR", "Reality-Virtuality", "Spatialized Information"],
+        ready: false
+      },
+      {
+        id: "ch18",
+        num: "Chapter 18",
+        part: "part3",
+        partLabel: "Part III Technology",
+        titleEn: "Mobile Learning",
+        titleKo: "모바일 학습과 유비쿼터스 탐구",
+        author: "Roy Pea & Mike Sharples",
+        tags: ["Mobile Seamless Learning", "Contextual Learning", "Ubiquitous"],
+        ready: false
+      },
+      // Part IV: Learning Together
+      {
+        id: "ch19",
+        num: "Chapter 19",
+        part: "part4",
+        partLabel: "Part IV Learning Together",
+        titleEn: "Knowledge Building and Knowledge Creation",
+        titleKo: "지식 구축과 지식 창조",
+        author: "Marlene Scardamalia & Carl Bereiter",
+        tags: ["Knowledge Building", "Knowledge Forum", "Idea Improvement"],
+        ready: false
+      },
+      {
+        id: "ch20",
+        num: "Chapter 20",
+        part: "part4",
+        partLabel: "Part IV Learning Together",
+        titleEn: "Computer-Supported Collaborative Learning",
+        titleKo: "컴퓨터 매개 협력 학습 (CSCL)",
+        author: "Gerry Stahl, Timothy Koschmann, & Daniel Suthers",
+        tags: ["CSCL", "Group Cognition", "Collaboration Scripts"],
+        ready: false
+      },
+      {
+        id: "ch21",
+        num: "Chapter 21",
+        part: "part4",
+        partLabel: "Part IV Learning Together",
+        titleEn: "Arguing to Learn",
+        titleKo: "논증을 통한 학습",
+        author: "Jerry Andriessen & Michael Baker",
+        tags: ["Argumentation", "Epistemic Dialogue", "CS Argumentation"],
+        ready: false
+      },
+      {
+        id: "ch22",
+        num: "Chapter 22",
+        part: "part4",
+        partLabel: "Part IV Learning Together",
+        titleEn: "Informal Learning in Museums",
+        titleKo: "박물관 비형식 학습과 공간 설계",
+        author: "Palmyre Pierroux, Karen Knutson, & Kevin Crowley",
+        tags: ["Informal Learning", "Museum Learning", "Designed Spaces"],
+        ready: false
+      },
+      // Part V: Disciplinary Knowledge
+      {
+        id: "ch23",
+        num: "Chapter 23",
+        part: "part5",
+        partLabel: "Part V Disciplinary Knowledge",
+        titleEn: "Research in Mathematics Education",
+        titleKo: "수학 교육 연구와 학습과학",
+        author: "Anna Sfard & Paul Cobb",
+        tags: ["Commognition", "Mathematical Discourse", "Classroom Norms"],
+        ready: false
+      },
+      {
+        id: "ch24",
+        num: "Chapter 24",
+        part: "part5",
+        partLabel: "Part V Disciplinary Knowledge",
+        titleEn: "Science Education and the Learning Sciences",
+        titleKo: "과학 교육과 학습과학",
+        author: "Nancy Butler Songer & Yael Kali",
+        tags: ["NGSS 3D Learning", "Scientific Practices", "Inquiry-Based"],
+        ready: false
+      },
+      {
+        id: "ch25",
+        num: "Chapter 25",
+        part: "part5",
+        partLabel: "Part V Disciplinary Knowledge",
+        titleEn: "Complex Systems and the Learning Sciences",
+        titleKo: "복잡계와 학습과학: 넷로고(NetLogo)와 창발",
+        author: "Michael J. Jacobson & Uri Wilensky",
+        tags: ["Complex Systems", "ABM", "NetLogo", "Emergence"],
+        ready: false
+      },
+      {
+        id: "ch26",
+        num: "Chapter 26",
+        part: "part5",
+        partLabel: "Part V Disciplinary Knowledge",
+        titleEn: "Learning History",
+        titleKo: "역사 학습과 역사적 사고",
+        author: "Mario Carretero & Everardo Perez-Manjarrez",
+        tags: ["Historical Thinking", "Sourcing", "Multiple Perspectives"],
+        ready: false
+      },
+      {
+        id: "ch27",
+        num: "Chapter 27",
+        part: "part5",
+        partLabel: "Part V Disciplinary Knowledge",
+        titleEn: "Learning to Be Literate",
+        titleKo: "문해력 학습의 인지과학",
+        author: "Peter Smagorinsky & Richard E. Mayer",
+        tags: ["Reading Comprehension", "Writing Process", "SOI Model"],
+        ready: false
+      },
+      {
+        id: "ch28",
+        num: "Chapter 28",
+        part: "part5",
+        partLabel: "Part V Disciplinary Knowledge",
+        titleEn: "Arts Education and the Learning Sciences",
+        titleKo: "예술 교육과 학습과학",
+        author: "Erica Rosenfeld Halverson & Kimberly M. Sheridan",
+        tags: ["Studio Habits of Mind", "Maker Movement", "Creative Expression"],
+        ready: false
+      },
+      // Part VI: Classroom & Future
+      {
+        id: "ch29",
+        num: "Chapter 29",
+        part: "part6",
+        partLabel: "Part VI Classroom & Future",
+        titleEn: "Learning as a Cultural Process",
+        titleKo: "문화적 과정으로서의 학습과 형평성",
+        author: "Na'ilah Suad Nasir, Ann S. Rosebery et al.",
+        tags: ["Cultural Foundations", "Equity", "Asset-Based Pedagogy"],
+        ready: false
+      },
+      {
+        id: "ch30",
+        num: "Chapter 30",
+        part: "part6",
+        partLabel: "Part VI Classroom & Future",
+        titleEn: "Designing for Meaningful Learning",
+        titleKo: "의미 있는 학습 설계: 흥미, 동기, 참여",
+        author: "K. Ann Renninger & Sanna Järvelä",
+        tags: ["Four-Phase Interest", "Motivation", "SSRL"],
+        ready: false
+      },
+      {
+        id: "ch31",
+        num: "Chapter 31",
+        part: "part6",
+        partLabel: "Part VI Classroom & Future",
+        titleEn: "Advances in Teacher Learning Research",
+        titleKo: "교사 학습 및 전문성 개발",
+        author: "Barry J. Fishman, Carol K. K. Chan, & Elizabeth A. Davis",
+        tags: ["Teacher PD", "PCK", "Teacher Notice", "Educative Curriculum"],
+        ready: false
+      },
+      {
+        id: "ch32",
+        num: "Chapter 32",
+        part: "part6",
+        partLabel: "Part VI Classroom & Future",
+        titleEn: "Learning Sciences and Policy",
+        titleKo: "학습과학과 교육 정책",
+        author: "William R. Penuel, James P. Spillane, & Min Sun",
+        tags: ["RPP", "Policy Implementation", "SNA", "Systemic Reform"],
+        ready: false
+      },
+      {
+        id: "ch33",
+        num: "Chapter 33",
+        part: "part6",
+        partLabel: "Part VI Classroom & Future",
+        titleEn: "The Learning Sciences in the 2020s",
+        titleKo: "2020년대 학습과학의 현주소와 미래",
+        author: "R. Keith Sawyer",
+        tags: ["Future of LS", "AI in Education", "Classroom Transformation"],
+        ready: false
+      }
+    ];
+
+    const grid = document.getElementById('chapter-grid');
+    const searchInput = document.getElementById('search-input');
+    const pillButtons = document.querySelectorAll('.pill-btn');
+    const themeBtn = document.getElementById('theme-btn');
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function renderChapters() {
+      grid.innerHTML = '';
+      const filtered = chaptersData.filter(ch => {
+        // Part/Ready filter
+        if (currentFilter === 'ready' && !ch.ready) return false;
+        if (currentFilter.startsWith('part') && ch.part !== currentFilter) return false;
+
+        // Search query filter
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          const matchNum = ch.num.toLowerCase().includes(q);
+          const matchEn = ch.titleEn.toLowerCase().includes(q);
+          const matchKo = ch.titleKo.toLowerCase().includes(q);
+          const matchAuthor = ch.author.toLowerCase().includes(q);
+          const matchTags = ch.tags.some(t => t.toLowerCase().includes(q));
+          return matchNum || matchEn || matchKo || matchAuthor || matchTags;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+            <p>검색 조건에 일치하는 챕터가 없습니다.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(ch => {
+        const card = document.createElement('div');
+        card.className = `chapter-card ${ch.ready ? 'ready' : 'upcoming'}`;
+
+        const tagsHtml = ch.tags.map(t => `<span class="tag">#${t}</span>`).join('');
+
+        let actionHtml = '';
+        if (ch.ready) {
+          actionHtml = `<a href="${ch.slidePath}" class="slide-link-btn" title="${ch.titleKo} 슬라이드 열기">🌐 슬라이드 열기 (Slide) ›</a>`;
+        } else {
+          actionHtml = `<div class="disabled-btn">⏳ 순차 제작 중 (Coming Soon)</div>`;
+        }
+
+        card.innerHTML = `
+          <div class="card-top">
+            <span class="card-part-tag">${ch.partLabel}</span>
+            <span class="status-badge ${ch.ready ? 'badge-ready' : 'badge-upcoming'}">
+              ${ch.ready ? '✨ 배포 완료' : '⏳ 준비 중'}
+            </span>
+          </div>
+
+          <div class="card-body">
+            <span class="chapter-num">${ch.num}</span>
+            <h3 class="chapter-title-en">${ch.titleEn}</h3>
+            <p class="chapter-title-ko">${ch.titleKo}</p>
+            <div class="chapter-author">👤 ${ch.author}</div>
+            <div class="tag-list">${tagsHtml}</div>
+          </div>
+
+          <div class="card-footer">
+            ${actionHtml}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Filter Buttons Click
+    pillButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        pillButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        renderChapters();
+      });
+    });
+
+    // Search Input
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      renderChapters();
+    });
+
+    // Theme Toggle
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    });
+
+    renderChapters();
+  </script>
+</body>
+</html>

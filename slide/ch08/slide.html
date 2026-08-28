@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 08: Cognitive Apprenticeship</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .split-layout {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1rem; width: 100%; align-items: stretch;
+    }
+
+    .image-box {
+      background: var(--bg-secondary); border: 1px solid var(--border-color);
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 0.5rem; cursor: pointer;
+      position: relative;
+    }
+    .image-box img {
+      max-width: 100%; max-height: 380px; object-fit: contain; border-radius: 8px;
+    }
+    .image-caption {
+      font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;
+    }
+
+    .table-container {
+      width: 100%; overflow-x: auto; margin-top: 0.5rem;
+    }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .styled-table th {
+      background: var(--bg-secondary); color: var(--accent-blue);
+      padding: 0.6rem 0.8rem; text-align: left; border-bottom: 2px solid var(--border-color);
+    }
+    .styled-table td {
+      padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .styled-table tr:hover td { background: rgba(56, 189, 248, 0.05); }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Modal for Image Zoom */
+    #modal {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
+      z-index: 200; display: none; justify-content: center; align-items: center; cursor: zoom-out;
+    }
+    #modal.active { display: flex; }
+    #modal img { max-width: 92vw; max-height: 92vh; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 08 · Part I Foundations 대단원</span>
+      <h1 class="slide-title">Cognitive Apprenticeship</h1>
+      <p class="slide-subtitle">인지적 도제 이론: 전문가 사고의 가시화(Making Thinking Visible)와 생산적 실패(Productive Failure)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Allan Collins</strong> (Northwestern) & <strong>Manu Kapur</strong> (ETH Zurich)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 157–176)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다</h3>
+          <ul>
+            <li><strong>사고의 가시화</strong>: 전문가의 암묵적 인지 과정을 소리 내어 시연</li>
+            <li><strong>4대 설계 차원 (Table 8.1)</strong>: 내용, 방법, 순서, 사회성</li>
+            <li><strong>6대 교수법</strong>: 모델링 ➔ 코칭 ➔ 스캐폴딩 ➔ 명료화 ➔ 반성 ➔ 탐색</li>
+            <li><strong>마누 카푸어의 생산적 실패</strong>: 사전 탐색/실패 ➔ 사후 명시적 통합</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 전통적 장인 도제의 도제식 전수 모델을 학교의 인지적 학술 영역(수학, 독해, 코딩)에 성공적으로 이식한 '인지적 도제 이론'과 그 현대적 진화인 '생산적 실패(Productive Failure)'를 탐구합니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>앨런 콜린스(Allan Collins)는 존 실리 브라운(John Seely Brown)과 함께 인지적 도제 이론을 창시한 거장이며, 마누 카푸어(Manu Kapur)는 생산적 실패 이론을 통해 인지적 도제를 21세기형 심층 전이 학습으로 도약시킨 석학입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"우리는 왜 학교에서 배운 지식을 실생활이나 실무 문제에 마주했을 때 전혀 쓰지 못할까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: Definition of Cognitive Apprenticeship -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">이론 정의 · Section 8.0</span>
+      <h2 class="slide-title">인지적 도제 이론(Cognitive Apprenticeship)이란?</h2>
+      <p class="slide-subtitle">보이지 않는 전문가의 인지적·메타인지적 사고 과정을 눈앞에 가시화하는 교수설계</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔍 핵심 목표: 사고의 가시화 (Making Thinking Visible)</h3>
+          <ul>
+            <li>전문가는 문제 해결 시 뇌 속에서 복잡한 의사결정과 디버깅을 수행함</li>
+            <li>그러나 학생 눈에는 최종 정답 결과물만 보임 (인지적 블랙박스)</li>
+            <li><strong>소리 내어 생각하기(Think-aloud)</strong>를 통해 뇌 속의 추론 과정을 외재화</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🛠️ 도제식 전수 메커니즘의 학술적 이식</h3>
+          <ul>
+            <li>물리적 공방의 **관찰 ➔ 코칭 ➔ 페이딩(Fading)**을 교실로 도입</li>
+            <li>독해, 작문, 수학적 증명, 소프트웨어 엔지니어링 훈련에 적용</li>
+            <li>초보자가 전문가 실천 공동체의 문화로 진입하도록 안내 (Collins et al., 1989)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>인지적 도제 이론의 학문적 정의와 '사고의 가시화'가 왜 현대 학교 교육의 가장 결정적인 혁신인지 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>교사가 칠판에 완성된 정답 코드나 수학 증명만 적어주면 학생들은 전문가가 그 답을 도출하기까지 겪은 수많은 시행착오와 메타인지적 조절을 전혀 배울 수 없습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교사가 문제를 풀다가 "어, 이게 왜 안 되지? 아, 이 조건 때문이구나"라며 혼잣말로 푸는 것이 학생들에게 얼마나 유익한지 나누어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Traditional vs Cognitive Apprenticeship -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">패러다임 대조 · Section 8.1</span>
+      <h2 class="slide-title">전통적 도제 vs 현대 학교 vs 인지적 도제</h2>
+      <p class="slide-subtitle">학습의 물리적 가시성, 맥락성, 지식 전이의 비교</p>
+      <div class="table-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>비교 기준</th>
+              <th>전통적 도제 (Traditional)</th>
+              <th>전통적 학교 (Schooling)</th>
+              <th>인지적 도제 (Cognitive)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>과제의 성격</strong></td>
+              <td>물리적 수공예 기술 (목공, 재단)</td>
+              <td>탈맥락화된 교과서 지식 암기</td>
+              <td>실제적 복합 인지 문제 해결</td>
+            </tr>
+            <tr>
+              <td><strong>사고의 가시성</strong></td>
+              <td>손동작과 도구 사용이 눈에 보임</td>
+              <td>최종 정답/시험 점수만 가시화</td>
+              <td><strong>사고 과정(Think-aloud)의 가시화</strong></td>
+            </tr>
+            <tr>
+              <td><strong>학습 맥락</strong></td>
+              <td>실제 공방의 진정한 작업 맥락</td>
+              <td>인위적이고 단절된 교실</td>
+              <td><strong>실제적 문제 해결 맥락으로 재맥락화</strong></td>
+            </tr>
+            <tr>
+              <td><strong>지식의 전이</strong></td>
+              <td>특정 공방 기술에 국한 (근거리)</td>
+              <td>불활성 지식으로 전이 실패</td>
+              <td><strong>다양한 맥락의 원거리 전이(Far)</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전통적 도제, 전통적 학교, 인지적 도제의 핵심 속성을 4대 축에서 비교합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>인지적 도제는 전통 도제의 '실제적 맥락'이라는 강점을 취하면서도, 전통 도제가 지닌 '특정 환경에의 기술 고착' 한계를 극복하기 위해 지식의 유연한 일반화와 전이를 추구합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교 교육이 왜 종종 '실생활에서 써먹지 못하는 헛배움'이 되는지 불활성 지식 개념과 연결해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Overcoming Inert Knowledge -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">문제의식 · Section 8.1</span>
+      <h2 class="slide-title">탈맥락화의 폐해와 '불활성 지식(Inert Knowledge)'</h2>
+      <p class="slide-subtitle">시험은 100점이지만 실제 문제 앞에서는 굳어버리는 지식의 비극</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 불활성 지식 (Inert Knowledge, Whitehead)</h3>
+          <ul>
+            <li>머릿속에 저장되어 시험 문제에는 인출되지만</li>
+            <li>실제 생활과 복합적 문제 상황에서는 활성화되지 못함</li>
+            <li><strong>원인</strong>: 지식이 실제 사용되는 조건과 목적(조건화된 지식)을 배우지 못했기 때문</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">💡 인지적 도제의 해결책: 상황화와 재맥락화</h3>
+          <ul>
+            <li>지식을 **실제 사용 맥락(Authentic Context)**과 유기적으로 결합</li>
+            <li>"언제, 왜 이 전략을 사용해야 하는가?"라는 **조건적 지식(Conditional Knowledge)** 체화</li>
+            <li>실제 실천 공동체의 진정한 과제에 도전시킴</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>화이트헤드(Whitehead)가 경고한 '불활성 지식(Inert Knowledge)'의 실체를 규명하고 인지적 도제의 상황화 전략을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>조건화되지 않은 개념(예: 미분 공식, 이진 탐색 알고리즘)은 창고에 쌓인 물건과 같습니다. 인지적 도제는 지식의 '언제/왜(When/Why)'라는 조건적 지식을 함께 가르칩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>운전면허 필기시험 100점인 사람이 실제 도로에서 당황하는 이유를 비유로 들어 설명하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Making Thinking Visible Deep Dive -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">핵심 원리 · Section 8.1</span>
+      <h2 class="slide-title">사고의 가시화 (Making Thinking Visible)</h2>
+      <p class="slide-subtitle">암묵적 인지 과정을 말과 그림으로 드러내어 관찰 가능하게 만든다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🗣️ 교사의 사고 가시화 (Modeling)</h3>
+          <ul>
+            <li><strong>소리 내어 생각하기 (Think-aloud)</strong></li>
+            <li>문제를 처음 읽었을 때의 당혹감과 가설 수립 과정</li>
+            <li>막혔을 때 전략을 전환하는 메타인지적 혼잣말 시연</li>
+            <li>"전문가도 고민하고 디버깅한다"는 것을 보여줌</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">📝 학생의 사고 가시화 (Articulation)</h3>
+          <ul>
+            <li><strong>개념적 설명과 논리 외재화</strong></li>
+            <li>자신의 풀이 과정과 코딩 이유를 동료에게 말로 설명</li>
+            <li>머릿속의 어설픈 직관을 정교한 언어적 멘탈 모델로 정립</li>
+            <li>교사가 학생의 오개념과 인지적 병목을 즉각 포착</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>'사고의 가시화'가 교사(모델링)와 학생(명료화) 양방향에서 어떻게 작동하는지 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>인간의 인지는 언어로 표현될 때 비로소 대상화(Objectified)되어 스스로 점검하고 수정할 수 있는 성찰의 재료가 됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교실에서 '고무오리 디버깅'이나 짝 설명 활동을 도입했을 때 학생들이 얻는 인지적 이점을 설명하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Table 8.1 4 Dimensions Framework -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">설계 프레임워크 · Table 8.1</span>
+      <h2 class="slide-title">인지적 도제 환경 설계를 위한 4대 차원 (Table 8.1)</h2>
+      <p class="slide-subtitle">내용(Content), 방법(Method), 순서(Sequencing), 사회성(Sociology)의 17개 원리</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>🏛️ 4대 설계 차원 개요</h3>
+          <ul>
+            <li><strong>1. 내용 (Content)</strong>: 교과 + 휴리스틱 + 통제 + 학습 전략</li>
+            <li><strong>2. 방법 (Method)</strong>: 모델링, 코칭, 스캐폴딩, 명료화, 반성, 탐색</li>
+            <li><strong>3. 순서 (Sequencing)</strong>: 복잡성·다양성 점증, 전체 ➔ 부분</li>
+            <li><strong>4. 사회성 (Sociology)</strong>: 상황학습, CoP, 내적동기, 협동</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/tab8_1.png')">
+          <img src="images/tab8_1.png" alt="Table 8.1 Cognitive Apprenticeship Principles">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Table 8.1)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Table 8.1을 통해 인지적 도제 학습 환경의 4대 핵심 차원과 17개 세부 원리의 전체 조망도를 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>콜린스와 카푸어는 훌륭한 수업이 단지 '좋은 설명(교수법)'에만 머물지 않고, 지식의 층위(내용), 과제의 흐름(순서), 교실 문화(사회성)가 4중으로 조화를 이루어야 한다고 강조합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>여러분의 수업 설계안을 이 4대 차원 체크리스트로 평가해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Dimension 1 - Content -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">차원 ① · Section 8.2.1</span>
+      <h2 class="slide-title">차원 1: 교육 내용 (Content)의 4대 지식 층위</h2>
+      <p class="slide-subtitle">단순한 교과 개념을 넘어 전문가의 메타인지 통제와 학습 전략까지</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card">
+          <h3>1. 교과 지식 (Domain Knowledge)</h3>
+          <p>교과서에 명시된 기본 개념, 사실, 표준 공식 및 절차적 지식</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 발견적 전략 (Heuristic Strategies)</h3>
+          <p>정형화되지 않은 실전 난제에 직면했을 때 전문가가 쓰는 어림셈, 팁, 문제 분해 노하우</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">3. 통제 전략 (Control / Metacognition)</h3>
+          <p>과제 진행 상황을 모니터링하고 시간·자원을 배분하며 전략을 수정하는 상위인지 전략</p>
+        </div>
+        <div class="card">
+          <h3>4. 학습 전략 (Learning Strategies)</h3>
+          <p>개념 변화를 일으키고 새로운 전문성을 스스로 습득하는 '배우는 법을 배우는' 메타학습</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전문가 역량을 구성하는 4대 지식 층위(교과 지식, 휴리스틱, 통제 전략, 학습 전략)를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>대부분의 교실은 1번(교과 지식)만 가르칩니다. 그러나 실제 문제 해결의 승패는 2번(휴리스틱)과 3번(메타인지 통제 전략)에서 갈립니다. 인지적 도제는 이를 명시적 교육 내용으로 끌어올립니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>코딩이나 수학에서 여러분만의 '실전 발견적 팁(Heuristics)'을 학생들에게 어떻게 가르치는지 공유하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Dimension 2 - The 6 Teaching Methods -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">차원 ② · Section 8.2.2</span>
+      <h2 class="slide-title">차원 2: 6대 핵심 교수 방법 (The 6 Methods)</h2>
+      <p class="slide-subtitle">초보자를 독립적 전문가로 이끄는 6단계 교수학적 사다리</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 모델링 (Modeling)</h3>
+          <p>전문가가 사고 과정을 소리 내어 시연 (Think-aloud)</p>
+        </div>
+        <div class="card">
+          <h3>2. 코칭 (Coaching)</h3>
+          <p>학생의 수행을 실시간 관찰하며 힌트와 피드백 제공</p>
+        </div>
+        <div class="card">
+          <h3>3. 스캐폴딩 (Scaffolding)</h3>
+          <p>임시 인지 비계 투입 및 역량 성장에 따른 점진적 페이딩</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>4. 명료화 (Articulation)</h3>
+          <p>자신의 지식과 문제 해결 추론을 명확한 언어로 외재화</p>
+        </div>
+        <div class="card">
+          <h3>5. 반성 (Reflection)</h3>
+          <p>자신의 수행을 전문가 및 동료 모델과 대조하여 성찰</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">6. 탐색 (Exploration)</h3>
+          <p>스스로 새로운 문제를 설정하고 독립적으로 해결</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>인지적 도제의 핵심인 6대 교수 방법의 유기적 흐름과 단계별 역할을 조망합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>1~3단계(모델링-코칭-스캐폴딩)는 외부적 지원 단계이며, 4~5단계(명료화-반성)는 메타인지적 내면화 단계이고, 6단계(탐색)는 완전한 자율적 실천 단계입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 3개 슬라이드에서 2개씩 짝을 지어 구체적인 실천 전략을 살펴봅니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Methods 1 & 2 - Modeling & Coaching -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">교수법 ① · Section 8.2.2</span>
+      <h2 class="slide-title">교수법 1 & 2: 모델링(Modeling)과 코칭(Coaching)</h2>
+      <p class="slide-subtitle">전문가의 뇌 속을 보여주고, 학생의 수행을 곁에서 안내한다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎭 모델링 (Modeling)</h3>
+          <ul>
+            <li>교사가 문제를 풀 때 막히는 순간의 심리적 대처 시연</li>
+            <li>가설을 세우고, 검증하고, 기각하는 전 과정을 소리 내어 말함</li>
+            <li>학생은 전문가의 인지적 멘탈 모델(Internal Model)을 관찰·구축</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🎯 코칭 (Coaching)</h3>
+          <ul>
+            <li>학생이 실제 문제를 푸는 동안 옆에서 관찰</li>
+            <li>적시에 힌트(Hints), 단서(Clues), 상기(Reminders) 제공</li>
+            <li>정답을 가로채지 않고 학생 스스로 길을 찾도록 지원</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>모델링(Modeling)과 코칭(Coaching)의 차이점과 상호보완적 역할을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>모델링이 '전문가의 멘탈 모델을 보여주는 입력'이라면, 코칭은 '학생의 멘탈 모델이 실제 작동할 때 궤도를 바로잡아주는 피드백'입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>코칭 시 학생에게 답을 바로 알려주고 싶은 유혹을 참고 '적절한 비계 질문'을 던지는 훈련을 해보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Methods 3 & 4 - Scaffolding & Articulation -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">교수법 ② · Section 8.2.2</span>
+      <h2 class="slide-title">교수법 3 & 4: 스캐폴딩(Scaffolding)과 명료화(Articulation)</h2>
+      <p class="slide-subtitle">임시 비계로 과제를 지탱하고, 언어화를 통해 사고를 명료하게 정립한다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🪜 스캐폴딩과 페이딩 (Fading)</h3>
+          <ul>
+            <li>과제의 난도를 낮추지 않고 템플릿/도구 비계 제공</li>
+            <li>학생의 수행 능력이 향상되면 **비계를 점진적으로 철회(Fading)**</li>
+            <li>비계를 걷어내지 않으면 학생의 의존성이 고착됨</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🗣️ 명료화 (Articulation)</h3>
+          <ul>
+            <li>학생이 자신의 추론과 의사결정 근거를 말로 설명</li>
+            <li>"왜 이 알고리즘을 선택했니?", "이 조건문의 목적은 뭐지?"</li>
+            <li>암묵적 직관이 체계적 개념으로 정교화됨</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>스캐폴딩의 핵심인 페이딩(Fading)과 명료화(Articulation)의 인지적 효과를 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>명료화는 학생이 자신의 지식을 메타인지적으로 모니터링하게 만드는 가장 강력한 도구입니다. 설명할 수 없는 지식은 진정으로 이해한 것이 아닙니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들에게 코드를 짠 후 '코드 리뷰 발표(Articulation)'를 시키는 활동의 교육적 가치를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Methods 5 & 6 - Reflection & Exploration -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">교수법 ③ · Section 8.2.2</span>
+      <h2 class="slide-title">교수법 5 & 6: 반성(Reflection)과 탐색(Exploration)</h2>
+      <p class="slide-subtitle">전문가 모델과 대조하여 성찰하고, 완전한 자율적 문제 해결사로 도약한다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">🪞 반성 (Reflection)</h3>
+          <ul>
+            <li>자신의 풀이 과정(코드, 증명)을 전문가/동료의 것과 나란히 대조</li>
+            <li>"전문가는 어떻게 접근했고, 나는 어디서 비효율적이었는가?"</li>
+            <li>비디오 다시보기나 코드 Diff를 통한 객관적 메타인지 성찰</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🚀 탐색 (Exploration)</h3>
+          <ul>
+            <li>교사의 모든 가이드와 비계가 완전히 제거된 독립 상태</li>
+            <li>학생 스스로 새로운 실세계 문제를 정의하고 가설 수립</li>
+            <li>자신만의 독창적 문제 해결 전략을 자율적으로 전개</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>반성(Reflection)을 통한 멘탈 모델의 정교화와 인지적 도제의 최종 종착지인 탐색(Exploration)을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>인지적 도제의 궁극적 목적은 도제를 평생 교사에게 의존하게 만드는 것이 아니라, 스스로 문제를 정의하고 해결할 수 있는 독립적 탐구자(Autonomous Practitioner)로 길러내는 것입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>수업의 마지막에 학생들에게 자율 캡스톤 프로젝트(탐색)를 부여하는 설계를 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Dimension 3 - Sequencing -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">차원 ③ · Section 8.2.3</span>
+      <h2 class="slide-title">차원 3: 순서 배열 (Sequencing)의 3대 원리</h2>
+      <p class="slide-subtitle">복잡성과 다양성의 점증, 그리고 전체적 조망 우선(Global before Local)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 복잡성의 점진적 증가</h3>
+          <p>단순하고 잘 구조화된 과제에서 점차 복잡하고 비구조화된 실세계 과제로 확장</p>
+        </div>
+        <div class="card">
+          <h3>2. 다양성의 점진적 증가</h3>
+          <p>동일한 원리를 매우 상이한 맥락에 적용하여 **유연한 원거리 전이(Far Transfer)** 획득</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-blue);">
+          <h3 style="color: var(--accent-blue);">3. 전체 조망 우선</h3>
+          <p><strong>Global before Local</strong>: 세부 기술을 훈련하기 전에, **시스템 전체의 큰 그림과 목적을 먼저 이해**시킴</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>인지적 도제의 순서 배열 3대 원리를 설명하고, 특히 '전체적 조망 우선(Global before Local)'의 중요성을 강조합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>전통 교육은 부품(알파벳, 문법, 연산자)부터 가르쳐 학생들이 왜 이것을 배우는지 모릅니다. 인지적 도제는 완성된 완제품 소프트웨어의 큰 그림을 먼저 보여준 후 부품을 가르칩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>웹 개발을 가르칠 때 HTML 태그 암기부터 시키는 것과, 완성된 웹사이트를 보여주고 수정하게 하는 것의 차이를 비교하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Dimension 4 - Sociology -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">차원 ④ · Section 8.2.4</span>
+      <h2 class="slide-title">차원 4: 사회적 맥락 (Sociology)의 4대 원리</h2>
+      <p class="slide-subtitle">상황 학습, 실천 공동체, 내적 동기, 그리고 협동 학습의 시너지</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card">
+          <h3>1. 상황 학습 (Situated Learning)</h3>
+          <p>탈맥락화된 교과서가 아닌 실세계의 실제적 문제 해결 맥락 속에서 학습</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 실천 공동체 (Community of Practice)</h3>
+          <p>전문가 집단의 문화, 언어, 규범을 자연스럽게 공유하는 학습 공동체 구축</p>
+        </div>
+        <div class="card">
+          <h3>3. 내적 동기 유발 (Intrinsic Motivation)</h3>
+          <p>시험 성적이 아닌 과제 자체의 진정한 가치와 문제 해결의 기쁨에서 동기 부여</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">4. 협동 학습 활용 (Exploiting Cooperation)</h3>
+          <p>동료 간 상호 스캐폴딩과 짝 프로그래밍을 통해 집단 지성과 다각적 시각 획득</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습 환경의 사회문화적 토대를 규정하는 4대 사회성 원리를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학습은 개인의 두뇌 안에서만 일어나지 않습니다. 지식은 공동체의 실천과 대화 속에 분산되어 있으며(Distributed Cognition), 풍부한 사회적 상호작용 속에서 활성화됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교실을 '경쟁적 시험장'에서 '협력적 실천 공동체'로 바꾸기 위한 구체적 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Lave & Wenger - LPP and Identity -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">실천 공동체 · Section 8.3.1~8.3.2</span>
+      <h2 class="slide-title">합법적 주변 참여(LPP)와 전문가 정체성 형성</h2>
+      <p class="slide-subtitle">초보자는 공동체의 주변부에서 중심으로 진입하며 전문가로 변모한다 (Lave & Wenger, 1991)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🌱 합법적 주변 참여 (LPP)</h3>
+          <ul>
+            <li>초보자는 처음에 사소하지만 실제적인 작업(주변부)을 수행</li>
+            <li>실수해도 전체 시스템에 치명적이지 않은 안전한 참여 보장</li>
+            <li>점차 복잡한 핵심 과제를 맡으며 **중심부 실천가(Core Member)**로 성장</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🪪 전문가 정체성(Identity)의 변혁</h3>
+          <ul>
+            <li>학습은 단순 지식 습득이 아니라 **"내가 어떤 사람이 되어가는가"의 정체성 형성 과정**</li>
+            <li>"나는 점수 따는 학생이다" ➔ "나는 가치 있는 문제를 해결하는 소프트웨어 엔지니어/과학자이다"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>장 레이브와 에티엔 벵거(Lave & Wenger, 1991)의 '합법적 주변 참여(LPP)'와 학습자의 정체성 형성 이론을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>오픈소스 프로젝트에 처음 참여할 때 오타 수정(주변부)부터 시작하여 점차 핵심 알고리즘 개발자(중심부)로 성장하는 과정이 완벽한 현대적 LPP의 사례입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>신규 입사자나 신입생이 안전하게 참여할 수 있는 '합법적 주변부 과제'를 어떻게 설계할지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Communities of Learners & Reciprocal Teaching -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">학습자 공동체 · Section 8.3.3</span>
+      <h2 class="slide-title">학습자 공동체(FCL)와 상호적 교수 (Reciprocal Teaching)</h2>
+      <p class="slide-subtitle">교사와 학생이 역할을 바꾸며 메타인지적 독해 전략을 체화한다 (Palincsar & Brown, 1984)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔄 상호적 교수 (Reciprocal Teaching)</h3>
+          <ul>
+            <li><strong>4대 독해 전략</strong>: 요약하기, 질문하기, 명료화하기, 예측하기</li>
+            <li>교사가 먼저 모델링한 후, **학생이 '교사 역할'을 맡아 소집단 토론을 주도**</li>
+            <li>메타인지적 모니터링 능력이 극적으로 향상됨</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>👥 학습자 공동체 육성 (FCL, Brown & Campione)</h3>
+          <ul>
+            <li><strong>분산 전문성 (Distributed Expertise)</strong>: 모둠별로 서로 다른 전문 분야 탐구</li>
+            <li><strong>직소(Jigsaw) 협동 학습</strong>: 각 분야 전문가들이 모여 통합 솔루션 구축</li>
+            <li>교실 전체가 하나의 활기찬 연구소로 진화</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>팔린사(Palincsar)와 브라운(Brown, 1984)의 상호적 교수(Reciprocal Teaching)와 FCL 모델의 실천적 가치를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학생이 교사 역할을 맡아 동료에게 질문하고 요약할 때, 수동적 청자에서 능동적 메타인지 조절자로 역할이 전환됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>프로그래밍 코드 리뷰 세션에서 학생들이 돌아가며 '리뷰어(교사)' 역할을 맡는 상호적 코칭을 도입해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 16: Productive Failure (Manu Kapur) -->
+    <section class="slide" data-index="15">
+      <span class="slide-badge">최신 혁신 · Section 8.3.5</span>
+      <h2 class="slide-title">마누 카푸어의 생산적 실패 (Productive Failure)</h2>
+      <p class="slide-subtitle">"정답을 먼저 주지 마라, 먼저 실패하게 한 후 정답을 제시하라" (Kapur, 2008, 2016)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 직접 교수 (Direct Instruction)의 역설</h3>
+          <ul>
+            <li>정답 공식을 먼저 설명하고 연습 문제를 풀게 함</li>
+            <li><strong>결과</strong>: 유사한 연습 문제는 잘 풀지만(근거리 전이), 조금만 변형된 복합 문제에서는 전멸(원거리 전이 실패)</li>
+            <li><strong>"이해했다는 착각(Illusion of Understanding)"</strong> 유발</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">💡 생산적 실패 (Productive Failure, PF)</h3>
+          <ul>
+            <li>정답 공식을 주기 전에 고난도 문제를 먼저 주고 직관으로 도전하게 함</li>
+            <li>필연적인 실패를 통해 **자신의 멘탈 모델 한계를 뼈저리게 자각**</li>
+            <li>그 후 교사의 정답 강의를 들었을 때 **폭발적인 심층 전이(Deep Transfer)** 발생</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>마누 카푸어(Manu Kapur)의 '생산적 실패(Productive Failure)'의 정의와 직접 교수의 역설을 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>카푸어는 수많은 무작위 통제 실험(RCT)을 통해, 표준 분산(Standard Deviation)이나 통계 개념을 배울 때 생산적 실패 집단이 직접 교수 집단보다 원거리 전이에서 압도적으로 우수함을 실증했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"배고프지 않은 사람에게 진수성찬을 주면 맛을 모르듯, 문제의식을 느끼지 않은 학생에게 정답은 무의미하다"는 비유를 활용하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 17: Productive Failure 2-Stage Architecture -->
+    <section class="slide" data-index="16">
+      <span class="slide-badge">PF 메커니즘 · Section 8.3.5</span>
+      <h2 class="slide-title">생산적 실패(PF)의 2단계 교수학적 아키텍처</h2>
+      <p class="slide-subtitle">사전 탐색/실패 ➔ 사후 명시적 개념 통합의 정밀한 순환 구조</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">1단계: 비안내 탐색 & 직관적 생성</h3>
+          <ul>
+            <li><strong>고난도 복합 도전 과제 부여</strong> (정답 공식 미제공)</li>
+            <li>학생들이 모둠별로 다양한 직관적 해결책 생성</li>
+            <li>자신의 방법이 가진 모순과 한계에 직면 (실패 경험)</li>
+            <li>➔ <strong>선행 지식 활성화 및 미래 학습 준비(PFL)</strong></li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-blue);">
+          <h3 style="color: var(--accent-blue);">2단계: 사후 명시적 개념 통합 강의</h3>
+          <ul>
+            <li><strong>학생들의 다양한 실패 시도들을 칠판에 대조 분석</strong></li>
+            <li>"A모둠의 방식은 왜 이 극단적 케이스에서 실패하는가?"</li>
+            <li>한계를 짚은 후 **표준 과학/수학 공식의 필연성을 명시적 설명**</li>
+            <li>➔ <strong>지식의 완벽한 개념 통합(Consolidation)</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>생산적 실패의 2단계 구조(1단계 탐색/실패 ➔ 2단계 명시적 통합)의 구체적 실행 절차를 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>생산적 실패는 '방임적 발견학습'이 아닙니다. 2단계에서 교사의 매우 강력하고 정교한 명시적 직접 교수(Direct Instruction)가 반드시 결합되어야만 성공합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>2단계에서 학생들의 오답을 '공개적으로 비교 대조'할 때 학생이 상처받지 않도록 긍정적인 학술 담화 문화를 조성하는 법을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 18: Why Productive Failure Works -->
+    <section class="slide" data-index="17">
+      <span class="slide-badge">인지 메커니즘 · Section 8.3.5</span>
+      <h2 class="slide-title">왜 생산적 실패가 직접 교수보다 뛰어난가?</h2>
+      <p class="slide-subtitle">인지적 활성화, 결핍 인식, 그리고 심층 구조의 발견</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 선행 지식 활성화</h3>
+          <p>문제를 풀기 위해 뇌 속의 모든 관련 직관과 개념을 총동원하여 인지적 회로 활성화</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 메타인지적 결핍 자각</h3>
+          <p><strong>"내가 무엇을 모르는가"</strong>를 정확히 인식하여 교사의 설명에 대한 극도의 주의 집중</p>
+        </div>
+        <div class="card">
+          <h3>3. 심층 구조의 식별</h3>
+          <p>표면적 특징이 아닌 문제의 본질적 인과 메커니즘을 꿰뚫어보아 **원거리 전이(Far Transfer)** 달성</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>생산적 실패가 인지적·메타인지적 차원에서 심층 전이를 낳는 3대 인과 기제를 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학습자가 실패를 통해 자신의 멘탈 모델에 구멍이 있음을 깨달을 때, 두뇌는 새로운 정보를 받아들일 수 있는 최적의 '수용 상태(Preparation for Future Learning)'가 됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 겪었던 가장 고통스러웠지만 결국 가장 큰 배움을 주었던 '생산적 실패' 경험을 나누어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 19: AI & Digital Technologies in Cognitive Apprenticeship -->
+    <section class="slide" data-index="18">
+      <span class="slide-badge">미래 지평 · Section 8.4</span>
+      <h2 class="slide-title">생성형 AI 시대의 인지적 도제 멘토 시스템</h2>
+      <p class="slide-subtitle">1:1 맞춤형 모델링, 지능형 코칭, 그리고 적응형 생산적 실패 지원</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🤖 AI 페어 프로그래머 & 튜터</h3>
+          <ul>
+            <li><strong>실시간 사고 모델링</strong>: AI가 코드 작성 이유와 디버깅 추론을 설명</li>
+            <li><strong>지능형 소크라테스식 코칭</strong>: 정답을 바로 주지 않고 질문으로 학생의 명료화(Articulation) 유도</li>
+            <li><strong>학생 코드와 전문가 코드의 자동 Diff 반성(Reflection)</strong> 지원</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🥽 몰입형 VR/AR 실천 시뮬레이션</h3>
+          <ul>
+            <li>의료 수술, 비행 조종, 위험 화학 실험의 안전한 가상 도제 환경</li>
+            <li>치명적 위험 없이 마음껏 실패를 경험하는 **궁극의 생산적 실패 공간**</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>생성형 AI와 VR/AR 기술이 인지적 도제와 생산적 실패를 어떻게 확장하고 있는지 미래 지평을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>과거에는 1명의 교사가 30명의 학생 모두에게 1:1 코칭을 제공하기 어려웠지만, 이제 LLM 기반 지능형 튜터가 모든 학생에게 개인 맞춤형 인지적 도제 멘토 역할을 수행할 수 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>AI가 정답을 바로 알려주는 '게으른 튜터'가 되지 않고 '생산적 실패를 돕는 코치'가 되도록 프롬프트를 설계하는 법을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 20: 40-Year Legacy of Cognitive Apprenticeship -->
+    <section class="slide" data-index="19">
+      <span class="slide-badge">학술적 유산 · Section 8.4</span>
+      <h2 class="slide-title">인지적 도제 이론 40년의 학술적 유산</h2>
+      <p class="slide-subtitle">학습과학 교수설계의 황금 표준(Gold Standard)으로 자리매김하다</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>사고의 가시화</h3>
+          <p>전문가의 머릿속 암묵적 지식을 외재화하여 학습의 블랙박스를 해체</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>통합적 4대 차원</h3>
+          <p>내용, 방법, 순서, 사회성을 아우르는 완벽한 학습 환경 설계 청사진</p>
+        </div>
+        <div class="card">
+          <h3>생산적 실패의 도약</h3>
+          <p>실패를 학습의 걸림돌이 아닌 심층 전이의 최고 디딤돌로 재창조</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>인지적 도제 이론이 지난 40년간 학습과학과 교육공학에 남긴 거대한 학술적 기여를 총괄 정리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>1989년 콜린스 등의 선구적 논문 이후, 인지적 도제는 PBL, 스캐폴딩, 상황 인지, 메타인지 연구를 하나의 거대한 실천적 틀로 통합한 학습과학의 기념비적 이정표가 되었습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리의 교육 현장에서 여전히 남아있는 '주입식 강의'를 인지적 도제로 전환하기 위한 로드맵을 제안해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 21: Part I Foundations Conclusion -->
+    <section class="slide" data-index="20">
+      <span class="slide-badge">총괄 결론 · Part I 완성</span>
+      <h2 class="slide-title">Part I 기초 이론 총결산: 참된 배움의 전당을 향하여</h2>
+      <p class="slide-subtitle">학습과학 제1부(Ch 01~08)의 기초 이론 체계를 완성하며</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card">
+          <h3>Ch 01~02 태동</h3>
+          <p>깊은 학습, 구성주의, 학제적 융합</p>
+        </div>
+        <div class="card">
+          <h3>Ch 03~04 탐구</h3>
+          <p>스캐폴딩 비계와 PBL 프로젝트</p>
+        </div>
+        <div class="card">
+          <h3>Ch 05~06 인지</h3>
+          <p>메타인지 SRL과 개념 변화(KiP)</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">Ch 07~08 실천</h3>
+          <p>활동이론과 인지적 도제(PF)</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 08과 함께 『The Cambridge Handbook of the Learning Sciences』 제1부 기초 이론(Part I: Foundations, Ch 01~08) 전체를 장엄하게 마무리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Part I은 인간이 어떻게 깊이 있게 학습하는지에 대한 인지적, 사회문화적, 설계적 기초를 완벽히 구축했습니다. 다음 Part II부터는 이를 연구하는 혁신적 연구 방법론(DBR, 상호작용 분석 등)으로 나아갑니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"Part I에서 배운 8개 챕터의 핵심 원리들을 융합하여 여러분만의 궁극의 미래 교실을 설계해 보세요."</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 08: Cognitive Apprenticeship (Allan Collins & Manu Kapur)</div>
+    <div class="footer-center" id="slide-counter">01 / 21</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Image Modal -->
+  <div id="modal" onclick="closeModal()">
+    <img id="modal-img" src="" alt="확대 도판">
+  </div>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch08_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function openModal(src) {
+      modalImg.src = src;
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 08: Cognitive Apprenticeship - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter08_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        closeModal();
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 07: Learning in Activity</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .split-layout {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1rem; width: 100%; align-items: stretch;
+    }
+
+    .image-box {
+      background: var(--bg-secondary); border: 1px solid var(--border-color);
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 0.5rem; cursor: pointer;
+      position: relative;
+    }
+    .image-box img {
+      max-width: 100%; max-height: 380px; object-fit: contain; border-radius: 8px;
+    }
+    .image-caption {
+      font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;
+    }
+
+    .table-container {
+      width: 100%; overflow-x: auto; margin-top: 0.5rem;
+    }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .styled-table th {
+      background: var(--bg-secondary); color: var(--accent-blue);
+      padding: 0.6rem 0.8rem; text-align: left; border-bottom: 2px solid var(--border-color);
+    }
+    .styled-table td {
+      padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .styled-table tr:hover td { background: rgba(56, 189, 248, 0.05); }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Modal for Image Zoom */
+    #modal {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
+      z-index: 200; display: none; justify-content: center; align-items: center; cursor: zoom-out;
+    }
+    #modal.active { display: flex; }
+    #modal img { max-width: 92vw; max-height: 92vh; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 07 · Part I Foundations</span>
+      <h1 class="slide-title">Learning in Activity</h1>
+      <p class="slide-subtitle">활동 이론과 학습: 활동 시스템 삼각형, 확장 학습(Expansive Learning), 그리고 역사적 모순</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Yrjö Engeström</strong> (University of Helsinki)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 135–156)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다</h3>
+          <ul>
+            <li><strong>활동 시스템 삼각형 (Figure 7.1)</strong>: 주체-도구-대상-규칙-공동체-분업</li>
+            <li><strong>경계 횡단 (Figure 7.2)</strong>: 이질적 시스템 간의 공유된 대상 창출</li>
+            <li><strong>확장 학습 (Figure 7.3)</strong>: "아직 존재하지 않는 것을 창조하며 배우기"</li>
+            <li><strong>4단계 모순과 변혁적 주체성</strong>: 이중 자극(Double Stimulation)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 인간의 학습을 뇌 속의 고립된 정보 처리가 아닌, 도구로 매개되고 사회적으로 분업화된 집단적 '활동 시스템(Activity System)'의 진화로 규명하는 문화역사적 활동이론(CHAT)의 핵심 프레임워크를 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>위리외 엔게스트롬(Yrjö Engeström)은 핀란드 헬싱키 대학의 석학으로, 3세대 활동이론과 확장 학습(Expansive Learning), 변화실험실(Change Laboratory) 방법론을 창시하여 전 세계 학습과학과 조직 혁신 분야에 지대한 영향을 미쳤습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"우리가 학교에서 겪는 수많은 갈등(예: 시험 성적과 참된 배움의 충돌)은 왜 개인의 탓이 아니라 시스템의 모순일까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 3 Generations of CHAT -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">이론적 진화 · Section 7.0</span>
+      <h2 class="slide-title">문화역사적 활동이론(CHAT)의 3세대 진화</h2>
+      <p class="slide-subtitle">비고츠키의 도구 매개에서 레온티예프의 활동 위계, 그리고 엔게스트롬의 삼각형으로</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>제1세대: Vygotsky</h3>
+          <p><strong>도구와 기호의 매개 (Mediation)</strong>: 인간의 인지는 자극-반응이 아닌 문화적 인공물(Artifacts)로 매개됨</p>
+        </div>
+        <div class="card">
+          <h3>제2세대: Leont'ev</h3>
+          <p><strong>활동-행동-조작의 3층 위계</strong>: 개인의 목표 지향적 '행동(Action)'과 집단적 동기의 '활동(Activity)' 구분</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-blue);">
+          <h3 style="color: var(--accent-blue);">제3세대: Engeström</h3>
+          <p><strong>활동 시스템 삼각형 & 경계 횡단</strong>: 규칙, 공동체, 분업을 통합하고 다중 시스템 간의 확장 학습 정립</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>CHAT의 3세대 진화 과정을 조망하고, 엔게스트롬의 3세대 활동이론이 집단적·제도적 맥락을 어떻게 통합했는지 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>레온티예프(Leont'ev, 1978)는 '원시 수렵' 비유를 통해, 몰이꾼(개인 행동)은 사냥감을 쫓아버리지만 전체 부족(집단 활동)의 식량 획득 동기 속에서만 그 행동이 의미를 갖는다는 활동의 사회적 분업을 밝혔습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교실에서 학생의 '노트 필기 행동'이 전체 학교 '교육 활동' 속에서 어떤 의미를 갖는지 연결해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Figure 7.1 Activity System Triangle -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">핵심 모델 · Figure 7.1</span>
+      <h2 class="slide-title">엔게스트롬의 활동 시스템 삼각형 (Figure 7.1)</h2>
+      <p class="slide-subtitle">주체, 도구, 대상, 규칙, 공동체, 분업의 6대 요소가 결합된 거시적 실천 구조</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>📐 활동 시스템 6대 구성 요소</h3>
+          <ul>
+            <li><strong>주체 (Subject)</strong>: 분석의 초점이 되는 개인/집단 (교사, 학생)</li>
+            <li><strong>도구 (Artifacts)</strong>: 활동을 매개하는 개념적·물질적 인공물</li>
+            <li><strong>대상 (Object)</strong>: 활동이 변혁하고자 하는 문제 공간/목표</li>
+            <li><strong>규칙 (Rules)</strong>: 공동체의 규범, 시험 기준, 시간표</li>
+            <li><strong>공동체 (Community)</strong>: 대상을 공유하는 이해관계자들</li>
+            <li><strong>분업 (Division of Labor)</strong>: 권력과 과제의 사회적 배분</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig7_1.png')">
+          <img src="images/fig7_1.png" alt="Figure 7.1 Activity System Triangle">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 7.1)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 7.1을 통해 엔게스트롬의 활동 시스템 삼각형 모델의 6대 구성 요소와 상호작용 관계를 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>상단 삼각형(주체-도구-대상)은 비고츠키의 고전적 매개 관계이며, 하단 삼각형(규칙-공동체-분업)은 개인이 속한 사회적·제도적 구조를 나타냅니다. 활동은 이 전체 시스템의 역동적 상호작용입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 학교의 '수업 활동'을 이 6개 꼭짓점에 대입하여 각각 무엇이 해당하는지 매핑해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: 6 Elements in School Classroom -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">교실 적용 · Section 7.1.1</span>
+      <h2 class="slide-title">교실 수업 활동 시스템의 6대 꼭짓점 분석</h2>
+      <p class="slide-subtitle">활동 시스템 렌즈로 바라본 학교 교육 현장의 실제 구조</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>👤 주체 (Subject)</h3>
+          <p>탐구에 참여하는 학생 모둠 및 수업을 이끄는 교사</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>💻 매개 도구 (Tools)</h3>
+          <p>태블릿, 코딩 IDE, 시뮬레이션(NetLogo), CER 프롬프트 카드</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🎯 대상 (Object)</h3>
+          <p>실세계 환경 오염 문제 해결 및 과학적 개념 멘탈 모델 구성</p>
+        </div>
+        <div class="card">
+          <h3>📜 규칙 (Rules)</h3>
+          <p>수업 시간 50분 제약, 협력 대화 규범, 지필고사 평가 기준</p>
+        </div>
+        <div class="card">
+          <h3>👥 공동체 (Community)</h3>
+          <p>학급 전체 급우, 동료 교사, 학부모, 지역사회 환경 전문가</p>
+        </div>
+        <div class="card">
+          <h3>⚖️ 분업 (Division)</h3>
+          <p>모둠 내 역할 분담(드라이버/내비게이터), 교사의 퍼실리테이션</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>활동 시스템 삼각형의 6대 구성 요소를 실제 학교 과학/SW 수업의 구체적 사례로 전환하여 이해를 돕습니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>수업의 성패는 도구(소프트웨어) 하나만으로 결정되지 않습니다. 규칙(평가 제도)과 분업(교사-학생 권력 구조)이 도구와 조화를 이루어야만 진정한 학습 혁신이 일어납니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>새로운 에듀테크 도구를 교실에 도입했을 때 기존의 '규칙'이나 '분업'과 충돌했던 경험을 나누어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Figure 7.2 Interconnected Activity Systems -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">3세대 모델 · Figure 7.2</span>
+      <h2 class="slide-title">상호 연결된 활동 시스템들과 공유된 대상 (Figure 7.2)</h2>
+      <p class="slide-subtitle">학교 활동 시스템과 지역사회/전문가 시스템이 만나 창출하는 혁신</p>
+      <div class="split-layout">
+        <div class="card">
+          <h3>🌐 다중 시스템 간의 상호작용</h3>
+          <ul>
+            <li><strong>시스템 1 (좌측)</strong>: 학교 교실 활동 (교사-학생)</li>
+            <li><strong>시스템 2 (우측)</strong>: 지역사회 병원/연구소 활동 (의사-전문가)</li>
+            <li><strong>객체 1 ➔ 객체 2 ➔ 객체 3</strong>: 두 시스템이 협력하여 **부분적으로 공유된 공동의 대상(Partially Shared Object 3)**을 창조</li>
+            <li>➔ 폐쇄적 교실을 넘어선 실세계 지식 창출</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig7_2.png')">
+          <img src="images/fig7_2.png" alt="Figure 7.2 Interconnected Activity Systems">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 7.2)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 7.2를 통해 3세대 활동이론의 핵심인 다중 활동 시스템 간의 결합과 '공유된 대상(Shared Object)' 창출 과정을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>엔게스트롬(Engeström, 2001)은 어린이 병원과 학교, 가정이 결합하여 만성 질환 아동을 치료하는 사례를 통해, 단일 시스템의 한계를 넘어서는 다학제적 협력 생태계를 실증했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교와 마을 공동체, 지역 IT 기업이 결합하는 '경계 횡단 프로젝트'의 가능성을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Boundary Crossing & Knotworking -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">협력 실천 · Section 7.1.2</span>
+      <h2 class="slide-title">경계 횡단(Boundary Crossing)과 매듭 묶기(Knotworking)</h2>
+      <p class="slide-subtitle">고정된 위계를 허물고 유동적으로 결합하여 복합 난제를 해결한다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌉 경계 횡단 (Boundary Crossing)</h3>
+          <ul>
+            <li>서로 다른 전문 분야와 문화를 가진 시스템의 경계를 넘나듦</li>
+            <li>경계 인공물(Boundary Objects)을 통해 이질적 언어 소통</li>
+            <li>새로운 하이브리드 실천과 융합 지식 창조</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🪢 매듭 묶기 (Knotworking)</h3>
+          <ul>
+            <li>고정된 상설 조직이나 중앙 지휘본부 없이 작동</li>
+            <li>필요에 따라 다양한 전문가들이 즉각적으로 결합(매듭 묶기)</li>
+            <li>과제 해결 후 자연스럽게 해체되는 **유연한 분산 협업**</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>현대 사회의 복합 문제 해결 양식인 '경계 횡단(Boundary Crossing)'과 '매듭 묶기(Knotworking)'의 개념을 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>기후 위기나 감염병 방역처럼 거대한 문제는 단일 관료 조직으로 풀 수 없습니다. 다양한 행위자들이 느슨하지만 강력하게 연결되는 '매듭 묶기' 협업이 21세기 핵심 학습 역량입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>오픈소스 개발 생태계(GitHub)가 어떻게 대표적인 '매듭 묶기(Knotworking)' 실천인지 설명해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: What is Expansive Learning? -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">확장 학습 · Section 7.1.3</span>
+      <h2 class="slide-title">확장 학습(Expansive Learning): 아직 존재하지 않는 것을 배우기</h2>
+      <p class="slide-subtitle">"Learning What Is Not Yet There" — 모순을 극복하는 집단적 실천의 창조</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 전통적 학습관 (수동적 내면화)</h3>
+          <ul>
+            <li>교사나 교과서에 이미 존재하는 표준 정답을 암기</li>
+            <li>기존 사회 질서와 직무 매뉴얼의 수동적 복제</li>
+            <li>새로운 문제 상황에 대처할 창의적 역량 결여</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">💡 활동이론의 확장 학습 (Expansive)</h3>
+          <ul>
+            <li>시스템 내부의 구조적 모순을 학습자가 주체적으로 진단</li>
+            <li><strong>세상에 아직 존재하지 않는 새로운 도구와 규칙을 공동 창조</strong></li>
+            <li>학습자 스스로 활동 시스템 전체를 질적으로 도약시킴 (Engeström, 2016)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>엔게스트롬의 '확장 학습(Expansive Learning)'의 정의와 전통적 지식 습득 모델 간의 패러다임 차이를 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>확장 학습에서 학습자는 가르침을 받는 수동적 존재가 아닙니다. 현장의 모순을 비판적으로 질문하고, 새로운 미래 실천 모델을 직접 설계하는 혁신가이자 연구자입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"정답이 없는 실세계 문제(예: 인공지능 윤리)"를 학습할 때 확장 학습이 왜 필수적인지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Figure 7.3 Two Dimensions of Expansivity -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">확장 차원 · Figure 7.3</span>
+      <h2 class="slide-title">확장 학습의 2대 확장 차원 (Figure 7.3)</h2>
+      <p class="slide-subtitle">사회-공간적 차원(Socio-spatial)과 생성성/도구적 차원(Generativity)</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>📈 2대 차원의 동시적 확장</h3>
+          <ul>
+            <li><strong>사회-공간적 차원 (X축)</strong>: 고립된 개인 ➔ 학급 ➔ 학교 전체 ➔ 지역사회 ➔ 글로벌 연대로 실천 공동체의 지평 확대</li>
+            <li><strong>생성성/도구적 차원 (Y축)</strong>: 주어진 지식의 단순 적용 ➔ 시스템 모순을 돌파하는 혁신적 개념 도구와 미래 모델 창출</li>
+            <li>➔ 우상향으로 나아갈 때 <strong>최대의 확장 학습 효능감</strong> 발휘</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig7_3.png')">
+          <img src="images/fig7_3.png" alt="Figure 7.3 Dimensions of Expansivity">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 7.3)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 7.3을 통해 확장 학습이 사회-공간적 지평의 확장과 지적 생성성의 도약이라는 2대 축으로 전개됨을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>공동체의 범위만 넓어지고 도구적 혁신이 없으면 공허한 확장이 되며, 도구만 새롭고 사회적 연결이 없으면 고립된 혁신에 그칩니다. 두 차원이 함께 우상향해야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들의 프로젝트가 교실 안에서 끝나는 것과 지역사회로 확장되는 것의 학습 효과 차이를 분석하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Figure 7.4 & 7.5 Evolution of Learning Object -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">학습 대상 · Figure 7.4 & 7.5</span>
+      <h2 class="slide-title">학습 대상(Object)의 다층적 진화와 확장 뷰</h2>
+      <p class="slide-subtitle">마르톤의 3대 대상 모델에서 역사적·사회적 모순을 품은 확장된 대상으로</p>
+      <div class="split-layout">
+        <div class="card">
+          <h3>🔄 대상의 역사적 심화</h3>
+          <ul>
+            <li><strong>Figure 7.4 (Marton)</strong>: 의도된 대상(Intended) ➔ 실행된 대상(Enacted) ➔ 살아있는 경험적 대상(Lived)</li>
+            <li><strong>Figure 7.5 (Engeström 확장 뷰)</strong>: 교실의 협력적 담화와 사회적 모순이 결합되어 **학습 대상 자체가 집단적으로 재정의되고 진화**함</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig7_5.png')">
+          <img src="images/fig7_5.png" alt="Figure 7.5 Extended View of Learning Object">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 7.4 & 7.5)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 7.4와 Figure 7.5를 대조하여 학습 대상(Object)이 고정된 교과 목표가 아니라 공동체에 의해 끊임없이 재구성되는 역동적 실체임을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학생들은 수업을 받으면서 교사가 처음에 의도했던 목표(Intended Object)를 넘어서, 자신들의 삶과 직결된 새로운 문제 의식을 스스로 부여하며 대상(Object)을 확장합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>수업 중 학생들이 교사의 원래 의도보다 훨씬 더 깊고 흥미로운 질문으로 과제의 대상을 바꾸어 놓았던 경험을 나누세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: 7-Step Expansive Learning Cycle -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">학습 주기 · Section 7.1.5</span>
+      <h2 class="slide-title">확장 학습의 7단계 순환 주기 (Learning Actions)</h2>
+      <p class="slide-subtitle">의문 제기에서 역사적 분석, 새 모델 설계, 현장 실행 및 정착까지 (Engeström)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card">
+          <h3>1. 의문 제기</h3>
+          <p><strong>Questioning</strong>: 기존 관행의 문제점 비판 및 거부</p>
+        </div>
+        <div class="card">
+          <h3>2. 역사적 분석</h3>
+          <p><strong>Historical</strong>: 모순이 왜 생겨났는지 기원 추적</p>
+        </div>
+        <div class="card">
+          <h3>3. 경험적 분석</h3>
+          <p><strong>Empirical</strong>: 현장의 실제 일상 데이터 분석</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>4. 새 모델 설계</h3>
+          <p><strong>Modeling</strong>: 모순을 해결할 새 시스템 모델 구축</p>
+        </div>
+        <div class="card">
+          <h3>5. 새 모델 검토</h3>
+          <p><strong>Examining</strong>: 모의 시연 및 한계점 테스트</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>6. 현장 실행</h3>
+          <p><strong>Implementing</strong>: 실제 교실/일터에 적용 및 확산</p>
+        </div>
+        <div class="card" style="grid-column: span 2;">
+          <h3>7. 성찰 및 정착 (Consolidating)</h3>
+          <p>새로운 실천 모델을 일상적 문화 규범으로 완전히 제도화</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>엔게스트롬의 확장 학습 7단계 순환 주기(Learning Actions)의 세부 메커니즘을 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이 7단계 주기는 개인의 학습 순서가 아니라, 학교나 병원 같은 전체 조직과 집단이 기존의 위기를 극복하고 완전히 새로운 수준의 실천으로 도약하는 거시적 발전 주기입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교의 수업 혁신 프로젝트를 이 7단계 주기에 맞추어 기획해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Formative Interventions & Change Laboratory -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">연구 방법론 · Section 7.1.5</span>
+      <h2 class="slide-title">형성적 개입과 변화실험실 (Change Laboratory)</h2>
+      <p class="slide-subtitle">현장 실천가들이 스스로 모순을 분석하고 미래를 공동 설계하는 방법론 (Virkkunen)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🪞 거울 데이터 (Mirror Data)</h3>
+          <ul>
+            <li>현장의 혼란, 갈등, 환자/학생의 불만 비디오 녹화물</li>
+            <li>실천가들에게 자신들의 모순된 현실을 직면하게 하는 '거울'</li>
+            <li>변혁적 주체성을 촉발하는 결정적 제1자극으로 작용</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">🔬 변화실험실 (Change Lab) 공간</h3>
+          <ul>
+            <li><strong>3개 벽면 구조</strong>: [과거 거울] ➔ [현재 모델/모순] ➔ [미래 비전]</li>
+            <li>교사와 연구자가 동등한 파트너로 참여하여 새 도구 공동 창작</li>
+            <li>외부 지시가 아닌 **내생적 혁신(Endogenous Innovation)** 추동</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>활동이론의 대표적 개입 연구 방법론인 '변화실험실(Change Laboratory)'의 구조와 작동 원리를 소개합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>비르쿠넨과 뉴넘(Virkkunen & Newnham, 2013)은 변화실험실이 전통적 하향식 개혁의 실패를 극복하고, 현장 교사들이 자발적으로 시스템을 리모델링하게 만드는 강력한 도구임을 입증했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 학교의 교원학습공동체에 '변화실험실' 3개 벽면 모델을 도입하는 방안을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: 3 Explanatory Patterns Overview -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">설명 패턴 · Section 7.2</span>
+      <h2 class="slide-title">활동 시스템 수준의 3대 설명 패턴 (Patterns of Explanation)</h2>
+      <p class="slide-subtitle">개인과 시스템의 상호작용 및 역사적 발전을 설명하는 인과 모델</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>패턴 1 (Figure 7.6)</h3>
+          <p><strong>시스템 ➔ 개인 학습</strong>: 규칙, 공동체, 분업 구조가 개인의 미시적 학습 행동을 매개</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>패턴 2 (Figure 7.7)</h3>
+          <p><strong>개인 행동 ➔ 시스템 변화</strong>: 개인의 변혁적 주체성과 일탈이 시스템 전체를 재구조화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">패턴 3 (Figure 7.8)</h3>
+          <p><strong>내부 모순 ➔ 역사적 발전</strong>: 4단계 시스템 모순이 심화·해결되며 시스템의 질적 도약</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>엔게스트롬이 제시한 활동이론의 3대 인과 설명 패턴(Figure 7.6, 7.7, 7.8)을 총괄 비교합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>활동이론은 개인주의적 환원론(개인 탓)도, 구조결정론(시스템 탓)도 거부합니다. 개인과 시스템이 모순과 주체성을 매개로 끊임없이 서로를 재창조하는 변증법적 상호작용을 설명합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 3개 슬라이드에서 각 패턴의 세부 메커니즘을 하나씩 깊이 있게 살펴봅니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Pattern 1 - System Explains Individual (Figure 7.6) -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">패턴 ① · Section 7.2.1</span>
+      <h2 class="slide-title">패턴 1: 시스템 구조로 개인 학습 설명 (Figure 7.6)</h2>
+      <p class="slide-subtitle">학생의 참여와 소외는 교실의 규칙, 공동체, 분업 구조의 산물이다</p>
+      <div class="split-layout">
+        <div class="card">
+          <h3>🏛️ 시스템 수준 매개 메커니즘</h3>
+          <ul>
+            <li>학생 개인의 학습 동기나 태도는 고립된 특성이 아님</li>
+            <li>교실의 **담화 규칙(Rules)**과 모둠 내 **권력 분업(Division of Labor)**이 학생의 발언 기회를 제약하거나 촉진</li>
+            <li>시스템 하단 구조를 개혁하지 않고 개인만 탓하는 교육의 오류 극복</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig7_6.png')">
+          <img src="images/fig7_6.png" alt="Figure 7.6 Pattern 1">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 7.6)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 7.6을 통해 시스템의 규칙과 분업이 개인 학습자의 인지적 참여를 어떻게 매개하는지 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>모둠 활동에서 침묵하는 학생은 '소극적 성격' 때문이 아니라, 모둠의 분업 구조가 우수 학생 1명에게 독점되어 있거나 실패를 비난하는 교실 규칙 때문일 수 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>수업에서 소외되는 학생을 돕기 위해 '시스템의 규칙과 분업'을 어떻게 재설계해야 할지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Pattern 2 - Individual Action Changes System (Figure 7.7) -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">패턴 ② · Section 7.2.2</span>
+      <h2 class="slide-title">패턴 2: 개인의 주체적 행동이 시스템을 바꾼다 (Figure 7.7)</h2>
+      <p class="slide-subtitle">기존 규칙에 대한 일탈 행동(Deviating Action)과 변혁적 주체성</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>⚡ 상향식 시스템 변혁의 메커니즘</h3>
+          <ul>
+            <li>모순된 상황에서 학습자가 기존 규칙을 그대로 따르기를 거부</li>
+            <li>새로운 문제 해결 방식(일탈 행동)을 주체적으로 시도</li>
+            <li>이 행동이 공동체의 지지를 얻어 **공식적인 새로운 규칙과 분업으로 제도화**</li>
+            <li>➔ 개별 행위자가 시스템의 진화를 이끄는 주역이 됨</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig7_7.png')">
+          <img src="images/fig7_7.png" alt="Figure 7.7 Pattern 2">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 7.7)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 7.7을 통해 개별 주체의 주체적 일탈 행동(Transformative Agency)이 거시적 활동 시스템을 변화시키는 상향식 혁신 경로를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>모든 혁신은 기존 규범에 대한 '생산적 일탈(Productive Deviation)'에서 시작됩니다. 학습과학은 이러한 주체적 행동을 처벌하지 않고 시스템 개선의 에너지로 전환합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생이 교사의 지시와 다른 창의적 방식으로 문제를 해결했을 때 이를 시스템 규칙으로 흡수한 사례를 공유하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Transformative Agency & Double Stimulation -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">주체성 기제 · Section 7.2.2</span>
+      <h2 class="slide-title">변혁적 주체성과 비고츠키의 이중 자극 (Double Stimulation)</h2>
+      <p class="slide-subtitle">도구를 장악하여 난관을 돌파하고 자신의 운명을 주체적으로 장악한다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">1. 제1자극 (First Stimulus)</h3>
+          <ul>
+            <li><strong>해결 불가능해 보이는 갈등 상황</strong></li>
+            <li>과도한 업무 부하, 모순된 평가 기준, 막다른 골목</li>
+            <li>마비와 무력감을 유발하는 문제 상황</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 제2자극 (Second Stimulus)</h3>
+          <ul>
+            <li><strong>스스로 의미를 부여한 중립적 도구/기호</strong></li>
+            <li>새로운 체크리스트, 타이머, 개념도, 협력 규약</li>
+            <li>제2자극을 지렛대 삼아 **행동을 재조직화하고 상황 돌파**</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>비고츠키의 '이중 자극(Double Stimulation)' 원리가 어떻게 인간의 변혁적 주체성(Transformative Agency)을 낳는지 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이중 자극은 인간이 환경의 노예가 아니라, 스스로 기호와 도구(제2자극)를 창출하여 자신의 인지와 사회적 환경을 주체적으로 통제하는 궁극의 자유를 획득하는 메커니즘입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>시험 불안이나 마감 압박(제1자극)을 극복하기 위해 나만의 플래너나 체크리스트(제2자극)를 썼던 경험을 나누세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 16: Pattern 3 - Contradictions Drive Evolution (Figure 7.8) -->
+    <section class="slide" data-index="15">
+      <span class="slide-badge">패턴 ③ · Section 7.2.3</span>
+      <h2 class="slide-title">패턴 3: 활동 시스템 내부의 모순이 발전을 이끈다 (Figure 7.8)</h2>
+      <p class="slide-subtitle">모순(Contradictions)은 고장이나 결함이 아니라 역사적 진화의 원동력이다</p>
+      <div class="split-layout">
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">⚡ 내재적 모순의 폭발과 질적 도약</h3>
+          <ul>
+            <li>활동 시스템은 고정된 정적 구조가 아님</li>
+            <li>새로운 도구의 유입이나 사회 변화로 인해 구성 요소 간에 **구조적 마찰과 긴장(Contradictions)** 발생</li>
+            <li>모순을 회피하지 않고 직면하여 해결할 때 **시스템 전체의 질적 도약(확장 학습)** 달성</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig7_8.png')">
+          <img src="images/fig7_8.png" alt="Figure 7.8 Pattern 3">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 7.8)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 7.8을 통해 활동이론의 가장 핵심적인 동력인 '내재적 모순(Inner Contradictions)'과 역사적 발전의 관계를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>헤겔과 마르크스의 유물변증법에 뿌리를 둔 활동이론은, 시스템의 모순을 '제거해야 할 에러'가 아니라 '새로운 질서를 낳는 산파'로 바라봅니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교육 현장에서 겪는 갈등을 "누구의 잘못인가"가 아니라 "어떤 구조적 모순인가"로 재해석해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 17: 4 Levels of Contradictions -->
+    <section class="slide" data-index="16">
+      <span class="slide-badge">모순 위계 · Section 7.2.3</span>
+      <h2 class="slide-title">활동 시스템 내부의 4단계 모순 위계</h2>
+      <p class="slide-subtitle">단일 노드 내부에서부터 이웃 시스템과의 충돌까지</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card">
+          <h3>1차 모순 (Primary)</h3>
+          <p><strong>단일 요소 내부의 모순</strong>: 사용가치(배움의 기쁨) vs 교환가치(입시 성적과 등급)의 근본 충돌</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2차 모순 (Secondary)</h3>
+          <p><strong>구성 요소들 간의 충돌</strong>: 혁신적 탐구 소프트웨어(도구) vs 선다형 지필 평가(규칙)의 불일치</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">3차 모순 (Tertiary)</h3>
+          <p><strong>관행 vs 새 모델의 충돌</strong>: PBL 협력 수업(새 모델) vs 진도 나가기식 주입 강의(기존 모델) 간 마찰</p>
+        </div>
+        <div class="card">
+          <h3>4차 모순 (Quaternary)</h3>
+          <p><strong>시스템 간의 충돌</strong>: 혁신 학교 교육과정 vs 보수적 학원가 및 교육부 관료 행정 시스템의 마찰</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>엔게스트롬의 4단계 모순 위계(Primary, Secondary, Tertiary, Quaternary Contradictions)를 교육 현장 사례와 함께 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>특히 2차 모순(새 도구와 낡은 규칙의 충돌)과 3차 모순(새로운 수업 모델 도입 시 교사의 정체성 혼란)은 학교 혁신 과정에서 가장 빈번하게 마주치는 핵심 쟁점입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 학교에서 겪고 있는 가장 심각한 갈등이 1~4차 모순 중 어디에 해당하는지 진단해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 18: Concept Formation: Abstract to Concrete -->
+    <section class="slide" data-index="17">
+      <span class="slide-badge">개념 형성 · Section 7.3</span>
+      <h2 class="slide-title">활동 속 개념 형성: 추상에서 구체로의 상승</h2>
+      <p class="slide-subtitle">다비도프(Davydov)의 유물변증법적 개념 발달 모델</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 경험적 추상화의 한계 (전통 교육)</h3>
+          <ul>
+            <li>개별 구체적 사례들을 여러 개 관찰</li>
+            <li>표면적 외형의 공통점을 뽑아내어 추상적 정의 암기</li>
+            <li>현상의 본질적 인과 메커니즘을 파악하지 못함</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">💡 추상에서 구체로의 상승 (Davydov)</h3>
+          <ul>
+            <li>현상의 핵심 모순을 담은 최소 발생 단위인 **'근원세포(Germ Cell)'** 포착</li>
+            <li>근원세포를 다양한 실세계 맥락으로 확장 적용</li>
+            <li>➔ <strong>풍부하고 구체적인 실천 체계로 도약 (Ascending to the Concrete)</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>바실리 다비도프(Davydov, 1990)의 '추상에서 구체로의 상승(Ascending from the Abstract to the Concrete)' 개념 형성 이론을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>진정한 개념은 머릿속의 정적 정의가 아니라, 복잡한 현실을 분석하고 변혁할 수 있는 살아있는 인지적 씨앗(Germ Cell)입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>물리학이나 프로그래밍에서 모든 응용을 낳는 '단 하나의 핵심 근원세포(Germ Cell)' 개념을 꼽아보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 19: Germ Cell as Functional Instrument -->
+    <section class="slide" data-index="18">
+      <span class="slide-badge">근원세포 · Section 7.3</span>
+      <h2 class="slide-title">근원세포(Germ Cell): 모순을 돌파하는 기능적 도구</h2>
+      <p class="slide-subtitle">개념은 암기하는 단어가 아니라 손에 쥐는 혁신의 무기이다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌱 근원세포 (Germ Cell)의 특성</h3>
+          <ul>
+            <li>전체 시스템의 본질적 관계를 가장 단순하게 압축한 발생적 모델</li>
+            <li>시간과 공간의 변화 속에서도 스스로를 복제·증식시키는 생명력</li>
+            <li>새로운 실천을 조직화하는 **기능적 도구(Functional Instrument)**</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🛠️ 교육 현장의 근원세포 사례</h3>
+          <ul>
+            <li><strong>수학</strong>: 수직선 상의 길이와 측정 관계 (Davydov 커리큘럼)</li>
+            <li><strong>의료</strong>: 만성 질환 환자의 치료 궤적 케어 플랜 (Engeström)</li>
+            <li><strong>컴퓨터</strong>: 상태 전이(State Transition)와 입력-처리-출력 루프</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>근원세포(Germ Cell)가 활동 시스템의 모순을 해결하는 기능적 도구(Functional Instrument)로 작용하는 원리를 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>엔게스트롬 연구진은 일터 혁신에서 현장 노동자들이 자신들의 문제를 해결하기 위해 직관적인 다이어그램(체화된 근원세포)을 고안하고, 이를 통해 업무 전체를 재설계함을 실증했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들이 복잡한 팀 프로젝트를 할 때 혼란을 정리해 줄 수 있는 '단순한 개념적 도구'를 구안해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 20: Conclusions & Educational Transition -->
+    <section class="slide" data-index="19">
+      <span class="slide-badge">결론 및 제언 · Section 7.4</span>
+      <h2 class="slide-title">미래 교육을 향한 활동이론의 확장적 전환 제언</h2>
+      <p class="slide-subtitle">학교를 닫힌 섬에서 열린 확장적 활동 시스템으로 혁신하라</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 경계 횡단 교육과정</h3>
+          <p>교실의 벽을 넘어 지역사회, 일터, 온라인 커뮤니티와 공유된 대상을 탐구</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 모순을 혁신의 엔진으로</h3>
+          <p>갈등과 불일치를 숨기지 않고 변화실험실을 통해 주체적으로 분석하고 해결</p>
+        </div>
+        <div class="card">
+          <h3>3. 변혁적 주체성 함양</h3>
+          <p>기존 규칙에 순종하는 수동적 학습자가 아닌 공동체를 개혁하는 체인지메이커 육성</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 07의 결론으로서 활동이론이 제시하는 미래 학교와 교육과정의 대전환 비전을 요약합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학교는 학생을 시험 점수로 줄 세우는 공장이 아니라, 학생들이 사회적 모순에 도전하고 새로운 지식을 집단적으로 창조하는 민주적 실천 공간이어야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 학교를 '확장 학습 공동체'로 바꾸기 위해 당장 바꿀 수 있는 작은 규칙 한 가지는 무엇일까요?</p>
+      </div>
+    </section>
+
+    <!-- Slide 21: Summary & Part I Conclusion -->
+    <section class="slide" data-index="20">
+      <span class="slide-badge">총괄 요약 · Part I 완성</span>
+      <h2 class="slide-title">Part I 기초 이론을 완성하는 활동이론의 위대한 지평</h2>
+      <p class="slide-subtitle">개인 두뇌의 인지에서 사회역사적 집단 실천의 거대한 생태계로</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>활동 시스템 삼각형</h3>
+          <p>도구, 규칙, 공동체, 분업이 유기적으로 결합된 집단적 실천 분석</p>
+        </div>
+        <div class="card">
+          <h3>확장 학습과 모순</h3>
+          <p>내재적 모순을 딛고 아직 존재하지 않는 새로운 미래를 창조하는 배움</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>이중 자극과 주체성</h3>
+          <p>도구를 장악하여 세상을 변혁하는 주체적이고 비판적인 학습자 양성</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 07과 함께 『The Cambridge Handbook of the Learning Sciences』의 제1부 기초 이론(Part I: Foundations) 전체를 총괄 마무리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Part I(Ch 01~07)은 학습과학의 태동(Ch01), 학문적 기초(Ch02), 스캐폴딩(Ch03), PBL(Ch04), 메타인지(Ch05), 개념변화(Ch06), 활동이론(Ch07)에 이르기까지, 미시적 인지에서 거시적 사회역사적 시스템까지 완벽한 이론적 기초를 완성했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"Part I의 7개 챕터 중 여러분의 교육관에 가장 큰 패러다임 전환을 가져다 준 이론은 무엇입니까?"를 마무리 질문으로 제시하세요.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 07: Learning in Activity (Yrjö Engeström)</div>
+    <div class="footer-center" id="slide-counter">01 / 21</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Image Modal -->
+  <div id="modal" onclick="closeModal()">
+    <img id="modal-img" src="" alt="확대 도판">
+  </div>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch07_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function openModal(src) {
+      modalImg.src = src;
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 07: Learning in Activity - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter07_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        closeModal();
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>
