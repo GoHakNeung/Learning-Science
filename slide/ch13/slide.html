@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 13: Learning Analytics and Educational Data Mining</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .table-container {
+      width: 100%; overflow-x: auto; margin-top: 0.5rem;
+    }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .styled-table th {
+      background: var(--bg-secondary); color: var(--accent-blue);
+      padding: 0.6rem 0.8rem; text-align: left; border-bottom: 2px solid var(--border-color);
+    }
+    .styled-table td {
+      padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .styled-table tr:hover td { background: rgba(56, 189, 248, 0.05); }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 13 · Part II Methodologies Finale</span>
+      <h1 class="slide-title">Learning Analytics and Educational Data Mining</h1>
+      <p class="slide-subtitle">학습분석학 및 교육데이터마이닝: 빅데이터를 통한 학습의 모델링, 예측, 그리고 적응적 개입</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Ryan S. Baker</strong> (UPenn) & <strong>George Siemens</strong> (UT Arlington)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 259–279)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다</h3>
+          <ul>
+            <li><strong>EDM vs LA</strong>: 두 연구 공동체의 비교와 상호 보완성</li>
+            <li><strong>5대 핵심 분석 방법론</strong>: 예측, 구조 발견, 관계 마이닝, 데이터 증류, 모델 활용 발견</li>
+            <li><strong>베이지안 지식 추적 (BKT)</strong> & <strong>딥 지식 추적 (DKT)</strong></li>
+            <li><strong>정서/이탈 행동 탐지</strong>: 시스템 악용(Gaming), 헛바퀴 돌기(Wheel-spinning)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 Part II: Methodologies의 대단원을 장식하는 챕터로, 대규모 디지털 학습 로그를 활용하여 인지 상태를 모델링하고 적응적 개입을 설계하는 '학습분석학(LA)'과 '교육데이터마이닝(EDM)'의 전모를 탐구합니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>라이언 베이커(Ryan Baker) 교수와 조지 시멘스(George Siemens) 교수는 각각 IEDMS(EDM 학회)와 SoLAR(LA 학회)를 설립하고 이끌어 온 두 분야의 최고 창시자들입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"학생이 온라인 학습 시스템에서 10분 동안 마우스를 클릭한 로그 데이터 속에 그 학생의 지식과 정서 상태가 어떻게 담겨 있을까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: EDM vs LA Comparison -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">패러다임 비교 · Section 13.1</span>
+      <h2 class="slide-title">EDM과 LA의 학문적 지향 및 차이점 (Siemens & Baker, 2012)</h2>
+      <p class="slide-subtitle">알고리즘 중심의 미세 인지 모델링(EDM) vs 전인적 시스템 의사결정 지원(LA)</p>
+      <div class="table-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>비교 차원</th>
+              <th>교육데이터마이닝 (EDM)</th>
+              <th>학습분석학 (LA)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>학문적 기원</strong></td>
+              <td>컴퓨터과학, 데이터마이닝, 머신러닝</td>
+              <td>학습과학, 고등교육 정책, 교육학</td>
+            </tr>
+            <tr>
+              <td><strong>분석 철학</strong></td>
+              <td><strong>환원주의적·알고리즘적 접근</strong></td>
+              <td><strong>전인적·시스템적 접근</strong></td>
+            </tr>
+            <tr>
+              <td><strong>분석 단위</strong></td>
+              <td>개별 지식 요소(KCs), 에러 단계, 초 단위 로그</td>
+              <td>강좌 수준 참여도, 학습자 네트워크, 텍스트 담화</td>
+            </tr>
+            <tr>
+              <td><strong>핵심 목표</strong></td>
+              <td>지능형 튜터링 시스템(ITS) 인지 모델 자동화</td>
+              <td>교수자/학습자 의사결정 대시보드 시각화</td>
+            </tr>
+            <tr>
+              <td><strong>대표 학회</strong></td>
+              <td>IEDMS (*Journal of EDM*, 2008)</td>
+              <td>SoLAR, LAK (*Journal of LA*, 2011)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>EDM과 LA의 역사적 배경, 철학적 차이점, 그리고 오늘날의 융합 추세를 명쾌하게 대조 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>EDM이 "학습 알고리즘의 자동화"에 방점을 둔다면, LA는 "교사와 학생의 전인적 의사결정을 돕는 인간 중심 대시보드"에 집중합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신의 연구 주제가 EDM에 가까운지, LA에 가까운지 판단해 보도록 유도하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: 5 Core Methods Overview -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">방법론 체계 · Section 13.2</span>
+      <h2 class="slide-title">EDM & LA 5대 핵심 분석 방법론 개요</h2>
+      <p class="slide-subtitle">학습과학자가 활용하는 데이터 중심 5대 툴킷 (Baker & Siemens, 2022)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 예측 기법</h3>
+          <p><strong>Prediction</strong></p>
+          <p>분류, 회귀, 베이지안 지식 추적(BKT), 딥 지식 추적(DKT)</p>
+        </div>
+        <div class="card">
+          <h3>2. 구조 발견</h3>
+          <p><strong>Structure Discovery</strong></p>
+          <p>학습자 군집화(Clustering), Q-Matrix 도메인 지식 구조 도출</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">3. 관계 마이닝</h3>
+          <p><strong>Relationship Mining</strong></p>
+          <p>연관 규칙, 순차 패턴 마이닝, 인과 데이터 마이닝</p>
+        </div>
+        <div class="card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">4. 데이터 증류</h3>
+          <p><strong>Distillation</strong></p>
+          <p>교사 대시보드 시각화, 인식 네트워크 분석(ENA)</p>
+        </div>
+        <div class="card highlight-card" style="grid-column: span 2; border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">5. 모델을 활용한 발견 (Discovery with Models)</h3>
+          <p>검증된 예측 모델의 출력값을 새로운 거시적 학습과학 가설 검증의 변수로 재활용하는 고차 분석</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>EDM/LA의 5대 방법론을 전체적으로 조망하고, 각 기법이 해결하는 연구 질문의 성격을 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이 5가지 방법론은 독립적으로 쓰이기보다, 예측 모델 ➔ 데이터 증류 ➔ 모델을 활용한 발견으로 연쇄 결합되는 경우가 많습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 슬라이드들에서 예측(BKT), 관계 마이닝, 정서 탐지를 구체적으로 살펴봅니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Bayesian Knowledge Tracing (BKT) -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">예측 모델 · Section 13.2.1</span>
+      <h2 class="slide-title">베이지안 지식 추적 (Bayesian Knowledge Tracing: BKT)</h2>
+      <p class="slide-subtitle">Corbett & Anderson (1995)의 고전적 지식 마스터리 은닉 마르코프 모델</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📐 BKT 4대 핵심 파라미터</h3>
+          <ul>
+            <li><strong>$P(L_0)$ (Prior)</strong>: 과제 시작 전 해당 스킬을 이미 알고 있을 확률</li>
+            <li><strong>$P(T)$ (Transition)</strong>: 과제를 풀며 새로 지식을 습득할 전이 확률</li>
+            <li><strong>$P(G)$ (Guess)</strong>: 몰라도 우연히 맞힐 추측 확률</li>
+            <li><strong>$P(S)$ (Slip)</strong>: 알고 있으면서도 실수로 틀릴 확률</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🔄 지식 상태 실시간 갱신</h3>
+          <ul>
+            <li>학생이 문제를 맞히거나 틀릴 때마다 베이즈 정리로 $P(L_t)$ 갱신</li>
+            <li>$P(L_t) \ge 0.95$에 도달하면 스킬 마스터(Mastery) 판정 ➔ 다음 학습 단계로 자동 진급</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>지능형 튜터링 시스템(ITS)의 표준 지식 추적 엔진인 BKT 모델의 4개 파라미터와 마스터리 판정 원리를 명확히 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>BKT는 학생의 정답/오답 이력을 기반으로 '추측'과 '실수'의 노이즈를 필터링하여 학생의 진짜 잠재 지식 상태를 추정합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>최근에는 순환신경망(LSTM)과 트랜스포머를 활용한 <strong>딥 지식 추적(Deep Knowledge Tracing: DKT)</strong>으로 확장되고 있음을 덧붙이세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Structure Discovery & Relationship Mining -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">패턴 발굴 · Section 13.2.2~13.2.3</span>
+      <h2 class="slide-title">구조 발견과 관계 마이닝: Q-행렬과 순차 패턴</h2>
+      <p class="slide-subtitle">숨겨진 지식 구조와 시계열 행동 전이 경로를 데이터로부터 자동 추출</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🧩 Q-Matrix 지식 구조 발견</h3>
+          <ul>
+            <li>문항($Item$)과 세부 지식 요소($Skill$) 간의 매핑 행렬($Q$) 도출</li>
+            <li>전문가가 미처 파악하지 못한 문항 간의 숨은 인지적 요구 스킬을 데이터로부터 역추론</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">⏱️ 순차 패턴 마이닝 (Sequential Mining)</h3>
+          <ul>
+            <li>학습자의 시계열 행동 루틴 추출:
+              <br/><code>[힌트 1단계] ➔ [코드 실행] ➔ [에러] ➔ [포럼 질문]</code>
+            </li>
+            <li>성공적인 학습자와 실패하는 학습자의 행동 경로 차이 규명</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Q-Matrix 도출을 통한 교육과정 결함 교정과, 순차 패턴 마이닝을 통한 학습자 행동 궤적 분석을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>순차 패턴 마이닝은 학생들의 메타인지 전략 사용 여부와 디버깅 패턴을 시계열로 비교하는 데 강력한 도구입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>온라인 코딩 플랫폼에서 성공적인 학생들이 밟는 공통 행동 시퀀스를 상상해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Distillation & Epistemic Network Analysis (ENA) -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">데이터 증류 · Section 13.2.4</span>
+      <h2 class="slide-title">데이터 증류: 교사 대시보드와 인식 네트워크 분석 (ENA)</h2>
+      <p class="slide-subtitle">수억 줄의 로그를 한눈에 통찰할 수 있는 직관적 시각화로 변환</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📊 실시간 교사 대시보드</h3>
+          <ul>
+            <li>도움이 시급한 학생을 빨간색 경고(Red flag)로 실시간 알림</li>
+            <li>교사의 인지 부하를 줄이고 최적의 순회 지도 동선 제안</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🌐 인식 네트워크 분석 (ENA, Shaffer et al.)</h3>
+          <ul>
+            <li>학습자 담화 속 개념 요소들 간의 동시 출현(Co-occurrence) 네트워크 모델링</li>
+            <li>전문가와 초보자의 인지 네트워크 구조 차이를 2차원 공간에 시각적 정량화</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>빅데이터를 인간 교수자와 학습자의 의사결정 도구로 변환하는 '데이터 증류' 기법(대시보드, ENA)을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>ENA(Epistemic Network Analysis)는 질적 담화 분석의 정교함과 소셜 네트워크 분석의 수학적 엄밀성을 결합한 대표적 학습분석 도구입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들의 협력 토론 데이터를 ENA로 분석하는 연구 사례를 공유하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Disengagement Behaviors (Gaming & Wheel-spinning) -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">이탈 탐지 · Section 13.3.1</span>
+      <h2 class="slide-title">학습 이탈 행동의 탐지: 시스템 악용 & 헛바퀴 돌기</h2>
+      <p class="slide-subtitle">학습과학이 밝혀낸 대표적 비생산적 학습 행동 2종 (Baker, 2004; Beck, 2013)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🎮 시스템 악용 (Gaming the System)</h3>
+          <ul>
+            <li>힌트 버튼을 난타하여 마지막 정답을 보거나, 보기를 무차별 대입하여 넘어가려는 행동</li>
+            <li><strong>학습과학적 발견</strong>: 시스템 악용 빈도가 높은 학생은 장기 전이 검사 점수가 극단적으로 하락함</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">🔄 헛바퀴 돌기 (Wheel-Spinning)</h3>
+          <ul>
+            <li>많은 시간과 노력을 들이고 있으나 전혀 개념적 마스터리에 도달하지 못하고 오류를 반복하는 상태</li>
+            <li><strong>생산적 실패(Productive Failure)와의 차이</strong>: 방치하면 좌절과 학습 포기로 이어지므로 즉각 개입 필요</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>EDM 분야에서 가장 유명한 두 가지 이탈 행동(Gaming the System, Wheel-Spinning)의 정의와 교육적 영향을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학생이 열심히 코딩하고 있다고 해서 반드시 학습하고 있는 것은 아닙니다. '생산적 지속(Productive Persistence)'과 '헛바퀴 돌기(Wheel-Spinning)'를 구분하는 것이 시스템의 핵심 지능입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 코딩할 때 '시스템 악용'이나 '헛바퀴 돌기'를 경험했던 순간을 회고해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Affect Detection & Multimodal LA (MMLA) -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">정서 & 다중모달 · Section 13.3</span>
+      <h2 class="slide-title">학습 정서 탐지와 다중모달 학습분석학 (MMLA)</h2>
+      <p class="slide-subtitle">클릭 로그를 넘어: 시선, 음성, 신체 제스처, 뇌파(EEG)의 전인적 융합</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎭 학습 정서 4대 상태 모델링 (D'Mello)</h3>
+          <ul>
+            <li><strong>몰입 (Flow)</strong>: 높은 집중과 적정 난이도</li>
+            <li><strong>혼란 (Confusion)</strong>: 인지 갈등 상태 (생산적일 수 있음)</li>
+            <li><strong>좌절 (Frustration)</strong>: 지속된 실패로 인한 분노</li>
+            <li><strong>지루함 (Boredom)</strong>: 가장 위험한 이탈 전조 정서</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🌐 다중모달 학습분석학 (MMLA)</h3>
+          <ul>
+            <li><strong>시선 추적 (Eye-tracking)</strong>: 코드 블록 응시 집중도</li>
+            <li><strong>음성 톤 & 신체 자세 (Pose)</strong>: 협력 소통 에너지</li>
+            <li><strong>생체 신호 (GSR/EEG)</strong>: 인지 부하 및 정서 각성 측정</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>D'Mello & Graesser의 인지-정서 역동 모델과 최첨단 다중모달 학습분석학(MMLA)의 지평을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>'혼란(Confusion)'은 적절한 시점에 비계가 주어지면 깊은 학습으로 이어지지만, 방치되면 '좌절(Frustration)'과 '지루함(Boredom)'으로 전락합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>AI 튜터가 학생의 표정과 음성을 인식하여 위로와 힌트를 건네는 미래 교육 환경을 상상해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Early Warning Systems & Practice -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">현장 개입 · Section 13.4</span>
+      <h2 class="slide-title">교육 현장 적용: 조기 경보 시스템(EWS)과 적응형 교수</h2>
+      <p class="slide-subtitle">학기 초 수주 만에 중도 탈락 및 낙제 위험군을 선별하여 선제적 상담 개입</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🚨 조기 경보 시스템 (Early Warning Systems)</h3>
+          <ul>
+            <li>학기 초 LMS 접속 빈도, 과제 제출 지연, 퀴즈 오답 패턴 분석</li>
+            <li>학기 말 낙제 위험 학생을 80% 이상 정확도로 사전 예측</li>
+            <li>지도교수 및 학습 컨설턴트에게 자동 알림 ➔ 밀착 상담 개입</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 적응형 지능형 튜터링 시스템 (ITS)</h3>
+          <ul>
+            <li>BKT 및 DKT를 기반으로 학생의 숙달도에 따라 다음 문제 자동 추천</li>
+            <li>ASSISTments, MATHia, Duolingo 등 전 세계 수백만 학습자 적용</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습분석학이 실제 대학교육 및 초·중등 교육 현장에서 거둔 가장 가시적인 성과(조기 경보 시스템, 적응형 튜터)를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>퍼듀 대학교의 'Course Signals' 프로젝트: 조기 경보 시스템 도입 후 학생들의 과목 낙제율이 20% 이상 감소하고 졸업률이 크게 상승했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학기 초 2주 차 데이터만으로 학기 말 성적을 예측하는 모델의 윤리적 주의점을 짚어보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Algorithmic Fairness & Ethics -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">AI 윤리 · Section 13.5</span>
+      <h2 class="slide-title">알고리즘 공정성(Fairness), 편향, 그리고 데이터 윤리</h2>
+      <p class="slide-subtitle">취약계층 편향 방지, 생체 데이터 프라이버시, 그리고 인간 중심 학습분석</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">1. 알고리즘 공정성</h3>
+          <p>특정 인종, 성별, 배경의 학생에 대해 낙제 확률을 과도하게 높게 예측하는 모델 편향(Bias) 감사</p>
+        </div>
+        <div class="card">
+          <h3>2. 데이터 프라이버시</h3>
+          <p>학생의 음성, 얼굴, 시선, 로그 데이터의 안전한 비식별화와 엄격한 동의권 보장 (GDPR)</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">3. 인간-AI 협업</h3>
+          <p>AI가 교사를 대체하는 것이 아니라, 교사의 전문적 판단을 돕는 인간 중심 분석(Human-in-the-loop)</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>AI 및 빅데이터 기반 교육 시스템이 반드시 지켜야 할 3대 윤리적 가치(공정성, 프라이버시, 인간-AI 협업)를 고찰합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>데이터가 과거의 불평등한 교육 결과를 담고 있다면, 머신러닝 모델은 그 차별을 학습하고 재생산할 위험이 있습니다. 알고리즘 감사가 필수적입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"AI가 위험 학생으로 낙인찍는 것(Labeling Effect)이 오히려 학생에게 해가 되지 않도록 하려면 어떻게 해야 할까요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Part II Methodologies Grand Finale -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">Part II 대단원 · 피날레</span>
+      <h2 class="slide-title">제2부 연구 방법론(Part II) 5개 챕터 총괄 맵</h2>
+      <p class="slide-subtitle">거시 설계부터 미시 상호작용, 순간 인지, 평가 설계, 빅데이터 분석까지의 완벽한 융합</p>
+      <div class="table-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>챕터</th>
+              <th>방법론 영역</th>
+              <th>분석 스케일</th>
+              <th>핵심 도구 / 모델</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ch 09 (Barab)</strong></td>
+              <td>디자인 기반 연구 (DBR)</td>
+              <td>거시적 교육과정 (주/월)</td>
+              <td>파스퇴르 사분면, 추측 매핑, 반복 순환</td>
+            </tr>
+            <tr>
+              <td><strong>Ch 10 (Enyedy)</strong></td>
+              <td>협력 상호작용 분석 (IA)</td>
+              <td>미시적 사회적 담화 (초/분)</td>
+              <td>제퍼슨 전사, 다중모달 공조율</td>
+            </tr>
+            <tr>
+              <td><strong>Ch 11 (Sherin)</strong></td>
+              <td>미시발생적 방법</td>
+              <td>미시적 순간 인지 (초/시행)</td>
+              <td>고밀도 관찰, 중첩 파동, 촉발 사건</td>
+            </tr>
+            <tr>
+              <td><strong>Ch 12 (Pellegrino)</strong></td>
+              <td>교육 평가 설계</td>
+              <td>다층 평가 체제 (Meso/Macro)</td>
+              <td>평가 삼각형, 증거 중심 설계 (ECD)</td>
+            </tr>
+            <tr>
+              <td><strong>Ch 13 (Baker)</strong></td>
+              <td>학습분석학 & EDM</td>
+              <td>빅데이터 전산 로그 (초/대규모)</td>
+              <td>BKT/DKT, 정서 탐지, 조기경보, MMLA</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Part II: Methodologies 전체 5개 챕터(DBR, 상호작용 분석, 미시발생, 평가 설계, 학습분석학)의 거대한 방법론적 사다리를 총괄 정리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학습과학의 힘은 어느 한 방법론에 편중되지 않고, 연구 질문에 따라 DBR(설계) + IA/미시발생(미시 인과) + ECD/LA(측정 및 확장)를 결합하는 데 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>5개 방법론 중 자신의 연구 설계에 주 무기로 삼을 2~3가지를 조합해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Looking Ahead to Part III Technology -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">다음 파트 예고 · Part III</span>
+      <h2 class="slide-title">다음 여정: 제3부 테크놀로지 기반 학습 (Part III) 개막!</h2>
+      <p class="slide-subtitle">Chapter 14 비디오 게임과 학습 (Video Games and Learning: Steinkuehler & Squire)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎮 Part III 테크놀로지 5개 챕터 라인업</h3>
+          <ul>
+            <li><strong>Ch 14</strong>: 비디오 게임과 학습 (Steinkuehler & Squire)</li>
+            <li><strong>Ch 15</strong>: 체화 인지와 체화 설계 (Abrahamson & Lindgren)</li>
+            <li><strong>Ch 16</strong>: 탠저블 및 전신 인터페이스 (Parés & Eisenberg)</li>
+            <li><strong>Ch 17</strong>: 증강현실(AR)과 학습과학 (Schneider & Radu)</li>
+            <li><strong>Ch 18</strong>: 모바일 학습과 유비쿼터스 탐구 (Pea & Sharples)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 방법론에서 테크놀로지로!</h3>
+          <p>Part I의 기초 이론과 Part II의 방법론 툴킷을 장착하고, 이제 게임, 체화, AR, 모바일이라는 최첨단 기술 기반 학습 환경으로 나아갑니다!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Part II의 완결을 축하하고, 다음 시간부터 펼쳐질 제3부 테크놀로지 기반 학습(Part III)의 흥미진진한 여정을 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Chapter 14는 게임이 어떻게 단순한 오락을 넘어 가장 깊은 몰입과 인식적 실천(Epistemic Practice)을 이끌어내는지 밝힙니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>Part II 완결을 기념하며 본 슬라이드를 마칩니다. 수고하셨습니다!</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 13: Learning Analytics and Educational Data Mining (Baker & Siemens)</div>
+    <div class="footer-center" id="slide-counter">01 / 12</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch13_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 13: Learning Analytics & EDM - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter13_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

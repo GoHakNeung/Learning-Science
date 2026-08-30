@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 27: Learning to Be Literate</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .table-container { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .styled-table th {
+      background: var(--bg-secondary); color: var(--accent-blue);
+      padding: 0.6rem 0.8rem; text-align: left; border-bottom: 2px solid var(--border-color);
+    }
+    .styled-table td {
+      padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);
+      vertical-align: top;
+    }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 27 · Part V Literacy Learning</span>
+      <h1 class="slide-title">Learning to Be Literate</h1>
+      <p class="slide-subtitle">문해력 학습의 인지과학과 사회문화적 실천: 읽기 유창성, 독해 과정, 그리고 작문 인지 모델</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Peter Smagorinsky</strong> (Univ. of Georgia) & <strong>Richard E. Mayer</strong> (UC Santa Barbara)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 554–570)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다 (27.0 ~ 27.3)</h3>
+          <ul>
+            <li><strong>27.1.1 일반 인지 문해 (Mayer)</strong>: 유창성, 독해 SOI, 작문 3단계</li>
+            <li><strong>27.1.2 과제 특정 장르 지식</strong>: 에세이/과학 보고서 스키마</li>
+            <li><strong>27.1.3 공동체 문화 지식 (Smagorinsky)</strong>: 비고츠키 사회문화</li>
+            <li><strong>27.2 인지와 사회문화의 통합</strong>: 다중 문해력 (Multiliteracies)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 인지심리학의 대가 리처드 메이어 교수와 문학교육학자 피터 스마고린스키 교수가 공저한 챕터로, 읽기와 쓰기의 인지적 정보처리 메커니즘과 사회문화적 담화 실천을 통합합니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>문해력(Literacy)은 단순한 언어 해독을 넘어, 인지적 선택-조직-통합(SOI)과 문화적 장르 규칙의 체화를 포괄합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"글을 읽는 것과 글을 쓰는 것은 두뇌 속에서 어떤 인지적 차이가 있을까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 27.1.1 Mayer's 3 Content Areas (Table 27.1) -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">인지과학 문해 · Section 27.1.1 (Table 27.1)</span>
+      <h2 class="slide-title">27.1.1 인지과학적 문해 학습의 3대 영역 (Table 27.1)</h2>
+      <p class="slide-subtitle">읽기 유창성, 읽기 독해, 작문의 목표 과제와 인지적 본질 (Richard E. Mayer)</p>
+      <div class="table-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>문해 영역 (Content Area)</th>
+              <th>목표 과제 (Target Task)</th>
+              <th>핵심 인지 메커니즘 및 하위 과정</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. 읽기 유창성<br/>(Reading Fluency)</strong></td>
+              <td>인쇄된 단어를 소리 내어 발음하기<br/>(Pronouncing a printed word)</td>
+              <td>• 음소 인식 (Phonemic awareness)<br/>• 단어 해독 (Word decoding)<br/>• 무오류 자동화 낭독 (Table 27.2)</td>
+            </tr>
+            <tr>
+              <td><strong>2. 읽기 독해<br/>(Reading Comprehension)</strong></td>
+              <td>인쇄된 지문의 의미를 심층 이해하기<br/>(Comprehending a printed passage)</td>
+              <td>• <strong>선택-조직-통합 (SOI 모델)</strong><br/>• 글 구조(Prose structure) 파악<br/>• 추론(Inference) & 메타인지 조절 (Table 27.3)</td>
+            </tr>
+            <tr>
+              <td><strong>3. 작문<br/>(Writing)</strong></td>
+              <td>논리적인 서면 에세이/글을 생성하기<br/>(Producing a written essay)</td>
+              <td>• <strong>계획하기 (Planning)</strong><br/>• <strong>변환하기 (Translating)</strong><br/>• <strong>검토하기 (Reviewing)</strong> (Table 27.4)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>27.1.1절의 핵심인 Table 27.1(인지과학적 문해 학습 3대 영역)을 구조화합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>리처드 메이어는 문해력을 읽기 유창성(하위 처리), 독해(상위 인지 처리), 작문(생성적 문제해결)으로 명확히 구분하여 인지 모델을 제시합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>이어지는 슬라이드에서 유창성, 독해, 작문의 세부 메커니즘을 하나씩 분석합니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: 27.1.1 Reading Fluency (Table 27.2) -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">읽기 유창성 · Section 27.1.1 (Table 27.2)</span>
+      <h2 class="slide-title">Table 27.2 읽기 유창성(Reading Fluency)의 기본 인지 과정</h2>
+      <p class="slide-subtitle">음소 분절에서 단어 자동 해독으로 이어지는 뇌의 부호화 경로 (Mayer, 2008)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 음소 인식 (Phonemes)</h3>
+          <p><strong>과제 예시</strong>: 첫 음소 치환</p>
+          <p>"ball" 단어를 듣고 /b/ 음소를 /t/로 바꾸어 "tall"로 발음하기 (음운론적 인식)</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 단어 해독 (Decoding)</h3>
+          <p><strong>과제 예시</strong>: 단어 식별 & 공격</p>
+          <p>인쇄된 단어 'CAT' 또는 가상의 비단어(Non-word) 'BLUD'를 규칙에 맞게 발음</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">3. 유창한 자동화 낭독</h3>
+          <p><strong>과제 예시</strong>: 문단 고속 낭독</p>
+          <p>작업기억의 부하 없이 빠르고 정확하게 전체 지문을 읽어내어 고차 독해 자원 확보</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>27.1.1절의 Table 27.2(읽기 유창성의 기본 인지 과정)를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>하위 해독 과정이 자동화(Automaticity)되지 않으면, 작업기억 용량이 해독에 모두 소진되어 고차원적 의미 독해(Comprehension)가 불가능해집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>초등 저학년 난독증(Dyslexia) 치료에서 음소 훈련의 중요성을 언급하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: 27.1.1 Reading Comprehension SOI Model (Table 27.3) -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">독해 인지 모델 · Section 27.1.1 (Table 27.3)</span>
+      <h2 class="slide-title">Table 27.3 읽기 독해의 선택-조직-통합 (SOI) 인지 모델</h2>
+      <p class="slide-subtitle">텍스트 표면을 넘어 심층 '상황 모델(Situation Model)'을 능동적으로 구축 (Mayer, 2011)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 선택 (Selecting)</h3>
+          <p>텍스트 지문에서 핵심 개념과 중심 문장을 선별하여 작업기억에 적재</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 조직 (Organizing)</h3>
+          <p>선택된 명제들을 원인-결과, 비교-대조의 구조(Prose Structure)로 체계화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">3. 통합 (Integrating)</h3>
+          <p>장기기억의 사전 지식(Prior Knowledge)과 결합하여 심층 멘탈 모델 완성</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">4. 메타인지 조절</h3>
+          <p>자신의 독해 이해도를 모니터링하고 막히는 부분을 재독·수리(Repair)</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>27.1.1절의 Table 27.3(읽기 독해의 4대 인지 과정: Mayer의 SOI 모델)을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>능숙한 독자는 글을 수동적으로 스캔하지 않고, 사전 지식을 동원해 글의 논리 구조를 능동적으로 재구성(Generative Processing)합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교과서 요약하기 활동이 어떻게 SOI 모델의 '선택과 조직'을 촉진하는지 설명하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: 27.1.1 Cognitive Writing Model (Table 27.4) -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">작문 인지 모델 · Section 27.1.1 (Table 27.4)</span>
+      <h2 class="slide-title">Table 27.4 작문의 3대 인지 과정 (Flower & Hayes 모델)</h2>
+      <p class="slide-subtitle">계획하기, 변환하기, 검토하기가 끊임없이 반복 순환하는 문제해결 과정 (Smagorinsky & Mayer)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card" style="border-color: var(--accent-blue);">
+          <h3>1. 계획하기 (Planning)</h3>
+          <ul>
+            <li><strong>생성 (Generating)</strong>: 장기기억에서 아이디어 인출</li>
+            <li><strong>조직 (Organizing)</strong>: 논리적 개요(Outline) 작성</li>
+            <li><strong>목표 설정 (Goal Setting)</strong>: 독자 고려</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 변환하기 (Translating)</h3>
+          <ul>
+            <li>머릿속의 비선형적 사고를 <strong>선형적 문법 텍스트로 부호화(Encoding)</strong></li>
+            <li>어휘 선택, 문장 구문 구성, 타이핑/필기</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">3. 검토하기 (Reviewing)</h3>
+          <ul>
+            <li><strong>읽기 (Reading)</strong>: 작성된 초안 점검</li>
+            <li><strong>수정 (Editing)</strong>: 논리적 비약과 문법 오류 진단 및 리팩터링</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>27.1.1절의 Table 27.4(작문의 3대 인지 과정)와 플라워-헤이즈(Flower & Hayes) 모델을 해설합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>작문은 선형적이지 않습니다. 문장을 쓰다가도(Translating) 다시 새로운 아이디어를 떠올리고(Planning), 즉시 앞 문장을 수정(Reviewing)하는 끊임없는 순환적 인지 과정입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>소프트웨어 개발의 기획-코딩-코드리뷰 사이클과 작문 모델을 대조해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: 27.1.2 & 27.1.3 Genre & Community Knowledge -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">장르와 사회문화 · Section 27.1.2 & 27.1.3</span>
+      <h2 class="slide-title">27.1.2 과제 특정 장르 지식 & 27.1.3 공동체 문화 실천</h2>
+      <p class="slide-subtitle">학문 장르의 구조적 규칙(Hillocks)과 비고츠키적 문화 매개 담화 (Smagorinsky)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📐 27.1.2 과제 특정 장르 지식</h3>
+          <ul>
+            <li>에세이, 과학 실험 보고서, 문학 비평 등 <strong>각 학문 도메인 고유의 서사 규범 체화</strong> (Hillocks)</li>
+            <li>단순 작문 기술이 아닌 '학문적 담화 프로토콜' 학습</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🌐 27.1.3 공동체 문화 실천</h3>
+          <ul>
+            <li>텍스트는 문화적 정체성과 권력 관계를 매개함 (Vygotsky)</li>
+            <li>학교 표준 규범의 지배성을 성찰하고 <strong>다중 문해력(Multiliteracies)</strong> 수용</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>27.1.2절(과제 특정 장르 지식)과 27.1.3절(공동체 특정 문화 지식)을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>피터 스마고린스키 교수는 메이어의 순수 인지 모델에 비고츠키적 사회문화주의를 접목하여, 글쓰기가 사회적 맥락과 장르 속에서 일어남을 강조합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>장르에 대한 이해 없는 글쓰기 지도의 한계를 지적하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Summary & Looking Ahead to Ch 28 -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 27.3</span>
+      <h2 class="slide-title">27.3 Chapter 27 총괄 결론 & Chapter 28 예술 교육 예고</h2>
+      <p class="slide-subtitle">문해력의 텍스트 구성에서 창의적 시각 표현, Part V 최종 장 '예술 교육 연구'로!</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌟 Ch 27 문해력 학습 연구의 핵심 교훈</h3>
+          <ul>
+            <li>1. 유창성 자동화로 고차원 독해 인지 자원을 확보하라</li>
+            <li>2. 독해의 SOI(선택-조직-통합) 모델을 훈련하라</li>
+            <li>3. 작문의 계획-변환-검토 순환 루프를 체화하라</li>
+            <li>4. 도메인별 장르 규칙과 사회문화적 실천을 통합하라</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🚀 Chapter 28 예고: 예술 교육 (Arts Education)</h3>
+          <p><strong>Erica Rosenfeld Halverson & Kimberly M. Sheridan</strong></p>
+          <p>스튜디오 사고의 습관(Studio Habits of Mind: 관찰, 구상, 표현, 반성, 탐색)과 메이커 운동의 융합! Part V 대단원의 완결!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 27(27.0~27.3)을 정리하고 Part V의 최종장인 Chapter 28(예술 교육과 학습과학)을 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Chapter 28은 예술 교육이 단순한 감상이나 기능 습득이 아니라, 창의적 문제 해결과 메이커 실천의 인지적 기반임을 밝힙니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 28로 나아갑니다.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 27: Learning to Be Literate (Peter Smagorinsky & Richard E. Mayer)</div>
+    <div class="footer-center" id="slide-counter">01 / 07</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch27_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 27: Learning to Be Literate - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter27_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

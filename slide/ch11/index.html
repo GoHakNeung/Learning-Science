@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 11: Microgenetic Methods</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .split-layout {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1rem; width: 100%; align-items: stretch;
+    }
+
+    .table-container {
+      width: 100%; overflow-x: auto; margin-top: 0.5rem;
+    }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .styled-table th {
+      background: var(--bg-secondary); color: var(--accent-blue);
+      padding: 0.6rem 0.8rem; text-align: left; border-bottom: 2px solid var(--border-color);
+    }
+    .styled-table td {
+      padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .styled-table tr:hover td { background: rgba(56, 189, 248, 0.05); }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 11 · Part II Methodologies</span>
+      <h1 class="slide-title">Microgenetic Methods</h1>
+      <p class="slide-subtitle">미시발생적 방법: 학습과 개념 변화의 순간순간(Moment-to-moment) 초정밀 추적</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Bruce L. Sherin</strong> (Northwestern) & <strong>Clark A. Chinn</strong> (Rutgers)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 219–237)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다</h3>
+          <ul>
+            <li><strong>사전-사후 검사의 한계</strong>: '결과'가 아닌 '변화가 일어나는 찰나' 포착</li>
+            <li><strong>시글러의 3대 필수 속성 (1991)</strong> & <strong>중첩 파동 이론</strong></li>
+            <li><strong>5대 핵심 연구 질문</strong>: 변동성, 촉발 사건, 동시 과정, 궤적, 속도</li>
+            <li><strong>미래 지평</strong>: AI 자연어 처리(NLP), 토픽 모델링, MMLA 자동화</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 학습과학 연구 방법론 중 개념 변화가 일어나는 결정적 순간을 고밀도로 관찰하여 인과 메커니즘을 밝혀내는 '미시발생적 방법(Microgenetic Methods)'을 심층 탐구합니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>브루스 셰린(Bruce Sherin)과 클라크 친(Clark Chinn)은 각각 물리 개념 변화/컴퓨터 분석 및 과학적 인식론/담화 분석의 세계적 석학들입니다. 이들은 사전-사후 검사가 은폐해 온 '학습의 블랙박스'를 미시발생 연구가 어떻게 투명하게 해체하는지 설명합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"학생이 시험을 보기 전과 후의 점수 차이만 알면, 그 학생이 중간에 어떤 계기로 깨달음을 얻었는지 알 수 있을까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: Beyond Pre-Post Design -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">문제의식 · Section 11.0</span>
+      <h2 class="slide-title">사전-사후 검사(Pre-Post)의 블랙박스와 미시발생적 전환</h2>
+      <p class="slide-subtitle">학습이 '끝난 후'가 아니라 '학습이 일어나고 있는 바로 그 순간(In-flight)'을 관찰하라!</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>📦 전통적 사전-사후 검사의 한계</h3>
+          <ul>
+            <li><strong>블랙박스(Black Box) 문제</strong>: 점수는 올랐지만 '어떻게' 올랐는지 알 수 없음</li>
+            <li>개념적 혼란, 일시적 퇴행, 결정적 깨달음의 순간이 완전히 은폐됨</li>
+            <li>오직 '결과(Outcome)'만 측정하고 '과정(Process)'을 놓침</li>
+          </ul>
+        </div>
+        <div class="card highlight-card">
+          <h3>🔬 미시발생적 방법의 혁신</h3>
+          <ul>
+            <li>학습이 일어나는 전 기간에 걸쳐 <strong>순간순간(Moment-to-moment)</strong> 추적</li>
+            <li>변화의 <strong>경로(Pathways)</strong>, <strong>촉발 사건(Triggers)</strong>, <strong>속도(Rate)</strong>를 실시간 포착</li>
+            <li>학습과학 연구의 초고해상도 현미경 역할 수행</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>사전-사후 검사 설계의 인식론적 한계와 미시발생 연구로의 패러다임 전환 필요성을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>원서 p.219의 핵심 인용구: "Rather than observing learners before and after an educational intervention, microgenetic researchers observe learners *while* learning is taking place."</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>환자의 건강 상태를 입원할 때와 퇴원할 때만 재는 것과, 24시간 심전도 모니터링을 하는 것의 차이에 비유하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Historical Roots -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">역사적 기원 · Section 11.1</span>
+      <h2 class="slide-title">미시발생적 방법의 3대 역사적 기원 (Section 11.1)</h2>
+      <p class="slide-subtitle">게슈탈트 심리학, 비고츠키의 형성 실험, 그리고 인지발달론의 계보</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 게슈탈트 심리학</h3>
+          <p><strong>아하 현상 (Insight)</strong>: 베르트하이머, 쾰러의 연구. 문제해결 중 갑자기 일어나는 지각의 순간적 재조직화 관찰</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 비고츠키 사회역사 학파</h3>
+          <p><strong>형성 실험 (Formative Experiment)</strong>: 고등정신기능이 도구를 매개로 형성되는 역사적·발생적 과정 추적</p>
+        </div>
+        <div class="card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">3. 피아제 & 시글러</h3>
+          <p><strong>발생적 인식론</strong>: 아동이 과제를 해결하며 전략을 바꾸어 나가는 연속적 시행(Trials) 관찰</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>미시발생적 방법이 20세기 심리학의 거장들(게슈탈트, 비고츠키, 피아제)로부터 어떻게 발전해왔는지 역사적 맥락을 조망합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>비고츠키는 발달을 정적인 상태가 아니라 '변화 과정 중에 있는 역동적 흐름'으로 보아야 한다고 주장했으며, 이는 미시발생 연구의 철학적 토대가 되었습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>비고츠키의 'ZPD(근접발달영역)' 관찰이 왜 본질적으로 미시발생적이어야 하는지 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Siegler's 3 Essential Properties -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">핵심 원리 · Section 11.2</span>
+      <h2 class="slide-title">로버트 시글러의 미시발생 연구 3대 필수 속성</h2>
+      <p class="slide-subtitle">Siegler & Crowley (1991)가 정립한 미시발생 연구의 방법론적 기준</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 전 기간 포괄 관찰</h3>
+          <p><strong>Entire Period of Change</strong></p>
+          <p>변화가 시작되기 전(Pre-change)부터 새로운 전략이 완전히 안정화될 때까지 전 과정을 끊김 없이 포괄해야 함</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 초고밀도 관찰</h3>
+          <p><strong>High Density of Observations</strong></p>
+          <p>관찰 빈도가 변화가 일어나는 속도보다 훨씬 더 촘촘해야 함 (매 문제, 매 발화, 매 초 단위)</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">3. 시행별 집중 분석</h3>
+          <p><strong>Trial-by-Trial Analysis</strong></p>
+          <p>개별 시행(Trial)과 턴 단위로 질적·양적 집중 분석을 수행하여 인과적 전이 메커니즘을 밝힘</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>시글러와 크라울리(Siegler & Crowley, 1991)의 3대 필수 조건을 암기 수준으로 명확히 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이 세 가지 조건 중 하나라도 빠지면(예: 관찰 밀도가 띄엄띄엄하거나, 변화 전 기간을 포괄하지 못하면) 진정한 미시발생 연구로 인정받지 못합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"영화의 프레임 레이트(FPS)"에 비유하세요. 1초에 60프레임을 찍어야 슬로모션으로 인과 과정을 볼 수 있습니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Overlapping Waves Theory -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">발달 모형 · Section 11.2.1</span>
+      <h2 class="slide-title">계단식 단계론 비판과 중첩 파동 이론 (Overlapping Waves)</h2>
+      <p class="slide-subtitle">학습은 계단을 오르는 것이 아니라, 여러 전략이 파도처럼 공존하며 교체되는 과정이다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🚫 고전적 계단식 단계론 (Step-like Stages)</h3>
+          <ul>
+            <li>피아제식 패러다임: 특정 시기에는 '단 하나의 전략'만 사용</li>
+            <li>[전략 1] ➔ (갑작스런 점프) ➔ [전략 2] ➔ [전략 3]</li>
+            <li>실제 학습자의 풍부한 인지적 유연성과 가변성을 설명 불가</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🌊 시글러의 중첩 파동 이론 (Overlapping Waves)</h3>
+          <ul>
+            <li>학습자는 한 번에 여러 가지 전략(1, 2, 3, 4)을 동시에 보유함</li>
+            <li>과제의 난이도와 맥락에 따라 전략을 유연하게 선택</li>
+            <li>학습이란 고급 전략의 사용 빈도가 파도처럼 상승하고 구 전략이 점진적으로 쇠퇴하는 과정</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>미시발생 연구가 밝혀낸 가장 위대한 이론적 성과인 '중첩 파동 이론(Overlapping Waves Theory)'을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>시글러(Siegler, 1996)의 아동 덧셈 연구: 아동은 손가락 세기, 머릿속 세기, 회상 전략을 동시에 가지고 있으며, 시행을 거듭하면서 점차 효율적인 전략의 비율을 높여갑니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>프로그래머가 코딩할 때도 초보적 방식과 고급 라이브러리 방식을 동시에 머릿속에 두고 저울질하는 현상과 연결하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Prototypical Case: Schoenfeld et al. (1993) -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">원형 연구 사례 · Section 11.4</span>
+      <h2 class="slide-title">숀펠드 등의 그래프 함수 학습 미시 분석 (1993)</h2>
+      <p class="slide-subtitle">고등학생 1명의 함수($y = mx + b$) 학습 과정을 수십 시간 비디오로 초밀도 분석</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📊 연구 설계 및 방법론</h3>
+          <ul>
+            <li><strong>연구 대상</strong>: 고등학생 1명 (Susan)</li>
+            <li><strong>소프트웨어 도구</strong>: 대화형 그래프 시뮬레이션 GRAPHER</li>
+            <li>수개월간 매 차시 비디오 녹화, 발화와 마우스 조작을 초 단위 전사</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>💡 학습과학적 핵심 발견</h3>
+          <ul>
+            <li>$y$-절편과 기울기에 대한 이해는 단번에 오지 않음</li>
+            <li>수많은 소박 직관과 지식 조각(p-prims)들이 갈등하고 결합되는 복잡한 나선형 궤적 실증</li>
+            <li><strong>"지식은 덩어리가 아니라 미세 지식 조각들의 상호작용 네트워크이다"</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학 분야에서 미시발생 연구의 교과서적 원형으로 꼽히는 Schoenfeld, Smith, & Arcavi (1993) 논문을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이 연구는 단 1명의 학생을 심층 분석함으로써, 교육과정 설계자가 미처 예상치 못했던 학생의 미세한 인지적 장애물과 개념적 돌파구를 명쾌하게 증명했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"N=1 사례 연구가 왜 통계 연구보다 더 강력한 이론적 인과성을 제공할 수 있는가?"를 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: 5 Key Research Questions -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">연구 질문 · Section 11.5</span>
+      <h2 class="slide-title">미시발생적 방법이 답하는 5대 핵심 연구 질문 (11.5)</h2>
+      <p class="slide-subtitle">오직 초고밀도 관찰을 통해서만 규명할 수 있는 학습의 인과적 비밀</p>
+      <div class="table-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>연구 질문 차원</th>
+              <th>핵심 분석 내용</th>
+              <th>학습과학적 의의</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. 변동성과 안정성 (Variability)</strong></td>
+              <td>새 지식 획득 직전 전략의 다양성과 불안정성 급증</td>
+              <td>혼란과 다양한 시도는 도약의 전조 증상임</td>
+            </tr>
+            <tr>
+              <td><strong>2. 촉발 사건 (Precipitating Events)</strong></td>
+              <td>개념 변화를 촉발한 결정적 에러, 발문, 이상 데이터 특정</td>
+              <td>효과적인 비계와 피드백의 골든타임 규명</td>
+            </tr>
+            <tr>
+              <td><strong>3. 동시 발생 과정 (Co-occurring)</strong></td>
+              <td>전략 변화 시 수반되는 메타인지 발화, 시선, 제스처 결합</td>
+              <td>다중모달 인지 아키텍처 규명</td>
+            </tr>
+            <tr>
+              <td><strong>4. 학습 궤적의 형태 (Trajectories)</strong></td>
+              <td>직선형, 나선형, 일시적 퇴행(U자형 발달) 궤적 지도화</td>
+              <td>학습자 맞춤형 학습 경로 설계</td>
+            </tr>
+            <tr>
+              <td><strong>5. 학습의 속도 (Rate of Learning)</strong></td>
+              <td>찰나의 통찰(Fast) vs 점진적 공고화(Slow) 속도 측정</td>
+              <td>개념별 필요 학습 시간 산정</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Section 11.5의 5대 핵심 연구 질문을 포괄적으로 정리하여 미시발생 연구의 독보적 연구 가치를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>사전-사후 검사로는 이 5가지 질문 중 단 하나도 답할 수 없습니다. 오직 미시발생 연구만이 학습의 역동적 궤적을 밝혀냅니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 슬라이드들에서 1번(변동성), 2번(촉발 사건), 4번(학습 궤적)을 심층적으로 살펴봅니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Variability & Precipitating Events -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">심층 분석 · Section 11.5.1~11.5.2</span>
+      <h2 class="slide-title">인지적 변동성과 결정적 촉발 사건 (Precipitating Events)</h2>
+      <p class="slide-subtitle">혼란은 실패가 아니다! 개념적 도약 직전에 폭발하는 인지적 변동성</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📈 인지적 변동성 (Cognitive Variability)</h3>
+          <ul>
+            <li>학생이 새로운 전략을 깨닫기 직전, 기존 전략이 흔들리며 <strong>다양한 시행착오 빈도가 급증</strong></li>
+            <li>오답을 연발하거나 주저하는 모습은 뇌가 멘탈 모델을 재조직화하고 있다는 강력한 증거</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">⚡ 결정적 촉발 사건 (Precipitating Events)</h3>
+          <ul>
+            <li>개념 변화를 단숨에 촉발시키는 결정적 트리거:
+              <ul>
+                <li>컴파일러의 치명적 에러 메시지</li>
+                <li>기존 예측을 뒤엎는 이상 데이터(Anomalous Data)</li>
+                <li>교사의 소크라테스식 반증 질문</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>인지적 변동성(Variability)이 학습 실패가 아니라 도약의 징후라는 점과, 촉발 사건(Precipitating Events)의 역할을 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>다이애나 쿤(Deanna Kuhn, 1995)의 연구: 아동이 과학적 가설 검증 전략을 마스터하기 직전, 가장 다양한 비효율적 전략들을 실험해보는 과도기적 혼란이 관찰되었습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>코딩 수업에서 학생이 에러를 만나 당황할 때 즉시 정답을 주지 않고 촉발 사건으로 활용하는 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: 6 Methodological Challenges -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">방법론적 과제 · Section 11.6</span>
+      <h2 class="slide-title">미시발생 연구의 6대 방법론적 도전과 극복 방안</h2>
+      <p class="slide-subtitle">엄청난 데이터 비용, 생각 말하기의 왜곡, 그리고 소표본 통계의 한계 극복</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 데이터 수집/전사 비용</h3>
+          <p>수백 시간 비디오 전사 부담 ➔ <strong>AI 음성 인식(Whisper) 및 자동화 전사 도구 도입</strong></p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 생각 말하기 왜곡</h3>
+          <p>발화 요구로 인한 인지 부하 ➔ <strong>자연스러운 짝 협력 코딩 담화 녹화로 대체</strong></p>
+        </div>
+        <div class="card">
+          <h3>3. 내적 지식 추론 타당도</h3>
+          <p>행동에서 멘탈 모델 추론 ➔ <strong>발화, 시선, IDE 로그의 다중 삼각측량</strong></p>
+        </div>
+        <div class="card">
+          <h3>4. 인과적 우발성 분석</h3>
+          <p>선후 관계와 인과성 구분 ➔ <strong>미시발생 시계열 인과 매핑 모델 적용</strong></p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">5. 소표본 통계 한계</h3>
+          <p>N은 작고 T는 큼 ➔ <strong>성장혼합모형(GMM), 인식 네트워크 분석(ENA)</strong></p>
+        </div>
+        <div class="card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">6. 분석의 장인정신</h3>
+          <p>연구자 편향 극복 ➔ <strong>공동 비디오 뷰잉(Collaborative Data Sessions)</strong></p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>미시발생 연구를 수행할 때 마주치는 6가지 실무적 도전 과제와 현대 학습과학의 해결책을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>과거에는 수백 시간의 전사 비용 때문에 미시발생 연구가 극소수 연구자들의 전유물이었으나, 오늘날 AI와 학습분석학의 발전으로 대중화되고 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신의 연구에서 어떤 도전 과제가 가장 큰 장벽인지 짚어보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Computational Microgenetics & AI (Sherin, 2013) -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">미래 혁신 · Section 11.7</span>
+      <h2 class="slide-title">계산적 미시발생(Computational Microgenetics)과 AI</h2>
+      <p class="slide-subtitle">브루스 셰린(Bruce Sherin, 2013, 2018)의 자연어 처리 및 토픽 모델링 기반 자동화 분석</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🤖 AI 기반 담화 토픽 모델링 (LDA)</h3>
+          <ul>
+            <li>수만 줄의 임상 인터뷰 및 교실 담화 텍스트에서 <strong>지식 조각(p-prims)을 알고리즘으로 자동 추출</strong></li>
+            <li>학생들의 발화 속에서 특정 개념 주제(Topic)가 부상하고 사라지는 시계열 궤적 시각화</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3 style="color: var(--accent-indigo);">📊 질적 연구와 빅데이터의 완벽한 융합</h3>
+          <ul>
+            <li>질적 연구의 '미시적 깊이(Depth)'와 빅데이터 학습분석의 '거시적 규모(Scale)'를 동시 달성</li>
+            <li>대규모 온라인 학습 환경(MOOC, AI 튜터)에서도 미시발생 분석 가능</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>브루스 셰린 교수가 선구적으로 개척한 '계산적 미시발생(Computational Microgenetics)' 분석법을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Sherin (2013, JLS): 자연어 처리와 토픽 모델링을 통해 diSessa의 p-prims 이론을 대규모 학생 인터뷰 데이터에서 전산학적으로 재검증하는 데 성공했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>ChatGPT와 LLM을 활용해 학생의 코딩 질문 로그를 미시발생적으로 분석하는 최신 연구 아이디어를 제시하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Application to CS Education & Debugging -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 11</span>
+      <h2 class="slide-title">컴퓨터 프로그래밍 및 디버깅 궤적의 미시발생 분석</h2>
+      <p class="slide-subtitle">키스트로크 로그, 에러 스택 트레이스, 멘탈 모델의 실시간 진화 추적</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 프로그래밍 미시 궤적의 3대 지표</h3>
+          <ul>
+            <li><strong>키스트로크 텔레메트리</strong>: 타이핑 멈춤(Pause) 시간과 코드 수정 빈도</li>
+            <li><strong>컴파일/런타임 에러 주기</strong>: 에러 발생 ➔ 시도 ➔ 해결까지의 소요 시간</li>
+            <li><strong>노셔널 머신(Notional Machine) 진화</strong>: 변수와 메모리 상태 추적 발화</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 중첩 파동 이론의 코딩 적용</h3>
+          <ul>
+            <li>초보자는 [무차별 수정(Trial-and-error)], [프린트 디버깅], [체계적 중단점 디버깅]을 동시에 보유</li>
+            <li>미시발생 피드백을 통해 체계적 디버깅 파동의 빈도를 높임</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 11의 미시발생적 방법을 소프트웨어 프로그래밍 및 디버깅 교육에 구체적으로 접목합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>IDE의 세밀한 로그(Keystroke, Error logs)는 미시발생 연구를 위한 가장 완벽한 고밀도 데이터 소스입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들의 깃허브 커밋 로그와 VS Code 타임라인을 미시발생 데이터로 활용하는 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Summary & Core Takeaways -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">총괄 결론 · Chapter 11</span>
+      <h2 class="slide-title">미시발생적 방법의 핵심 가치 총괄</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 3대 미시발생 원리</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>고밀도 관찰의 힘</h3>
+          <p>변화가 일어나는 찰나를 포착하여 학습의 인과 메커니즘을 밝혀냄</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>중첩 파동의 지혜</h3>
+          <p>학습은 계단이 아닌 파도이며, 도약 직전의 혼란(변동성)을 포용함</p>
+        </div>
+        <div class="card">
+          <h3>AI 융합의 미래</h3>
+          <p>토픽 모델링과 MMLA로 질적 깊이와 거시적 확장성을 동시 달성</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 11의 모든 핵심 교훈을 3대 축(고밀도 관찰, 중첩 파동, AI 융합)으로 압축 정리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>미시발생적 방법은 학습과학이 단순한 교육 통계를 넘어 '인간 인지의 진정한 과학'으로 자리매김하게 한 결정적 방법론입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"여러분의 연구에 미시발생적 관점을 도입한다면 어떤 새로운 발견을 할 수 있을까요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Looking Ahead to Chapter 12 -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">다음 챕터 예고 · Part II</span>
+      <h2 class="slide-title">다음 여정: Chapter 12 교육 평가 설계 (Assessment in Education)</h2>
+      <p class="slide-subtitle">제임스 펠레그리노(James W. Pellegrino)의 평가 삼각형과 증거 중심 설계(ECD)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 11 vs Ch 12 연계성</h3>
+          <ul>
+            <li><strong>Ch 11 미시발생 연구</strong>: 학습 과정(Process)의 순간순간 미세 궤적 추적</li>
+            <li><strong>Ch 12 교육 평가 설계</strong>: 학습과학 이론에 기반하여 인지(Cognition), 관찰(Observation), 해석(Interpretation)을 일치시키는 평가 시스템 구축</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 Part II 방법론의 완결</h3>
+          <p>DBR ➔ 상호작용 분석 ➔ 미시발생 ➔ 평가 설계(ECD) ➔ 학습분석학(LA/EDM)으로 이어지는 완벽한 방법론 체계</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 11을 마무리하고, 다음 챕터인 Chapter 12(Assessment in Education)와의 유기적 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>펠레그리노의 '평가 삼각형(Assessment Triangle)'과 '증거 중심 설계(Evidence-Centered Design, ECD)'는 학습과학의 인지 모델을 표준 평가에 접목하는 최고 권위의 이론입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 12를 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 11: Microgenetic Methods (Bruce L. Sherin & Clark A. Chinn)</div>
+    <div class="footer-center" id="slide-counter">01 / 13</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch11_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 11: Microgenetic Methods - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter11_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

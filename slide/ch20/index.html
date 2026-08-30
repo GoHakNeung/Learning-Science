@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 20: Computer-Supported Collaborative Learning (CSCL)</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 20 · Part IV CSCL Core</span>
+      <h1 class="slide-title">Computer-Supported Collaborative Learning</h1>
+      <p class="slide-subtitle">CSCL: 컴퓨터 지원 협력 학습 — 개인의 뇌를 넘어 집단 인지와 상호작용적 의미구성으로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Gerry Stahl</strong>, <strong>Timothy Koschmann</strong>, & <strong>Daniel D. Suthers</strong></p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 401–422)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다 (20.0 ~ 20.5)</h3>
+          <ul>
+            <li><strong>20.0 CSCL 정의</strong>: 함께 학습하는 과정을 매개하는 기술</li>
+            <li><strong>20.1 교육 속 CSCL</strong>: 협동(분업) vs 협력(공동 해결)</li>
+            <li><strong>20.2 5대 역사적 패러다임 전환</strong> (개인 ➔ 집단, 표상 ➔ 의미구성)</li>
+            <li><strong>20.3 집단 인지 & VMT 시스템</strong>: 지표적 참조(Deictic Referencing)</li>
+            <li><strong>20.4 미래 연구 과제</strong>: 멀티모달 분석 & 오케스트레이션 스크립트</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 학습과학의 대표 분과인 CSCL(Computer-Supported Collaborative Learning)의 역사적 기원과 이론적 기초를 정립하는 챕터로, 지능이 개인의 뇌 속에 갇힌 것이 아니라 소집단의 상호작용 속에서 출현하는 '집단 인지(Group Cognition)'임을 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>게리 스탈, 티모시 코슈만, 대니얼 서더스는 CSCL이라는 학문 분야를 창시하고 저널(ijCSCL)을 설립한 3대 개척자들입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"두 사람이 함께 수학 문제를 풀 때 일어나는 번뜩이는 통찰은 누구의 머릿속에서 나온 것일까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 20.1 CSCL within Education & Cooperative vs Collaborative -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">교육적 위치 · Section 20.1</span>
+      <h2 class="slide-title">20.1 교육 속의 CSCL: 협동(Cooperative) vs 협력(Collaborative)</h2>
+      <p class="slide-subtitle">단순한 과제 분업을 넘어, 공동 문제 공간(JPS)을 구축하는 진정한 협력의 조건</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">🧩 협동 학습 (Cooperative Learning)</h3>
+          <ul>
+            <li>과제를 여러 조각으로 나누어 각자 수행 (분업식 진행)</li>
+            <li>마지막에 개별 결과물을 물리적으로 합침</li>
+            <li><strong>한계</strong>: 상호작용적 의미구성이나 개념적 갈등 조정이 일어나지 않음</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🤝 협력 학습 (Collaborative Learning)</h3>
+          <ul>
+            <li>문제해결의 모든 단계를 <strong>처음부터 끝까지 함께(Jointly)</strong> 수행</li>
+            <li><strong>공동 문제 공간 (Joint Problem Space: JPS)</strong>을 지속적으로 유지·조율</li>
+            <li><strong>효과</strong>: 개인의 지식을 초월하는 새로운 집단적 통찰 창출</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>20.1절의 핵심 주제인 '협동(Cooperative)'과 '협력(Collaborative)'의 본질적 차이를 명확히 구분합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>로셸과 티즐리(Roschelle & Teasley, 1995)의 정의: 협력은 단순한 노동 분업이 아니라, 공유된 이해를 구축하고 유지하기 위한 동기화된 지속적 활동입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>모둠 과제에서 "너는 1번 풀고, 나는 2번 풀자"는 협동이지 협력이 아님을 지적하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: 20.2 Five Historical Paradigm Shifts -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">패러다임 전환 · Section 20.2</span>
+      <h2 class="slide-title">20.2 CSCL의 5대 역사적 패러다임 전환 (Paradigm Shifts)</h2>
+      <p class="slide-subtitle">인지과학과 컴퓨터 교육의 전통적 전제를 전복하며 탄생한 CSCL의 학문적 궤적</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. AI 튜터 ➔ 협력 지원 기술 (20.2.2)</h3>
+          <p>교사를 대체하는 지능형 컴퓨터에서, <strong>동료 간 사회적 상호작용을 촉진하고 매개하는 기술</strong>로 전환</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 개인 ➔ 상호작용 소집단 (20.2.3)</h3>
+          <p>분석 단위를 고립된 개별 학습자의 뇌에서 <strong>소집단의 담화와 상호작용 연쇄</strong>로 이동</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">3. 심적 표상 ➔ 상호작용적 의미구성 (20.2.4)</h3>
+          <p>머릿속 멘탈 모델 측정에서 <strong>대화와 도구 조작 속에서 일어나는 의미 협상</strong> 분석으로 전환</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">4. 양적 비교 ➔ 미시 사례분석 (20.2.5)</h3>
+          <p>사전-사후 검사 점수 비교에서 <strong>에스노메소돌로지 대화분석(CA) 및 상호작용분석(IA)</strong>으로 전환</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>20.2절(20.2.1~20.2.5)에 제시된 CSCL의 5대 패러다임 전환을 체계적으로 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>CSCL은 데카르트적 개인주의 인지과학에 반기를 들고, 지능과 학습이 사회적 기호와 도구의 매개를 통해 일어난다는 비고츠키-가핑클-헤겔의 철학적 계보를 잇습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>CSCL이 단순한 기술 적용 분야가 아니라 인지과학 전체의 패러다임을 바꾼 혁명임을 강조하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: 20.3.1 Group Cognition & Intersubjectivity -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">핵심 이론 · Section 20.3.1</span>
+      <h2 class="slide-title">20.3.1 새로운 학습관: 집단 인지 (Group Cognition)</h2>
+      <p class="slide-subtitle">개인의 두개골을 넘어 소집단 대화와 도구의 상호작용 속에서 출현하는 지능 (Stahl, 2006)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🧠 집단 인지 (Group Cognition)의 원리</h3>
+          <ul>
+            <li>학습은 단일 개인의 뇌 속에서만 일어나는 것이 아님</li>
+            <li>소집단 구성원들이 주고받는 발화의 연쇄, 제스처, 공유 화면 조작 속에서 <strong>새로운 의미가 창발(Emerge)</strong></li>
+            <li>개인 인지는 이러한 집단 인지 과정이 내면화된 결과물임</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🌐 상호주관성 (Intersubjectivity)</h3>
+          <ul>
+            <li>타인의 마음을 완벽히 읽는 것이 아니라, <strong>"우리가 지금 동일한 상황을 공유하고 있는가?"</strong>를 대화로 확인</li>
+            <li>불일치(Breakdown) 발생 시 수리(Repair) 작업을 통해 공통 기반 재구축</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>20.3.1절의 집단 인지(Group Cognition)와 상호주관성(Intersubjectivity) 이론을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>게리 스탈 교수의 핵심 주장: "작은 소집단이야말로 인지가 창발하는 가장 작고 풍요로운 분석 단위이다."</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>이어지는 슬라이드에서 이를 지원하기 위한 대표 소프트웨어 VMT를 살펴봅니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: 20.3.2 VMT System & Deictic Referencing -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">시스템 설계 · Section 20.3.2</span>
+      <h2 class="slide-title">20.3.2 가상 수학 팀 (VMT)과 지표적 참조 도구</h2>
+      <p class="slide-subtitle">텍스트 채팅과 공유 기하학 판의 실시간 연동 및 시선 동기화 (Stahl, 2009)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📐 이중 상호작용 공간 (Dual Space)</h3>
+          <ul>
+            <li><strong>담화 공간</strong>: 실시간 동기식 텍스트 채팅창</li>
+            <li><strong>작업 공간</strong>: 다중 사용자가 동시에 도형을 작도하는 GeoGebra 화이트보드</li>
+            <li>두 공간의 조작 로그가 하나의 시간축에 완벽히 동기화 기록</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🎯 지표적 참조 (Deictic Referencing)</h3>
+          <ul>
+            <li>채팅창에서 "저기 있는 저 선(that line)"이라고 타이핑하며 화살표로 화이트보드의 선분 지목</li>
+            <li>원격 참여자들의 <strong>시선과 주의(Joint Attention)</strong>를 정확한 작도 위치로 즉각 정렬</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>20.3.2절의 VMT(Virtual Math Teams) 시스템 아키텍처와 지표적 참조(Deictic Referencing)의 학습과학적 중요성을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>온라인 협업에서 "그거 있잖아 저거"라는 모호한 지시어는 혼란을 야기합니다. VMT의 지표적 화살표 도구는 원격 참여자 간의 상호주관성을 비약적으로 높입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>원격 협업 툴(Figma, Miro, Google Docs)에서 실시간 커서가 왜 강력한지 VMT 이론과 연결하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: 20.3.3 Micro Conversation Analysis & Sequentiality -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">분석 방법론 · Section 20.3.3~20.3.5</span>
+      <h2 class="slide-title">20.3.3 미시 대화분석(CA)과 순차성(Sequentiality)</h2>
+      <p class="slide-subtitle">발화를 쪼개어 코딩하지 않고, 대화 턴(Turn)의 연쇄 맥락 속에서 의미 구성을 추적</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">❌ 정적 코딩 체계의 한계</h3>
+          <ul>
+            <li>발화 하나하나를 '질문', '동의', '반박'으로 독립 분류</li>
+            <li><strong>맹점</strong>: 앞 발화와의 인과적 맥락과 턴 사이의 의미 협상 과정이 증발함</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✅ 순차성 분석 (Sequential Turn Analysis)</h3>
+          <ul>
+            <li>에스노메소돌로지(민속방법론) 대화분석(CA) 적용</li>
+            <li>A의 발화에 대해 B가 어떻게 반응했는가(인접 쌍: Adjacency Pairs)를 통해 실제 소통된 의미 규명</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>20.3.3절과 20.3.4절의 CSCL 미시 상호작용 분석 방법론을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>코슈만과 스탈 교수는 양적 빈도 코딩이 협력의 질적 메커니즘을 왜곡한다고 강력히 비판했습니다. 발화의 맥락적 순차성을 추적하는 것이 CSCL 연구의 정수입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>대화분석(CA)의 제퍼슨 전사법이 연구자에게 주는 엄밀성을 설명하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: 20.4 Future Directions & Multimodality -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">미래 연구 · Section 20.4</span>
+      <h2 class="slide-title">20.4 CSCL의 미래 동향: 멀티모달 융합과 오케스트레이션</h2>
+      <p class="slide-subtitle">시선 추적(Dual Eye-Tracking), 생체 신호, 그리고 적응형 협업 스크립트</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 멀티모달 상호작용 (MMLA)</h3>
+          <p>텍스트 로그를 넘어 이중 안구 추적(Gaze Synchrony), 표정, 제스처, 생체 신호를 융합 분석</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 오케스트레이션 스크립트</h3>
+          <p>모둠 간 지식 불균형과 무임승차를 방지하고 최적의 협업 역할을 부여하는 스마트 스크립트</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">3. 글로벌 크로스보더 협력</h3>
+          <p>언어와 문화가 다른 다국적 학습자들이 실시간 AI 통역을 매개로 함께 복잡 문제를 해결</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>20.4절의 미래 연구 과제(멀티모달 학습분석학, 협업 스크립트, 글로벌 협업)를 조망합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>최신 CSCL은 AI 기반 협업 스크립트와 시선 동기화 분석을 통해 실시간으로 집단 인지의 질을 진단하고 개입합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>AI가 협력 학습의 중재자(Mediator)로 어떻게 기여할 수 있는지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Summary & Looking Ahead to Ch 21 -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 20.5</span>
+      <h2 class="slide-title">20.5 Chapter 20 총괄 결론 & Chapter 21 논증 학습 예고</h2>
+      <p class="slide-subtitle">아이디어를 발전시키는 핵심 담화 메커니즘, '논증 학습(Arguing to Learn)'으로!</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌟 Ch 20 CSCL의 핵심 교훈</h3>
+          <ul>
+            <li>1. 인지는 두개골 속이 아니라 상호작용 속에서 피어난다</li>
+            <li>2. 분업(협동) 대신 진정한 공동 문제 공간(협력)을 구축하라</li>
+            <li>3. 지표적 참조 도구로 시선과 담화를 동기화하라</li>
+            <li>4. 턴의 연쇄 맥락(순차성)을 미시 분석하라</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🚀 Chapter 21 예고: 논증 학습 (Arguing to Learn)</h3>
+          <p><strong>Jerry Andriessen & Michael Baker</strong></p>
+          <p>상호작용적 의미구성의 핵심 엔진! 주장, 근거, 반론을 통해 집단 지성을 한 단계 도약시키는 논증 담화의 세계!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 20(20.0~20.5)을 마무리하고, CSCL 환경에서 가장 핵심적인 담화 형태인 Chapter 21(Arguing to Learn)을 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Chapter 21은 학생들이 서로의 주장을 비판하고 대안을 조율하는 '논증(Argumentation)'이 어떻게 심층 학습을 이끄는지 밝힙니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 21로 나아갑니다.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 20: Computer-Supported Collaborative Learning (Stahl, Koschmann, & Suthers)</div>
+    <div class="footer-center" id="slide-counter">01 / 08</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch20_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 20: CSCL - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter20_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

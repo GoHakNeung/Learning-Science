@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 26: Learning History</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .table-container { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .styled-table th {
+      background: var(--bg-secondary); color: var(--accent-blue);
+      padding: 0.6rem 0.8rem; text-align: left; border-bottom: 2px solid var(--border-color);
+    }
+    .styled-table td {
+      padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);
+      vertical-align: top;
+    }
+
+    .img-container {
+      position: relative; width: 100%; border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--border-color); background: #000; margin-top: 0.5rem; cursor: pointer;
+    }
+    .img-container img { width: 100%; height: auto; max-height: 340px; object-fit: contain; display: block; }
+    .img-caption {
+      padding: 0.4rem 0.6rem; font-size: 0.75rem; color: var(--text-secondary);
+      background: rgba(15, 23, 42, 0.85); text-align: center;
+    }
+
+    #img-modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); z-index: 200; justify-content: center; align-items: center; padding: 2rem;
+    }
+    #img-modal.active { display: flex; }
+    #modal-img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 26 · Part V Historical Thinking</span>
+      <h1 class="slide-title">Learning History</h1>
+      <p class="slide-subtitle">역사 학습: 사실 암기에서 사료 비판과 역사적 사고력으로 — 1차·2차 개념과 마스터 내러티브 해체</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Mario Carretero</strong> (UAM & FLACSO) & <strong>Everardo Perez-Manjarrez</strong> (Harvard Univ.)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 534–553)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다 (26.0 ~ 26.3)</h3>
+          <ul>
+            <li><strong>26.0 역사적 사고의 본질</strong>: 단일 암기 탈피 & 사료 비판</li>
+            <li><strong>26.1 1차 개념 & 2차 메타개념</strong> (Table 26.1 & Figure 26.1)</li>
+            <li><strong>26.2 학교 마스터 내러티브의 6대 왜곡</strong> (영웅주의, 선악 이분법)</li>
+            <li><strong>26.3 다원적 역사 교육</strong>: 다성성(Polyphony) 복원 & 시민성</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 역사를 '연도와 사실 암기 과목'에서 '상충하는 1차 사료를 비판적으로 검증하고 해석하는 역사적 사고력(Historical Thinking)'으로 재정의하는 인지과학적·사회문화적 분석을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>마리오 카레테로 교수는 역사 교육과 인지 발달, 국가주의 내러티브 연구의 세계적 석학입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"교과서에 실린 역사 이야기는 '과거에 일어난 팩트'일까요, 아니면 역사가들이 구성한 '하나의 해석'일까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 26.1 First- and Second-Order Concepts -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">개념 체계 · Section 26.1</span>
+      <h2 class="slide-title">26.1 역사적 사고를 구성하는 1차 개념과 2차 메타개념</h2>
+      <p class="slide-subtitle">내용 지식(Substantive)과 역사학자의 탐구 도구(Procedural)의 이원 구조 (Lee; Seixas)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🏛️ 1차 실질적 개념 (First-Order)</h3>
+          <ul>
+            <li><strong>역사의 내용 지식</strong>: 왕, 국가, 혁명, 봉건제, 민주주의, 경제</li>
+            <li><strong>인지 발달</strong>: 구체적 인격화(프랑스 혁명=나폴레옹)에서 제도적·구조적 상호작용 개념으로 고도화</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🔍 2차 절차적 메타개념 (Second-Order)</h3>
+          <ul>
+            <li><strong>사료 증거 (Evidence)</strong>: 1차 사료의 신뢰성과 편향 검증</li>
+            <li><strong>인과 관계 (Causation)</strong>: 복합적 다중 원인 및 구조적 요인 분석</li>
+            <li><strong>역사적 맥락화 (Contextualization)</strong>: 당시 시대적 가치관으로 조망</li>
+            <li><strong>연속성과 변화 (Change & Continuity)</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>26.1절의 핵심 이론인 1차 개념(내용 지식)과 2차 메타개념(절차적 탐구 도구)의 구분을 명확히 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>피터 리(Peter Lee)와 세이샤스(Peter Seixas)의 이론: 역사를 배운다는 것은 1차 사실을 많이 외우는 것이 아니라, 2차 메타개념을 통해 과거를 스스로 해석할 줄 아는 것입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>이어지는 슬라이드에서 1차 개념의 4대 발달 축(Table 26.1)을 살펴봅니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Table 26.1 Development of 4 Historical Concepts -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">개념 발달 · Section 26.1 (Table 26.1)</span>
+      <h2 class="slide-title">Table 26.1 역사적 개념의 4대 인지 발달 축</h2>
+      <p class="slide-subtitle">구체적·정적 환원에서 추상적·동적 상호의존성 체계로의 진화 (Carretero & Perez-Manjarrez)</p>
+      <div class="table-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>발달 변화 축</th>
+              <th>역사 개념 영역</th>
+              <th>초기 순진한 이해 (Naive)</th>
+              <th>최종 성숙한 이해 (Mature)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="2"><strong>구체적 ➔ 추상적</strong></td>
+              <td><strong>사실 (Facts)</strong></td>
+              <td>직접 지각되는 피상적 사건 암기</td>
+              <td>심층적 이론적 구조와 맥락적 정의</td>
+            </tr>
+            <tr>
+              <td><strong>제도 (Institutions)</strong></td>
+              <td>특정 영웅 인물의 인격화로 환원</td>
+              <td>사회적 제도 및 법률의 구조적 기능</td>
+            </tr>
+            <tr>
+              <td rowspan="2"><strong>정적 ➔ 동적</strong></td>
+              <td><strong>공존 현실 (Simultaneous)</strong></td>
+              <td>정치, 경제, 사회 영역이 분리되어 보임</td>
+              <td>다차원적 역사 현실의 상호작용 통합</td>
+            </tr>
+            <tr>
+              <td><strong>연속 현실 (Successive)</strong></td>
+              <td>사회 질서를 불변의 자연법칙으로 오해</td>
+              <td>역사적 변화와 생성을 상대화하여 이해</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>26.1절의 Table 26.1(역사 개념의 4대 발달 축)을 상세히 해설합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>아동은 역사를 '위인들의 행위 모음'으로 단순화하지만, 교육을 통해 사회 제도가 어떻게 형성되고 변화하는지 구조적으로 파악하게 됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들이 역사를 배울 때 겪는 인격화(Personalization)의 한계를 지적하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Figure 26.1 Sourcing Heuristic & Columbus Engraving -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">사료 비판 · Section 26.1</span>
+      <h2 class="slide-title">26.1 1차 사료 분석과 출처 확인 (Sourcing: Figure 26.1)</h2>
+      <p class="slide-subtitle">콜럼버스와 카시케 판화 분석: "역사 그림은 과거의 사진이 아닌, 시대의 해석적 산물이다"</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1.2fr;">
+        <div class="card highlight-card">
+          <h3>🔍 출처 확인(Sourcing) 휴리스틱</h3>
+          <ul>
+            <li><strong>초보자</strong>: 그림을 "당시 사건을 그대로 찍은 사진"으로 순진하게 신뢰</li>
+            <li><strong>역사가적 사고</strong>: 사건 100년 후 유럽 판화가(Theodore de Bry)가 그린 '역사학적 인공물'임을 간파</li>
+            <li>누가, 왜, 어떤 이데올로기로 제작했는가 비판적 질문</li>
+          </ul>
+        </div>
+        <div class="img-container" onclick="openModal('images/fig26_1.png')">
+          <img src="images/fig26_1.png" alt="Figure 26.1 Columbus receives presents from the Cacique">
+          <div class="img-caption">🔍 [Figure 26.1] 테오도르 드 브리의 판화 (1594) 사료 분석 (클릭하여 확대)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>26.1절의 핵심 도판인 Figure 26.1(콜럼버스와 카시케 판화 분석)을 통해 와인버그(Wineburg)의 출처 확인(Sourcing) 휴리스틱을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>카레테로의 실증 연구: 12~14세 학생들은 그림을 실재의 복사본으로 믿는 반면, 16세 이상과 전문가는 그림의 정치적 제작 의도를 읽어냅니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>사료를 볼 때 "이 문서는 누가, 누구를 위해 썼을까?"를 먼저 묻는 습관을 강조하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: 26.2 Master Narratives & 6 Distortions -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">내러티브 해체 · Section 26.2</span>
+      <h2 class="slide-title">26.2 학교 마스터 내러티브의 6대 인지·서사적 왜곡</h2>
+      <p class="slide-subtitle">국가 정체성 형성을 위해 조작된 공식 역사 서사의 인지적 함정 (Carretero & Bermudez, 2012)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">1. 허구적 주체 설정</h3>
+          <p>'우리 민족'이 수천 년 전부터 동일한 본질로 존재해 왔다는 신화적 주체 상정</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">2. 감정적 동일시</h3>
+          <p>역사적 고난과 승리를 나와 국가의 일체화로 받아들이며 무비판적 애국심 유도</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">3. 영웅 중심주의</h3>
+          <p>구조적 원인을 지우고 소수 위인의 영웅적 결단으로 역사를 단순화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-blue);">
+          <h3>4. 단선적 자유 탐색</h3>
+          <p>역사를 '자유와 영토 회복'을 향한 필연적인 단선적 진보 서사로 포장</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">5. 도덕적 선악 이분법</h3>
+          <p>아군(선) vs 적군(악)의 유치한 이분법으로 복합적 국제 갈등을 환원</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>6. 낭만적 본질주의</h3>
+          <p>민족의 문화적 본질이 불변의 순수성을 지닌다는 본질주의적 망상</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>26.2절(26.2.1~26.2.6)에 체계화된 학교 마스터 내러티브의 6가지 서사적 왜곡 구조를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>국가주의 역사 교육은 국민 통합을 위해 역사를 신화화하지만, 이는 비판적 사고력을 마비시키고 타국에 대한 배타적 민족주의를 조장합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리나라 역사 교과서에도 이러한 6대 왜곡 특성이 어떻게 나타나는지 성찰해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: 26.3 Models of History Education & Polyphony -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">미래 모델 · Section 26.3</span>
+      <h2 class="slide-title">26.3 다원적 역사 교육: 다성성(Polyphony) 복원과 시민성</h2>
+      <p class="slide-subtitle">단일 승자 서사에서 소수자의 목소리와 공공 기억의 장소(Memory Sites) 비판으로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🗣️ 열린 다성성 (Polyphony)의 복원</h3>
+          <ul>
+            <li>단 하나의 공식 내러티브가 아닌, 피지배자, 여성, 이민자, 노동자의 목소리 공존</li>
+            <li>상충하는 사료들을 대조하며 <strong>다원적 관점(Perspective Taking)</strong> 형성</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🏛️ 공공 역사와 기억의 장소 해체</h3>
+          <ul>
+            <li>박물관 전시와 기념비가 역사를 어떻게 '정치적으로 소비'하는지 비판적 분석</li>
+            <li>21세기 민주시민으로서의 성찰적 역사 의식(Historical Consciousness) 고양</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>26.3절의 다원적 역사 교육 모델과 공공 역사(Public History) 비판을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>역사 학습의 궁극적 목표는 과거의 정답을 외우는 것이 아니라, 과거의 다양한 목소리를 통해 현재의 민주적 시민 사회를 성찰하는 것입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>논쟁적인 역사적 기념비 철거 문제를 사료 비판적 관점에서 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Summary & Looking Ahead to Ch 27 -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 26.4</span>
+      <h2 class="slide-title">26.4 Chapter 26 총괄 결론 & Chapter 27 문해력 학습 예고</h2>
+      <p class="slide-subtitle">역사 사료의 비판적 해석에서 텍스트 읽기와 쓰기의 인지과학, '문해력 학습 연구'로!</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌟 Ch 26 역사 학습 연구의 핵심 교훈</h3>
+          <ul>
+            <li>1. 역사는 닫힌 사실이 아니라 사료로 구성된 해석이다</li>
+            <li>2. 1차 개념(제도화)과 2차 메타개념(사료, 인과)을 습득하라</li>
+            <li>3. 출처 확인(Sourcing)으로 사료의 의도를 꿰뚫어라</li>
+            <li>4. 마스터 내러티브의 6대 왜곡을 해체하고 다성성을 복원하라</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🚀 Chapter 27 예고: 문해력 학습 (Learning to Be Literate)</h3>
+          <p><strong>Peter Smagorinsky & Richard E. Mayer</strong></p>
+          <p>텍스트 이해와 작문의 인지과학! 선택-조직-통합(SOI) 모델과 디지털 시대의 다중 문해력(Multiliteracies) 탐구!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 26(26.0~26.4)을 정리하고 다음 Chapter 27(문해력 학습 연구: Smagorinsky & Mayer)을 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Chapter 27은 인지심리학의 거두 리처드 메이어 교수와 문학교육학자 피터 스마고린스키 교수가 밝히는 읽기·쓰기의 심층 인지 메커니즘을 다룹니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 27로 나아갑니다.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 26: Learning History (Mario Carretero & Everardo Perez-Manjarrez)</div>
+    <div class="footer-center" id="slide-counter">01 / 07</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Modal for Figure 26.1 Zoom -->
+  <div id="img-modal" onclick="closeModal()">
+    <img id="modal-img" src="" alt="Zoomed Figure">
+  </div>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+    const imgModal = document.getElementById('img-modal');
+    const modalImg = document.getElementById('modal-img');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch26_slide_note_';
+
+    function openModal(src) {
+      modalImg.src = src;
+      imgModal.classList.add('active');
+    }
+    function closeModal() {
+      imgModal.classList.remove('active');
+    }
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 26: Learning History - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter26_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (imgModal.classList.contains('active')) closeModal();
+        else if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

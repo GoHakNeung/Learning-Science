@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 21: Arguing to Learn</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 21 · Part IV Discourse Engine</span>
+      <h1 class="slide-title">Arguing to Learn</h1>
+      <p class="slide-subtitle">논증을 통한 학습: 이기기 위한 논쟁에서 개념적 이해와 지식 구성을 위한 대화로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Jerry Andriessen</strong> (Wise & Munro) & <strong>Michael Baker</strong> (CNRS & Telecom Paris)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 423–442)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다 (21.0 ~ 21.10)</h3>
+          <ul>
+            <li><strong>21.0 논증 학습 vs 논증을 통한 학습</strong>: 협력적 의미구성의 도구</li>
+            <li><strong>21.1 논증 이론 3대 토대</strong>: 툴민 6요소, 월턴 대화 유형, 화용-변증법</li>
+            <li><strong>21.2~21.6 사회-인지적 갈등 & 정서적 안전성</strong> (Emotional Safety)</li>
+            <li><strong>21.9 디지털 논증 비계</strong>: 대화 게임(Digalo), 논증 지도(Belvedere), WISE</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 협력 학습과 집단 인지의 핵심 엔진인 '논증(Argumentation)'을 다루며, 상대를 굴복시키는 승패 토론이 아니라 대상 영역의 심층 개념을 함께 탐구하는 '논증을 통한 학습(Arguing to Learn)'의 메커니즘을 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>네덜란드의 제리 안드리센과 프랑스 국립과학연구원(CNRS)의 마이클 베이커 교수는 교육적 논증 대화 분석 및 다이어그램 도구 연구의 세계적 권위자들입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"토론 수업에서 학생들이 상대를 이기려고만 하다가 감정이 상하는 문제를 어떻게 해결할 수 있을까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 21.0 Learning to Argue vs Arguing to Learn -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">개념 구분 · Section 21.0</span>
+      <h2 class="slide-title">21.0 논증 학습(Learning to Argue) vs 논증을 통한 학습</h2>
+      <p class="slide-subtitle">수사학적 기법의 습득을 넘어, 개념적 공간을 탐구하는 인식적 도구로서의 논증</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">⚔️ 논증 학습 (Learning to Argue)</h3>
+          <ul>
+            <li>수사학적 웅변 및 디베이트 승리 기술 습득</li>
+            <li>상대방의 논리적 허점을 공격하고 자신의 주장 관철</li>
+            <li><strong>초점</strong>: 설득력과 논증 스킬 그 자체</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🔍 논증을 통한 학습 (Arguing to Learn)</h3>
+          <ul>
+            <li>주장, 근거, 반론의 교환을 통해 <strong>지식 영역의 심층 원리 탐구</strong></li>
+            <li>자신의 암묵적 전제를 명시화하고 동료와 함께 멘탈 모델 수정</li>
+            <li><strong>초점</strong>: <strong>개념적 재구조화 (Conceptual Restructuring)</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>21.0절의 핵심 개념인 '논증 학습(수사학 기술)'과 '논증을 통한 학습(개념적 이해의 도구)'을 엄밀히 대비합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학습과학이 주목하는 논증은 승패를 가리는 디베이트가 아니라, 학생들이 미지의 문제 공간(Space of Debate)을 함께 탐험하며 더 나은 설명을 구축하는 '협력적 인식 활동'입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>과학과 수학 교과에서 왜 논증이 개념 이해의 필수 엔진인지 질문을 던지세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: 21.1 Three Theoretical Foundations -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">이론적 토대 · Section 21.1</span>
+      <h2 class="slide-title">21.1 현대 논증 이론의 3대 기둥</h2>
+      <p class="slide-subtitle">툴민의 6요소 모델, 월턴의 대화 유형론, 그리고 판 에메렌의 화용-변증법</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 툴민의 6요소 모델</h3>
+          <p><strong>Stephen Toulmin (1958)</strong></p>
+          <p>주장(Claim), 자료(Data), 보증(Warrant), 뒷받침(Backing), 반론(Rebuttal), 한정(Qualifier) 구조화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 월턴의 대화 유형론</h3>
+          <p><strong>Douglas Walton (1998)</strong></p>
+          <p>설득, 협상, 정보요구 중 <strong>'탐구(Inquiry)'와 '심의(Deliberation)'</strong>가 학습의 핵심</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">3. 화용-변증법 (Pragma)</h3>
+          <p><strong>Van Eemeren & Grootendorst</strong></p>
+          <p>의견 차이를 합리적으로 해결하는 비판적 토론 규범</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>21.1절에 제시된 학습과학의 3대 논증 이론(Toulmin, Walton, Van Eemeren)을 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>툴민의 모델은 주장의 정당성을 검증하는 구조적 틀을 제공하며, 월턴의 이론은 대화의 목표가 '상대 굴복'이 아니라 '진리 탐구'가 되어야 함을 규정합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>이어지는 슬라이드들에서 논증이 어떻게 학습자의 인지적 갈등을 유발하고 해결하는지 살펴봅니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: 21.2 & 21.3 Socio-Cognitive Conflict & Development -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">학습 메커니즘 · Section 21.2~21.3</span>
+      <h2 class="slide-title">21.2 사회-인지적 갈등과 21.3 논증 기술의 발달</h2>
+      <p class="slide-subtitle">동료의 반론이 만드는 인지적 불평형과 아동의 '내편 편향(Myside bias)' 극복</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>⚡ 21.2 사회-인지적 갈등 (Doise & Mugny)</h3>
+          <ul>
+            <li>자신의 주장과 상반된 동료의 반론을 마주할 때 피아제식 <strong>인지적 불평형(Disequilibration)</strong> 발생</li>
+            <li>갈등을 해소하기 위해 자신의 가정을 재검토하고 더 정교한 개념 모델로 재구성</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">📉 21.3 발달적 난제: 내편 편향 (Myside bias)</h3>
+          <ul>
+            <li>초등 아동은 자신의 주장을 뒷받침하는 근거만 찾고 반증을 외면하는 경향 (Kuhn, 1991)</li>
+            <li>타인의 관점을 고려하고 반론을 예측하는 <strong>'역지사지 스캐폴딩'</strong> 필요</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>21.2절의 사회-인지적 갈등 메커니즘과 21.3절의 아동기 논증 발달의 한계(내편 편향)를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>동료와의 건강한 인지적 갈등은 뇌 속 멘탈 모델을 뒤흔들어 깊은 개념 변화를 이끄는 가장 강력한 에너지입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>어떻게 하면 인지적 갈등이 감정적 싸움으로 변질되지 않게 막을 수 있을까요? 다음 슬라이드에서 답을 찾습니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: 21.4 & 21.5 Reasoning Skills & Emotional Safety -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">사회정서 역동 · Section 21.4~21.5</span>
+      <h2 class="slide-title">21.4 추론 능력 향상과 21.5 소집단 내 정서적 안전성</h2>
+      <p class="slide-subtitle">자신의 불완전한 아이디어를 드러낼 수 있는 심리적 안정감과 체면 유지(Face-saving)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🧠 21.4 암묵적 가정의 명시화 (Externalization)</h3>
+          <ul>
+            <li>말로 설명하고 반론에 답하는 과정에서 자신의 지식 공백(Gaps) 자각</li>
+            <li>비판적 평가 기준(Epistemic Criteria)을 스스로 내면화하여 메타인지 고도화</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🛡️ 21.5 정서적 안전성 (Emotional Safety)</h3>
+          <ul>
+            <li>비판이 사람에 대한 인신공격이 아니라 <strong>'아이디어에 대한 탐구'</strong>라는 교실 신뢰 구축</li>
+            <li>동료의 체면(Face)을 살려주는 정중한 대인 윤리(Interpersonal Ethics) 훈련</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>21.4절의 추론 및 메타인지 역량과 21.5절의 정서적 안전성(Emotional Safety) 이론을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>베이커, 안드리센, 얘르벨래(Baker, Andriessen, & Järvelä, 2013)의 연구: 협력적 논증은 고도의 사회정서적 과제이며, 감정적 위협을 느끼는 순간 인지적 학습은 즉각 중단됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교사가 비판적 피드백을 주고받는 규범을 어떻게 모델링해야 하는지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: 21.7 Arguing to Learn in Context -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">교과 적용 · Section 21.7</span>
+      <h2 class="slide-title">21.7 교과 맥락 속에서의 논증 학습 실천</h2>
+      <p class="slide-subtitle">과학적 증거 검증, 역사적 1차 사료 대조, 그리고 사회과학적 쟁점(SSI) 심의</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>🔬 과학 교육 (Science)</h3>
+          <p>가설과 관찰 데이터의 정합성 검증, 이상 현상(Anomalous data)에 대한 반론을 통한 오개념 수정</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">📜 역사 교육 (History)</h3>
+          <p>단일 교과서 암기 탈피, 상충하는 1차 역사 사료들을 대조하며 역사 해석의 다원성과 관점주의 학습</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">🌍 사회·윤리 쟁점 (SSI)</h3>
+          <p>기후 변화, 유전자 편집, AI 윤리 등 정답이 없는 복합 딜레마에 대해 과학적 증거와 도덕적 가치를 심의</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>21.7절의 교과별 논증 학습 실천(과학, 역사, 사회과학 SSI)을 체계적으로 비교 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>교과마다 논증의 규칙과 정당화 기준(Epistemic Criteria)이 다릅니다. 과학에서는 경험적 증거가, 역사에서는 출처의 맥락이, SSI에서는 가치 조율이 핵심입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신의 전공 교과에서 가장 효과적인 논증 과제 주제를 구상해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: 21.9 Electronic Environments & Argument Maps -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">디지털 비계 · Section 21.9</span>
+      <h2 class="slide-title">21.9 디지털 환경에서의 논증: 대화 게임과 논증 지도</h2>
+      <p class="slide-subtitle">Belvedere, Digalo, WISE를 통한 논리 구조의 시각화와 스캐폴딩</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card highlight-card">
+          <h3>🎮 21.9.1 대화 게임 비계 (Digalo)</h3>
+          <p>'주장하기', '이유묻기', '반박하기' 버튼을 누르며 대화 턴을 게임 규칙처럼 수행하도록 구조화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🗺️ 21.9.3 논증 지도 (Belvedere, Argunet)</h3>
+          <p>주장, 근거, 반론을 노드와 화살표 다이어그램으로 시각화하여 논리적 비약과 미탐구 영역을 가시화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet); grid-column: span 2;">
+          <h3 style="color: var(--accent-violet);">🔬 21.9.4 과학 탐구 통합 환경 (WISE, SenseMaker)</h3>
+          <p>시뮬레이션 조작과 증거 바구니(Evidence Basket)를 결합하여, 학생들이 실험 데이터를 끌어다 논증을 완성하도록 지원 (Linn et al.)</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>21.9절(21.9.1~21.9.4)에 제시된 디지털 논증 지원 테크놀로지를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>서더스와 훈트하우젠(Suthers & Hundhausen, 2003)의 연구: 논증 지도(Argument Map)라는 표상적 도구는 학생들이 근거 없는 주장을 삼가고 증거 기반 담화를 지속하도록 유도합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>텍스트 토론보다 다이어그램 논증 지도가 주는 인지적 이점을 짚어주세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Summary & Looking Ahead to Ch 22 -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 21.10</span>
+      <h2 class="slide-title">21.10 Chapter 21 총괄 결론 & Chapter 22 박물관 학습 예고</h2>
+      <p class="slide-subtitle">교실을 넘어 박물관과 과학관으로 확장되는 비형식 학습(Informal Learning)의 세계로!</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌟 Ch 21 논증 학습의 핵심 교훈</h3>
+          <ul>
+            <li>1. 이기려 하지 말고, 개념 공간을 탐구하라</li>
+            <li>2. 사회-인지적 갈등을 멘탈 모델 수정의 촉매로 삼아라</li>
+            <li>3. 정서적 안전성을 보장하여 아이디어를 보호하라</li>
+            <li>4. 논증 지도(Argument Map)로 논리적 구조를 시각화하라</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🚀 Chapter 22 예고: 박물관에서의 비형식 학습</h3>
+          <p><strong>Kevin Crowley, Palmyre Pierroux, & Karen Knutson</strong></p>
+          <p>학교 밖 박물관, 과학관, 미술관에서 가족과 공동체가 만들어내는 생생한 비형식(Informal) 학습 생태계!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 21(21.0~21.10)을 마무리하고, Part IV의 마지막 챕터인 Chapter 22(박물관 비형식 학습)를 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Chapter 22는 교실을 벗어나 박물관과 과학관의 전시물 속에서 가족과 공동체가 어떻게 협력적 대화를 나누는지 밝힙니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>수고하셨습니다! 다음 Chapter 22로 나아갑니다.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 21: Arguing to Learn (Jerry Andriessen & Michael Baker)</div>
+    <div class="footer-center" id="slide-counter">01 / 08</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch21_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 21: Arguing to Learn - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter21_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

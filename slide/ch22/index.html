@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 22: Informal Learning in Museums</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .table-container { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .styled-table th {
+      background: var(--bg-secondary); color: var(--accent-blue);
+      padding: 0.6rem 0.8rem; text-align: left; border-bottom: 2px solid var(--border-color);
+    }
+    .styled-table td {
+      padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);
+      vertical-align: top;
+    }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 22 · Part IV Collaboration Finale</span>
+      <h1 class="slide-title">Informal Learning in Museums</h1>
+      <p class="slide-subtitle">박물관에서의 비형식 학습: 전시물과의 상호작용, 가족의 설명적 담화, 그리고 지역사회 학습 생태계</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Palmyre Pierroux</strong> (Oslo), <strong>Karen Knutson</strong>, & <strong>Kevin Crowley</strong> (Pittsburgh)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 443–463)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다 (22.0 ~ 22.5)</h3>
+          <ul>
+            <li><strong>22.0 역사적 변천</strong>: 유물 보관소 ➔ 참여형 학습 생태계</li>
+            <li><strong>22.1 3대 연구 패러다임</strong> (전송 ➔ 인지 ➔ 사회문화적 생태학)</li>
+            <li><strong>22.2 미디어 풍부 환경</strong>: 진품 유물, 인터랙티브 키오스크, AR</li>
+            <li><strong>22.3 가족 학습</strong>: 전문성의 섬(Islands of Expertise) & 설명적 담화</li>
+            <li><strong>22.4 협력자로서의 박물관</strong>: 메이커스페이스 & 시민 과학</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 제4부 협력과 공동체(Part IV: Learning Together)의 대단원을 장식하는 챕터로, 학교 밖 박물관, 과학관, 미술관에서 가족과 공동체가 전시물과 상호작용하며 형성하는 비형식(Informal) 학습의 생태학적 메커니즘을 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>오슬로 대학교의 팔미레 피에루 교수와 피츠버그 대학교의 케빈 크라울리, 카렌 넛슨 교수는 박물관 비디오 상호작용 분석 및 가족 과학 소양 연구의 세계적 석학들입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"아이와 함께 박물관에 갔을 때, 아이가 특정 전시물에 30분 이상 푹 빠져 탐구하게 만드는 비결은 무엇일까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 22.0 & 22.1 Historical Evolution & Research Paradigms -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">연구 패러다임 · Section 22.0~22.1</span>
+      <h2 class="slide-title">22.0 박물관의 역사적 진화 & 22.1 3대 연구 패러다임</h2>
+      <p class="slide-subtitle">유물 보관소에서 인지적 조작을 거쳐 사회문화적 학습 생태계(Learning Ecosystems)로</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 전송 모델 (19C~20C 초)</h3>
+          <p><strong>Transmission Model</strong></p>
+          <p>전시 패널 텍스트 지식이 관람객의 머릿속으로 얼마나 전달되었는가? (출구 설문, 사실 회상 검사)</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 인지적 구성주의 (20C 말)</h3>
+          <p><strong>Hands-on Constructivism</strong></p>
+          <p>인터랙티브 전시물 조작을 통해 관람객이 자신의 멘탈 모델을 어떻게 수정하는가? (사전-사후 검사)</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">3. 사회문화·생태학 (현재)</h3>
+          <p><strong>Sociocultural & Ecological</strong></p>
+          <p>가족과 동료들이 전시물 앞에서 <strong>어떤 대화(Talk)를 나누며 관심과 정체성을 발전시키는가?</strong></p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>22.0절과 22.1절의 박물관 역사와 3대 연구 패러다임(전송 ➔ 구성주의 ➔ 사회문화적 생태학)을 체계적으로 비교 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학습 생태계(Learning Ecosystems) 관점: 박물관에서의 2시간은 고립된 사건이 아니라, 가정에서의 독서, 학교 수업, 온라인 취미로 이어지는 거대한 관심 발전 궤적의 한 정거장입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>박물관 평가 기준이 '단순 방문자 수'에서 '가족 간 의미 있는 대화의 발생'으로 진화했음을 강조하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: 22.2 Museums: Media-Rich Environments -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">미디어 생태계 · Section 22.2</span>
+      <h2 class="slide-title">22.2 미디어 풍부 환경으로서의 박물관 다감각 상호작용</h2>
+      <p class="slide-subtitle">진품 유물의 현장감과 디지털 인터랙티브 미디어의 공존 (Pierroux et al., 2022)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🏛️ 진품 유물(Authentic Artifacts)의 힘</h3>
+          <ul>
+            <li>진짜 공룡 뼈, 달 착륙선 부품, 거대 미술 원화가 주는 압도적 아우라와 경외감(Awe)</li>
+            <li>물리적 공간의 크기와 조명이 학습자의 감각적 몰입을 자극</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">📱 다중 매체 증강 (Multimodal Ecology)</h3>
+          <ul>
+            <li>인터랙티브 터치 키오스크, 프로젝션 매핑, 증강현실(AR) 해설</li>
+            <li>관람객 스스로 이동 궤적을 선택하는 주도적 길찾기(Wayfinding) 지원</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>22.2절에 제시된 박물관의 미디어 풍부 환경과 공간적 여건(Affordances)을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>디지털 스크린이 물리적 유물을 가리지 않고, 유물에 대한 관람객의 관찰과 대화를 증폭시키는 '조용한 조력자'로 작동해야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>박물관에서 스마트폰이나 AR 가이드가 유물 감상을 방해하지 않고 촉진하게 만드는 설계 팁을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: 22.3.1 Islands of Expertise -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">가족 학습 ① · Section 22.3</span>
+      <h2 class="slide-title">22.3.1 '전문성의 섬' (Islands of Expertise)</h2>
+      <p class="slide-subtitle">아동이 가족과의 일상 대화를 통해 구축한 깊은 지식과 관심의 연결망 (Crowley & Jacobs, 2002)</p>
+      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
+        <div class="card highlight-card">
+          <h3>🏝️ '전문성의 섬' 형성 메커니즘</h3>
+          <ul>
+            <li>아이가 특정 주제(공룡, 벅스, 천문학, 기차)에 강한 흥미를 가질 때</li>
+            <li>부모와의 일상 대화, 동화책 읽기, 장난감 놀이를 통해 <strong>깊은 어휘와 개념 네트워크가 하나의 '섬(Island)'처럼 축적</strong></li>
+            <li>이 섬은 이후 다른 과학 교과 영역을 탐구할 때 강력한 전이의 발판(Bridgehead)이 됨</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🌟 박물관의 역할: 기폭제</h3>
+          <ul>
+            <li>가정에서 싹튼 전문성의 섬을 실제 전시물과 대면시키며 비약적으로 확장</li>
+            <li>아동이 "내가 아는 공룡이다!"라고 외치며 스스로 해설자가 되는 효능감 체험</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>22.3절의 대표 이론인 크라울리와 제이콥스(Crowley & Jacobs, 2002)의 '전문성의 섬(Islands of Expertise)'을 완벽히 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>아동의 초기 관심은 단순한 취미가 아닙니다. 가족의 사회적 상호작용 속에서 형성된 '전문성의 섬'은 평생에 걸친 과학적 소양(Scientific Literacy)의 모태가 됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>어린 시절 자신이 푹 빠졌던 관심 영역이 현재의 학업이나 진로에 어떤 영향을 주었는지 회고해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: 22.3.2 Parental Explanatory Talk & Gender Gap -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">가족 학습 ② · Section 22.3</span>
+      <h2 class="slide-title">22.3.2 부모의 설명적 담화(Explanatory Talk) & 성별 격차</h2>
+      <p class="slide-subtitle">부모의 짧은 인과적 설명 한마디가 아동의 탐구 몰입을 3배 연장한다 (Crowley et al., 2001)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🗣️ 설명적 담화의 마법 (Crowley et al., 2001)</h3>
+          <ul>
+            <li>부모가 "왜 그럴까?", "저건 우리가 지난번에 본 거랑 원리가 같네" 인과적 설명 제공 시:</li>
+            <li>➔ <strong>아동의 전시물 조작 시간이 2~3배 연장</strong>되고 고차원 탐구 전략 구사</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">⚖️ 성별 격차 발견과 포용적 전시 비계</h3>
+          <ul>
+            <li>자연사/과학관 관찰 연구: 부모들이 <strong>아들에게 딸보다 3배 더 많은 인과적 과학 설명</strong>을 제공하던 무의식적 편향 포착</li>
+            <li>➔ 부모에게 대화 질문 힌트를 제공하는 포용적 안내판 설계 필수</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>22.3절의 부모 설명적 담화(Parental Explanatory Talk) 실증 연구와 과학관 내 성별 격차(Gender Gap) 발견을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>크라울리 교수의 기념비적 비디오 연구: 부모의 인과적 설명은 아동의 산만한 조작을 체계적인 가설 검증 탐구로 변환시키는 결정적 비계(Scaffolding)입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>가족 대상 안내판에 "아이에게 이렇게 질문해 보세요"라는 프롬프트가 왜 중요한지 설명하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: 22.4 Museums as Collaborators: PBL & Makerspaces -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">협력적 확장 · Section 22.4</span>
+      <h2 class="slide-title">22.4 협력자로서의 박물관: 학교 연계 PBL & 메이커 공간</h2>
+      <p class="slide-subtitle">일회성 소풍(Field trip)을 넘어, 교실과 지역사회를 잇는 경계 넘나들기(Boundary Crossing)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🏫 학교-박물관 심층 연계 (Curriculum-Linked PBL)</h3>
+          <ul>
+            <li>교실 사전 탐구 ➔ 박물관 심층 데이터 수집 ➔ 교실 사후 종합의 3단계 프로젝트</li>
+            <li>교과서 추상 개념과 실제 박물관 유물의 유기적 결합</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🛠️ 박물관 메이커스페이스 (Museum Makerspaces)</h3>
+          <ul>
+            <li>전시물 감상 후, 팹랩에서 아두이노와 3D 프린터로 원리를 직접 만들어보는 창작 실습</li>
+            <li>관람객에서 <strong>능동적 창작자(Maker)</strong>로의 정체성 도약</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>22.4절의 박물관 협력 확장 모델(학교 연계 PBL, 메이커스페이스)을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>박물관은 1년에 한 번 가는 소풍 장소가 아니라, 학교 교육과정과 상시적으로 호흡하며 실천적 경험을 제공하는 '지역 학습 연구소'로 기능해야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교 교사와 박물관 에듀케이터의 협력 수업 기획 방안을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: 22.4 Citizen Science & Youth Curation -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">시민 참여 · Section 22.4</span>
+      <h2 class="slide-title">22.4 시민 과학(Citizen Science) & 청소년 큐레이션</h2>
+      <p class="slide-subtitle">관람객이 과학 연구의 주체가 되고, 소외계층 청소년이 전시 기획자로 성장</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">🌿 시민 과학 프로젝트 (Citizen Science)</h3>
+          <ul>
+            <li>관람객이 박물관 학예사와 함께 지역 하천 수질 측정 및 조류 이동 경로 데이터 수집</li>
+            <li>진정한 과학 실천 공동체(Community of Practice)의 정당한 주변적 참여(LPP)</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🎤 청소년 도슨트 & 큐레이션 (Youth Curation)</h3>
+          <ul>
+            <li>지역 청소년들이 직접 지역 역사와 환경 문제를 주제로 전시 기획 및 해설 진행</li>
+            <li>소외계층 청소년의 문화적 목소리 표출 및 과학적 자아 효능감 확립</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>22.4절의 시민 과학(Citizen Science)과 청소년 큐레이션 프로그램을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학습자가 전문가의 연구에 실제 기여하고(시민과학), 자신의 공동체 이야기를 전시로 구성할 때(청소년 큐레이션), 가장 강력한 정체성 변화가 일어납니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>비형식 학습이 포용적 교육 형평성에 기여하는 방식을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Part IV Grand Finale Table -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">Part IV 대단원 · 총괄 맵</span>
+      <h2 class="slide-title">제4부 협력과 공동체(Part IV) 4개 챕터 총괄</h2>
+      <p class="slide-subtitle">지식 구축, CSCL, 논증 대화, 그리고 박물관 학습 생태계의 완벽한 조화</p>
+      <div class="table-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>챕터</th>
+              <th>협력 & 공동체 영역</th>
+              <th>핵심 메커니즘</th>
+              <th>대표 시스템 / 이론</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ch 19 (Scardamalia)</strong></td>
+              <td>지식 구축과 지식 창조</td>
+              <td>세계 3 인식적 인공물, Rise Above</td>
+              <td>Knowledge Forum, 8대 분석학</td>
+            </tr>
+            <tr>
+              <td><strong>Ch 20 (Stahl)</strong></td>
+              <td>컴퓨터 매개 협력 학습 (CSCL)</td>
+              <td>집단 인지, 상호주관성, 순차성</td>
+              <td>가상 수학 팀(VMT), 지표적 참조</td>
+            </tr>
+            <tr>
+              <td><strong>Ch 21 (Andriessen)</strong></td>
+              <td>논증을 통한 학습 (Arguing to Learn)</td>
+              <td>사회-인지적 갈등, 정서적 안전성</td>
+              <td>툴민 모델, 논증 지도(Belvedere)</td>
+            </tr>
+            <tr>
+              <td><strong>Ch 22 (Pierroux)</strong></td>
+              <td>박물관에서의 비형식 학습</td>
+              <td>전문성의 섬, 설명적 담화, 학습생태계</td>
+              <td>가족 담화 분석, 시민 과학, 메이커</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>제4부 협력과 공동체(Part IV: Learning Together) 전체 4개 챕터의 학술적 성과를 총괄 정리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Part IV는 인간의 학습이 닫힌 개인의 뇌가 아니라, 공동체와 네트워크, 논증 대화, 그리고 삶의 생태계 속에서 피어나는 '사회적이고 문화적인 실천'임을 완벽히 증명했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>4개 챕터 중 자신의 연구나 수업에 가장 큰 영감을 준 챕터를 꼽아보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Looking Ahead to Part V Disciplines -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">다음 파트 예고 · Part V</span>
+      <h2 class="slide-title">다음 여정: 제5부 교과 지식 학습(Part V: Disciplines) 개막!</h2>
+      <p class="slide-subtitle">Chapter 23 수학 학습 연구 (Research in Mathematics Learning: Lieven Verschaffel et al.)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📚 Part V 교과 지식 학습 6개 챕터 라인업</h3>
+          <ul>
+            <li><strong>Ch 23</strong>: 수학 학습 연구 (Verschaffel et al.)</li>
+            <li><strong>Ch 24</strong>: 과학 학습 연구 (Songer & Kali)</li>
+            <li><strong>Ch 25</strong>: 역사 학습 연구 (VanSledright & Limón)</li>
+            <li><strong>Ch 26</strong>: 문해력과 읽기 학습 (Goldman et al.)</li>
+            <li><strong>Ch 27</strong>: 컴퓨터 프로그래밍 및 컴퓨팅 사고 (Guzdial)</li>
+            <li><strong>Ch 28</strong>: 예술 및 창의성 학습 (Hetland et al.)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 일반 이론에서 구체적 교과 본질로!</h3>
+          <p>수학, 과학, 역사, 국어, 컴퓨터, 예술 교과의 고유한 멘탈 모델과 개념 변화의 심층으로 들어갑니다!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Part IV의 완결을 축하하고, 다음 시간부터 펼쳐질 제5부 교과 지식 학습(Part V: Learning Disciplinary Knowledge)의 장대한 여정을 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Chapter 23은 수학적 모델링, 비례 추론, 분수 오개념을 다루는 세계적 수학 교육학자 리벤 베르스하펠 교수의 챕터입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>Part IV 완결을 축하하며 본 강의를 마칩니다. 수고하셨습니다!</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 22: Informal Learning in Museums (Pierroux, Knutson, & Crowley)</div>
+    <div class="footer-center" id="slide-counter">01 / 09</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch22_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 22: Informal Learning in Museums - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter22_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

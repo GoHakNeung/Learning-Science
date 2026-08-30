@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 12: Assessment in Education</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .split-layout {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1rem; width: 100%; align-items: stretch;
+    }
+
+    .image-box {
+      background: var(--bg-secondary); border: 1px solid var(--border-color);
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 0.5rem; cursor: pointer;
+      position: relative;
+    }
+    .image-box img {
+      max-width: 100%; max-height: 380px; object-fit: contain; border-radius: 8px;
+    }
+    .image-caption {
+      font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;
+    }
+
+    .table-container {
+      width: 100%; overflow-x: auto; margin-top: 0.5rem;
+    }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .styled-table th {
+      background: var(--bg-secondary); color: var(--accent-blue);
+      padding: 0.6rem 0.8rem; text-align: left; border-bottom: 2px solid var(--border-color);
+    }
+    .styled-table td {
+      padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .styled-table tr:hover td { background: rgba(56, 189, 248, 0.05); }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Modal for Image Zoom */
+    #modal {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
+      z-index: 200; display: none; justify-content: center; align-items: center; cursor: zoom-out;
+    }
+    #modal.active { display: flex; }
+    #modal img { max-width: 92vw; max-height: 92vh; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 12 · Part II Methodologies</span>
+      <h1 class="slide-title">Assessment in Education</h1>
+      <p class="slide-subtitle">학습과학 관점의 교육 평가 설계: 평가 삼각형, 증거 중심 설계, 그리고 균형 잡힌 평가 체제</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>James W. Pellegrino</strong> (University of Illinois at Chicago)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 238–258)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다</h3>
+          <ul>
+            <li><strong>평가 삼각형 (Assessment Triangle, Figure 12.1)</strong>: 인지-관찰-해석</li>
+            <li><strong>증거 중심 설계 (ECD, Figure 12.2)</strong>: 학생 모델, 과제 모델, 증거 모델</li>
+            <li><strong>학습 진행 경로 (Learning Progressions, LPs)</strong></li>
+            <li><strong>균형 잡힌 평가 체제 (Balanced Assessment, Figure 12.3)</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 학습과학과 심리측정학의 융합을 이끈 제임스 펠레그리노 교수의 평가 이론을 바탕으로, 단순 지필고사를 넘어 고차원적 인지 역량을 측정하는 '증거 중심 평가 설계'의 전모를 탐구합니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>펠레그리노 교수는 2001년 NRC의 전설적 보고서 『Knowing What Students Know』의 위원장으로서, 평가를 단순한 시험지가 아니라 '증거에 기반한 인과적 추론 과정(Process of reasoning from evidence)'으로 재정의했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"우리가 학생들에게 시험을 볼 때, 그 점수가 정말 학생 머릿속의 지식을 정확히 대변하고 있다고 확신할 수 있을까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 3 Purposes of Assessment -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">평가의 목적 · Section 12.1</span>
+      <h2 class="slide-title">교육 평가의 3대 핵심 목적과 시공간 척도</h2>
+      <p class="slide-subtitle">평가는 단일한 만능 도구가 아니며, 목적에 따라 명확히 차별화되어야 한다 (Berman et al., 2019)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 학습을 돕기 위한 평가</h3>
+          <p><strong>형성평가 (Formative)</strong></p>
+          <p>수업 중 학생의 오개념과 인지적 병목을 진단하고, 교사의 맞춤형 처방 및 학생의 자기조절 피드백 제공 (Micro/Meso)</p>
+        </div>
+        <div class="card">
+          <h3>2. 학습에 대한 평가</h3>
+          <p><strong>총괄평가 (Summative)</strong></p>
+          <p>단원, 학기 종료 후 학습자의 최종 역량 도달 수준을 판정하고 성적 부여 및 자격 인증 (Meso/Macro)</p>
+        </div>
+        <div class="card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">3. 프로그램/정책 평가</h3>
+          <p><strong>책무성 평가 (Policy)</strong></p>
+          <p>학교 및 국가 수준에서 교육과정의 효과성을 검증하고 시스템을 모니터링 (NAEP, PISA, 수능) (Macro)</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>교육 평가의 3대 목적(형성, 총괄, 정책)과 시공간 척도(Micro, Meso, Macro)의 상호 관계를 명확히 이해시킵니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>하나의 평가 도구로 세 가지 목적을 모두 달성하려는 시도는 대부분 실패합니다. 각 목적마다 요구되는 인지 모델의 해상도와 신뢰도 기준이 완전히 다르기 때문입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교실에서 매주 보는 퀴즈가 '형성평가'로 기능하려면 어떻게 피드백이 주어져야 하는지 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Figure 12.1 The Assessment Triangle -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">핵심 이론 · Figure 12.1</span>
+      <h2 class="slide-title">증거 기반 추론의 기초: 평가 삼각형 (The Assessment Triangle)</h2>
+      <p class="slide-subtitle">모든 타당한 교육 평가는 인지, 관찰, 해석의 3대 꼭짓점이 정밀하게 정렬되어야 한다 (NRC, 2001)</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>📐 3대 꼭짓점의 상호 연결성</h3>
+          <ul>
+            <li><strong>인지 (Cognition)</strong>: 학생의 멘탈 모델과 역량 발달 경로 (LPs)</li>
+            <li><strong>관찰 (Observation)</strong>: 역량 발현 증거를 유도하는 수행 과제</li>
+            <li><strong>해석 (Interpretation)</strong>: 관찰된 행동을 인지 상태로 변환하는 측정 모형</li>
+            <li>➔ 세 꼭짓점이 어긋나면 평가의 타당도(Validity)는 붕괴됨!</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig12_1.png')">
+          <img src="images/fig12_1.png" alt="Figure 12.1 The Assessment Triangle">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 12.1)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 12.1 평가 삼각형의 3대 구성 요소(Cognition, Observation, Interpretation)의 메커니즘을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>전통적 평가는 '관찰(문항 맞힘)'에서 곧바로 '점수'로 건너뛰며 인지 모델을 무시했습니다. 학습과학은 반드시 명시적인 '인지 모델'을 거쳐야만 올바른 해석이 가능하다고 역설합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"선다형 4지선다 문항을 맞혔다는 관찰 결과로부터 학생이 알고리즘을 깊이 이해했다고 추론할 수 있을까요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Learning Progressions (LPs) -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">인지 토대 · Section 12.2.2</span>
+      <h2 class="slide-title">인지 모델의 나침반: 학습 진행 경로 (Learning Progressions)</h2>
+      <p class="slide-subtitle">초보적 소박 직관에서 전문가 수준으로 진화하는 경험적으로 검증된 발달 궤적</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🧭 학습 진행 경로(LPs)의 특징</h3>
+          <ul>
+            <li>단순한 지식의 나열이 아닌, 개념이 정교화되는 <strong>인지적 사다리</strong></li>
+            <li>대표적 오개념과 중간 단계 직관(Intermediate states)을 명시</li>
+            <li>평가 문항 설계자가 학생의 현재 인지적 위치를 진단하는 기준선</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">💡 컴퓨터교육 및 STEM의 LPs 적용</h3>
+          <ul>
+            <li><strong>변수/제어문 LPs</strong>: 값 대입 오개념 ➔ 순차 흐름 ➔ 조건 분기 ➔ 루프 불변성</li>
+            <li><strong>과학 물질의 입자성 LPs</strong>: 연속체 직관 ➔ 입자 모형 ➔ 원자/분자 상호작용</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>평가 삼각형의 첫 번째 꼭짓점인 '인지 모델'을 채우는 핵심 토대로서 '학습 진행 경로(Learning Progressions)'를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Duschl et al. (2007)과 NRC (2007) 보고서: LPs는 교육과정, 수업, 평가를 하나로 묶어주는 거대한 인지 지도(Cognitive Map)입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 가르치는 교과목에서 학생들이 반드시 거치는 '중간 단계 오개념 사다리'를 그려보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Figure 12.2 Evidence-Centered Design (ECD) -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">설계 공학 · Figure 12.2</span>
+      <h2 class="slide-title">증거 중심 설계 (Evidence-Centered Design: ECD)</h2>
+      <p class="slide-subtitle">로버트 미슬레비(Robert Mislevy, 2019)의 표준 평가 문항 개발 공학 프레임워크</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>🏗️ ECD의 3대 핵심 모델 체계</h3>
+          <ul>
+            <li><strong>1. 학생 모델 (Student Model)</strong>: 측정하려는 지식/역량(KSAs)</li>
+            <li><strong>2. 과제 모델 (Task Model)</strong>: 증거를 유도하는 시뮬레이션 환경/상황</li>
+            <li><strong>3. 증거 모델 (Evidence Model)</strong>: 행동을 점수로 변환하는 채점 루브릭</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig12_2.png')">
+          <img src="images/fig12_2.png" alt="Figure 12.2 Simplified ECD Representation">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 12.2)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 12.2 증거 중심 설계(ECD)의 학생 모델, 과제 모델, 증거 모델의 연계 아키텍처를 상세히 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>ECD는 "어떤 문제를 낼까?"부터 고민하는 아마추어식 출제를 방지하고, "어떤 역량을 측정할 것인가(학생 모델) ➔ 어떤 증거가 필요한가(증거 모델) ➔ 그 증거를 어떤 과제로 유도할 것인가(과제 모델)"의 역방향 설계를 강제합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>코딩 테스트 문항을 만들 때 ECD의 3단계를 적용하는 실습을 진행하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Assessment Validity as Argumentation -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">타당도 이론 · Section 12.2.4</span>
+      <h2 class="slide-title">평가 타당도: 케인의 논증 기반 타당도 (Kane, 2013)</h2>
+      <p class="slide-subtitle">타당도는 도구의 고정된 속성이 아니라, 관찰에서 추론으로 이어지는 '해석/활용 논증의 사슬'이다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🔗 해석 및 활용 논증 (IUA)의 4단계 사슬</h3>
+          <ol style="margin-left: 1.2rem; font-size: 0.85rem; color: var(--text-secondary);">
+            <li><strong>채점 (Scoring)</strong>: 관찰된 수행 ➔ 관찰 점수</li>
+            <li><strong>일반화 (Generalization)</strong>: 관찰 점수 ➔ 과제 영역 전체 점수</li>
+            <li><strong>추론 (Extrapolation)</strong>: 과제 점수 ➔ 실제 세계의 목표 인지 역량</li>
+            <li><strong>결정/활용 (Decision/Use)</strong>: 인지 역량 판정 ➔ 교육적 처방</li>
+          </ol>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">⚠️ 가장 약한 연결고리가 타당도를 결정함</h3>
+          <p>아무리 채점이 정확해도(1단계), 그 시험이 실제 세계 역량으로 외삽(3단계)되지 않는다면 전체 평가의 타당도는 0이 됨!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>마이클 케인(Michael Kane, 2013)의 '논증 기반 타당도(Argument-based Validity)' 개념을 학습과학적 맥락에서 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>평가 타당도는 "이 시험은 타당하다"는 단발성 증명이 아니라, 4단계 논증 사슬 중 어느 하나라도 결함이 없는지 지속적으로 반증하는 '주장-증거 논증 과정'입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>선다형 시험으로 코딩 실력을 측정하려는 시도가 왜 3단계(외삽)에서 타당성이 깨지는지 설명하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Classroom Formative Assessment -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">교실 혁신 · Section 12.3.1</span>
+      <h2 class="slide-title">교실 평가의 혁신: 형성평가와 피드백 루프</h2>
+      <p class="slide-subtitle">판관의 평가에서 '학습을 돕는 형성적 나침반'으로의 패러다임 전환 (Black & Wiliam, 1998)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔄 효과적인 형성평가 피드백 3대 질문</h3>
+          <ul>
+            <li><strong>1. 어디로 가고 있는가? (Feed Up)</strong>: 학습 목표의 가시화</li>
+            <li><strong>2. 지금 어디에 있는가? (Feed Back)</strong>: 현재 상태 진단</li>
+            <li><strong>3. 다음엔 어디로 가야 하는가? (Feed Forward)</strong>: 구체적 실천 처방</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>👥 자기조절학습(SRL)과 동료 평가</h3>
+          <ul>
+            <li>루브릭을 활용한 자기 평가(Self-assessment) 훈련</li>
+            <li>동료 간 비판적 피드백(Peer feedback)을 통한 메타인지 활성화</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>교실 형성평가가 가져오는 거대한 학업 성취 향상 효과(Black & Wiliam, 1998)와 실천적 피드백 루프(Hattie & Timperley)를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>단순히 정답/오답만 알려주는 피드백은 효과가 미미하지만, "다음 단계로 무엇을 공부해야 하는지"를 명시하는 Feed Forward 피드백은 학습 효과 크기(d)가 0.7을 상회합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 학생들에게 주는 피드백이 'Feed Back'에 머물러 있는지, 'Feed Forward'까지 나아가는지 점검하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Next-Gen Psychometrics (DCMs & BKT) -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">측정 모형 · Section 12.3.3</span>
+      <h2 class="slide-title">차세대 심리측정 모형: 진단분류모형 & 베이지안 네트워크</h2>
+      <p class="slide-subtitle">1차원 총점을 넘어: 다차원 지식 요소(Knowledge Components)의 실시간 프로파일링</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📊 진단분류모형 (DCMs)</h3>
+          <ul>
+            <li>학생의 역량을 단일 점수(예: 85점)가 아닌 <strong>다차원 지식 마스터리 벡터 [1, 0, 1, 1]</strong>로 진단</li>
+            <li>어떤 세부 개념이 부족하고 어떤 오개념을 가졌는지 정밀 처방</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3 style="color: var(--accent-indigo);">🤖 베이지안 지식 추적 (BKT & Bayes Nets)</h3>
+          <ul>
+            <li>컴퓨터 기반 복합 시뮬레이션 환경에서 학생의 클릭 로그로부터 인지 상태를 실시간 확률적으로 갱신</li>
+            <li>지능형 튜터링 시스템(ITS)의 핵심 평가 엔진</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>고전검사이론(CTT)과 단순 IRT를 넘어선 차세대 심리측정 모형(DCMs, Bayesian Networks)의 원리를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학습과학의 미세 지식 조각(p-prims, KCs) 이론은 심리측정학의 진단분류모형(DCMs)과 결합할 때 비로소 수학적으로 완벽한 평가 모델로 구현됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 챕터인 Chapter 13(학습분석학 및 EDM)과 어떻게 직결되는지 힌트를 제공하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Figure 12.3 Balanced Assessment Systems -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">평가 생태계 · Figure 12.3</span>
+      <h2 class="slide-title">균형 잡힌 평가 체제: CAESL 모델 (Figure 12.3)</h2>
+      <p class="slide-subtitle">형성평가, 총괄평가, 정책평가가 하나의 학습과학 인지 모델로 통합된 이상적 생태계</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>🌟 균형 잡힌 평가의 3대 필수 원리</h3>
+          <ul>
+            <li><strong>1. 포괄성 (Comprehensiveness)</strong>: 다각적 평가 방식의 조화</li>
+            <li><strong>2. 일관성 (Coherence)</strong>: 동일한 학습진행경로(LPs)에 정렬</li>
+            <li><strong>3. 연속성 (Continuity)</strong>: 종단적 성장 궤적 지속 추적</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig12_3.png')">
+          <img src="images/fig12_3.png" alt="Figure 12.3 Balanced Assessment System (CAESL)">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 12.3)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 12.3의 CAESL 모델을 바탕으로 '균형 잡힌 평가 체제(Balanced Assessment Systems)'의 3대 원리를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>오늘날 교육의 비극은 교실에서 가르치는 깊은 탐구(형성평가)와 국가에서 치르는 표준화 시험(총괄평가)의 인지 모델이 서로 완전히 분열(Incoherence)되어 있다는 점입니다. 이를 극복해야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"수능 시험의 형태가 바뀌지 않으면 교실의 프로젝트 수업이 정착하기 힘든 이유"를 평가 체제의 일관성(Coherence) 관점에서 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Application to CS Education & Auto-grading -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 12</span>
+      <h2 class="slide-title">컴퓨터 소프트웨어 교육 및 자동 채점(Auto-grading) 평가</h2>
+      <p class="slide-subtitle">테스트 통과 여부를 넘어선 ECD 기반 소프트웨어 공학 역량 다차원 평가</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 ECD 기반 프로그래밍 평가 모델</h3>
+          <ul>
+            <li><strong>학생 모델</strong>: 알고리즘 복잡도 분석력, 디버깅 메타인지, 클린 코드 설계력</li>
+            <li><strong>과제 모델</strong>: 엣지 케이스가 숨겨진 리팩토링 및 버그 수정 챌린지</li>
+            <li><strong>증거 모델</strong>: 정적 코드 분석(AST), 실행 시간/메모리 텔레메트리, 단위 테스트 커버리지</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🤖 AI 기반 실시간 형성적 피드백</h3>
+          <ul>
+            <li>단순 컴파일 오류 출력을 넘어, 학생의 오개념을 진단하여 소크라테스식 힌트 생성</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 12의 증거 중심 설계(ECD)를 컴퓨터 프로그래밍 및 알고리즘 교육의 자동 채점 시스템(Auto-grader)에 구체적으로 접목합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>단순히 "맞았다/틀렸다"만 판정하는 채점기는 100년 전 행동주의 평가에 불과합니다. 학습과학적 ECD 채점기는 학생의 AST(추상구문트리)와 에러 패턴으로부터 학생의 인지 모델을 추론합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>백준/프로그래머스 같은 저지 시스템을 교육용 형성평가 플랫폼으로 진화시키기 위해 필요한 개선점을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Summary & Core Takeaways -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">총괄 결론 · Chapter 12</span>
+      <h2 class="slide-title">학습과학 기반 교육 평가 설계의 핵심 통찰</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 3대 평가 설계 원리</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>평가 삼각형의 정렬</h3>
+          <p>인지, 관찰, 해석의 완벽한 일치를 통한 평가 타당도 보증</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>증거 중심 설계 (ECD)</h3>
+          <p>학생 모델 ➔ 과제 모델 ➔ 증거 모델의 체계적 공학 설계</p>
+        </div>
+        <div class="card">
+          <h3>균형 잡힌 평가 생태계</h3>
+          <p>포괄성, 일관성, 연속성을 갖춘 형성-총괄 통합 시스템</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 12의 모든 핵심 교훈을 3대 축(평가 삼각형, ECD, 균형 잡힌 평가)으로 압축 정리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>펠레그리노 교수가 제시한 평가는 '학습을 옥죄는 시험'이 아니라, '학습의 길을 밝혀주는 가장 과학적인 등대'입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"여러분이 설계할 평가 시스템은 학생들에게 어떤 학습의 길을 비추어 주게 될까요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Looking Ahead to Chapter 13 -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">다음 챕터 예고 · Part II</span>
+      <h2 class="slide-title">다음 여정: Chapter 13 학습분석학 & 교육데이터마이닝 (LA & EDM)</h2>
+      <p class="slide-subtitle">라이언 베이커(Ryan S. Baker)와 조지 시멘스(George Siemens)의 빅데이터 학습과학</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 12 vs Ch 13 연계성</h3>
+          <ul>
+            <li><strong>Ch 12 교육 평가 설계</strong>: 인지 모델과 ECD에 기반한 평가 타당도 프레임워크</li>
+            <li><strong>Ch 13 학습분석학 (LA/EDM)</strong>: 대규모 디지털 로그 데이터로부터 지식 추적, 예측 모델링, MMLA를 수행하는 최첨단 전산 기법</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 Part II 방법론의 피날레</h3>
+          <p>Chapter 13으로 Part II: Methodologies 5개 챕터 대단원의 막을 내리고, Part III 테크놀로지 편으로 진입합니다!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 12를 마무리하고, Part II의 마지막 챕터인 Chapter 13(Learning Analytics and Educational Data Mining)과의 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Chapter 12의 ECD와 심리측정 모델은 Chapter 13의 학습분석학(LA)과 교육데이터마이닝(EDM) 알고리즘의 뼈대가 됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 13을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 12: Assessment in Education (James W. Pellegrino)</div>
+    <div class="footer-center" id="slide-counter">01 / 12</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Modal for Image Zoom -->
+  <div id="modal" onclick="closeModal()">
+    <img id="modal-img" src="" alt="확대 도판">
+  </div>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch12_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function openModal(src) {
+      modalImg.src = src;
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 12: Assessment in Education - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter12_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        closeModal();
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

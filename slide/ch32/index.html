@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 32: Learning Sciences and Policy</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 32 · Part VI Policy & Systems</span>
+      <h1 class="slide-title">Learning Sciences and Policy</h1>
+      <p class="slide-subtitle">학습과학과 교육 정책: 상호 협력의 10년 — 교육 인프라스트럭처 재설계, RPP, 그리고 DBIR</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>William R. Penuel</strong> (UC Boulder), <strong>James P. Spillane</strong> (Northwestern Univ.), & <strong>Min Sun</strong> (Univ. of Washington)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 648–667)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다 (32.0 ~ 32.4)</h3>
+          <ul>
+            <li><strong>32.0 정책 협력의 전환</strong>: 미시적 교실에서 거시적 시스템 공학으로</li>
+            <li><strong>32.1 교육 인프라스트럭처</strong> (5대 요소) & <strong>MIST 프로젝트 (SNA)</strong></li>
+            <li><strong>32.2 연구-실천 파트너십 (RPPs)</strong> & <strong>DBIR 4대 원리</strong></li>
+            <li><strong>32.3 가족·지역사회 중심 접근</strong> (FLDC) & 정책 데이터 과학</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 학습과학이 왜 개별 교실 연구를 넘어 교육 정책(Policy)과 시스템 차원의 교육 인프라스트럭처(Infrastructure) 재설계로 확장되었는지를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>윌리엄 페뉴엘과 제임스 스필레인 교수는 연구-실천 파트너십(RPPs)과 분산 리더십(Distributed Leadership) 분야의 세계적 석학입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"아무리 훌륭한 수업 도구와 교육과정을 개발해도, 왜 학교와 교육청 정책이 받쳐주지 않으면 3년 만에 사라질까요?"로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 32.1 Educational Infrastructure & MIST Project -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">교육 인프라 & SNA · Section 32.1</span>
+      <h2 class="slide-title">32.1 교육 인프라스트럭처와 MIST 프로젝트 (SNA)</h2>
+      <p class="slide-subtitle">수업 개선을 지탱하는 5대 인프라와 교사 조언 네트워크의 힘 (Cobb et al.; Sun et al.)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🏗️ 교육 인프라스트럭처 5대 요소</h3>
+          <ul>
+            <li>1. <strong>교육과정 자료 및 표준</strong> (Curriculum)</li>
+            <li>2. <strong>평가 체제</strong> (3D Performance Assessment)</li>
+            <li>3. <strong>지속적 교사 연수</strong> (Collaborative TPD)</li>
+            <li>4. <strong>사회적 자원 및 규범</strong> (신뢰, 조언 네트워크)</li>
+            <li>5. <strong>분산 리더십</strong> (권한 공유 거버넌스)</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">📊 MIST 프로젝트 & SNA 분석</h3>
+          <ul>
+            <li>대규모 도시 구역(District) 중학교 수학 혁신 연구</li>
+            <li><strong>사회연결망분석(SNA)</strong>으로 교사 간 조언 네트워크(Advice Networks)를 분석한 결과, <strong>조언 연결 밀도가 높은 학교일수록 수업 혁신이 지속 정착</strong>함을 입증</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>32.1절의 교육 인프라스트럭처(Educational Infrastructure) 5대 요소와 MIST 프로젝트의 사회연결망(SNA) 분석 결과를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>코헨과 스필레인(Cohen & Spillane)의 이론: 개별 교사의 열정에만 의존하는 개혁은 실패합니다. 교육과정, 평가, 연수, 리더십이 하나의 일관된 인프라로 엮여야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교 내 비공식적 동료 장학과 조언 네트워크의 중요성을 강조하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: 32.2 RPPs & DBIR Framework -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">RPP & DBIR · Section 32.2</span>
+      <h2 class="slide-title">32.2 연구-실천 파트너십(RPPs)과 DBIR의 4대 원리</h2>
+      <p class="slide-subtitle">연구자와 교육청이 동등한 파트너로서 현안 문제를 공동 정의하고 지속 반복 개선 (Penuel et al.)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 실천의 핵심 문제 공동 정의</h3>
+          <p>연구자의 개인적 관심사가 아닌, 교육청과 현장 교사가 겪는 '가장 절박한 현안'에서 출발</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 지속적 반복 연구 (Iterative DBR)</h3>
+          <p>하향식 집행이 아니라, DBR 순환 주기를 통해 정책과 프로그램을 현장 피드백에 맞춰 리팩터링</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">3. 다학제 수평적 협력 팀</h3>
+          <p>학습과학자, 교육 행정가, 교사, 정책 입안자가 위계 없이 대등한 파트너십 형성</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">4. 조직 역량의 내재화</h3>
+          <p>프로젝트 종료 후에도 학교 시스템 자체에 지속 가능한 연구·개선 역량이 남도록 인프라 구축</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>32.2절의 RPP(Research-Practice Partnerships)와 DBIR(Design-Based Implementation Research) 4대 원리를 체계화합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>RPP는 연구자가 학교를 단순한 '실험 대상'으로 삼던 착취적 관계를 종식하고, 현장의 진짜 문제를 함께 해결하는 상생의 연구 패러다임입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교육청과 대학 연구진의 이상적인 협력 모델을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: 32.2.1 Carbon TIME & 32.3 Community Co-Design -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">실제 사례 · Section 32.2.1 & 32.3</span>
+      <h2 class="slide-title">32.2.1 Carbon TIME 사례 & 가족·지역사회 공동 설계</h2>
+      <p class="slide-subtitle">교육과정-정책의 다층 정렬과 소외 계층 학부모의 정책 참여 (FLDC: Penuel et al.)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🌿 Carbon TIME 프로젝트 (32.2.1)</h3>
+          <ul>
+            <li>기후 변화 및 탄소 순환 과학 탐구 교육과정</li>
+            <li>교재 개발 ➔ 3D 수행 평가 ➔ 온라인 TPD ➔ 주 교육청 과학 표준 정책을 완벽하게 통합 정렬(Systemic Alignment)</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">👨‍👩‍👧 가족 리더십 디자인 (FLDC, 32.3)</h3>
+          <ul>
+            <li>소외 계층 학부모를 정책의 단순 수혜자가 아닌 <strong>교육 시스템 공동 설계자(Co-designers)</strong>로 격상</li>
+            <li>지역사회 문화적 가치를 학교 교육과정에 반영</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>32.2.1절의 Carbon TIME 시스템 정렬 성공 사례와 32.3절의 가족 리더십 협력체(FLDC)를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Carbon TIME은 교재와 평가, 연수, 정책이 톱니바퀴처럼 맞물릴 때 비로소 교실의 과학 수업이 근본적으로 바뀔 수 있음을 보여줍니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교 정책 결정에서 학부모 참여의 새로운 지평을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Summary & Looking Ahead to Ch 33 -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">결론 & 제3판 대단원 예고 · Section 32.4</span>
+      <h2 class="slide-title">32.4 Chapter 32 총괄 결론 & 제3판 최종장 Chapter 33 예고</h2>
+      <p class="slide-subtitle">교육 인프라와 정책 공학에서, 33개 챕터의 정점을 찍는 '학습과학 2020s 미래(Sawyer)'로!</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌟 Ch 32 교육 정책과 RPP의 핵심 교훈</h3>
+          <ul>
+            <li>1. 교실 개혁을 넘어 5대 교육 인프라를 재설계하라</li>
+            <li>2. 연구-실천 파트너십(RPP)으로 현장 문제를 풀어라</li>
+            <li>3. SNA 조언 네트워크를 강화하여 지속성을 높여라</li>
+            <li>4. 가족과 지역사회를 정책 공동 설계자로 초대하라</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🚀 Chapter 33 대단원 완결 예고: 2020년대 학습과학</h3>
+          <p><strong>The Learning Sciences in the 2020s: Implications for Schools and Beyond</strong></p>
+          <p><strong>R. Keith Sawyer (편저자 총괄 결론)</strong></p>
+          <p>창의성, 깊은 개념 학습, AI와 테크놀로지, 학교를 넘어선 미래 교육 생태계의 종합 설계도!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 32(32.0~32.4)를 정리하고 『The Cambridge Handbook of the Learning Sciences』(3rd Ed.)의 대미를 장식하는 최종장 Chapter 33(The Learning Sciences in the 2020s: R. Keith Sawyer)을 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Chapter 33은 핸드북 전체 33개 챕터를 총괄 요약하며, 2020년대 이후 학습과학이 학교와 인류 사회에 던지는 비전을 제시합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>대망의 최종장 Chapter 33으로 나아갑니다.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 32: Learning Sciences and Policy (Penuel, Spillane, & Sun)</div>
+    <div class="footer-center" id="slide-counter">01 / 05</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch32_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 32: Learning Sciences and Policy - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter32_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

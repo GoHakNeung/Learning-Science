@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 28: Arts Education and the Learning Sciences</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 28 · Part V Arts Learning</span>
+      <h1 class="slide-title">Arts Education and the Learning Sciences</h1>
+      <p class="slide-subtitle">예술 교육과 학습과학: 스튜디오 사고의 습관, 표상 생성, 그리고 메이커 운동의 융합</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Erica Rosenfeld Halverson</strong> (Univ. of Wisconsin–Madison) & <strong>Kimberly M. Sheridan</strong> (George Mason Univ.)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 571–589)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다 (28.0 ~ 28.4)</h3>
+          <ul>
+            <li><strong>28.0 예술 교과의 3대 고유성</strong>: 형식과 내용, 청중 소통, 정체성</li>
+            <li><strong>28.2 표상 생성 & 정체성 발달</strong>: 탈유형화(Detypification)</li>
+            <li><strong>28.2.4 스튜디오 사고의 습관</strong> (Studio Habits of Mind 8대 역량)</li>
+            <li><strong>28.3 스튜디오 비평 (Critique)</strong> & <strong>메이커 운동</strong> 융합</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 Part V(교과 지식 학습)의 최종 장으로, 예술 학습이 단순한 감정 표현이나 기능 습득을 넘어 고차원적 인지 습관(Studio Habits of Mind)과 메이커 창작 실천의 핵심임을 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>에리카 할버슨 교수와 킴벌리 셰리던 교수는 하버드 프로젝트 제로와 메이커 무브먼트의 선구자들입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"예술 수업에서 배우는 가장 중요한 생각하는 힘은 무엇일까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 28.0 Distinct Features of Arts Learning -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">예술의 고유성 · Section 28.0</span>
+      <h2 class="slide-title">28.0 예술 학습의 3대 고유 특성</h2>
+      <p class="slide-subtitle">다른 교과와 예술을 구별 짓는 본질적인 인지·표현적 차별성 (Halverson & Sheridan)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 형식과 내용의 불가분성</h3>
+          <p>예술에서 표현 형식(Form)과 의미 내용(Content)은 분리되지 않음. 매체의 물리적·디지털 속성 자체가 메시지를 형성</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 실제 청중과의 소통</h3>
+          <p>시험지 답안이 아니라, 실제 관객/청중(Audience)에게 공개되고 반응과 대화를 이끌어내는 외현적 인공물 산출</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">3. 정체성 구성의 중심성</h3>
+          <p>창작을 통해 자신의 개인적, 문화적, 사회적 자아와 가치관을 능동적으로 탐색하고 재구성</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>28.0절의 도입부에서 예술 교과가 지닌 3가지 고유한 본질적 특성을 명확히 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>예술은 다른 학문을 위한 도구(수학 성적을 올려주는 수단 등)가 아니라, 그 자체로 고유한 인식론적 가치를 지닌 상징 체계입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>도구적 예술 교육론(Arts transfer)의 한계를 비판하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: 28.2.1 Creating Representations & Identity -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">표상과 정체성 · Section 28.2.1 & 28.2.2</span>
+      <h2 class="slide-title">28.2 표상 생성(Representation)과 정체성 발달</h2>
+      <p class="slide-subtitle">매체와의 끊임없는 대화(Halverson, 2013)와 낙인 정체성의 탈유형화 (Detypification)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎨 28.2.1 표상 생성의 순환 루프</h3>
+          <ul>
+            <li><strong>아이디어 구상 ➔ 매체 도구 조작 ➔ 외부 표상 ➔ 청중 반응</strong></li>
+            <li>디지털 툴(영상, 음향)이나 물리적 재료의 저항(Resistance)과 가능성을 탐색하며 생각 고도화</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🪞 28.2.2 탈유형화 (Detypification)</h3>
+          <ul>
+            <li>사회적 편견이나 낙인찍힌 정체성을 예술적 서사(연극, 시, 힙합)로 재해석</li>
+            <li>자신의 억압된 경험을 <strong>주체적이고 긍정적인 문화적 정체성으로 승화</strong> (Halverson, 2010)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>28.2.1절의 표상 생성(Creating Representations)과 28.2.2절의 탈유형화(Detypification)를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>할버슨의 연구: 소수자 청소년들이 디지털 스토리텔링과 공연 예술을 통해 고정관념화된 사회적 자아를 깨뜨리고 건강한 자아 정체성을 획득합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>창작 과정에서 매체와 마주칠 때 일어나는 인지적 갈등과 해결을 설명하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: 28.2.4 Studio Habits of Mind -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">스튜디오 사고 습관 · Section 28.2.4</span>
+      <h2 class="slide-title">28.2.4 스튜디오 사고의 습관 (Studio Habits of Mind)</h2>
+      <p class="slide-subtitle">하버드 프로젝트 제로가 규명한 예술가들의 8대 핵심 인지 습관 (Hetland, Winner et al., 2013)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 관찰하기 (Observe)</h3>
+          <p>대상의 세부 디테일과 관계를 편견 없이 주의 깊게 시각화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 구상하기 (Envision)</h3>
+          <p>눈앞에 없는 다음 작업 단계나 결과를 머릿속으로 시각적 상상</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">3. 표현하기 (Express)</h3>
+          <p>개인적 감정과 의미를 작품의 조형적 형식에 담아내기</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">4. 반성하기 (Reflect)</h3>
+          <p>자신의 작업 과정을 메타인지적으로 비판하고 평가하기</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-blue);">
+          <h3>5. 탐색하기 (Stretch & Explore)</h3>
+          <p>실패를 두려워하지 않고 새로운 재료와 기법을 과감히 실험</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>6. 몰입과 끈기 (Engage & Persist)</h3>
+          <p>어려운 과제에 인내심을 갖고 끝까지 몰입하여 완성</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">7. 기법 습득 (Develop Craft)</h3>
+          <p>도구의 적절한 사용법과 스튜디오 안전 규범 체화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">8. 예술계 이해 (Understand World)</h3>
+          <p>예술사의 맥락과 현대 미술 커뮤니티의 담화 파악</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>28.2.4절의 가장 핵심적인 이론인 하버드 프로젝트 제로의 8대 스튜디오 사고의 습관(Studio Habits of Mind)을 전수 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>스튜디오 해빗은 예술뿐 아니라 소프트웨어 엔지니어링, 건축, 과학 연구 등 모든 창의적 문제 해결 분야로 전이되는 메타 인지 습관입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>8가지 습관 중 '구상하기(Envisioning)'와 '탐색하기(Stretch & Explore)'가 디자인 씽킹과 어떻게 맞닿아 있는지 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: 28.3 Studio Critique & Maker Movement -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">비평과 메이커 · Section 28.3 & 28.4</span>
+      <h2 class="slide-title">28.3 스튜디오 비평(Critique)과 메이커 운동(Maker Movement)</h2>
+      <p class="slide-subtitle">형성평가로서의 스튜디오 비평 문화와 디지털 피지컬 창작의 결합 (Halverson & Peppler)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">🗣️ 스튜디오 비평 (Studio Critique) 문화</h3>
+          <ul>
+            <li>단순 채점이 아니라, 창작자와 동료들이 둘러앉아 작품의 의도와 표현 전략을 심층 토론</li>
+            <li>비판을 수용하고 다음 단계로 리팩터링하는 <strong>메타인지적 반성 공동체</strong></li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🛠️ 메이커 운동 (Maker Movement)과의 융합</h3>
+          <ul>
+            <li>아두이노, 3D 프린터, 직물 공예(E-textiles)를 결합한 피지컬 메이커스페이스</li>
+            <li>예술적 표현과 공학적 코딩이 만나는 <strong>궁극의 구성주의 학습 환경</strong> (Sheridan et al.)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>28.3절의 스튜디오 비평(Critique) 평가 원리와 28.4절의 메이커 운동(Maker Movement) 융합을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>스튜디오 비평은 소프트웨어 공학의 코드 리뷰(Code Review)와 본질적으로 동일하며, 학습자가 자신의 창작물을 객관화하여 바라보게 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>메이커스페이스에서 예술적 감수성과 공학적 프로그래밍이 어떻게 시너지를 내는지 설명하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Summary & Looking Ahead to Part VI -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">Part V 완결 & Part VI 예고 · Section 28.4</span>
+      <h2 class="slide-title">28.4 Part V 교과 지식 완결 & Part VI 현장 적용 예고</h2>
+      <p class="slide-subtitle">수학·과학·복잡계·역사·문해력·예술을 관통한 Part V 완결! 제6부 교실 적용과 미래로!</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌟 Part V 6대 교과 지식 학습 총결산</h3>
+          <ul>
+            <li>• <strong>Ch 23 수학</strong>: 코모그니션 & 담화 오케스트레이션</li>
+            <li>• <strong>Ch 24 과학</strong>: NGSS 3D 학습 & 지식 통합</li>
+            <li>• <strong>Ch 25 복잡계</strong>: NetLogo 창발 & 지식 재구조화</li>
+            <li>• <strong>Ch 26 역사</strong>: 1차 사료 비판 & 마스터 내러티브 해체</li>
+            <li>• <strong>Ch 27 문해력</strong>: 독해 SOI 모델 & 작문 3단계</li>
+            <li>• <strong>Ch 28 예술</strong>: 스튜디오 사고의 습관 & 메이커 운동</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🚀 Part VI 대단원 예고: 연구의 교실 확산</h3>
+          <p><strong>Moving Learning Sciences Research into the Classroom</strong></p>
+          <ul>
+            <li>• <strong>Ch 29 문화와 형평성</strong> (Nasir et al.)</li>
+            <li>• <strong>Ch 30 흥미, 동기, 참여</strong> (Renninger & Järvelä)</li>
+            <li>• <strong>Ch 31 교사 전문성 개발</strong> (Fishman et al.)</li>
+            <li>• <strong>Ch 32 교육 정책과 RPP</strong> (Penuel et al.)</li>
+            <li>• <strong>Ch 33 학습과학 2020s 미래</strong> (Sawyer)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Part V(교과 지식 학습: Ch 23~28)의 6개 챕터 대장정을 완결하고, 제3판의 최종 대단원인 Part VI(Moving Learning Sciences Research into the Classroom: Ch 29~33)를 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Part V는 수학, 과학, 복잡계, 역사, 문해력, 예술 등 인간의 모든 핵심 지식 영역에 학습과학이 어떻게 적용되는지 입증했습니다. Part VI는 이를 실제 학교 현장과 정책으로 확산하는 방안을 다룹니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>Part V의 6개 교과 챕터가 공유하는 공통적인 학습과학적 원리(체화, 담화, 비계, 도구 매개)를 요약해 보세요.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 28: Arts Education and the Learning Sciences (Halverson & Sheridan)</div>
+    <div class="footer-center" id="slide-counter">01 / 06</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch28_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 28: Arts Education - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter28_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

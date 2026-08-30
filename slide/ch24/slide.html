@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 24: Science Education and the Learning Sciences</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .img-container {
+      position: relative; width: 100%; border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--border-color); background: #000; margin-top: 0.5rem; cursor: pointer;
+    }
+    .img-container img { width: 100%; height: auto; max-height: 340px; object-fit: contain; display: block; }
+    .img-caption {
+      padding: 0.4rem 0.6rem; font-size: 0.75rem; color: var(--text-secondary);
+      background: rgba(15, 23, 42, 0.85); text-align: center;
+    }
+
+    /* Modal for figure zoom */
+    #img-modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); z-index: 200; justify-content: center; align-items: center; padding: 2rem;
+    }
+    #img-modal.active { display: flex; }
+    #modal-img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 24 · Part V Science Inquiry</span>
+      <h1 class="slide-title">Science Education and the Learning Sciences</h1>
+      <p class="slide-subtitle">과학교육과 학습과학: 공진화하는 두 학문의 역사와 미래 — 3차원 탐구 학습에서 네트워크 시민 리터러시로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Nancy Butler Songer</strong> (Drexel) & <strong>Yael Kali</strong> (Univ. of Haifa)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 490–511)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다 (24.0 ~ 24.5)</h3>
+          <ul>
+            <li><strong>24.0 50년 공진화</strong>: 지식 통합, 스캐폴딩, DBR의 산실</li>
+            <li><strong>24.1 지식 통합 (Knowledge Integration)</strong> 프레임워크</li>
+            <li><strong>24.2 NGSS 3차원 학습</strong> (실천 SEP + 개념 DCI + 횡단 CCC)</li>
+            <li><strong>24.3 탐구·공학 설계</strong> (Figure 24.1) & BioKIDS / WISE</li>
+            <li><strong>24.4 네트워크 사회의 포용성</strong> & 가짜 뉴스 대응 시민 과학</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 과학교육과 학습과학이 지난 50년간 어떻게 상호 영향을 주고받으며 공진화(Co-evolution)해 왔는지 밝히고, NGSS 3차원 학습과 지식 통합(Knowledge Integration)의 원리를 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>낸시 버틀러 송거 교수(BioKIDS 개발자)와 야엘 칼리 교수(TELS/WISE 지식 통합 설계자)는 과학교육 테크놀로지 및 커리큘럼 디자인 연구의 세계적 권위자들입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"왜 교과서에 나오는 '요리책 실험(Cookbook lab)'은 학생들의 실제 과학적 사고력을 길러주지 못할까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 24.1 Knowledge Integration Framework -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">핵심 이론 · Section 24.1</span>
+      <h2 class="slide-title">24.1 과학 지식의 상황성과 지식 통합 (Knowledge Integration)</h2>
+      <p class="slide-subtitle">오개념을 지우는 것이 아니라, 아이디어를 도출·추가·구별·통합하는 동적 과정 (Linn & Eylon)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 도출 (Elicit)</h3>
+          <p>일상 경험에서 나온 학생들의 직관적 아이디어 레퍼토리를 자유롭게 표출</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 추가 (Add)</h3>
+          <p>시뮬레이션과 실험을 통해 과학적으로 타당한 새로운 증거와 개념 추가</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">3. 구별 (Distinguish)</h3>
+          <p>상충하는 아이디어들을 증거에 입각하여 비교하고 조건별로 세분화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">4. 통합 (Reflect)</h3>
+          <p>반성적 숙고를 통해 다양한 현상을 설명하는 일관된 개념 네트워크로 통합</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>24.1절의 마샤 린과 엘론(Linn & Eylon)의 '지식 통합(Knowledge Integration)' 프레임워크 4단계를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>전통 교육은 학생의 직관을 '틀린 오개념'으로 규정하고 지우려 했으나, 지식 통합론은 직관적 아이디어가 학습의 귀중한 출발점(Starting resources)임을 강조합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>TELS와 WISE 플랫폼이 어떻게 컴퓨터 시뮬레이션으로 증거를 제공하는지 연결하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: 24.2.1 1996 NSES vs 2013 NGSS -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">표준 개혁 · Section 24.2 (Table 24.1)</span>
+      <h2 class="slide-title">24.2.1 과학 교육과정의 패러다임 전환: 1996 NSES vs 2013 NGSS</h2>
+      <p class="slide-subtitle">내용(지식)과 탐구(스킬)를 분리하던 시대에서 융합된 3차원 수행 기대로의 도약</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">📜 과거: 1996 NSES (분리형 표준)</h3>
+          <ul>
+            <li><strong>지식과 탐구의 이원화</strong>: 내용 표준(Content Standard)과 탐구 표준(Inquiry Standard)이 별도로 서술</li>
+            <li><strong>한계</strong>: 교과서 사실 암기 수업과 절차적 실험이 따로따로 진행됨</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🚀 혁신: 2013 NGSS (3차원 통합 표준)</h3>
+          <ul>
+            <li><strong>3-Dimensional Learning</strong>: 과학 실천(SEP) + 핵심 개념(DCI) + 횡단 개념(CCC)의 완벽한 융합</li>
+            <li><strong>수행 기대(PE)</strong>: "생태계 변화가 개체군에 미치는 영향을 증거 기반 논증으로 구성하라"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>24.2절의 Table 24.1에 제시된 미국 국가 과학 표준의 역사적 전환(1996 NSES ➔ 2013 NGSS)을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>NGSS의 획기적인 점은 학생이 무엇을 '알고 있는가'가 아니라, 개념을 활용하여 무엇을 '수행(Perform)할 수 있는가'로 표준을 재정의한 것입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리나라 2022 개정 과학과 교육과정의 핵심 아이디어 및 탐구 실천과 비교해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: 24.2.2 NGSS 3D Learning Architecture -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">3차원 학습 · Section 24.2 (Table 24.2)</span>
+      <h2 class="slide-title">24.2.2 NGSS 3차원 학습 (3D Learning) 입체 구조</h2>
+      <p class="slide-subtitle">과학·공학 실천(SEP) × 교과 핵심 개념(DCI) × 횡단 개념(CCC)의 상호작용 (NRC, 2013)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>1. 과학·공학 실천 (SEP)</h3>
+          <p>질문하기, 모델 개발, 증거 기반 논증, 데이터 분석 및 해석 등 8대 과학 실천</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">2. 교과 핵심 개념 (DCI)</h3>
+          <p>물리, 생명, 지구우주, 공학 기술 영역의 가장 핵심적인 원리와 불변의 빅 아이디어</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">3. 횡단 개념 (CCC)</h3>
+          <p><strong>원인과 결과</strong>, 패턴, 시스템과 모델, 구조와 기능 등 모든 과학 분과를 관통하는 렌즈</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>24.2절과 Table 24.2의 NGSS 3차원 학습(3D Learning) 아키텍처를 상세히 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>3차원 학습은 줄타기와 같습니다. 세 줄(실천, 개념, 횡단)이 꼬여 하나의 굵은 밧줄이 될 때 학생들은 과학자처럼 사고할 수 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>이어지는 슬라이드에서 이를 실천하는 교실 탐구와 공학 설계(Figure 24.1)를 살펴봅니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: 24.3 Traditional vs Research-Based Pedagogy (Figure 24.1) -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">교수학습 혁신 · Section 24.3</span>
+      <h2 class="slide-title">24.3 교실에서의 과학 탐구와 공학 설계 (Figure 24.1)</h2>
+      <p class="slide-subtitle">요리책 실험에서 실제 자연 현상(Phenomena) 기반 가설 검증 및 공학적 프로토타이핑으로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1.2fr;">
+        <div class="card highlight-card">
+          <h3>🔍 연구 기반 과학 교실의 특징</h3>
+          <ul>
+            <li><strong>현상 기반 시작</strong>: 설명되지 않는 자연 현상이나 사회적 공학 딜레마에서 출발</li>
+            <li><strong>증거 기반 모델링</strong>: 학생 스스로 데이터를 수집하고 인과 관계를 시뮬레이션</li>
+            <li><strong>공학 설계 루프</strong>: 문제 정의 ➔ 설계 ➔ 테스트 ➔ 반복 개선(Iterate)</li>
+          </ul>
+        </div>
+        <div class="img-container" onclick="openModal('images/fig24_1.png')">
+          <img src="images/fig24_1.png" alt="Figure 24.1 Features of Science Investigation and Engineering Design">
+          <div class="img-caption">🔍 [Figure 24.1] 전통 과학 교실과 연구 기반 과학 탐구/공학 설계의 비교 (클릭하여 확대)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>24.3절의 핵심 도판인 Figure 24.1(전통 과학 수업과 연구 기반 탐구/공학 설계의 대조)을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>NRC(2019) 보고서 기반: 전통 과학 수업은 교사가 정답을 알려주고 학생이 확인하는 반면, 혁신적 과학 교실은 학생들이 실제 증거를 바탕으로 지식을 스스로 구축합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들에게 도판을 확대하여 보게 하고, 좌측의 전통 방식과 우측의 탐구 실천 차이를 설명하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: 24.3.1 BioKIDS & WISE Curricula -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">대표 프로젝트 · Section 24.3.1</span>
+      <h2 class="slide-title">24.3.1 BioKIDS와 WISE: 테크놀로지 기반 탐구 커리큘럼</h2>
+      <p class="slide-subtitle">모바일 센서 야외 탐구(BioKIDS)와 컴퓨터 시뮬레이션 지식 통합(WISE) (Songer, 2006; Linn)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🌿 BioKIDS 프로젝트 (Songer, 2006)</h3>
+          <ul>
+            <li>모바일 핸드헬드 기기를 들고 학교 숲의 생물 다양성 데이터 수집</li>
+            <li>수집된 동물/식물 데이터를 기반으로 생태계 먹이사슬 인과 관계 모델링</li>
+            <li>도시 소외지역 학생들의 복합 추론(Complex Reasoning) 발달 입증</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">💻 WISE & TELS 환경 (Kali et al., 2008)</h3>
+          <ul>
+            <li>분자 열운동, 온실 효과 등 비가시적 과학 현상을 동적 시뮬레이션으로 조작</li>
+            <li>'증거 바구니'에 데이터를 모아 과학적 논증 에세이 작성 스캐폴딩</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>24.3.1절에 제시된 대표적인 학습과학 기반 과학 탐구 시스템인 BioKIDS와 WISE를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>테크놀로지는 단순히 책을 컴퓨터로 옮긴 것이 아니라, 학생들이 직접 데이터를 수집하고 비가시적 미시 세계를 조작할 수 있는 '인지적 어포던스'를 제공합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>야외 모바일 탐구와 실내 가상 시뮬레이션의 결합 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: 24.4 Citizen Science & Critical Literacy -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">네트워크 사회 · Section 24.4</span>
+      <h2 class="slide-title">24.4 네트워크 사회의 과학: 시민 과학과 가짜 뉴스 대응</h2>
+      <p class="slide-subtitle">기후 위기, 감염병, 허위 정보(Misinformation)에 맞서는 비판적 과학 리터러시 (Kali et al.)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">🌐 시민 과학 (Citizen Science)과 형평성</h3>
+          <ul>
+            <li>소외계층 및 다문화 청소년이 실제 지역 환경 데이터 측정에 참여</li>
+            <li>'모든 이를 위한 과학(Science for All)'을 실현하고 과학자 정체성 고양</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🛡️ 허위 정보(Misinformation) 판별 역량</h3>
+          <ul>
+            <li>소셜 미디어에 떠도는 백신/기후 음모론에 대한 증거 기반 비판적 평가</li>
+            <li>출처의 신뢰성, 데이터의 통계적 타당성을 검증하는 시민적 소양 육성</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>24.4절의 과학 교육의 포용성(Equity)과 초연결 네트워크 사회에서의 비판적 과학 리터러시를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>현대 사회에서 과학 교육은 미래 과학자 양성을 넘어, 민주시민이 일상적 건강과 환경 문제에 대해 합리적 결정을 내릴 수 있는 생존 기술입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>유튜브나 틱톡의 유사과학 영상을 비판적으로 검증하는 수업 설계를 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Summary & Looking Ahead to Ch 25 -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 24.5</span>
+      <h2 class="slide-title">24.5 Chapter 24 총괄 결론 & Chapter 25 역사 학습 예고</h2>
+      <p class="slide-subtitle">과학적 증거 검증에서 과거 사료의 비판적 해석, '역사 학습 연구(VanSledright)'로!</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌟 Ch 24 과학 학습 연구의 핵심 교훈</h3>
+          <ul>
+            <li>1. 과학교육과 학습과학은 지난 50년간 공진화해 왔다</li>
+            <li>2. 지식 통합: 도출 ➔ 추가 ➔ 구별 ➔ 반성적 통합</li>
+            <li>3. NGSS 3차원: 실천(SEP) + 핵심개념(DCI) + 횡단개념(CCC)</li>
+            <li>4. 현상 기반 탐구와 공학 설계 루프를 구현하라</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-violet);">
+          <h3 style="color: var(--accent-violet);">🚀 Chapter 25 예고: 역사 학습 연구 (History Learning)</h3>
+          <p><strong>Bruce A. VanSledright & Margarita Limón</strong></p>
+          <p>단일 교과서 암기에서 탈피! 상충하는 1차 사료(Primary Sources)의 출처 확인(Sourcing)과 역사적 사고력의 세계로!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 24(24.0~24.5)를 마무리하고 다음 Chapter 25(역사 학습 연구)를 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Chapter 25는 과학의 경험적 데이터 검증과 대비되는 역사의 1차 사료 해석 및 관점주의 사고를 다룹니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 25로 나아갑니다.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 24: Science Education and the Learning Sciences (Songer & Kali)</div>
+    <div class="footer-center" id="slide-counter">01 / 08</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Modal for Figure 24.1 Zoom -->
+  <div id="img-modal" onclick="closeModal()">
+    <img id="modal-img" src="" alt="Zoomed Figure">
+  </div>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+    const imgModal = document.getElementById('img-modal');
+    const modalImg = document.getElementById('modal-img');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch24_slide_note_';
+
+    function openModal(src) {
+      modalImg.src = src;
+      imgModal.classList.add('active');
+    }
+    function closeModal() {
+      imgModal.classList.remove('active');
+    }
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 24: Science Education - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter24_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (imgModal.classList.contains('active')) closeModal();
+        else if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>

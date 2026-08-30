@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 18: Mobile Learning</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    .img-zoom-card {
+      cursor: pointer; position: relative; overflow: hidden;
+      border: 1px solid var(--border-color); border-radius: 10px; background: #fff;
+      display: flex; justify-content: center; align-items: center; padding: 0.5rem;
+    }
+    .img-zoom-card img {
+      max-width: 100%; max-height: 220px; object-fit: contain;
+      transition: transform 0.2s ease;
+    }
+    .img-zoom-card:hover img { transform: scale(1.03); }
+    .img-zoom-badge {
+      position: absolute; bottom: 8px; right: 8px; background: rgba(0, 0, 0, 0.7);
+      color: #fff; font-size: 0.72rem; padding: 2px 8px; border-radius: 4px;
+    }
+
+    .table-container { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+    .styled-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;
+    }
+    .styled-table th {
+      background: var(--bg-secondary); color: var(--accent-blue);
+      padding: 0.6rem 0.8rem; text-align: left; border-bottom: 2px solid var(--border-color);
+    }
+    .styled-table td {
+      padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);
+      vertical-align: top;
+    }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Modal for Image Zoom */
+    #image-modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.88); z-index: 300; justify-content: center; align-items: center;
+      flex-direction: column; padding: 2rem; backdrop-filter: blur(5px);
+    }
+    #image-modal.active { display: flex; }
+    #modal-img { max-width: 90vw; max-height: 85vh; object-fit: contain; border-radius: 8px; }
+    #modal-caption { margin-top: 1rem; color: #fff; font-size: 0.95rem; text-align: center; }
+    #modal-close {
+      position: absolute; top: 1.5rem; right: 2rem; background: none; border: none;
+      color: #fff; font-size: 2rem; cursor: pointer;
+    }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="stage">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" data-index="0">
+      <span class="slide-badge">Chapter 18 · Part III Technology Finale</span>
+      <h1 class="slide-title">Mobile Learning</h1>
+      <p class="slide-subtitle">모바일 학습: 다이나북의 비전에서 끊김 없는 유비쿼터스 개인 탐구로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Roy Pea</strong> (Stanford) & <strong>Mike Sharples</strong> (The Open Univ.)</p>
+          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 363–384)</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다 (18.0 ~ 18.5)</h3>
+          <ul>
+            <li><strong>18.0 다이나북 비전 (Figure 18.1)</strong>: 1972년 앨런 케이의 예언</li>
+            <li><strong>18.1 끊김 없는 학습 (MSL, Table 18.1)</strong> 10대 핵심 특성</li>
+            <li><strong>18.2 모바일 학습 실천</strong>: 참여형 시뮬레이션(Fig 18.2) & 개인 탐구(Fig 18.3)</li>
+            <li><strong>18.3 이론적 토대</strong>: 맥락의 동적 구성, 분산 인지, 파괴적 혁신</li>
+            <li><strong>18.4 미래 도전</strong>: 주의 분산, 데이터 감시, 디지털 형평성</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
+        <p>본 장은 제3부 테크놀로지 기반 학습(Part III)의 대단원을 장식하는 챕터로, 모바일 기기가 어떻게 교실의 벽을 허물고 전 생애에 걸친 '끊김 없는 탐구 생태계(Seamless Learning)'를 구축하는지 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
+        <p>스탠퍼드 대학교 로이 피 교수와 오픈 유니버시티 마이크 샤플스 교수는 모바일 학습 분야의 창시자들입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"스마트폰은 학생의 주의를 분산시키는 방해물일까요, 아니면 교실을 야외로 확장하는 가장 강력한 인지적 파트너일까요?"라는 질문으로 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 18.0 DynaBook Vision (Figure 18.1) -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">역사적 기원 · Section 18.0</span>
+      <h2 class="slide-title">18.0 50년의 예언: 앨런 케이의 다이나북 (DynaBook, 1972)</h2>
+      <p class="slide-subtitle">아이들이 야외 잔디밭에서 무선 태블릿으로 시뮬레이션을 공유하며 학습하는 미래 (Figure 18.1)</p>
+      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
+        <div class="img-zoom-card" onclick="openModal('images/fig18_1.png', 'Figure 18.1 Illustration by Alan Kay (1972) of children learning outdoors on wirelessly connected tablet computers (p. 377)')">
+          <img src="images/fig18_1.png" alt="Figure 18.1 DynaBook">
+          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
+        </div>
+        <div class="card highlight-card">
+          <h3>📱 모바일 학습의 본질적 정의</h3>
+          <ul>
+            <li>"모바일 학습은 기기가 움직이는 것이 아니라, <strong>학습자가 다양한 삶의 맥락을 넘나들며 지식을 구성하는 과정</strong>이다."</li>
+            <li>정적 교실을 넘어 야외, 가정, 박물관 어디서나 탐구 지속</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 18.1의 앨런 케이 1972년 다이나북 원화와 함께 모바일 학습의 본질을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>앨런 케이가 꿈꾸었던 태블릿 PC의 비전은 단순한 전자 교과서가 아니라, 아이들이 스스로 프로그래밍하고 시뮬레이션을 돌리는 '동적 매체(Dynamic Medium)'였습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>도판을 확대하여 1972년에 상상했던 무선 네트워크 기반 학습의 디테일을 살펴보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: 18.1 Ten Characteristics of MSL (Table 18.1) -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">핵심 프레임워크 · Section 18.1</span>
+      <h2 class="slide-title">18.1 모바일 끊김 없는 학습 (MSL)의 10대 특성</h2>
+      <p class="slide-subtitle">형식-비형식, 물리-디지털, 시공간을 초월하는 통합 학습 생태계 (Table 18.1)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card highlight-card">
+          <h3>🌉 경계의 허묾</h3>
+          <ul>
+            <li><strong>1. 형식 ↔ 비형식</strong>: 교실과 일상 야외의 연결</li>
+            <li><strong>2. 개인 ↔ 사회적</strong>: 자기주도 탐구와 동료 협력</li>
+            <li><strong>3. 시간 초월</strong>: 장기적 탐구 궤적 지속</li>
+            <li><strong>4. 공간 초월</strong>: 위치가 바뀌어도 맥락 유지</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🚀 데이터와 역량의 융합</h3>
+          <ul>
+            <li><strong>5. 유비쿼터스 지식 접근</strong>: 즉각적 클라우드 AI 연결</li>
+            <li><strong>6. 물리-디지털 융합</strong>: 센서 측정과 가상 모델</li>
+            <li><strong>7. 다중 기기 연동</strong>: 폰-태블릿-PC 동기화</li>
+            <li><strong>8. 고차원 사고 촉진</strong>: 단순 검색을 넘은 가설 검증</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Table 18.1의 MSL(Mobile Seamless Learning) 10대 핵심 특성을 체계적으로 정리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>'끊김 없는 학습'이란 장소나 기기가 바뀌어도 학생의 학습 흐름과 탐구 데이터가 중단되지 않고 이어지는 상태를 의미합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>이어지는 슬라이드들에서 교실 안/밖의 대표 실천 사례 2종을 살펴봅니다.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: 18.2.1 Participatory Simulation Virus (Figure 18.2) -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">교실 안 실천 · Section 18.2.1</span>
+      <h2 class="slide-title">18.2.1 참여형 바이러스 시뮬레이션 (Virus, Figure 18.2)</h2>
+      <p class="slide-subtitle">학생 자신이 시뮬레이션의 분산 에이전트가 되어 전염병 역학을 온몸으로 추론 (Colella, 2000)</p>
+      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
+        <div class="img-zoom-card" onclick="openModal('images/fig18_2.png', 'Figure 18.2 User and settings screens for the handheld Virus simulation (p. 381)')">
+          <img src="images/fig18_2.png" alt="Figure 18.2 Virus Simulation">
+          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
+        </div>
+        <div class="card highlight-card">
+          <h3>🦠 참여형 시뮬레이션 메커니즘</h3>
+          <ul>
+            <li>학생들은 손안의 모바일 기기를 들고 교실을 자유롭게 돌아다니며 악수</li>
+            <li>보이지 않는 바이러스가 전파되고, 기기 화면에 감염 증상 출현</li>
+            <li><strong>학습 효과</strong>: 학생들은 집단 토론을 통해 감염 경로와 면역 규칙을 스스로 역추론</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>18.2.1절의 참여형 시뮬레이션(Participatory Simulations: Virus)과 WILD 프로젝트를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학생들은 모니터 밖 관찰자가 아니라, 시뮬레이션 내부의 '살아있는 에이전트'가 됩니다. 이는 복잡계 과학 원리를 이해하는 가장 직관적인 체화 학습입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>코로나19 팬데믹 상황에서 이러한 역학 시뮬레이션이 교육적으로 얼마나 유용했는지 상기하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: 18.2.2 Personal Inquiry Project (Figure 18.3) -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">교실 밖 실천 · Section 18.2.2</span>
+      <h2 class="slide-title">18.2.2 개인 탐구 프로젝트 (Personal Inquiry, Figure 18.3)</h2>
+      <p class="slide-subtitle">교실 대형 스크린과 모바일 기기가 동기화되어 야외 시민 과학 탐구를 안내 (Sharples et al.)</p>
+      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
+        <div class="img-zoom-card" onclick="openModal('images/fig18_3.png', 'Figure 18.3 Representation of personal inquiry process (p. 384)')">
+          <img src="images/fig18_3.png" alt="Figure 18.3 Personal Inquiry">
+          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🌿 야외 소음과 조류 생태 탐구</h3>
+          <ul>
+            <li>학생들이 야외에서 소음 센서로 데이터를 수집하고 사진 업로드</li>
+            <li>교실 벽면의 탐구 웹(Inquiry Web)에 실시간 집계 그래프 렌더링</li>
+            <li>가설 설정 ➔ 데이터 수집 ➔ 분석 ➔ 공유의 전 과정을 모바일이 비계화</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>18.2.2절의 Personal Inquiry 프로젝트 구조와 과학 탐구 프로세스를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>모바일 앱은 학생들에게 데이터 수집 폼뿐 아니라, "지금 어떤 가설을 검증하고 있는가?"를 상기시키는 메타인지적 길잡이 역할을 수행합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>도판을 클릭하여 탐구 단계(Find a topic, Decide my question, Plan my investigation 등)의 원형 프로세스를 확인하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: 18.3 Theory of Mobile Learning -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">이론적 토대 · Section 18.3</span>
+      <h2 class="slide-title">18.3 모바일 학습의 3대 이론적 토대</h2>
+      <p class="slide-subtitle">맥락의 동적 구성, 분산 인지 마인드툴, 그리고 전통 교실의 파괴적 혁신</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>18.3.1 맥락과 학습 (Context)</h3>
+          <p>맥락은 고정된 장소가 아니라, 학습자가 상호작용을 통해 동적으로 생성해 나가는 관계적 구성물(Construct)</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">18.3.2 인지 증강 (Augmentation)</h3>
+          <p>모바일 기기는 지식 저장소가 아니라, 인간의 기억과 계산 역량을 확장하는 분산 인지 파트너(Mindtool)</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-amber);">
+          <h3 style="color: var(--accent-amber);">18.3.3 파괴적 잠재력 (Disruption)</h3>
+          <p>전통적 은행저금식(Banking model) 주입 교실의 위계를 허물고, 학생에게 학습 주도권(Agency) 부여</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>18.3절의 3대 이론적 토대(18.3.1 맥락과 학습, 18.3.2 인지 증강, 18.3.3 파괴적 잠재력)를 체계적으로 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>모바일 학습 이론은 학습이 '장치' 안에서 일어나는 것이 아니라, 여러 맥락을 넘나드는 '대화와 탐구의 과정' 속에서 일어난다고 봅니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>스마트폰이 교실의 전통적 권력 구조를 어떻게 변화시키는지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: 18.4 Future Trends & Challenges -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">미래 과제 · Section 18.4</span>
+      <h2 class="slide-title">18.4 미래 동향과 극복 과제: 주의 분산, 감시, 형평성</h2>
+      <p class="slide-subtitle">주의 경제(Attention Economy)의 극복과 데이터 윤리 거버넌스</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">1. 주의 분산 극복</h3>
+          <p>SNS 알림으로 인한 인지 파편화를 방지하기 위해 자기조절학습(SRL) 및 포모도로 메타인지 훈련 결합</p>
+        </div>
+        <div class="card">
+          <h3>2. 데이터 감시 및 프라이버시</h3>
+          <p>학생의 실시간 GPS 위치와 브라우징 데이터의 상업적 악용을 막는 교육적 데이터 거버넌스 수립</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">3. 디지털 형평성 (Equity)</h3>
+          <p>BYOD(Bring Your Own Device)로 인한 격차를 해소하는 웹 기반 경량화 플랫폼 보급</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>18.4절에 제시된 모바일 학습의 3대 미래 쟁점(주의 분산, 프라이버시/감시, 디지털 형평성)을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>스마트폰의 편의성 이면에 존재하는 '주의 파편화'와 '상시 감시'의 위험을 학습과학적으로 통제하는 지혜가 요구됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들의 스마트폰 과몰입을 건강한 탐구 몰입으로 전환하는 교수 전략을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Part III Grand Finale Table -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">Part III 대단원 · 총괄 맵</span>
+      <h2 class="slide-title">제3부 테크놀로지 기반 학습(Part III) 5개 챕터 총괄</h2>
+      <p class="slide-subtitle">게임, 체화 인지, 탠저블 공예, 증강현실, 모바일 유비쿼터스 탐구의 완벽한 조화</p>
+      <div class="table-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>챕터</th>
+              <th>테크놀로지 영역</th>
+              <th>핵심 메커니즘</th>
+              <th>대표 시스템 / 이론</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ch 14 (Steinkuehler)</strong></td>
+              <td>비디오 게임과 학습</td>
+              <td>참여 아키텍처, 은밀한 평가</td>
+              <td>Foldit, WoW 문해력, 친화 공간</td>
+            </tr>
+            <tr>
+              <td><strong>Ch 15 (Abrahamson)</strong></td>
+              <td>체화 인지와 체화 설계</td>
+              <td>감각운동 스키마, 점진적 기호 매개</td>
+              <td>수학 심상 훈련기(MIT-P), GRASP</td>
+            </tr>
+            <tr>
+              <td><strong>Ch 16 (Parés)</strong></td>
+              <td>탠저블 및 전신 인터페이스</td>
+              <td>계산적 공예, 전신 인터랙션 공간</td>
+              <td>LilyPad E-Textiles, 안개의 나라</td>
+            </tr>
+            <tr>
+              <td><strong>Ch 17 (Schneider)</strong></td>
+              <td>증강현실(AR)과 학습과학</td>
+              <td>비가시적 개념 가시화, 오케스트레이션</td>
+              <td>HoloSpeaker, Tinker Table, EcoMOBILE</td>
+            </tr>
+            <tr>
+              <td><strong>Ch 18 (Pea)</strong></td>
+              <td>모바일 학습 (Mobile Learning)</td>
+              <td>끊김 없는 학습(MSL), 인지 증강</td>
+              <td>다이나북, 참여형 시뮬레이션, PI</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Part III: Technology 전체 5개 챕터의 거대한 학습 테크놀로지 프레임워크를 총괄 정리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학습과학에서 테크놀로지는 결코 '교과서를 전달하는 파이프'가 아닙니다. 인간의 신체, 사물, 증강 시각, 모바일 네트워크와 결합하여 '새로운 앎의 양식(New Ways of Knowing)'을 창조하는 도구입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>5개 테크놀로지 중 자신의 연구와 교육에 가장 영감을 준 기술을 꼽아보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Looking Ahead to Part IV Collaboration -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">다음 파트 예고 · Part IV</span>
+      <h2 class="slide-title">다음 여정: 제4부 협력과 공동체(Part IV) 개막!</h2>
+      <p class="slide-subtitle">Chapter 19 지식 구축과 지식 창조 (Knowledge Building: Scardamalia & Bereiter)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>👥 Part IV 협력과 공동체 4개 챕터 라인업</h3>
+          <ul>
+            <li><strong>Ch 19</strong>: 지식 구축과 지식 창조 (Scardamalia & Bereiter)</li>
+            <li><strong>Ch 20</strong>: 컴퓨터 지원 협력 학습 CSCL (Stahl, Koschmann, & Suthers)</li>
+            <li><strong>Ch 21</strong>: 논증 학습과 담화 (Andriessen & Baker)</li>
+            <li><strong>Ch 22</strong>: 실천 공동체와 정체성 (Lave & Wenger)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 테크놀로지에서 집단 지성으로!</h3>
+          <p>개별 학습자와 도구의 상호작용을 넘어, 이제 집단 지성과 지식 구축 공동체라는 사회문화적 지평으로 나아갑니다!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Part III의 완결을 축하하고, 다음 시간부터 펼쳐질 제4부 협력과 공동체(Part IV)의 장대한 여정을 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Chapter 19는 스카다말리아와 베레이터 교수의 전설적인 '지식 구축(Knowledge Building)' 이론과 Knowledge Forum 환경을 다룹니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>Part III 완결을 축하하며 본 강의를 마칩니다. 수고하셨습니다!</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">Chapter 18: Mobile Learning (Pea & Sharples)</div>
+    <div class="footer-center" id="slide-counter">01 / 09</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Modal for Image Zoom -->
+  <div id="image-modal" onclick="closeModal()">
+    <button id="modal-close" onclick="closeModal()">✕</button>
+    <img id="modal-img" src="" alt="도판 확대">
+    <div id="modal-caption"></div>
+  </div>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch18_slide_note_';
+
+    function openModal(src, caption) {
+      modalImg.src = src;
+      modalCaption.textContent = caption;
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 18: Mobile Learning - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter18_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (modal.classList.contains('active')) closeModal();
+        else if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>
