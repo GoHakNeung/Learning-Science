@@ -130,6 +130,150 @@
       transform: translateY(-1px);
     }
 
+    .ctrl-btn.highlight-btn {
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      color: #ffffff;
+      border: none;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+      text-decoration: none;
+    }
+
+    .ctrl-btn.highlight-btn:hover {
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.55);
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      border-color: transparent;
+    }
+
+    /* Knowledge Graph CTA Banner */
+    .graph-banner-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 182, 212, 0.08), rgba(99, 102, 241, 0.1));
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 18px;
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.2);
+      backdrop-filter: blur(12px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .graph-banner-card:hover {
+      transform: translateY(-3px);
+      border-color: #10b981;
+      box-shadow: 0 18px 40px -10px rgba(16, 185, 129, 0.35);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(6, 182, 212, 0.12), rgba(99, 102, 241, 0.15));
+    }
+
+    .graph-banner-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 60%);
+      pointer-events: none;
+      animation: pulseGlow 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(0.9); opacity: 0.5; }
+      100% { transform: scale(1.1); opacity: 0.9; }
+    }
+
+    .graph-banner-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      z-index: 1;
+    }
+
+    .graph-banner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #34d399;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .graph-banner-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .graph-banner-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    .graph-banner-features {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.25rem;
+    }
+
+    .graph-feature-tag {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .graph-banner-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      color: #ffffff;
+      padding: 0.75rem 1.4rem;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s ease;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+
+    .graph-banner-card:hover .graph-banner-cta {
+      transform: scale(1.04);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      .graph-banner-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.25rem;
+      }
+      .graph-banner-cta {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
     main {
       flex: 1;
       max-width: 1380px;
@@ -496,6 +640,7 @@
       <span class="brand-title">Learning Sciences Interactive Slides</span>
     </a>
     <div class="header-controls">
+      <a href="relationship_graph.html" class="ctrl-btn highlight-btn" title="33개 챕터 통합 관계도 & 지식 그래프 탐색">🕸️ 지식 관계도 (Graph)</a>
       <button class="ctrl-btn" id="theme-btn" title="테마 변경 (다크/라이트)">🌓 테마</button>
       <a href="https://github.com" target="_blank" class="ctrl-btn">💻 GitHub 저장소</a>
     </div>
@@ -520,6 +665,30 @@
       </div>
     </section>
 
+    <!-- Knowledge Graph Navigator Banner -->
+    <a href="relationship_graph.html" class="graph-banner-card" title="학습과학 33개 챕터 통합 관계도 열기">
+      <div class="graph-banner-info">
+        <div class="graph-banner-badge">✨ NEW INTERACTIVE KNOWLEDGE MAP</div>
+        <div class="graph-banner-title">
+          <span>🧠 학습과학 33개 챕터 통합 지식 관계도 (Knowledge Navigator)</span>
+        </div>
+        <p class="graph-banner-desc">
+          33개 전 챕터 간의 이론적 계승·적용 관계망, 7대 주제별 학습 경로, 5대 핵심 관점 & 논쟁, 130+ 용어사전, 깊은 학습 설계 원리를 대화형 지식 그래프로 입체 탐색하세요.
+        </p>
+        <div class="graph-banner-features">
+          <span class="graph-feature-tag">🕸️ vis.js 지식 그래프 (33개 챕터)</span>
+          <span class="graph-feature-tag">🛣️ 7대 주제 트랙</span>
+          <span class="graph-feature-tag">⚖️ 5대 이론적 관점 & 논쟁</span>
+          <span class="graph-feature-tag">📚 마스터 용어사전</span>
+          <span class="graph-feature-tag">🧊 깊은 학습 설계 원리</span>
+        </div>
+      </div>
+      <div class="graph-banner-cta">
+        <span>통합 관계도 탐색하기</span>
+        <span style="font-size: 1.1rem;">›</span>
+      </div>
+    </a>
+
     <!-- Filter & Search Section -->
     <section class="filter-section">
       <div class="search-box">
@@ -528,6 +697,7 @@
       </div>
 
       <div class="pills-container">
+        <a href="relationship_graph.html" class="pill-btn" style="background: linear-gradient(135deg, #10b981, #06b6d4); color: #ffffff; border: none; font-weight: 700; text-decoration: none;" title="33개 챕터 통합 관계도 열기">🕸️ 통합 관계도 (Graph)</a>
         <button class="pill-btn active" data-filter="all">전체 보기 (33)</button>
         <button class="pill-btn" data-filter="ready">배포 완료 (33)</button>
         <button class="pill-btn" data-filter="part1">Part I: 기초 이론 (Ch 01~08)</button>
@@ -552,6 +722,8 @@
       단축키 안내: 슬라이드 내에서 <code>←</code>/<code>→</code> (이동), <code>N</code> (발표자 노트), <code>F</code> (전체화면), <code>🌓</code> (테마)
     </div>
     <div class="footer-links">
+      <a href="relationship_graph.html" class="footer-link" style="color: var(--accent-emerald); font-weight: 700;">🕸️ 33개 챕터 지식 관계도</a>
+      <span>·</span>
       <a href="#" class="footer-link">상단으로 이동</a>
       <span>·</span>
       <a href="https://www.cambridge.org" target="_blank" class="footer-link">Cambridge University Press</a>
