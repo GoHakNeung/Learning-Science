@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📖 학습과학 통합 관계도 | Learning Sciences Knowledge Navigator</title>
+  <meta name="description" content="Cambridge Handbook of the Learning Sciences (3rd Ed.) 전 33개 챕터의 관계망, 6대 Part, 5대 이론적 관점, 7대 주제 트랙을 대화형으로 탐색하는 인터랙티브 지식 그래프" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg-primary: #0a0e17;
+      --bg-secondary: #111827;
+      --bg-tertiary: #1f2937;
+      --bg-glass: rgba(17, 24, 39, 0.88);
+      --bg-card: rgba(31, 41, 55, 0.85);
+      --border-color: rgba(255, 255, 255, 0.12);
+      --border-focus: rgba(99, 102, 241, 0.6);
+      --text-primary: #f9fafb;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --accent-blue: #3b82f6;
+      --accent-indigo: #6366f1;
+      --accent-purple: #8b5cf6;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-cyan: #06b6d4;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    body.light-theme {
+      --bg-primary: #f8fafc; --bg-secondary: #ffffff; --bg-tertiary: #f1f5f9;
+      --bg-glass: rgba(255,255,255,0.92); --bg-card: rgba(255,255,255,0.95);
+      --border-color: rgba(0,0,0,0.1); --border-focus: rgba(99,102,241,0.5);
+      --text-primary: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width:100%; height:100%; min-height:100vh; font-family:'Noto Sans KR','Inter',-apple-system,sans-serif; background-color:var(--bg-primary); color:var(--text-primary); overflow:hidden; display:flex; flex-direction:column; }
+    header.app-header { background:var(--bg-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid var(--border-color); flex-shrink:0; height:60px; padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; z-index:50; }
+    .header-brand { display:flex; align-items:center; gap:0.75rem; text-decoration:none; color:var(--text-primary); }
+    .brand-icon { width:34px; height:34px; border-radius:var(--radius-sm); background:linear-gradient(135deg, #10b981, #06b6d4); display:flex; align-items:center; justify-content:center; color:white; box-shadow:0 0 15px rgba(16,185,129,0.4); }
+    .brand-text h1 { font-family:'Outfit',sans-serif; font-size:1.1rem; font-weight:700; letter-spacing:-0.02em; background:linear-gradient(90deg, #fff, #6ee7b7); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    body.light-theme .brand-text h1 { background:linear-gradient(90deg, #064e3b, #059669); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .brand-text span { font-size:0.68rem; color:var(--text-secondary); display:block; margin-top:-2px; }
+    .nav-tabs { display:flex; align-items:center; background:var(--bg-tertiary); padding:3px; border-radius:var(--radius-md); border:1px solid var(--border-color); gap:2px; }
+    .nav-tab-btn { background:transparent; border:none; color:var(--text-secondary); padding:6px 12px; font-size:0.82rem; font-weight:600; border-radius:var(--radius-sm); cursor:pointer; display:flex; align-items:center; gap:6px; transition:all var(--transition-fast); font-family:inherit; }
+    .nav-tab-btn:hover { color:var(--text-primary); background:rgba(255,255,255,0.05); }
+    .nav-tab-btn.active { background:var(--accent-emerald); color:#ffffff; box-shadow:0 2px 10px rgba(16,185,129,0.35); }
+    .header-actions { display:flex; align-items:center; gap:0.75rem; }
+    .search-box { position:relative; width:200px; }
+    .search-box input { width:100%; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:6px 10px 6px 30px; color:var(--text-primary); font-size:0.8rem; font-family:inherit; outline:none; transition:all var(--transition-fast); }
+    .search-box input:focus { border-color:var(--accent-emerald); box-shadow:0 0 0 2px rgba(16,185,129,0.2); width:240px; }
+    .search-box i { position:absolute; left:9px; top:50%; transform:translateY(-50%); color:var(--text-muted); width:14px; height:14px; }
+    .icon-btn { background:var(--bg-tertiary); border:1px solid var(--border-color); color:var(--text-secondary); width:34px; height:34px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all var(--transition-fast); }
+    .icon-btn:hover { color:var(--text-primary); background:var(--border-color); }
+    main.main-content { flex:1; position:relative; display:flex; flex-direction:column; height:calc(100vh - 60px); overflow:hidden; }
+    .tab-page { display:none; width:100%; height:100%; position:relative; overflow:hidden; }
+    .tab-page.active { display:flex; }
+    .graph-layout { display:flex; width:100%; height:100%; position:relative; }
+    .graph-canvas-container { flex:1; width:100%; height:100%; position:relative; background:radial-gradient(circle at center, rgba(30,41,59,0.5) 0%, var(--bg-primary) 100%); overflow:hidden; }
+    #network-canvas { width:100%; height:100%; position:absolute; top:0; left:0; right:0; bottom:0; }
+    .graph-floating-panel { position:absolute; top:1rem; left:1rem; z-index:10; background:var(--bg-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:0.6rem 0.9rem; display:flex; flex-wrap:wrap; align-items:center; gap:0.75rem; box-shadow:0 10px 30px rgba(0,0,0,0.4); max-width:calc(100% - 2rem); }
+    .control-group { display:flex; align-items:center; gap:0.4rem; }
+    .control-group label { font-size:0.72rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; }
+    .filter-select { background:var(--bg-tertiary); border:1px solid var(--border-color); color:var(--text-primary); border-radius:var(--radius-sm); padding:4px 8px; font-size:0.78rem; font-family:inherit; outline:none; cursor:pointer; }
+    .toggle-pill { display:flex; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:999px; padding:2px; gap:2px; }
+    .pill-btn { background:transparent; border:none; color:var(--text-secondary); padding:4px 10px; font-size:0.74rem; font-weight:600; border-radius:999px; cursor:pointer; transition:all var(--transition-fast); font-family:inherit; }
+    .pill-btn.active { background:var(--accent-emerald); color:#fff; }
+    .graph-zoom-controls { position:absolute; bottom:1.25rem; right:1.25rem; z-index:10; background:var(--bg-glass); backdrop-filter:blur(12px); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:4px; display:flex; flex-direction:column; gap:4px; box-shadow:0 4px 15px rgba(0,0,0,0.3); }
+    .zoom-btn { background:var(--bg-tertiary); border:none; color:var(--text-primary); width:32px; height:32px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all var(--transition-fast); }
+    .zoom-btn:hover { background:var(--accent-emerald); color:#fff; }
+    .graph-legend { position:absolute; bottom:1.25rem; left:1.25rem; z-index:10; background:var(--bg-glass); backdrop-filter:blur(12px); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:0.6rem 0.9rem; font-size:0.72rem; display:flex; flex-direction:column; gap:0.35rem; box-shadow:0 4px 15px rgba(0,0,0,0.3); }
+    .legend-item { display:flex; align-items:center; gap:6px; color:var(--text-secondary); }
+    .legend-dot { width:10px; height:10px; border-radius:50%; }
+    .detail-drawer { width:440px; height:100%; background:var(--bg-secondary); border-left:1px solid var(--border-color); display:flex; flex-direction:column; transform:translateX(100%); transition:transform var(--transition-normal); position:absolute; right:0; top:0; bottom:0; z-index:30; box-shadow:-8px 0 30px rgba(0,0,0,0.45); }
+    .detail-drawer.open { transform:translateX(0); }
+    .drawer-header { padding:1.25rem; border-bottom:1px solid var(--border-color); display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; background:var(--bg-glass); }
+    .drawer-badge-row { display:flex; flex-wrap:wrap; gap:0.35rem; margin-bottom:0.5rem; }
+    .badge { font-size:0.68rem; font-weight:700; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.04em; }
+    .badge-p1 { background:rgba(59,130,246,0.15); color:#60a5fa; border:1px solid rgba(59,130,246,0.3); }
+    .badge-p2 { background:rgba(16,185,129,0.15); color:#34d399; border:1px solid rgba(16,185,129,0.3); }
+    .badge-p3 { background:rgba(139,92,246,0.15); color:#a78bfa; border:1px solid rgba(139,92,246,0.3); }
+    .badge-p4 { background:rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.3); }
+    .badge-p5 { background:rgba(236,72,153,0.15); color:#f472b6; border:1px solid rgba(236,72,153,0.3); }
+    .badge-p6 { background:rgba(6,182,212,0.15); color:#22d3ee; border:1px solid rgba(6,182,212,0.3); }
+    .drawer-title h2 { font-size:1.1rem; font-weight:700; line-height:1.35; color:var(--text-primary); }
+    .drawer-title p { font-size:0.78rem; color:var(--text-muted); margin-top:2px; }
+    .drawer-close-btn { background:transparent; border:none; color:var(--text-secondary); cursor:pointer; padding:4px; border-radius:var(--radius-sm); }
+    .drawer-close-btn:hover { color:var(--text-primary); background:var(--bg-tertiary); }
+    .drawer-body { flex:1; overflow-y:auto; padding:1.25rem; display:flex; flex-direction:column; gap:1.25rem; }
+    .drawer-section { background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1rem; }
+    .drawer-section-title { font-size:0.8rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.75rem; display:flex; align-items:center; gap:6px; }
+    .summary-list { list-style:none; display:flex; flex-direction:column; gap:0.5rem; }
+    .summary-list li { font-size:0.82rem; line-height:1.5; color:var(--text-primary); padding-left:1.2rem; position:relative; }
+    .summary-list li::before { content:"•"; color:var(--accent-emerald); font-weight:bold; position:absolute; left:0.2rem; top:0; }
+    .glossary-accordion { display:flex; flex-direction:column; gap:0.5rem; }
+    .glossary-card { background:var(--bg-tertiary); border-radius:var(--radius-sm); padding:0.6rem 0.8rem; border-left:3px solid var(--accent-emerald); }
+    .glossary-card-header { display:flex; align-items:baseline; justify-content:space-between; gap:0.5rem; }
+    .glossary-term { font-weight:700; font-size:0.85rem; color:var(--text-primary); }
+    .glossary-en { font-size:0.72rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace; }
+    .glossary-def { font-size:0.78rem; color:var(--text-secondary); margin-top:4px; line-height:1.45; }
+    .connection-pill-list { display:flex; flex-direction:column; gap:0.4rem; }
+    .connection-pill { background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:0.5rem 0.75rem; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:all var(--transition-fast); }
+    .connection-pill:hover { border-color:var(--accent-emerald); background:rgba(16,185,129,0.12); }
+    .conn-info { display:flex; flex-direction:column; }
+    .conn-title { font-size:0.8rem; font-weight:600; color:var(--text-primary); }
+    .conn-desc { font-size:0.7rem; color:var(--text-muted); }
+    .conn-badge { font-size:0.65rem; font-weight:700; padding:2px 6px; border-radius:4px; background:rgba(255,255,255,0.08); color:var(--text-secondary); }
+    .drawer-actions { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; padding-top:0.5rem; }
+    .btn-action { padding:8px; border-radius:var(--radius-sm); font-size:0.76rem; font-weight:600; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; transition:all var(--transition-fast); }
+    .btn-primary { background:var(--accent-emerald); color:white; border:none; }
+    .btn-primary:hover { background:#059669; }
+    .btn-outline { background:transparent; border:1px solid var(--border-color); color:var(--text-primary); }
+    .btn-outline:hover { background:var(--bg-tertiary); border-color:var(--text-secondary); }
+    .tab-scroll-container { flex:1; height:100%; overflow-y:auto; padding:2rem; display:flex; flex-direction:column; gap:2rem; max-width:1280px; margin:0 auto; width:100%; }
+    .section-header-title { text-align:center; margin-bottom:0.5rem; }
+    .section-header-title h2 { font-size:1.75rem; font-weight:800; font-family:'Outfit',sans-serif; margin-bottom:0.4rem; }
+    .section-header-title p { color:var(--text-secondary); font-size:0.92rem; }
+    .track-section-card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-xl); padding:1.75rem; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+    .track-title-bar { display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem; }
+    .track-icon-badge { width:42px; height:42px; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; color:white; }
+    .track-title-info h3 { font-size:1.2rem; font-weight:700; }
+    .track-title-info p { font-size:0.82rem; color:var(--text-secondary); margin-top:2px; }
+    .pathway-flow { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:0.75rem; margin-top:1rem; }
+    .pathway-step { background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:0.9rem; display:flex; flex-direction:column; cursor:pointer; transition:all var(--transition-fast); }
+    .pathway-step:hover { transform:translateY(-3px); border-color:var(--accent-emerald); box-shadow:0 8px 20px rgba(0,0,0,0.3); }
+    .step-badge { font-size:0.65rem; font-weight:800; color:var(--accent-emerald); text-transform:uppercase; margin-bottom:0.3rem; }
+    .step-ch-name { font-size:0.85rem; font-weight:700; color:var(--text-primary); margin-bottom:0.4rem; }
+    .step-role { font-size:0.75rem; color:var(--text-secondary); line-height:1.4; margin-top:auto; }
+    .paradigm-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem; }
+    .paradigm-card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:1.5rem; display:flex; flex-direction:column; gap:1rem; border-top:4px solid var(--accent-emerald); }
+    .paradigm-card-title { font-size:1.05rem; font-weight:700; }
+    .paradigm-card-desc { font-size:0.82rem; color:var(--text-secondary); line-height:1.5; }
+    .paradigm-ch-tags { display:flex; flex-wrap:wrap; gap:0.35rem; margin-top:auto; }
+    .ch-chip { font-size:0.7rem; font-weight:600; padding:3px 8px; border-radius:6px; background:var(--bg-tertiary); color:var(--text-secondary); border:1px solid var(--border-color); cursor:pointer; }
+    .ch-chip:hover { color:var(--text-primary); border-color:var(--accent-emerald); }
+    .debate-card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:1.5rem; display:flex; flex-direction:column; gap:1rem; }
+    .debate-title { font-size:1rem; font-weight:700; color:var(--text-primary); display:flex; align-items:center; gap:8px; }
+    .debate-vs { display:grid; grid-template-columns:1fr auto 1fr; gap:1rem; align-items:center; background:var(--bg-secondary); border-radius:var(--radius-md); padding:1rem; }
+    .vs-box { padding:0.75rem; border-radius:var(--radius-sm); background:var(--bg-tertiary); }
+    .vs-box h4 { font-size:0.85rem; font-weight:700; color:var(--accent-emerald); margin-bottom:4px; }
+    .vs-box p { font-size:0.78rem; color:var(--text-secondary); line-height:1.4; }
+    .vs-divider { font-weight:800; font-size:0.9rem; color:var(--accent-rose); font-family:'Outfit',sans-serif; }
+    .glossary-toolbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:1rem 1.25rem; }
+    .glossary-search-input { flex:1; min-width:260px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:8px 12px; color:var(--text-primary); font-size:0.85rem; outline:none; font-family:inherit; }
+    .glossary-stats { font-size:0.82rem; color:var(--text-muted); font-weight:600; }
+    .glossary-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:1rem; }
+    .glossary-item-card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1.1rem; display:flex; flex-direction:column; gap:0.5rem; transition:all var(--transition-fast); cursor:pointer; }
+    .glossary-item-card:hover { border-color:var(--accent-emerald); transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,0.2); }
+    .glossary-card-top { display:flex; align-items:baseline; justify-content:space-between; }
+    .glossary-card-top .term-ko { font-size:0.95rem; font-weight:700; color:var(--text-primary); }
+    .glossary-card-top .term-en { font-size:0.72rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace; }
+    .glossary-card-def { font-size:0.8rem; color:var(--text-secondary); line-height:1.5; }
+    .glossary-card-footer { margin-top:auto; display:flex; align-items:center; justify-content:space-between; padding-top:0.5rem; border-top:1px solid rgba(255,255,255,0.05); }
+    .ch-ref-badge { font-size:0.7rem; font-weight:700; color:var(--accent-emerald); }
+    .level-box { background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:1.5rem; display:flex; flex-direction:column; gap:0.75rem; border-left:4px solid var(--accent-emerald); }
+    .level-box h3 { font-size:1.05rem; font-weight:700; color:var(--text-primary); }
+    .level-box .level-subtitle { font-size:0.78rem; color:var(--accent-emerald); font-weight:600; text-transform:uppercase; }
+    .level-box p { font-size:0.82rem; color:var(--text-secondary); line-height:1.5; }
+    .marr-levels-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.5rem; }
+    .debates-section { display:flex; flex-direction:column; gap:1.25rem; }
+    @media (max-width:900px) {
+      .header-brand .brand-text span { display:none; }
+      .nav-tab-btn span { display:none; }
+      .search-box { width:140px; }
+      .search-box input:focus { width:180px; }
+      .detail-drawer { width:100%; }
+      .debate-vs { grid-template-columns:1fr; }
+      .vs-divider { text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <a href="#" class="header-brand" id="brand-home-link">
+      <div class="brand-icon"><i data-lucide="book-open"></i></div>
+      <div class="brand-text">
+        <h1>학습과학 지식 항해사</h1>
+        <span>Learning Sciences Knowledge Navigator (Ch01~33)</span>
+      </div>
+    </a>
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab-btn active" data-target="tab-graph"><i data-lucide="network"></i><span>지식 그래프</span></button>
+      <button class="nav-tab-btn" data-target="tab-tracks"><i data-lucide="git-branch"></i><span>7대 주제 트랙</span></button>
+      <button class="nav-tab-btn" data-target="tab-paradigms"><i data-lucide="swords"></i><span>이론적 관점 & 쟁점</span></button>
+      <button class="nav-tab-btn" data-target="tab-glossary"><i data-lucide="book-marked"></i><span>마스터 용어사전</span></button>
+      <button class="nav-tab-btn" data-target="tab-principles"><i data-lucide="layers"></i><span>학습 설계 원리</span></button>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box"><i data-lucide="search"></i><input type="text" id="global-search-input" placeholder="챕터 또는 개념 검색..." /></div>
+      <button class="icon-btn" id="theme-toggle-btn" title="다크/라이트 테마 전환"><i data-lucide="sun-moon"></i></button>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- TAB 1: GRAPH -->
+    <section class="tab-page active" id="tab-graph">
+      <div class="graph-layout">
+        <div class="graph-canvas-container">
+          <div class="graph-floating-panel">
+            <div class="control-group">
+              <label>배치:</label>
+              <div class="toggle-pill">
+                <button class="pill-btn active" id="layout-flow">🗺️ Part별 뷰</button>
+                <button class="pill-btn" id="layout-organic">🕸️ 방사형 뷰</button>
+                <button class="pill-btn" id="layout-clusters">⚖️ 관점별 뷰</button>
+              </div>
+            </div>
+            <div class="control-group">
+              <label>표시:</label>
+              <div class="toggle-pill">
+                <button class="pill-btn active" id="view-mode-chapters">챕터 관계망 (33)</button>
+                <button class="pill-btn" id="view-mode-all">개념 온톨로지</button>
+              </div>
+            </div>
+            <div class="control-group">
+              <label>Part:</label>
+              <select class="filter-select" id="filter-part-select">
+                <option value="all">전체 (All)</option>
+                <option value="Part I">Part I: 기초</option>
+                <option value="Part II">Part II: 방법론</option>
+                <option value="Part III">Part III: 테크놀로지</option>
+                <option value="Part IV">Part IV: 협력학습</option>
+                <option value="Part V">Part V: 교과학습</option>
+                <option value="Part VI">Part VI: 교실실천</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label>이론적 관점:</label>
+              <select class="filter-select" id="filter-paradigm-select">
+                <option value="all">전체 (All)</option>
+                <option value="구성주의">구성주의</option>
+                <option value="사회문화이론">사회문화이론</option>
+                <option value="인지과학적 접근">인지과학적 접근</option>
+                <option value="상황학습">상황학습</option>
+                <option value="설계기반연구">설계기반연구</option>
+              </select>
+            </div>
+          </div>
+          <div class="graph-zoom-controls">
+            <button class="zoom-btn" id="btn-zoom-in" title="확대"><i data-lucide="plus"></i></button>
+            <button class="zoom-btn" id="btn-zoom-out" title="축소"><i data-lucide="minus"></i></button>
+            <button class="zoom-btn" id="btn-fit-graph" title="화면 맞춤"><i data-lucide="maximize-2"></i></button>
+            <button class="zoom-btn" id="btn-toggle-physics" title="물리 엔진 일시정지"><i data-lucide="pause"></i></button>
+          </div>
+          <div id="network-canvas"></div>
+          <div class="graph-legend">
+            <div class="legend-item"><span class="legend-dot" style="background:#3B82F6"></span> Part I: 기초 (Foundations)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#10B981"></span> Part II: 방법론 (Methodologies)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#8B5CF6"></span> Part III: 테크놀로지 (Technology)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#F59E0B"></span> Part IV: 협력학습 (Learning Together)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#EC4899"></span> Part V: 교과학습 (Disciplinary Knowledge)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#06B6D4"></span> Part VI: 교실실천 (Classroom Practice)</div>
+          </div>
+        </div>
+        <aside class="detail-drawer" id="node-detail-drawer">
+          <div class="drawer-header">
+            <div class="drawer-title-area">
+              <div class="drawer-badge-row" id="drawer-badges"></div>
+              <div class="drawer-title"><h2 id="drawer-title-text">챕터를 선택하세요</h2><p id="drawer-subtitle-text"></p></div>
+            </div>
+            <button class="drawer-close-btn" id="drawer-close-btn"><i data-lucide="x"></i></button>
+          </div>
+          <div class="drawer-body">
+            <div class="drawer-section"><div class="drawer-section-title"><i data-lucide="sparkles"></i> 3줄 핵심 개요</div><ul class="summary-list" id="drawer-summary-list"></ul></div>
+            <div class="drawer-section"><div class="drawer-section-title"><i data-lucide="key"></i> 핵심 용어사전</div><div class="glossary-accordion" id="drawer-glossary-list"></div></div>
+            <div class="drawer-section"><div class="drawer-section-title"><i data-lucide="git-merge"></i> 연결된 챕터 & 맥락</div><div class="connection-pill-list" id="drawer-connections-list"></div></div>
+            <div class="drawer-section"><div class="drawer-section-title"><i data-lucide="external-link"></i> 학습 자료 바로가기</div><div class="drawer-actions" id="drawer-actions-container"></div></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- TAB 2: TRACKS -->
+    <section class="tab-page" id="tab-tracks">
+      <div class="tab-scroll-container">
+        <div class="section-header-title">
+          <h2>🛣️ 7대 학습과학 주제별 학습 경로</h2>
+          <p>이론적 기초부터 교실 실천까지, 학습과학의 핵심 주제를 트랙별로 체계적으로 탐색합니다.</p>
+        </div>
+        <div id="tracks-content-list" style="display:flex; flex-direction:column; gap:1.75rem;"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: PARADIGMS & DEBATES -->
+    <section class="tab-page" id="tab-paradigms">
+      <div class="tab-scroll-container">
+        <div class="section-header-title">
+          <h2>⚖️ 5대 이론적 관점 & 핵심 학술 쟁점</h2>
+          <p>학습의 본질을 설명하는 5가지 관점과 학습과학 내부의 핵심 논쟁을 비교합니다.</p>
+        </div>
+        <div class="paradigm-grid" id="paradigms-grid-container"></div>
+        <div class="debates-section">
+          <h3 style="font-size:1.25rem; font-weight:700; margin-top:1rem;"><i data-lucide="swords"></i> 학습과학 핵심 논쟁 (Key Debates)</h3>
+          <div class="debate-card">
+            <div class="debate-title">⚔️ 논쟁 1: 습득 은유 vs 참여 은유 (Ch02, Ch23)</div>
+            <div class="debate-vs">
+              <div class="vs-box"><h4>습득 은유 (Acquisition)</h4><p>학습은 개인의 머릿속에 지식을 획득하는 인지적 과정이다. 스키마 구성, 개념변화, 정보처리가 핵심 메커니즘.</p></div>
+              <div class="vs-divider">VS</div>
+              <div class="vs-box"><h4>참여 은유 (Participation)</h4><p>학습은 공동체의 실천에 점진적으로 참여하는 사회문화적 과정이다. 정당한 주변적 참여(LPP), 담화 실천이 핵심.</p></div>
+            </div>
+          </div>
+          <div class="debate-card">
+            <div class="debate-title">⚔️ 논쟁 2: 교수주의 vs 구성주의 (Ch01, Ch08)</div>
+            <div class="debate-vs">
+              <div class="vs-box"><h4>교수주의 (Instructionism)</h4><p>교사가 체계적으로 구조화된 지식을 학생에게 전달하는 것이 효과적이다. 직접 교수, 명시적 설명, 연습이 핵심.</p></div>
+              <div class="vs-divider">VS</div>
+              <div class="vs-box"><h4>구성주의 (Constructivism)</h4><p>학습자가 능동적으로 경험하고 탐구하며 지식을 구성해야 깊은 학습이 일어난다. PBL, 탐구학습이 핵심.</p></div>
+            </div>
+          </div>
+          <div class="debate-card">
+            <div class="debate-title">⚔️ 논쟁 3: 개념 대체 vs 시스템적 재조직화 (Ch06)</div>
+            <div class="debate-vs">
+              <div class="vs-box"><h4>개념 대체 모델</h4><p>학습자의 오개념(Misconception)은 과학적 개념으로 완전히 대체되어야 한다. 인지적 갈등을 통한 혁명적 변화.</p></div>
+              <div class="vs-divider">VS</div>
+              <div class="vs-box"><h4>시스템적 재조직화 (diSessa)</h4><p>지식은 작은 p-prims의 네트워크이며, 개념변화는 이 조각들의 점진적 재조직화이다. 기존 지식은 폐기되지 않고 재구조화된다.</p></div>
+            </div>
+          </div>
+          <div class="debate-card">
+            <div class="debate-title">⚔️ 논쟁 4: 실험실 연구 vs 설계기반연구 (Ch09, Ch11)</div>
+            <div class="debate-vs">
+              <div class="vs-box"><h4>실험실 기반 연구</h4><p>통제된 조건에서 변인을 분리하여 인과관계를 규명하는 전통적 연구 방법. 내적 타당도(Internal Validity) 중시.</p></div>
+              <div class="vs-divider">VS</div>
+              <div class="vs-box"><h4>설계기반연구 (DBR)</h4><p>실제 교육 맥락의 복잡성을 보존하며 반복적 설계-실행-분석을 통해 실용적 이론을 생성. 생태적 타당도(Ecological Validity) 중시.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: GLOSSARY -->
+    <section class="tab-page" id="tab-glossary">
+      <div class="tab-scroll-container">
+        <div class="section-header-title">
+          <h2>📚 학습과학 마스터 용어사전</h2>
+          <p>01장부터 33장까지 수록된 핵심 개념을 검색하고 관련 챕터를 탐색합니다.</p>
+        </div>
+        <div class="glossary-toolbar">
+          <input type="text" class="glossary-search-input" id="glossary-filter-input" placeholder="용어명, 영문명, 정의 내용 검색..." />
+          <select class="filter-select" id="glossary-chapter-filter"><option value="all">모든 챕터 (All Chapters)</option></select>
+          <div class="glossary-stats" id="glossary-count-label">총 0개 용어</div>
+        </div>
+        <div class="glossary-grid" id="glossary-items-grid"></div>
+      </div>
+    </section>
+
+    <!-- TAB 5: DESIGN PRINCIPLES -->
+    <section class="tab-page" id="tab-principles">
+      <div class="tab-scroll-container">
+        <div class="section-header-title">
+          <h2>🧊 학습과학의 핵심 설계 원리</h2>
+          <p>Sawyer가 제시한 깊은 학습(Deep Learning)을 위한 교수학습 설계 원리와 전통적 교실의 차이를 비교합니다.</p>
+        </div>
+        <div class="marr-levels-grid">
+          <div class="level-box" style="border-left-color:#3b82f6;">
+            <div class="level-subtitle">원리 1</div>
+            <h3>깊은 개념적 이해 (Deep Conceptual Understanding)</h3>
+            <p><strong>단순 암기가 아닌, 개념 간 관계와 원리를 이해하는 학습</strong></p>
+            <p>전문가의 지식은 사실과 절차뿐 아니라 '언제, 왜, 어떻게' 적용하는지에 대한 조건적 지식을 포함한다. 학습 환경은 이러한 깊은 이해를 촉진하도록 설계되어야 한다.</p>
+            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:auto;">관련 챕터: Ch01, Ch02, Ch06, Ch08</p>
+          </div>
+          <div class="level-box" style="border-left-color:#10b981;">
+            <div class="level-subtitle">원리 2</div>
+            <h3>학습자의 능동적 구성 (Active Construction)</h3>
+            <p><strong>학습자가 스스로 의미를 구성하고 지식을 연결하는 과정</strong></p>
+            <p>학습자는 빈 그릇이 아니다. 사전지식을 기반으로 새로운 정보를 해석하고, 능동적으로 의미를 구성한다. 교사는 전달자가 아닌 학습 과정의 촉진자이다.</p>
+            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:auto;">관련 챕터: Ch03, Ch04, Ch05, Ch19</p>
+          </div>
+          <div class="level-box" style="border-left-color:#ec4899;">
+            <div class="level-subtitle">원리 3</div>
+            <h3>사회적 참여와 협력 (Social Participation & Collaboration)</h3>
+            <p><strong>학습은 타인과의 상호작용과 공동체 참여를 통해 깊어진다</strong></p>
+            <p>협력학습, 논증적 담화, 지식 구축 활동은 개인의 사고를 확장하고, 다양한 관점의 통합을 통해 깊은 이해를 촉진한다.</p>
+            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:auto;">관련 챕터: Ch10, Ch19, Ch20, Ch21, Ch29</p>
+          </div>
+        </div>
+        <div class="track-section-card" style="margin-top:1rem;">
+          <div class="track-title-bar">
+            <div class="track-icon-badge" style="background:var(--accent-amber);"><i data-lucide="table"></i></div>
+            <div class="track-title-info">
+              <h3>깊은 학습 vs 전통적 교실 실천 비교 (Sawyer, Table 1.1)</h3>
+              <p>학습과학 연구가 밝혀낸 효과적 학습 원리와 전통적 교실 실천의 핵심 차이점</p>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem;">
+            <div style="background:var(--bg-secondary); padding:1rem; border-radius:var(--radius-sm); border:1px solid var(--border-color); border-top:3px solid #10b981;">
+              <h4 style="color:#34d399; margin-bottom:8px;">✅ 깊은 학습 (인지과학 연구 결과)</h4>
+              <ul style="font-size:0.82rem; color:var(--text-secondary); line-height:1.7; padding-left:1rem;">
+                <li>깊은 개념적 이해와 전이 가능한 지식</li>
+                <li>학습자의 사전지식에 기반한 구성적 학습</li>
+                <li>협력적 의미 구성과 반성적 사고</li>
+                <li>실세계 맥락에서의 상황화된 학습</li>
+                <li>형성적 평가를 통한 지속적 피드백</li>
+                <li>자기조절학습과 메타인지 전략 활용</li>
+              </ul>
+            </div>
+            <div style="background:var(--bg-secondary); padding:1rem; border-radius:var(--radius-sm); border:1px solid var(--border-color); border-top:3px solid #f43f5e;">
+              <h4 style="color:#f472b6; margin-bottom:8px;">❌ 전통적 교실 실천</h4>
+              <ul style="font-size:0.82rem; color:var(--text-secondary); line-height:1.7; padding-left:1rem;">
+                <li>사실과 절차의 단순 암기와 반복 연습</li>
+                <li>교사 중심의 일방적 지식 전달</li>
+                <li>개인주의적 학습과 경쟁 구도</li>
+                <li>탈맥락화된 추상적 교과서 학습</li>
+                <li>총괄평가 중심의 일회성 시험</li>
+                <li>교사 주도의 외적 조절과 수동적 수용</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    var KNOWLEDGE_DATA = {"chapters": [{"folder": "01_Introduction_to_LS", "ch_num": "01", "ko_title": "Ch01: 학습과학 서론", "en_title": "An Introduction to the Learning Sciences", "authors": "R. Keith Sawyer", "part": "Part I", "summary": ["학습과학(LS)은 인지과학, 교육심리학, 컴퓨터과학 등을 융합하여 효과적인 학습 과정을 과학적으로 연구하는 학제적 분야이다.", "전통적 '교수주의(Instructionism)'의 한계를 극복하고, 깊은 개념적 이해(Deep Conceptual Understanding)를 촉진하는 학습 환경 설계를 지향한다.", "학습과학의 핵심 발견: 사전지식 활성화, 협력학습, 반성적 사고, 전이(Transfer)를 촉진하는 학습 환경이 더 효과적이다."], "glossary": [{"term": "학습과학", "en": "Learning Sciences", "def": "교수와 학습을 과학적으로 연구하는 학제적 분야로, 인지과학·교육심리학·컴퓨터과학 등이 융합된다."}, {"term": "교수주의", "en": "Instructionism", "def": "지식을 교사가 학생에게 일방적으로 전달하는 전통적 교육 패러다임."}, {"term": "깊은 학습", "en": "Deep Learning", "def": "단순 암기가 아닌 개념 간 관계, 전이 가능한 이해를 추구하는 학습."}, {"term": "전이", "en": "Transfer", "def": "한 맥락에서 학습한 지식을 새로운 상황에 적용하는 능력."}, {"term": "학습 환경 설계", "en": "Learning Environment Design", "def": "효과적 학습을 촉진하기 위해 물리적·사회적·기술적 환경을 체계적으로 구성하는 것."}], "paradigms": ["구성주의"], "tracks": [{"track_id": "foundations", "role": "학습과학의 정의, 역사, 핵심 원리 개관"}], "connections": {"outgoing": [{"target": "02_Foundations_of_LS", "type": "이론기반", "label": "LS의 학문적 기초 → 인식론적 기반", "desc": "학습과학 서론에서 제시된 핵심 원리가 인식론적으로 정립됨"}, {"target": "33_Future_Learning_Sciences", "type": "계승/발전", "label": "서론 → 2020년대 전망", "desc": "1장의 비전이 33장의 미래 방향으로 수렴"}], "incoming": []}}, {"folder": "02_Foundations_of_LS", "ch_num": "02", "ko_title": "Ch02: 학습과학의 기초", "en_title": "Foundations of the Learning Sciences", "authors": "Mitchell J. Nathan & R. Keith Sawyer", "part": "Part I", "summary": ["학습과학의 인식론적 기초: 구성주의(Constructivism), 사회문화주의(Sociocultural Theory), 프래그머티즘(Pragmatism)이 핵심 철학적 토대이다.", "학습은 개인의 능동적 지식 구성과 사회적 참여를 통한 의미 협상의 이중 과정으로 이해된다.", "연구 방법론으로 설계기반연구(DBR), 질적·양적 혼합 방법, 학습분석학 등 다양한 접근이 활용된다."], "glossary": [{"term": "구성주의", "en": "Constructivism", "def": "학습자가 능동적으로 자신의 지식을 구성한다는 인식론적 입장."}, {"term": "사회문화이론", "en": "Sociocultural Theory", "def": "비고츠키에 기반하여 학습을 사회적·문화적 맥락 속 참여와 매개로 이해하는 이론."}, {"term": "근접발달영역", "en": "Zone of Proximal Development", "def": "학습자가 독립적으로 해결할 수 없지만 유능한 타인의 도움으로 해결 가능한 과제 수준."}, {"term": "설계기반연구", "en": "Design-Based Research", "def": "교육 혁신을 설계·실행·분석하는 반복적 연구 방법론."}, {"term": "인식론", "en": "Epistemology", "def": "지식의 본질과 학습의 근본 원리를 탐구하는 철학적 분야."}], "paradigms": ["구성주의", "사회문화이론"], "tracks": [{"track_id": "foundations", "role": "학습과학의 인식론적·철학적 기초 정립"}], "connections": {"outgoing": [{"target": "06_Conceptual_Change", "type": "이론기반", "label": "구성주의 인식론 → 개념변화 연구", "desc": "구성주의적 지식관이 개념변화 연구의 이론적 토대"}, {"target": "09_Design_Based_Research", "type": "방법론적 확장", "label": "LS 방법론 → DBR 상세화", "desc": "기초에서 소개된 DBR이 9장에서 심화 전개"}], "incoming": [{"source": "01_Introduction_to_LS", "type": "이론기반", "label": "LS의 학문적 기초 → 인식론적 기반", "desc": "학습과학 서론에서 제시된 핵심 원리가 인식론적으로 정립됨"}]}}, {"folder": "03_Scaffolding", "ch_num": "03", "ko_title": "Ch03: 스캐폴딩", "en_title": "Scaffolding", "authors": "Iris Tabak & Brian J. Reiser", "part": "Part I", "summary": ["스캐폴딩은 학습자가 근접발달영역(ZPD) 내에서 과제를 수행할 수 있도록 일시적 지원을 제공하고 점진적으로 제거(Fading)하는 교수 전략이다.", "소프트 스캐폴딩(교사의 반응적 상호작용)과 하드 스캐폴딩(테크놀로지 내장형 구조적 지원)으로 구분된다.", "효과적 스캐폴딩의 핵심: 진단(Diagnosis), 적응적 조절(Calibration), 점진적 철거(Fading)의 3단계 과정."], "glossary": [{"term": "스캐폴딩", "en": "Scaffolding", "def": "학습자의 현재 능력 수준에 맞춰 임시적 지원을 제공하고 점진적으로 제거하는 교수 전략."}, {"term": "페이딩", "en": "Fading", "def": "학습자의 역량이 증가함에 따라 지원을 점진적으로 철회하는 과정."}, {"term": "하드 스캐폴딩", "en": "Hard Scaffolding", "def": "소프트웨어 도구나 워크시트 등에 내장된 고정적·구조적 학습 지원."}, {"term": "소프트 스캐폴딩", "en": "Soft Scaffolding", "def": "교사가 실시간으로 학습자의 반응에 맞춰 제공하는 적응적 상호작용 지원."}], "paradigms": ["구성주의", "사회문화이론"], "tracks": [{"track_id": "instructional_design", "role": "핵심 교수전략으로서의 스캐폴딩 원리"}], "connections": {"outgoing": [{"target": "04_Project_Based_Learning", "type": "적용/실천", "label": "스캐폴딩 → PBL 내 지원 구조", "desc": "PBL에서 학습자의 탐구를 안내하는 스캐폴딩 기법"}, {"target": "08_Cognitive_Apprenticeship", "type": "상호보완", "label": "스캐폴딩 ↔ 인지적 도제", "desc": "두 이론 모두 점진적 지원 철거와 학습자 자율성 증대를 강조"}], "incoming": []}}, {"folder": "04_Project_Based_Learning", "ch_num": "04", "ko_title": "Ch04: 프로젝트 기반 학습", "en_title": "Project-Based Learning", "authors": "Joseph S. Krajcik & Namsoo Shin", "part": "Part I", "summary": ["PBL은 실세계 문제를 중심으로 장기적 탐구 프로젝트를 수행하며, 학습자가 지식을 능동적으로 구성하는 교수학습 방법이다.", "핵심 설계 원리: 추진질문(Driving Question), 상황화된 탐구, 협력, 테크놀로지 활용, 공유 가능한 산출물(Artifact) 제작.", "NGSS 기반 과학교육과의 정합성이 높으며, 학습분석학과 결합하여 형성평가를 강화할 수 있다."], "glossary": [{"term": "프로젝트 기반 학습", "en": "Project-Based Learning", "def": "실세계 문제 해결을 위한 장기적 탐구 프로젝트를 통해 학습하는 교수 방법."}, {"term": "추진질문", "en": "Driving Question", "def": "PBL에서 학습 전체를 안내하고 동기를 부여하는 핵심 탐구 질문."}, {"term": "산출물", "en": "Artifact", "def": "학습 과정에서 학습자가 제작하여 공유하는 구체적 결과물."}], "paradigms": ["구성주의", "설계기반연구"], "tracks": [{"track_id": "instructional_design", "role": "구성주의 기반 탐구 학습 모델"}], "connections": {"outgoing": [{"target": "24_Science_Learning", "type": "적용/실천", "label": "PBL → 과학교육 실천", "desc": "PBL이 NGSS 기반 과학 수업에 핵심 방법론으로 적용"}], "incoming": [{"source": "03_Scaffolding", "type": "적용/실천", "label": "스캐폴딩 → PBL 내 지원 구조", "desc": "PBL에서 학습자의 탐구를 안내하는 스캐폴딩 기법"}]}}, {"folder": "05_Metacognition_SRL", "ch_num": "05", "ko_title": "Ch05: 메타인지와 자기조절학습", "en_title": "Metacognition and Self-Regulated Learning", "authors": "Philip H. Winne & Roger Azevedo", "part": "Part I", "summary": ["메타인지는 자신의 인지 과정에 대한 지식(Knowledge of Cognition)과 조절(Regulation of Cognition)로 구성된다.", "자기조절학습(SRL)은 목표 설정→전략 선택→모니터링→적응적 조절의 순환적 피드백 루프이다.", "Winne의 COPES 모델: 조건(Conditions)→작업(Operations)→산출물(Products)→평가(Evaluations)→기준(Standards)의 5요소 순환 구조."], "glossary": [{"term": "메타인지", "en": "Metacognition", "def": "자신의 인지 과정에 대해 생각하고 조절하는 상위 인지 능력."}, {"term": "자기조절학습", "en": "Self-Regulated Learning", "def": "학습자가 스스로 목표를 설정하고 전략을 선택·모니터링·조절하는 능동적 학습 과정."}, {"term": "COPES 모델", "en": "COPES Model", "def": "Winne의 SRL 모델로 조건·작업·산출물·평가·기준의 5요소 순환 구조."}, {"term": "캘리브레이션", "en": "Calibration", "def": "학습자의 자기 평가와 실제 수행 수준 간의 일치도."}], "paradigms": ["인지과학적 접근"], "tracks": [{"track_id": "instructional_design", "role": "학습자의 인지적 자기 조절 메커니즘"}], "connections": {"outgoing": [{"target": "13_Learning_Analytics_EDM", "type": "방법론적 확장", "label": "SRL 추적 → 학습분석학", "desc": "SRL 과정을 학습분석학 기법으로 실시간 추적·시각화"}], "incoming": []}}, {"folder": "06_Conceptual_Change", "ch_num": "06", "ko_title": "Ch06: 개념변화 연구", "en_title": "Conceptual Change Research", "authors": "Andrea A. diSessa", "part": "Part I", "summary": ["학습자는 과학적 개념에 대해 직관적이지만 불완전한 사전 개념(Naive Conceptions)을 갖고 있으며, 이를 과학적 개념으로 변화시키는 과정이 개념변화이다.", "diSessa의 p-prims(Phenomenological Primitives) 이론: 지식은 작은 '조각적 직관(p-prims)'의 네트워크이며, 개념변화는 이 조각들의 재조직화이다.", "고전적 '대체 모델' vs '시스템적 재조직화 모델'의 패러다임 논쟁이 핵심 학술 쟁점이다."], "glossary": [{"term": "개념변화", "en": "Conceptual Change", "def": "학습자의 기존 개념이 과학적으로 정교한 개념으로 전환되는 학습 과정."}, {"term": "p-prims", "en": "Phenomenological Primitives", "def": "diSessa의 이론에서 학습자의 직관적 지식을 구성하는 원초적 인지 단위."}, {"term": "오개념", "en": "Misconception", "def": "과학적 개념과 불일치하는 학습자의 사전 지식이나 직관."}, {"term": "인지적 갈등", "en": "Cognitive Conflict", "def": "기존 개념과 새로운 증거 간의 모순으로 인해 발생하는 인지적 불균형 상태."}], "paradigms": ["구성주의", "인지과학적 접근"], "tracks": [{"track_id": "foundations", "role": "학습에서의 지식 재구성 메커니즘"}], "connections": {"outgoing": [{"target": "24_Science_Learning", "type": "적용/실천", "label": "개념변화 → 과학교육 적용", "desc": "개념변화 이론이 과학 수업 설계의 핵심 근거"}, {"target": "23_Math_Learning", "type": "적용/실천", "label": "개념변화 → 수학 학습", "desc": "수학적 개념 발달에서의 개념변화 과정"}], "incoming": [{"source": "02_Foundations_of_LS", "type": "이론기반", "label": "구성주의 인식론 → 개념변화 연구", "desc": "구성주의적 지식관이 개념변화 연구의 이론적 토대"}]}}, {"folder": "07_Learning_in_Activity", "ch_num": "07", "ko_title": "Ch07: 활동 속의 학습", "en_title": "Learning in Activity", "authors": "Yrjö Engeström", "part": "Part I", "summary": ["활동이론(Activity Theory)은 학습을 개인의 머릿속이 아닌 도구 매개적·집단적·역사적 활동체계(Activity System) 안에서 이해한다.", "Engeström의 확장적 학습(Expansive Learning): 활동체계 내 모순(Contradictions)이 집단적 혁신과 새로운 활동 형태의 창출을 추동한다.", "3세대 활동이론은 최소 두 개의 상호작용하는 활동체계 간 경계 횡단(Boundary Crossing)을 분석 단위로 삼는다."], "glossary": [{"term": "활동이론", "en": "Activity Theory", "def": "비고츠키-레온티예프-엥게스트룀 전통에서 도구 매개적 집단 활동을 분석 단위로 삼는 이론 체계."}, {"term": "확장적 학습", "en": "Expansive Learning", "def": "활동체계 내 모순을 통해 새로운 활동 형태와 개념을 집단적으로 창출하는 학습 과정."}, {"term": "활동체계", "en": "Activity System", "def": "주체·도구·대상·규칙·공동체·분업으로 구성된 분석 단위."}, {"term": "경계 횡단", "en": "Boundary Crossing", "def": "서로 다른 활동체계 간의 상호작용과 지식 이동."}], "paradigms": ["사회문화이론"], "tracks": [{"track_id": "foundations", "role": "사회문화적 학습 이론의 핵심 프레임워크"}], "connections": {"outgoing": [{"target": "29_Cultural_Process", "type": "이론기반", "label": "활동이론 → 문화적 학습 과정", "desc": "활동이론의 문화-역사적 관점이 문화적 학습 과정 분석에 적용"}], "incoming": []}}, {"folder": "08_Cognitive_Apprenticeship", "ch_num": "08", "ko_title": "Ch08: 인지적 도제", "en_title": "Cognitive Apprenticeship", "authors": "Allan Collins & Manu Kapur", "part": "Part I", "summary": ["인지적 도제(Cognitive Apprenticeship)는 전문가의 사고 과정을 가시화(Modeling)하고, 학습자가 점진적으로 독립적 수행에 이르도록 안내하는 교수 모델이다.", "핵심 6단계: 모델링(Modeling)→코칭(Coaching)→스캐폴딩(Scaffolding)→명료화(Articulation)→반성(Reflection)→탐구(Exploration).", "Kapur의 생산적 실패(Productive Failure): 의도적으로 실패 경험을 선행시켜 이후 직접 교수의 효과를 극대화하는 전략."], "glossary": [{"term": "인지적 도제", "en": "Cognitive Apprenticeship", "def": "전문가의 암묵적 사고 과정을 가시화하여 학습자가 점진적으로 전문성을 습득하도록 하는 교수 모델."}, {"term": "모델링", "en": "Modeling", "def": "전문가가 자신의 사고 과정을 명시적으로 시연하는 교수 행위."}, {"term": "생산적 실패", "en": "Productive Failure", "def": "의도적 실패 경험을 통해 후속 직접 교수의 학습 효과를 높이는 전략 (Kapur)."}, {"term": "코칭", "en": "Coaching", "def": "학습자의 수행을 관찰하며 적시에 피드백과 힌트를 제공하는 교수 행위."}], "paradigms": ["상황학습"], "tracks": [{"track_id": "instructional_design", "role": "전문가 사고의 가시화와 점진적 자율성 확보 모델"}], "connections": {"outgoing": [], "incoming": [{"source": "03_Scaffolding", "type": "상호보완", "label": "스캐폴딩 ↔ 인지적 도제", "desc": "두 이론 모두 점진적 지원 철거와 학습자 자율성 증대를 강조"}]}}, {"folder": "09_Design_Based_Research", "ch_num": "09", "ko_title": "Ch09: 설계기반연구", "en_title": "Design-Based Research", "authors": "Sasha Barab", "part": "Part II", "summary": ["설계기반연구(DBR)는 실제 교육 맥락에서 혁신적 학습 환경을 설계·실행·분석하는 반복적 연구 방법론이다.", "핵심 특징: 실제 맥락 내 연구, 설계와 연구의 통합, 반복적 정련(Iterative Refinement), 실용적 이론 생성.", "전통적 실험 연구와 달리 '통제된 변인 분리'보다 '복잡한 교육 생태계의 총체적 이해'를 추구한다."], "glossary": [{"term": "설계기반연구", "en": "Design-Based Research", "def": "교육 혁신을 설계·실행·분석하며 반복적으로 이론과 실천을 정련하는 방법론."}, {"term": "반복적 정련", "en": "Iterative Refinement", "def": "설계-실행-분석-재설계의 순환적 과정을 통해 교육 혁신을 점진적으로 개선하는 절차."}, {"term": "추측적 교수-학습 경로", "en": "Conjectured Learning Trajectory", "def": "DBR에서 학습자의 예상 발달 경로를 사전에 설계하고 실증적으로 검증하는 도구."}], "paradigms": ["설계기반연구"], "tracks": [{"track_id": "methodology", "role": "학습과학의 핵심 연구 방법론"}], "connections": {"outgoing": [{"target": "12_Assessment_in_Education", "type": "방법론적 확장", "label": "DBR → 평가 혁신 설계", "desc": "DBR 방법론을 활용한 형성적 평가 체계 설계"}], "incoming": [{"source": "02_Foundations_of_LS", "type": "방법론적 확장", "label": "LS 방법론 → DBR 상세화", "desc": "기초에서 소개된 DBR이 9장에서 심화 전개"}]}}, {"folder": "10_Analyzing_Collaboration", "ch_num": "10", "ko_title": "Ch10: 협력 분석", "en_title": "Analyzing Collaboration", "authors": "Noel Enyedy & Reed Stevens", "part": "Part II", "summary": ["협력 학습 연구의 4대 동기: 학습 효과 입증, 학습 과정 이해, 테크놀로지 설계, 21세기 핵심 역량으로서의 협력.", "담화 분석(Discourse Analysis), 상호작용 분석(Interaction Analysis), 다중 양태 분석(Multimodal Analysis) 등이 핵심 방법론이다.", "분석 단위 선택(개인 vs 집단 vs 도구-매개 시스템)이 협력 연구의 핵심 설계 결정이다."], "glossary": [{"term": "담화 분석", "en": "Discourse Analysis", "def": "대화와 텍스트를 체계적으로 분석하여 의미 구성 과정을 이해하는 방법론."}, {"term": "상호작용 분석", "en": "Interaction Analysis", "def": "참여자 간 행위, 제스처, 도구 사용 등 다양한 소통 양식을 분석하는 방법."}, {"term": "분석 단위", "en": "Unit of Analysis", "def": "연구에서 관찰·분석의 기본 대상이 되는 단위(개인, 쌍, 소집단, 활동체계 등)."}], "paradigms": ["사회문화이론"], "tracks": [{"track_id": "methodology", "role": "협력 학습의 과정을 분석하는 방법론"}], "connections": {"outgoing": [{"target": "20_CSCL", "type": "적용/실천", "label": "협력 분석 → CSCL 연구", "desc": "협력 분석 방법론이 CSCL 연구에 핵심 도구로 활용"}, {"target": "21_Arguing_to_Learn", "type": "적용/실천", "label": "담화 분석 → 논증 학습", "desc": "담화 분석이 논증 학습의 질적 분석에 적용"}], "incoming": []}}, {"folder": "11_Microgenetic_Methods", "ch_num": "11", "ko_title": "Ch11: 미시발생적 방법", "en_title": "Microgenetic Methods", "authors": "Bruce L. Sherin & Clark A. Chinn", "part": "Part II", "summary": ["미시발생적 방법(Microgenetic Methods)은 학습 변화가 일어나는 실제 순간을 포착하기 위해 빠르게 변화하는 과정을 고밀도로 관찰·기록하는 연구 방법이다.", "전통적 사전-사후 검사와 달리, 학습 변화의 경로(Path), 비율(Rate), 폭(Breadth), 가변성(Variability)을 세밀하게 추적한다.", "핵심 설계 원칙: 변화 기간 전체 포괄, 변화 속도 대비 높은 관찰 밀도, 행동의 질적·양적 분석 병행."], "glossary": [{"term": "미시발생적 방법", "en": "Microgenetic Methods", "def": "학습 변화가 일어나는 과정을 실시간으로 고밀도로 관찰·기록하는 연구 방법론."}, {"term": "학습 궤적", "en": "Learning Trajectory", "def": "시간에 따른 학습자의 이해 변화 과정을 나타내는 경로."}, {"term": "전략 가변성", "en": "Strategy Variability", "def": "학습자가 같은 과제에 대해 다양한 전략을 동시에 사용하는 현상."}], "paradigms": ["인지과학적 접근"], "tracks": [{"track_id": "methodology", "role": "학습 변화의 실시간 포착 방법론"}], "connections": {"outgoing": [], "incoming": []}}, {"folder": "12_Assessment_in_Education", "ch_num": "12", "ko_title": "Ch12: 교육 평가", "en_title": "Assessment in Education", "authors": "James W. Pellegrino", "part": "Part II", "summary": ["NRC '평가 삼각형(Assessment Triangle)': 인지(Cognition)·관찰(Observation)·해석(Interpretation)의 세 꼭짓점이 유기적으로 연결되어야 타당한 평가가 된다.", "형성적 평가(Formative Assessment)는 학습 과정 중 실시간 피드백을 제공하여 교수학습을 개선하는 핵심 도구이다.", "증거 중심 설계(ECD, Evidence-Centered Design)를 통해 평가의 타당성과 신뢰성을 체계적으로 확보한다."], "glossary": [{"term": "평가 삼각형", "en": "Assessment Triangle", "def": "NRC 모델로 인지·관찰·해석의 세 요소가 유기적으로 연결된 평가 프레임워크."}, {"term": "형성적 평가", "en": "Formative Assessment", "def": "학습 과정 중 실시간 피드백을 제공하여 교수학습을 개선하는 평가 방식."}, {"term": "증거 중심 설계", "en": "Evidence-Centered Design", "def": "평가를 학생 모델·증거 모델·과제 모델의 3층 구조로 체계적으로 설계하는 프레임워크."}], "paradigms": ["설계기반연구"], "tracks": [{"track_id": "methodology", "role": "학습과학 기반 평가 설계 원리"}], "connections": {"outgoing": [{"target": "13_Learning_Analytics_EDM", "type": "계승/발전", "label": "ECD → 학습분석학 모델링", "desc": "증거 중심 설계가 학습분석학의 학생 모델링에 이론적 토대 제공"}], "incoming": [{"source": "09_Design_Based_Research", "type": "방법론적 확장", "label": "DBR → 평가 혁신 설계", "desc": "DBR 방법론을 활용한 형성적 평가 체계 설계"}]}}, {"folder": "13_Learning_Analytics_EDM", "ch_num": "13", "ko_title": "Ch13: 학습분석학과 교육 데이터마이닝", "en_title": "Learning Analytics and Educational Data Mining", "authors": "Ryan S. Baker & George Siemens", "part": "Part II", "summary": ["학습분석학(LA)은 학습자 데이터를 수집·분석·시각화하여 학습과 교육 환경을 최적화하는 분야이다.", "교육 데이터마이닝(EDM)은 교육 맥락의 대규모 데이터에서 패턴을 자동 탐색하는 계산적 접근이다.", "두 분야의 핵심 차이: LA는 인간 해석과 개입에 초점, EDM은 자동화된 패턴 발견에 초점."], "glossary": [{"term": "학습분석학", "en": "Learning Analytics", "def": "학습자 데이터를 수집·분석·시각화하여 학습과 교수를 최적화하는 분야."}, {"term": "교육 데이터마이닝", "en": "Educational Data Mining", "def": "교육 맥락의 대규모 데이터에서 자동으로 패턴을 발견하는 계산적 접근."}, {"term": "지식 추적", "en": "Knowledge Tracing", "def": "학습자의 지식 상태를 실시간으로 추정하는 모델링 기법."}], "paradigms": ["인지과학적 접근"], "tracks": [{"track_id": "methodology", "role": "데이터 기반 학습 연구 방법론"}], "connections": {"outgoing": [], "incoming": [{"source": "05_Metacognition_SRL", "type": "방법론적 확장", "label": "SRL 추적 → 학습분석학", "desc": "SRL 과정을 학습분석학 기법으로 실시간 추적·시각화"}, {"source": "12_Assessment_in_Education", "type": "계승/발전", "label": "ECD → 학습분석학 모델링", "desc": "증거 중심 설계가 학습분석학의 학생 모델링에 이론적 토대 제공"}]}}, {"folder": "14_Video_Games_and_Learning", "ch_num": "14", "ko_title": "Ch14: 비디오 게임과 학습", "en_title": "Video Games and Learning", "authors": "Constance Steinkuehler & Kurt Squire", "part": "Part III", "summary": ["게임 기반 학습은 몰입적 가상 세계에서 정체성 탐험, 상황학습, 실험적 탐구를 통해 깊은 학습을 촉진한다.", "게임 커뮤니티(Affinity Spaces)는 비공식적이면서도 강력한 학습 생태계를 형성한다.", "핵심 설계 원리: 즉각적 피드백, 도전 수준의 적응적 조절, 다양한 참여 경로, 실패의 안전한 경험."], "glossary": [{"term": "친화 공간", "en": "Affinity Spaces", "def": "공통 관심사를 중심으로 자발적으로 형성되는 비공식 학습 공동체 (Gee)."}, {"term": "게임 기반 학습", "en": "Game-Based Learning", "def": "게임의 몰입적 특성을 활용하여 학습 목표를 달성하는 교수 접근."}, {"term": "시뮬레이션", "en": "Simulation", "def": "실세계 현상을 가상으로 모사하여 탐구와 실험을 가능케 하는 학습 도구."}], "paradigms": ["상황학습"], "tracks": [{"track_id": "technology", "role": "게임의 학습 잠재력과 설계 원리"}], "connections": {"outgoing": [{"target": "25_Complex_Systems", "type": "적용/실천", "label": "시뮬레이션 → 복잡계 학습", "desc": "게임 시뮬레이션이 복잡계 개념 학습에 효과적 도구"}], "incoming": []}}, {"folder": "15_Embodiment_and_Design", "ch_num": "15", "ko_title": "Ch15: 체화와 학습 설계", "en_title": "Embodiment and Embodied Design", "authors": "Dor Abrahamson & Robb Lindgren", "part": "Part III", "summary": ["체화 인지(Embodied Cognition)는 인지가 신체적 경험과 감각운동적 상호작용에 근본적으로 기반한다는 관점이다.", "체화 설계(Embodied Design)는 신체 동작과 제스처를 학습 자원으로 활용하는 교수학습 설계 접근이다.", "수학적 비례 개념, 각도, 힘 등의 추상 개념을 신체 움직임으로 탐구하는 실증 연구가 축적되고 있다."], "glossary": [{"term": "체화 인지", "en": "Embodied Cognition", "def": "인지가 신체적 경험과 감각운동적 상호작용에 기반한다는 관점."}, {"term": "체화 설계", "en": "Embodied Design", "def": "신체 동작과 제스처를 학습 자원으로 활용하는 교수학습 설계 접근."}, {"term": "감각운동 접지", "en": "Sensorimotor Grounding", "def": "추상적 개념을 구체적 감각운동 경험에 기반하여 이해하는 과정."}], "paradigms": ["구성주의"], "tracks": [{"track_id": "technology", "role": "신체적 경험 기반 학습 설계 원리"}], "connections": {"outgoing": [{"target": "16_Tangible_Full_Body_Interfaces", "type": "계승/발전", "label": "체화 인지 → 탠저블 인터페이스", "desc": "체화 인지 원리가 물리적 인터페이스 설계에 적용"}], "incoming": []}}, {"folder": "16_Tangible_Full_Body_Interfaces", "ch_num": "16", "ko_title": "Ch16: 탠저블 및 전신 인터페이스", "en_title": "Tangible and Full-Body Interfaces", "authors": "Narcis Pares & Michael Eisenberg", "part": "Part III", "summary": ["탠저블 인터페이스(TUI)는 물리적 객체를 직접 조작하여 디지털 정보와 상호작용하는 학습 도구이다.", "전신 인터페이스는 학습자의 몸 전체를 입력 장치로 활용하여 몰입적 학습 경험을 제공한다.", "구성주의적 조작 학습(Manipulative Learning)과 디지털 기술의 결합이 핵심이다."], "glossary": [{"term": "탠저블 인터페이스", "en": "Tangible User Interface", "def": "물리적 객체 조작을 통해 디지털 정보와 상호작용하는 인터페이스."}, {"term": "전신 인터페이스", "en": "Full-Body Interface", "def": "학습자의 몸 전체를 입력 장치로 활용하는 인터페이스."}], "paradigms": ["구성주의"], "tracks": [{"track_id": "technology", "role": "물리적 조작 기반 학습 테크놀로지"}], "connections": {"outgoing": [], "incoming": [{"source": "15_Embodiment_and_Design", "type": "계승/발전", "label": "체화 인지 → 탠저블 인터페이스", "desc": "체화 인지 원리가 물리적 인터페이스 설계에 적용"}]}}, {"folder": "17_Augmented_Reality", "ch_num": "17", "ko_title": "Ch17: 증강현실과 학습", "en_title": "Augmented Reality in Learning", "authors": "Bertrand Schneider & Iulian Radu", "part": "Part III", "summary": ["증강현실(AR)은 실세계 위에 디지털 정보를 겹쳐 표시하여 학습 경험을 확장하는 기술이다.", "AR 학습의 장점: 추상적 개념의 시각화, 상황맥락적 정보 제공, 체화적 상호작용 지원, 협력 학습 촉진.", "효과적 AR 학습 설계를 위해 인지부하 관리, 학습 목표와의 정합성, 교사 역할 재설계가 중요하다."], "glossary": [{"term": "증강현실", "en": "Augmented Reality", "def": "실세계 위에 디지털 정보를 겹쳐 표시하여 인지적 경험을 확장하는 기술."}, {"term": "인지부하", "en": "Cognitive Load", "def": "학습 과정에서 작업기억에 가해지는 정보처리 부담의 총량."}], "paradigms": ["구성주의"], "tracks": [{"track_id": "technology", "role": "증강현실 기반 학습 환경 설계"}], "connections": {"outgoing": [], "incoming": []}}, {"folder": "18_Mobile_Learning", "ch_num": "18", "ko_title": "Ch18: 모바일 학습", "en_title": "Mobile Learning", "authors": "Roy Pea & Mike Sharples", "part": "Part III", "summary": ["모바일 학습은 학습이 교실 밖의 다양한 맥락과 시간대에 걸쳐 연속적으로 이루어질 수 있게 하는 패러다임이다.", "학습의 이동성(Mobility): 물리적 이동성, 기술적 이동성, 개념적 이동성, 사회적 이동성, 시간적 이동성.", "맥락 인식(Context-Aware) 기술과 원활한 학습(Seamless Learning)이 핵심 설계 과제이다."], "glossary": [{"term": "모바일 학습", "en": "Mobile Learning", "def": "이동 가능한 디지털 기기를 활용하여 다양한 맥락에서 학습하는 방식."}, {"term": "원활한 학습", "en": "Seamless Learning", "def": "공식/비공식, 실내/실외 등 다양한 맥락을 가로지르며 연속적으로 이루어지는 학습."}, {"term": "맥락 인식", "en": "Context-Aware", "def": "학습자의 위치, 활동, 환경 등 맥락 정보를 자동으로 감지하여 적응적 학습을 지원하는 기술."}], "paradigms": ["상황학습"], "tracks": [{"track_id": "technology", "role": "이동성과 맥락 연속성 기반 학습"}], "connections": {"outgoing": [], "incoming": []}}, {"folder": "19_Knowledge_Building", "ch_num": "19", "ko_title": "Ch19: 지식 구축과 지식 창출", "en_title": "Knowledge Building and Knowledge Creation", "authors": "Marlene Scardamalia & Carl Bereiter", "part": "Part IV", "summary": ["지식 구축(Knowledge Building)은 학습 공동체가 집단적으로 아이디어를 개선하고 새로운 지식을 창출하는 교육 접근이다.", "핵심 12원칙: 실재 아이디어와 진정한 문제, 아이디어 개선, 아이디어 다양성, 상향식 인식론 등.", "Knowledge Forum 테크놀로지를 활용하여 학생들의 아이디어가 공동체의 공유 지적 자산으로 발전한다."], "glossary": [{"term": "지식 구축", "en": "Knowledge Building", "def": "학습 공동체가 집단적으로 아이디어를 개선하고 새로운 지식을 창출하는 교육 접근."}, {"term": "아이디어 개선", "en": "Idea Improvement", "def": "개인의 아이디어가 공동체의 담화를 통해 점진적으로 정교화되는 과정."}, {"term": "Knowledge Forum", "en": "Knowledge Forum", "def": "Scardamalia & Bereiter가 개발한 지식 구축 지원 온라인 협력 플랫폼."}, {"term": "인식론적 주체성", "en": "Epistemic Agency", "def": "학습자가 지식 생산의 주체로서 스스로 탐구 방향을 결정하고 책임지는 역량."}], "paradigms": ["구성주의", "사회문화이론"], "tracks": [{"track_id": "collaboration", "role": "집단적 지식 창출의 이론과 실천"}], "connections": {"outgoing": [{"target": "20_CSCL", "type": "계승/발전", "label": "지식구축 → CSCL 플랫폼", "desc": "Knowledge Forum이 CSCL의 대표적 테크놀로지 사례"}], "incoming": []}}, {"folder": "20_CSCL", "ch_num": "20", "ko_title": "Ch20: 컴퓨터 지원 협력학습", "en_title": "Computer-Supported Collaborative Learning", "authors": "Gerry Stahl, Timothy Koschmann & Daniel Suthers", "part": "Part IV", "summary": ["CSCL은 테크놀로지를 매개로 한 협력학습의 설계와 연구를 다루는 학제적 분야이다.", "핵심 논의: 개인적 학습 vs 집단적 인지(Group Cognition), 동기/비동기 협력, 스크립트화된 협력(Scripted Collaboration).", "CSCL 연구의 3대 패러다임: 효과 패러다임(실험), 조건 패러다임(변인 탐색), 상호작용 패러다임(과정 분석)."], "glossary": [{"term": "컴퓨터 지원 협력학습", "en": "CSCL", "def": "테크놀로지를 매개로 한 협력학습의 설계와 연구를 다루는 분야."}, {"term": "집단 인지", "en": "Group Cognition", "def": "개인의 인지를 넘어 집단 수준에서 발현되는 공유된 의미 구성과 문제 해결 과정."}, {"term": "스크립트화된 협력", "en": "Scripted Collaboration", "def": "학습자의 협력 과정을 구조화된 역할·단계·규칙으로 안내하는 설계 전략."}], "paradigms": ["사회문화이론", "설계기반연구"], "tracks": [{"track_id": "collaboration", "role": "테크놀로지 매개 협력학습의 설계와 분석"}], "connections": {"outgoing": [{"target": "21_Arguing_to_Learn", "type": "적용/실천", "label": "CSCL → 온라인 논증 학습", "desc": "CSCL 플랫폼이 논증 학습의 주요 실천 맥락"}], "incoming": [{"source": "10_Analyzing_Collaboration", "type": "적용/실천", "label": "협력 분석 → CSCL 연구", "desc": "협력 분석 방법론이 CSCL 연구에 핵심 도구로 활용"}, {"source": "19_Knowledge_Building", "type": "계승/발전", "label": "지식구축 → CSCL 플랫폼", "desc": "Knowledge Forum이 CSCL의 대표적 테크놀로지 사례"}]}}, {"folder": "21_Arguing_to_Learn", "ch_num": "21", "ko_title": "Ch21: 논증을 통한 학습", "en_title": "Arguing to Learn", "authors": "Jerry Andriessen & Michael Baker", "part": "Part IV", "summary": ["교육적 논증(Argumentation)은 학습자가 주장·근거·반론을 구성하고 평가하는 과정을 통해 깊은 이해에 도달하는 학습 방법이다.", "Toulmin 모델(주장-근거-보증-한정-반박)이 논증 구조 분석의 표준 프레임워크이다.", "논증 학습의 3대 목표: 논증에 대한 학습(Learning about argumentation), 논증을 통한 학습(Learning through argumentation), 논증하는 법 학습(Learning to argue)."], "glossary": [{"term": "논증", "en": "Argumentation", "def": "주장·근거·반론을 구성하고 평가하는 담화적·인지적 과정."}, {"term": "Toulmin 모델", "en": "Toulmin's Model", "def": "주장·근거·보증·한정·반박으로 구성된 논증 구조 분석 프레임워크."}, {"term": "인식적 논증", "en": "Epistemic Argumentation", "def": "지식의 타당성과 정당화를 탐구하는 목적의 논증 활동."}], "paradigms": ["사회문화이론"], "tracks": [{"track_id": "collaboration", "role": "논증적 담화를 통한 협력적 의미 구성"}], "connections": {"outgoing": [], "incoming": [{"source": "10_Analyzing_Collaboration", "type": "적용/실천", "label": "담화 분석 → 논증 학습", "desc": "담화 분석이 논증 학습의 질적 분석에 적용"}, {"source": "20_CSCL", "type": "적용/실천", "label": "CSCL → 온라인 논증 학습", "desc": "CSCL 플랫폼이 논증 학습의 주요 실천 맥락"}]}}, {"folder": "22_Museum_Informal_Learning", "ch_num": "22", "ko_title": "Ch22: 박물관과 비형식 학습", "en_title": "Informal Learning in Museums", "authors": "Palmyre Pierroux, Karen Knutson & Kevin Crowley", "part": "Part IV", "summary": ["박물관은 자유선택 학습(Free-Choice Learning) 환경으로서, 방문자의 흥미·동기·사회적 상호작용에 의해 학습이 추동된다.", "가족 학습(Family Learning), 전시 설계의 교육적 의도, 디지털 매개 경험이 핵심 연구 주제이다.", "비형식 학습의 특징: 비순차적, 자발적, 사회적으로 공유되며, 정서적·감각적 경험이 학습에 통합된다."], "glossary": [{"term": "비형식 학습", "en": "Informal Learning", "def": "공식 교육과정 밖에서 자발적으로 이루어지는 학습."}, {"term": "자유선택 학습", "en": "Free-Choice Learning", "def": "학습자가 무엇을·언제·어떻게 학습할지 스스로 결정하는 학습 환경."}, {"term": "가족 학습", "en": "Family Learning", "def": "가족 구성원 간의 대화와 상호작용을 통해 이루어지는 비형식 학습."}], "paradigms": ["상황학습", "사회문화이론"], "tracks": [{"track_id": "collaboration", "role": "비형식 맥락에서의 사회적 학습"}], "connections": {"outgoing": [], "incoming": []}}, {"folder": "23_Math_Learning", "ch_num": "23", "ko_title": "Ch23: 수학 학습", "en_title": "Mathematics Learning", "authors": "Anna Sfard & Paul Cobb", "part": "Part V", "summary": ["수학 학습 연구의 두 패러다임: 습득 은유(Acquisition Metaphor, 인지주의적)와 참여 은유(Participation Metaphor, 사회문화적).", "Sfard의 의사소통주의(Commognition): 수학적 사고는 특정 담화 공동체 내의 의사소통 활동(수학적 담화)으로 이해된다.", "Cobb의 교수학습 실험(Classroom Design Experiments)이 수학 교육 연구의 핵심 방법론이다."], "glossary": [{"term": "습득 은유", "en": "Acquisition Metaphor", "def": "학습을 개인의 머릿속에 지식을 획득하는 과정으로 보는 관점."}, {"term": "참여 은유", "en": "Participation Metaphor", "def": "학습을 공동체의 실천에 점진적으로 참여하는 과정으로 보는 관점."}, {"term": "의사소통주의", "en": "Commognition", "def": "Sfard의 이론으로, 수학적 사고를 수학적 담화 실천으로 이해하는 접근."}], "paradigms": ["사회문화이론", "구성주의"], "tracks": [{"track_id": "disciplinary", "role": "수학적 사고와 학습의 본질 탐구"}], "connections": {"outgoing": [], "incoming": [{"source": "06_Conceptual_Change", "type": "적용/실천", "label": "개념변화 → 수학 학습", "desc": "수학적 개념 발달에서의 개념변화 과정"}]}}, {"folder": "24_Science_Learning", "ch_num": "24", "ko_title": "Ch24: 과학 학습", "en_title": "Science Education and the Learning Sciences", "authors": "Nancy Butler Songer & Yael Kali", "part": "Part V", "summary": ["과학교육과 학습과학의 공진화적 관계(Coevolutionary Connection): 두 분야가 상호 영향을 주고받으며 발전해왔다.", "NGSS(차세대 과학 표준)와 학습과학의 정합성: 과학적 실천(Practices), 횡단개념(Crosscutting Concepts), 핵심 아이디어(Disciplinary Core Ideas).", "설계 원리 기반 교육과정 개발: 테크놀로지 강화 탐구학습(TEI) 프레임워크."], "glossary": [{"term": "공진화적 연결", "en": "Coevolutionary Connection", "def": "과학교육과 학습과학이 상호 영향을 주고받으며 동시에 발전하는 관계."}, {"term": "과학적 실천", "en": "Scientific Practices", "def": "NGSS에서 강조하는 질문하기, 모델링, 논증, 데이터 분석 등의 과학 탐구 활동."}, {"term": "설계 원리", "en": "Design Principles", "def": "학습 환경 설계를 안내하는 연구 기반 지침."}], "paradigms": ["설계기반연구", "구성주의"], "tracks": [{"track_id": "disciplinary", "role": "과학교육에서의 학습과학 적용"}], "connections": {"outgoing": [], "incoming": [{"source": "04_Project_Based_Learning", "type": "적용/실천", "label": "PBL → 과학교육 실천", "desc": "PBL이 NGSS 기반 과학 수업에 핵심 방법론으로 적용"}, {"source": "06_Conceptual_Change", "type": "적용/실천", "label": "개념변화 → 과학교육 적용", "desc": "개념변화 이론이 과학 수업 설계의 핵심 근거"}]}}, {"folder": "25_Complex_Systems", "ch_num": "25", "ko_title": "Ch25: 복잡계와 학습과학", "en_title": "Complex Systems and the Learning Sciences", "authors": "Michael J. Jacobson & Uri Wilensky", "part": "Part V", "summary": ["복잡계(Complex Systems)는 다수의 행위자가 상호작용하여 창발적(Emergent) 패턴을 만들어내는 시스템이다.", "학습과학에 대한 3대 함의: 교육적(복잡계 개념 학습), 이론적(학습 자체를 복잡 시스템으로 이해), 방법론적(에이전트 기반 모델링).", "NetLogo 등의 시뮬레이션 도구를 통한 복잡계 교육이 효과적이다."], "glossary": [{"term": "복잡계", "en": "Complex Systems", "def": "다수의 행위자가 상호작용하여 예측 불가능한 창발적 패턴을 만들어내는 시스템."}, {"term": "창발", "en": "Emergence", "def": "개별 구성 요소의 단순한 상호작용에서 전체 시스템 수준의 새로운 속성이 나타나는 현상."}, {"term": "에이전트 기반 모델링", "en": "Agent-Based Modeling", "def": "독립적 행위자들의 규칙 기반 상호작용을 시뮬레이션하여 복잡계 현상을 탐구하는 방법."}], "paradigms": ["인지과학적 접근"], "tracks": [{"track_id": "disciplinary", "role": "복잡계 사고와 시스템적 이해 교육"}], "connections": {"outgoing": [], "incoming": [{"source": "14_Video_Games_and_Learning", "type": "적용/실천", "label": "시뮬레이션 → 복잡계 학습", "desc": "게임 시뮬레이션이 복잡계 개념 학습에 효과적 도구"}]}}, {"folder": "26_History_Learning", "ch_num": "26", "ko_title": "Ch26: 역사 학습", "en_title": "Learning History", "authors": "Mario Carretero & Everardo Perez-Manjarrez", "part": "Part V", "summary": ["역사적 사고(Historical Thinking)는 과거를 증거 기반으로 해석하고, 사료를 비판적으로 분석하며, 맥락화하는 인지적 역량이다.", "역사교육의 핵심 긴장: 비판적 역사적 사고 vs 국가 정체성 형성(National Identity)의 이중 목표.", "개인 서사(Personal Narratives)와 국가 서사(National Master Narratives)의 관계가 역사 학습의 핵심 연구 주제이다."], "glossary": [{"term": "역사적 사고", "en": "Historical Thinking", "def": "과거를 증거 기반으로 해석하고 사료를 비판적으로 분석하는 인지적 역량."}, {"term": "사료 읽기", "en": "Sourcing", "def": "사료의 출처, 저자, 맥락을 고려하여 비판적으로 해석하는 기술."}, {"term": "마스터 내러티브", "en": "Master Narrative", "def": "국가나 공동체가 공유하는 지배적인 역사 해석 프레임."}], "paradigms": ["사회문화이론"], "tracks": [{"track_id": "disciplinary", "role": "역사적 사고의 인지적·사회문화적 분석"}], "connections": {"outgoing": [], "incoming": []}}, {"folder": "27_Literacy_Learning", "ch_num": "27", "ko_title": "Ch27: 문식성 학습", "en_title": "Learning to Be Literate", "authors": "Peter Smagorinsky & Richard E. Mayer", "part": "Part V", "summary": ["문식성(Literacy) 연구에서 인지적 관점(읽기의 정보처리 과정)과 사회문화적 관점(문식 실천의 사회적 맥락)이 병존한다.", "Mayer의 멀티미디어 학습 원리(Multimedia Learning Principles)와 Smagorinsky의 사회문화적 문식 발달 이론이 두 축을 이룬다.", "디지털 문식성, 비판적 문식성, 다중양식 문식성(Multimodal Literacy)으로의 확장이 21세기 핵심 과제이다."], "glossary": [{"term": "문식성", "en": "Literacy", "def": "텍스트를 읽고 쓰는 능력뿐 아니라 다양한 기호 체계를 해석·생산하는 역량."}, {"term": "멀티미디어 학습 원리", "en": "Multimedia Learning Principles", "def": "Mayer의 인지 이론에 기반한 텍스트+이미지 결합의 효과적 설계 원칙."}, {"term": "다중양식 문식성", "en": "Multimodal Literacy", "def": "텍스트, 이미지, 음성, 동영상 등 다양한 양식을 통합적으로 이해하고 생산하는 역량."}], "paradigms": ["인지과학적 접근", "사회문화이론"], "tracks": [{"track_id": "disciplinary", "role": "읽기·쓰기의 인지적·사회문화적 발달"}], "connections": {"outgoing": [], "incoming": []}}, {"folder": "28_Arts_Learning", "ch_num": "28", "ko_title": "Ch28: 예술 학습", "en_title": "Arts Education and the Learning Sciences", "authors": "Erica Rosenfeld Halverson & Kimberly M. Sheridan", "part": "Part V", "summary": ["예술 학습은 '만들기(Making)'를 통한 정체성 탐구, 의미 구성, 창의적 표현의 과정이다.", "예술적 습관(Studio Habits of Mind): 관찰하기, 상상하기, 표현하기, 반성하기, 확장하기, 참여하기.", "메이커 운동(Maker Movement)과 예술 교육의 융합이 학습과학의 새로운 연구 영역으로 부상하고 있다."], "glossary": [{"term": "스튜디오 사고 습관", "en": "Studio Habits of Mind", "def": "예술 학습에서 길러지는 관찰·상상·표현·반성 등의 핵심 사고 성향."}, {"term": "메이커 운동", "en": "Maker Movement", "def": "직접 만들기와 프로토타이핑을 통한 학습을 강조하는 교육 운동."}, {"term": "예술적 정체성", "en": "Artistic Identity", "def": "예술 활동을 통해 구성되는 학습자의 자기 인식과 정체성."}], "paradigms": ["상황학습", "구성주의"], "tracks": [{"track_id": "disciplinary", "role": "만들기와 예술적 표현을 통한 학습"}], "connections": {"outgoing": [], "incoming": []}}, {"folder": "29_Cultural_Process", "ch_num": "29", "ko_title": "Ch29: 문화적 학습 과정", "en_title": "Learning as a Cultural Process", "authors": "Na'ilah Suad Nasir, Ann S. Rosebery, Beth Warren & Carol D. Lee", "part": "Part VI", "summary": ["학습은 근본적으로 문화적 과정이며, 학습자의 문화적 자원(Cultural Resources)과 일상적 실천(Everyday Practices)이 학문적 학습의 강력한 기반이 된다.", "문화적으로 반응적 교수(Culturally Responsive Teaching)는 학습자의 문화적 배경을 자산으로 활용하는 교수 접근이다.", "형평성(Equity)과 다양성(Diversity)은 학습과학의 핵심 가치이며, 교육적 불평등 해소가 궁극적 목표이다."], "glossary": [{"term": "문화적 자원", "en": "Cultural Resources", "def": "학습자의 문화적 배경, 언어, 실천에서 비롯된 지적·사회적 자산."}, {"term": "문화반응적 교수", "en": "Culturally Responsive Teaching", "def": "학습자의 문화적 배경을 자산으로 활용하여 교수학습을 설계하는 접근."}, {"term": "기금 of 지식", "en": "Funds of Knowledge", "def": "가정과 지역사회에서 축적된 문화적·실천적 지식 자원 (Moll et al.)."}], "paradigms": ["사회문화이론"], "tracks": [{"track_id": "practice", "role": "문화적 형평성과 다양성 기반 교육 실천"}], "connections": {"outgoing": [], "incoming": [{"source": "07_Learning_in_Activity", "type": "이론기반", "label": "활동이론 → 문화적 학습 과정", "desc": "활동이론의 문화-역사적 관점이 문화적 학습 과정 분석에 적용"}]}}, {"folder": "30_Meaningful_Learning", "ch_num": "30", "ko_title": "Ch30: 의미있는 학습 설계", "en_title": "Designing for Meaningful Learning", "authors": "K. Ann Renninger & Sanna Järvelä", "part": "Part VI", "summary": ["의미있는 학습의 3대 동력: 흥미(Interest), 동기(Motivation), 참여(Engagement)가 상호작용하며 학습을 추동한다.", "Renninger의 4단계 흥미 발달 모델: 촉발된 상황적 흥미 → 유지된 상황적 흥미 → 출현하는 개인적 흥미 → 잘 발달된 개인적 흥미.", "자기결정이론(SDT)의 자율성·유능감·관계성 3대 기본심리욕구가 내재적 동기의 핵심 조건이다."], "glossary": [{"term": "흥미 발달", "en": "Interest Development", "def": "상황적 흥미에서 개인적 흥미로 점진적으로 발달하는 4단계 과정 (Renninger)."}, {"term": "자기결정이론", "en": "Self-Determination Theory", "def": "자율성·유능감·관계성의 3대 기본심리욕구 충족이 내재적 동기를 촉진한다는 이론 (Deci & Ryan)."}, {"term": "내재적 동기", "en": "Intrinsic Motivation", "def": "활동 자체의 즐거움과 만족에서 비롯되는 동기."}], "paradigms": ["인지과학적 접근", "구성주의"], "tracks": [{"track_id": "practice", "role": "학습자의 흥미·동기·참여 촉진 전략"}], "connections": {"outgoing": [], "incoming": []}}, {"folder": "31_Teacher_Learning", "ch_num": "31", "ko_title": "Ch31: 교사 학습의 진전", "en_title": "Advances in Teacher Learning", "authors": "Barry J. Fishman, Carol K. K. Chan & Elizabeth A. Davis", "part": "Part VI", "summary": ["교사 학습은 학습과학 원리를 교사 전문성 개발(Professional Development)에 적용하는 연구 영역이다.", "효과적 교사 학습의 핵심: 내용 지식(CK)과 교수 내용 지식(PCK)의 통합, 실천 공동체(Community of Practice) 참여, 교육과정 자료의 교육적 활용(Educative Curriculum Materials).", "연구-실천 파트너십(RPP)이 교사 학습과 교육 혁신의 지속가능한 모델로 부상하고 있다."], "glossary": [{"term": "교수 내용 지식", "en": "Pedagogical Content Knowledge", "def": "특정 교과 내용을 효과적으로 가르치기 위한 교사의 전문 지식 (Shulman)."}, {"term": "교육적 교육과정 자료", "en": "Educative Curriculum Materials", "def": "교사의 전문성 개발을 지원하도록 설계된 교육과정 자료."}, {"term": "실천 공동체", "en": "Community of Practice", "def": "공동의 관심사를 중심으로 지식과 실천을 공유하는 전문가 집단 (Wenger)."}], "paradigms": ["사회문화이론", "설계기반연구"], "tracks": [{"track_id": "practice", "role": "교사 전문성 개발과 학습과학의 연결"}], "connections": {"outgoing": [{"target": "32_Policy_RPP", "type": "계승/발전", "label": "교사 학습 → 연구-실천 파트너십", "desc": "RPP가 교사 학습과 정책의 연결 고리"}], "incoming": []}}, {"folder": "32_Policy_RPP", "ch_num": "32", "ko_title": "Ch32: 학습과학과 정책", "en_title": "Learning Sciences and Policy", "authors": "William R. Penuel, James P. Spillane & Min Sun", "part": "Part VI", "summary": ["학습과학과 교육 정책의 상호 참여(Mutual Engagement)가 교육 혁신의 지속가능성을 결정한다.", "연구-실천 파트너십(RPP)은 연구자와 실천가가 공동으로 문제를 정의하고 해결하는 장기적 협력 구조이다.", "정책 도구(Policy Instruments)를 통한 교육 혁신의 확산과 제도화가 핵심 과제이다."], "glossary": [{"term": "연구-실천 파트너십", "en": "Research-Practice Partnership", "def": "연구자와 실천가가 공동으로 문제를 정의하고 해결하는 장기적·호혜적 협력 구조."}, {"term": "상호 참여", "en": "Mutual Engagement", "def": "학습과학 연구자와 교육 정책 입안자가 양방향으로 영향을 주고받는 관계."}, {"term": "정책 도구", "en": "Policy Instruments", "def": "교육과정 표준, 평가 체계, 교사 연수 프로그램 등 정책적 수단."}], "paradigms": ["설계기반연구"], "tracks": [{"track_id": "practice", "role": "학습과학 연구의 정책적 확산과 제도화"}], "connections": {"outgoing": [{"target": "33_Future_Learning_Sciences", "type": "계승/발전", "label": "정책 ↔ 미래 방향", "desc": "정책-연구 연결이 학습과학의 미래 방향을 형성"}], "incoming": [{"source": "31_Teacher_Learning", "type": "계승/발전", "label": "교사 학습 → 연구-실천 파트너십", "desc": "RPP가 교사 학습과 정책의 연결 고리"}]}}, {"folder": "33_Future_Learning_Sciences", "ch_num": "33", "ko_title": "Ch33: 2020년대 학습과학", "en_title": "The Learning Sciences in the 2020s", "authors": "R. Keith Sawyer", "part": "Part VI", "summary": ["학습과학의 미래 6대 과제: 형평성과 사회정의, 비형식 학습의 통합, 평가 혁신, 테크놀로지와 AI, 교사 전문성 개발, 국제화.", "깊은 학습(Deep Learning)을 평가하는 새로운 체계가 필요하며, 전통적 표준화 시험의 한계를 극복해야 한다.", "학습과학은 교실 변화를 위해 연구-실천-정책의 삼각 협력 체계를 강화해야 한다."], "glossary": [{"term": "깊은 학습", "en": "Deep Learning", "def": "단순 암기를 넘어 개념 간 관계, 전이, 문제 해결 역량을 추구하는 학습."}, {"term": "형평성", "en": "Equity", "def": "모든 학습자에게 공정한 학습 기회와 자원을 보장하는 교육적 가치."}, {"term": "연구-실천-정책 삼각", "en": "Research-Practice-Policy Triangle", "def": "학습과학 연구, 교육 실천, 교육 정책이 상호작용하며 교육 혁신을 추동하는 체계."}], "paradigms": ["설계기반연구", "구성주의"], "tracks": [{"track_id": "practice", "role": "학습과학의 미래 방향과 교육 변혁 비전"}], "connections": {"outgoing": [], "incoming": [{"source": "01_Introduction_to_LS", "type": "계승/발전", "label": "서론 → 2020년대 전망", "desc": "1장의 비전이 33장의 미래 방향으로 수렴"}, {"source": "32_Policy_RPP", "type": "계승/발전", "label": "정책 ↔ 미래 방향", "desc": "정책-연구 연결이 학습과학의 미래 방향을 형성"}]}}], "edges": [{"source": "01_Introduction_to_LS", "target": "02_Foundations_of_LS", "type": "이론기반", "label": "LS의 학문적 기초 → 인식론적 기반", "desc": "학습과학 서론에서 제시된 핵심 원리가 인식론적으로 정립됨"}, {"source": "01_Introduction_to_LS", "target": "33_Future_Learning_Sciences", "type": "계승/발전", "label": "서론 → 2020년대 전망", "desc": "1장의 비전이 33장의 미래 방향으로 수렴"}, {"source": "02_Foundations_of_LS", "target": "06_Conceptual_Change", "type": "이론기반", "label": "구성주의 인식론 → 개념변화 연구", "desc": "구성주의적 지식관이 개념변화 연구의 이론적 토대"}, {"source": "02_Foundations_of_LS", "target": "09_Design_Based_Research", "type": "방법론적 확장", "label": "LS 방법론 → DBR 상세화", "desc": "기초에서 소개된 DBR이 9장에서 심화 전개"}, {"source": "03_Scaffolding", "target": "04_Project_Based_Learning", "type": "적용/실천", "label": "스캐폴딩 → PBL 내 지원 구조", "desc": "PBL에서 학습자의 탐구를 안내하는 스캐폴딩 기법"}, {"source": "03_Scaffolding", "target": "08_Cognitive_Apprenticeship", "type": "상호보완", "label": "스캐폴딩 ↔ 인지적 도제", "desc": "두 이론 모두 점진적 지원 철거와 학습자 자율성 증대를 강조"}, {"source": "04_Project_Based_Learning", "target": "24_Science_Learning", "type": "적용/실천", "label": "PBL → 과학교육 실천", "desc": "PBL이 NGSS 기반 과학 수업에 핵심 방법론으로 적용"}, {"source": "05_Metacognition_SRL", "target": "13_Learning_Analytics_EDM", "type": "방법론적 확장", "label": "SRL 추적 → 학습분석학", "desc": "SRL 과정을 학습분석학 기법으로 실시간 추적·시각화"}, {"source": "06_Conceptual_Change", "target": "24_Science_Learning", "type": "적용/실천", "label": "개념변화 → 과학교육 적용", "desc": "개념변화 이론이 과학 수업 설계의 핵심 근거"}, {"source": "06_Conceptual_Change", "target": "23_Math_Learning", "type": "적용/실천", "label": "개념변화 → 수학 학습", "desc": "수학적 개념 발달에서의 개념변화 과정"}, {"source": "07_Learning_in_Activity", "target": "29_Cultural_Process", "type": "이론기반", "label": "활동이론 → 문화적 학습 과정", "desc": "활동이론의 문화-역사적 관점이 문화적 학습 과정 분석에 적용"}, {"source": "09_Design_Based_Research", "target": "12_Assessment_in_Education", "type": "방법론적 확장", "label": "DBR → 평가 혁신 설계", "desc": "DBR 방법론을 활용한 형성적 평가 체계 설계"}, {"source": "10_Analyzing_Collaboration", "target": "20_CSCL", "type": "적용/실천", "label": "협력 분석 → CSCL 연구", "desc": "협력 분석 방법론이 CSCL 연구에 핵심 도구로 활용"}, {"source": "10_Analyzing_Collaboration", "target": "21_Arguing_to_Learn", "type": "적용/실천", "label": "담화 분석 → 논증 학습", "desc": "담화 분석이 논증 학습의 질적 분석에 적용"}, {"source": "12_Assessment_in_Education", "target": "13_Learning_Analytics_EDM", "type": "계승/발전", "label": "ECD → 학습분석학 모델링", "desc": "증거 중심 설계가 학습분석학의 학생 모델링에 이론적 토대 제공"}, {"source": "14_Video_Games_and_Learning", "target": "25_Complex_Systems", "type": "적용/실천", "label": "시뮬레이션 → 복잡계 학습", "desc": "게임 시뮬레이션이 복잡계 개념 학습에 효과적 도구"}, {"source": "15_Embodiment_and_Design", "target": "16_Tangible_Full_Body_Interfaces", "type": "계승/발전", "label": "체화 인지 → 탠저블 인터페이스", "desc": "체화 인지 원리가 물리적 인터페이스 설계에 적용"}, {"source": "19_Knowledge_Building", "target": "20_CSCL", "type": "계승/발전", "label": "지식구축 → CSCL 플랫폼", "desc": "Knowledge Forum이 CSCL의 대표적 테크놀로지 사례"}, {"source": "20_CSCL", "target": "21_Arguing_to_Learn", "type": "적용/실천", "label": "CSCL → 온라인 논증 학습", "desc": "CSCL 플랫폼이 논증 학습의 주요 실천 맥락"}, {"source": "31_Teacher_Learning", "target": "32_Policy_RPP", "type": "계승/발전", "label": "교사 학습 → 연구-실천 파트너십", "desc": "RPP가 교사 학습과 정책의 연결 고리"}, {"source": "32_Policy_RPP", "target": "33_Future_Learning_Sciences", "type": "계승/발전", "label": "정책 ↔ 미래 방향", "desc": "정책-연구 연결이 학습과학의 미래 방향을 형성"}], "tracks": [{"id": "foundations", "name": "🏛️ 이론적 기초 트랙 (Theoretical Foundations)", "description": "학습과학의 인식론적 토대, 학습 이론, 핵심 개념 프레임워크를 다루는 기초 이론 경로", "color": "#3B82F6", "icon": "library", "steps": [{"ch": "01_Introduction_to_LS", "role": "학습과학의 정의·역사·핵심 원리 개관"}, {"ch": "02_Foundations_of_LS", "role": "인식론적 기초(구성주의, 사회문화이론, 프래그머티즘)"}, {"ch": "06_Conceptual_Change", "role": "학습에서의 지식 재구성 메커니즘"}, {"ch": "07_Learning_in_Activity", "role": "활동이론과 확장적 학습 프레임워크"}, {"ch": "33_Future_Learning_Sciences", "role": "2020년대 학습과학의 미래 방향"}]}, {"id": "instructional_design", "name": "🎯 교수학습 설계 트랙 (Instructional Design)", "description": "스캐폴딩, PBL, 메타인지, 인지적 도제 등 핵심 교수 전략과 학습 설계 원리", "color": "#10B981", "icon": "compass", "steps": [{"ch": "03_Scaffolding", "role": "스캐폴딩의 원리와 유형(소프트/하드)"}, {"ch": "04_Project_Based_Learning", "role": "PBL의 핵심 설계 원리와 추진질문"}, {"ch": "05_Metacognition_SRL", "role": "메타인지와 자기조절학습 순환 모델"}, {"ch": "08_Cognitive_Apprenticeship", "role": "전문가 사고 가시화와 생산적 실패"}, {"ch": "30_Meaningful_Learning", "role": "흥미·동기·참여를 통한 의미있는 학습 설계"}]}, {"id": "methodology", "name": "🔬 연구방법론 트랙 (Research Methodology)", "description": "설계기반연구, 협력 분석, 미시발생적 방법, 평가, 학습분석학 등 학습과학 고유 방법론", "color": "#F59E0B", "icon": "flask-conical", "steps": [{"ch": "09_Design_Based_Research", "role": "학습과학의 핵심 연구 방법론 DBR"}, {"ch": "10_Analyzing_Collaboration", "role": "협력 학습의 과정을 분석하는 방법론"}, {"ch": "11_Microgenetic_Methods", "role": "학습 변화의 실시간 포착 방법론"}, {"ch": "12_Assessment_in_Education", "role": "평가 삼각형과 형성적 평가 설계"}, {"ch": "13_Learning_Analytics_EDM", "role": "데이터 기반 학습 연구와 교육 데이터마이닝"}]}, {"id": "technology", "name": "💻 학습 테크놀로지 트랙 (Learning Technology)", "description": "게임, 체화 인터페이스, AR, 모바일 등 학습과학 기반 테크놀로지 혁신", "color": "#8B5CF6", "icon": "monitor-smartphone", "steps": [{"ch": "14_Video_Games_and_Learning", "role": "게임의 학습 잠재력과 설계 원리"}, {"ch": "15_Embodiment_and_Design", "role": "체화 인지 기반 학습 환경 설계"}, {"ch": "16_Tangible_Full_Body_Interfaces", "role": "물리적 조작 기반 학습 테크놀로지"}, {"ch": "17_Augmented_Reality", "role": "증강현실 기반 학습 환경 설계"}, {"ch": "18_Mobile_Learning", "role": "이동성과 맥락 연속성 기반 학습"}]}, {"id": "collaboration", "name": "🤝 협력학습 트랙 (Collaborative Learning)", "description": "지식 구축, CSCL, 논증 학습, 비형식 학습 등 사회적 학습의 이론과 실천", "color": "#EC4899", "icon": "users", "steps": [{"ch": "19_Knowledge_Building", "role": "집단적 지식 창출의 이론과 실천"}, {"ch": "20_CSCL", "role": "테크놀로지 매개 협력학습의 설계와 분석"}, {"ch": "21_Arguing_to_Learn", "role": "논증적 담화를 통한 협력적 의미 구성"}, {"ch": "22_Museum_Informal_Learning", "role": "비형식 맥락에서의 사회적 학습"}]}, {"id": "disciplinary", "name": "📚 교과학습 트랙 (Disciplinary Learning)", "description": "수학, 과학, 복잡계, 역사, 문식성, 예술 등 교과별 학습과학 연구", "color": "#06B6D4", "icon": "book-open", "steps": [{"ch": "23_Math_Learning", "role": "수학적 사고와 학습의 본질 탐구"}, {"ch": "24_Science_Learning", "role": "과학교육과 학습과학의 공진화"}, {"ch": "25_Complex_Systems", "role": "복잡계 사고와 시스템적 이해 교육"}, {"ch": "26_History_Learning", "role": "역사적 사고의 인지적·사회문화적 분석"}, {"ch": "27_Literacy_Learning", "role": "읽기·쓰기의 인지적·사회문화적 발달"}, {"ch": "28_Arts_Learning", "role": "만들기와 예술적 표현을 통한 학습"}]}, {"id": "practice", "name": "🏫 교실실천 트랙 (Classroom Practice)", "description": "문화적 형평성, 교사 학습, 정책, 미래 방향 등 학습과학의 교실 적용과 제도화", "color": "#F97316", "icon": "school", "steps": [{"ch": "29_Cultural_Process", "role": "문화적 형평성과 다양성 기반 교육 실천"}, {"ch": "30_Meaningful_Learning", "role": "학습자의 흥미·동기·참여 촉진 전략"}, {"ch": "31_Teacher_Learning", "role": "교사 전문성 개발과 학습과학의 연결"}, {"ch": "32_Policy_RPP", "role": "학습과학 연구의 정책적 확산과 제도화"}, {"ch": "33_Future_Learning_Sciences", "role": "학습과학의 미래 방향과 교육 변혁 비전"}]}], "paradigms": {"구성주의 (Constructivism)": {"color": "#3B82F6", "desc": "학습자가 능동적으로 자신의 지식을 구성한다는 인식론적 입장. Piaget의 인지적 구성주의와 Vygotsky의 사회적 구성주의를 포괄하며, PBL, 스캐폴딩, 탐구학습 등 핵심 교수 전략의 이론적 기초.", "chapters": ["01_Introduction_to_LS", "02_Foundations_of_LS", "03_Scaffolding", "04_Project_Based_Learning", "06_Conceptual_Change", "15_Embodiment_and_Design", "16_Tangible_Full_Body_Interfaces", "17_Augmented_Reality", "19_Knowledge_Building", "24_Science_Learning", "28_Arts_Learning", "30_Meaningful_Learning", "33_Future_Learning_Sciences"]}, "사회문화이론 (Sociocultural Theory)": {"color": "#10B981", "desc": "비고츠키(Vygotsky)에 기반하여 학습을 사회적·문화적 맥락 속 참여와 도구 매개 활동으로 이해하는 이론. 근접발달영역(ZPD), 활동이론, 정당한 주변적 참여(LPP) 등이 핵심 개념.", "chapters": ["02_Foundations_of_LS", "03_Scaffolding", "07_Learning_in_Activity", "10_Analyzing_Collaboration", "19_Knowledge_Building", "20_CSCL", "21_Arguing_to_Learn", "22_Museum_Informal_Learning", "23_Math_Learning", "26_History_Learning", "27_Literacy_Learning", "29_Cultural_Process", "31_Teacher_Learning"]}, "인지과학적 접근 (Cognitive Science Approach)": {"color": "#8B5CF6", "desc": "인간의 인지 과정(기억, 주의, 문제해결, 메타인지)에 대한 과학적 연구를 교육에 적용하는 접근. 정보처리 이론, 인지부하 이론, 전문성 연구 등이 포함.", "chapters": ["05_Metacognition_SRL", "06_Conceptual_Change", "11_Microgenetic_Methods", "13_Learning_Analytics_EDM", "25_Complex_Systems", "27_Literacy_Learning", "30_Meaningful_Learning"]}, "상황학습 (Situated Learning)": {"color": "#F59E0B", "desc": "학습은 항상 특정 사회적·물리적 맥락 안에서 이루어지며, 정통적 실천 공동체에의 참여를 통해 일어난다는 관점. Lave & Wenger의 정당한 주변적 참여(LPP), 친화 공간(Affinity Spaces) 등이 핵심.", "chapters": ["08_Cognitive_Apprenticeship", "14_Video_Games_and_Learning", "18_Mobile_Learning", "22_Museum_Informal_Learning", "28_Arts_Learning"]}, "설계기반연구 (Design-Based Research)": {"color": "#EC4899", "desc": "실제 교육 맥락에서 혁신적 학습 환경을 설계·실행·분석하는 반복적 연구 방법론. 연구와 실천의 경계를 허물고, 맥락 속에서 실용적 이론을 생성하는 것이 목표.", "chapters": ["04_Project_Based_Learning", "09_Design_Based_Research", "12_Assessment_in_Education", "20_CSCL", "24_Science_Learning", "31_Teacher_Learning", "32_Policy_RPP", "33_Future_Learning_Sciences"]}}, "glossary": [{"term": "학습과학", "en": "Learning Sciences", "def": "교수와 학습을 과학적으로 연구하는 학제적 분야로, 인지과학·교육심리학·컴퓨터과학 등이 융합된다.", "chapter_id": "01_Introduction_to_LS", "chapter_ko": "Ch01: 학습과학 서론", "part": "Part I"}, {"term": "교수주의", "en": "Instructionism", "def": "지식을 교사가 학생에게 일방적으로 전달하는 전통적 교육 패러다임.", "chapter_id": "01_Introduction_to_LS", "chapter_ko": "Ch01: 학습과학 서론", "part": "Part I"}, {"term": "깊은 학습", "en": "Deep Learning", "def": "단순 암기가 아닌 개념 간 관계, 전이 가능한 이해를 추구하는 학습.", "chapter_id": "01_Introduction_to_LS", "chapter_ko": "Ch01: 학습과학 서론", "part": "Part I"}, {"term": "전이", "en": "Transfer", "def": "한 맥락에서 학습한 지식을 새로운 상황에 적용하는 능력.", "chapter_id": "01_Introduction_to_LS", "chapter_ko": "Ch01: 학습과학 서론", "part": "Part I"}, {"term": "학습 환경 설계", "en": "Learning Environment Design", "def": "효과적 학습을 촉진하기 위해 물리적·사회적·기술적 환경을 체계적으로 구성하는 것.", "chapter_id": "01_Introduction_to_LS", "chapter_ko": "Ch01: 학습과학 서론", "part": "Part I"}, {"term": "구성주의", "en": "Constructivism", "def": "학습자가 능동적으로 자신의 지식을 구성한다는 인식론적 입장.", "chapter_id": "02_Foundations_of_LS", "chapter_ko": "Ch02: 학습과학의 기초", "part": "Part I"}, {"term": "사회문화이론", "en": "Sociocultural Theory", "def": "비고츠키에 기반하여 학습을 사회적·문화적 맥락 속 참여와 매개로 이해하는 이론.", "chapter_id": "02_Foundations_of_LS", "chapter_ko": "Ch02: 학습과학의 기초", "part": "Part I"}, {"term": "근접발달영역", "en": "Zone of Proximal Development", "def": "학습자가 독립적으로 해결할 수 없지만 유능한 타인의 도움으로 해결 가능한 과제 수준.", "chapter_id": "02_Foundations_of_LS", "chapter_ko": "Ch02: 학습과학의 기초", "part": "Part I"}, {"term": "설계기반연구", "en": "Design-Based Research", "def": "교육 혁신을 설계·실행·분석하는 반복적 연구 방법론.", "chapter_id": "02_Foundations_of_LS", "chapter_ko": "Ch02: 학습과학의 기초", "part": "Part I"}, {"term": "인식론", "en": "Epistemology", "def": "지식의 본질과 학습의 근본 원리를 탐구하는 철학적 분야.", "chapter_id": "02_Foundations_of_LS", "chapter_ko": "Ch02: 학습과학의 기초", "part": "Part I"}, {"term": "스캐폴딩", "en": "Scaffolding", "def": "학습자의 현재 능력 수준에 맞춰 임시적 지원을 제공하고 점진적으로 제거하는 교수 전략.", "chapter_id": "03_Scaffolding", "chapter_ko": "Ch03: 스캐폴딩", "part": "Part I"}, {"term": "페이딩", "en": "Fading", "def": "학습자의 역량이 증가함에 따라 지원을 점진적으로 철회하는 과정.", "chapter_id": "03_Scaffolding", "chapter_ko": "Ch03: 스캐폴딩", "part": "Part I"}, {"term": "하드 스캐폴딩", "en": "Hard Scaffolding", "def": "소프트웨어 도구나 워크시트 등에 내장된 고정적·구조적 학습 지원.", "chapter_id": "03_Scaffolding", "chapter_ko": "Ch03: 스캐폴딩", "part": "Part I"}, {"term": "소프트 스캐폴딩", "en": "Soft Scaffolding", "def": "교사가 실시간으로 학습자의 반응에 맞춰 제공하는 적응적 상호작용 지원.", "chapter_id": "03_Scaffolding", "chapter_ko": "Ch03: 스캐폴딩", "part": "Part I"}, {"term": "프로젝트 기반 학습", "en": "Project-Based Learning", "def": "실세계 문제 해결을 위한 장기적 탐구 프로젝트를 통해 학습하는 교수 방법.", "chapter_id": "04_Project_Based_Learning", "chapter_ko": "Ch04: 프로젝트 기반 학습", "part": "Part I"}, {"term": "추진질문", "en": "Driving Question", "def": "PBL에서 학습 전체를 안내하고 동기를 부여하는 핵심 탐구 질문.", "chapter_id": "04_Project_Based_Learning", "chapter_ko": "Ch04: 프로젝트 기반 학습", "part": "Part I"}, {"term": "산출물", "en": "Artifact", "def": "학습 과정에서 학습자가 제작하여 공유하는 구체적 결과물.", "chapter_id": "04_Project_Based_Learning", "chapter_ko": "Ch04: 프로젝트 기반 학습", "part": "Part I"}, {"term": "메타인지", "en": "Metacognition", "def": "자신의 인지 과정에 대해 생각하고 조절하는 상위 인지 능력.", "chapter_id": "05_Metacognition_SRL", "chapter_ko": "Ch05: 메타인지와 자기조절학습", "part": "Part I"}, {"term": "자기조절학습", "en": "Self-Regulated Learning", "def": "학습자가 스스로 목표를 설정하고 전략을 선택·모니터링·조절하는 능동적 학습 과정.", "chapter_id": "05_Metacognition_SRL", "chapter_ko": "Ch05: 메타인지와 자기조절학습", "part": "Part I"}, {"term": "COPES 모델", "en": "COPES Model", "def": "Winne의 SRL 모델로 조건·작업·산출물·평가·기준의 5요소 순환 구조.", "chapter_id": "05_Metacognition_SRL", "chapter_ko": "Ch05: 메타인지와 자기조절학습", "part": "Part I"}, {"term": "캘리브레이션", "en": "Calibration", "def": "학습자의 자기 평가와 실제 수행 수준 간의 일치도.", "chapter_id": "05_Metacognition_SRL", "chapter_ko": "Ch05: 메타인지와 자기조절학습", "part": "Part I"}, {"term": "개념변화", "en": "Conceptual Change", "def": "학습자의 기존 개념이 과학적으로 정교한 개념으로 전환되는 학습 과정.", "chapter_id": "06_Conceptual_Change", "chapter_ko": "Ch06: 개념변화 연구", "part": "Part I"}, {"term": "p-prims", "en": "Phenomenological Primitives", "def": "diSessa의 이론에서 학습자의 직관적 지식을 구성하는 원초적 인지 단위.", "chapter_id": "06_Conceptual_Change", "chapter_ko": "Ch06: 개념변화 연구", "part": "Part I"}, {"term": "오개념", "en": "Misconception", "def": "과학적 개념과 불일치하는 학습자의 사전 지식이나 직관.", "chapter_id": "06_Conceptual_Change", "chapter_ko": "Ch06: 개념변화 연구", "part": "Part I"}, {"term": "인지적 갈등", "en": "Cognitive Conflict", "def": "기존 개념과 새로운 증거 간의 모순으로 인해 발생하는 인지적 불균형 상태.", "chapter_id": "06_Conceptual_Change", "chapter_ko": "Ch06: 개념변화 연구", "part": "Part I"}, {"term": "활동이론", "en": "Activity Theory", "def": "비고츠키-레온티예프-엥게스트룀 전통에서 도구 매개적 집단 활동을 분석 단위로 삼는 이론 체계.", "chapter_id": "07_Learning_in_Activity", "chapter_ko": "Ch07: 활동 속의 학습", "part": "Part I"}, {"term": "확장적 학습", "en": "Expansive Learning", "def": "활동체계 내 모순을 통해 새로운 활동 형태와 개념을 집단적으로 창출하는 학습 과정.", "chapter_id": "07_Learning_in_Activity", "chapter_ko": "Ch07: 활동 속의 학습", "part": "Part I"}, {"term": "활동체계", "en": "Activity System", "def": "주체·도구·대상·규칙·공동체·분업으로 구성된 분석 단위.", "chapter_id": "07_Learning_in_Activity", "chapter_ko": "Ch07: 활동 속의 학습", "part": "Part I"}, {"term": "경계 횡단", "en": "Boundary Crossing", "def": "서로 다른 활동체계 간의 상호작용과 지식 이동.", "chapter_id": "07_Learning_in_Activity", "chapter_ko": "Ch07: 활동 속의 학습", "part": "Part I"}, {"term": "인지적 도제", "en": "Cognitive Apprenticeship", "def": "전문가의 암묵적 사고 과정을 가시화하여 학습자가 점진적으로 전문성을 습득하도록 하는 교수 모델.", "chapter_id": "08_Cognitive_Apprenticeship", "chapter_ko": "Ch08: 인지적 도제", "part": "Part I"}, {"term": "모델링", "en": "Modeling", "def": "전문가가 자신의 사고 과정을 명시적으로 시연하는 교수 행위.", "chapter_id": "08_Cognitive_Apprenticeship", "chapter_ko": "Ch08: 인지적 도제", "part": "Part I"}, {"term": "생산적 실패", "en": "Productive Failure", "def": "의도적 실패 경험을 통해 후속 직접 교수의 학습 효과를 높이는 전략 (Kapur).", "chapter_id": "08_Cognitive_Apprenticeship", "chapter_ko": "Ch08: 인지적 도제", "part": "Part I"}, {"term": "코칭", "en": "Coaching", "def": "학습자의 수행을 관찰하며 적시에 피드백과 힌트를 제공하는 교수 행위.", "chapter_id": "08_Cognitive_Apprenticeship", "chapter_ko": "Ch08: 인지적 도제", "part": "Part I"}, {"term": "설계기반연구", "en": "Design-Based Research", "def": "교육 혁신을 설계·실행·분석하며 반복적으로 이론과 실천을 정련하는 방법론.", "chapter_id": "09_Design_Based_Research", "chapter_ko": "Ch09: 설계기반연구", "part": "Part II"}, {"term": "반복적 정련", "en": "Iterative Refinement", "def": "설계-실행-분석-재설계의 순환적 과정을 통해 교육 혁신을 점진적으로 개선하는 절차.", "chapter_id": "09_Design_Based_Research", "chapter_ko": "Ch09: 설계기반연구", "part": "Part II"}, {"term": "추측적 교수-학습 경로", "en": "Conjectured Learning Trajectory", "def": "DBR에서 학습자의 예상 발달 경로를 사전에 설계하고 실증적으로 검증하는 도구.", "chapter_id": "09_Design_Based_Research", "chapter_ko": "Ch09: 설계기반연구", "part": "Part II"}, {"term": "담화 분석", "en": "Discourse Analysis", "def": "대화와 텍스트를 체계적으로 분석하여 의미 구성 과정을 이해하는 방법론.", "chapter_id": "10_Analyzing_Collaboration", "chapter_ko": "Ch10: 협력 분석", "part": "Part II"}, {"term": "상호작용 분석", "en": "Interaction Analysis", "def": "참여자 간 행위, 제스처, 도구 사용 등 다양한 소통 양식을 분석하는 방법.", "chapter_id": "10_Analyzing_Collaboration", "chapter_ko": "Ch10: 협력 분석", "part": "Part II"}, {"term": "분석 단위", "en": "Unit of Analysis", "def": "연구에서 관찰·분석의 기본 대상이 되는 단위(개인, 쌍, 소집단, 활동체계 등).", "chapter_id": "10_Analyzing_Collaboration", "chapter_ko": "Ch10: 협력 분석", "part": "Part II"}, {"term": "미시발생적 방법", "en": "Microgenetic Methods", "def": "학습 변화가 일어나는 과정을 실시간으로 고밀도로 관찰·기록하는 연구 방법론.", "chapter_id": "11_Microgenetic_Methods", "chapter_ko": "Ch11: 미시발생적 방법", "part": "Part II"}, {"term": "학습 궤적", "en": "Learning Trajectory", "def": "시간에 따른 학습자의 이해 변화 과정을 나타내는 경로.", "chapter_id": "11_Microgenetic_Methods", "chapter_ko": "Ch11: 미시발생적 방법", "part": "Part II"}, {"term": "전략 가변성", "en": "Strategy Variability", "def": "학습자가 같은 과제에 대해 다양한 전략을 동시에 사용하는 현상.", "chapter_id": "11_Microgenetic_Methods", "chapter_ko": "Ch11: 미시발생적 방법", "part": "Part II"}, {"term": "평가 삼각형", "en": "Assessment Triangle", "def": "NRC 모델로 인지·관찰·해석의 세 요소가 유기적으로 연결된 평가 프레임워크.", "chapter_id": "12_Assessment_in_Education", "chapter_ko": "Ch12: 교육 평가", "part": "Part II"}, {"term": "형성적 평가", "en": "Formative Assessment", "def": "학습 과정 중 실시간 피드백을 제공하여 교수학습을 개선하는 평가 방식.", "chapter_id": "12_Assessment_in_Education", "chapter_ko": "Ch12: 교육 평가", "part": "Part II"}, {"term": "증거 중심 설계", "en": "Evidence-Centered Design", "def": "평가를 학생 모델·증거 모델·과제 모델의 3층 구조로 체계적으로 설계하는 프레임워크.", "chapter_id": "12_Assessment_in_Education", "chapter_ko": "Ch12: 교육 평가", "part": "Part II"}, {"term": "학습분석학", "en": "Learning Analytics", "def": "학습자 데이터를 수집·분석·시각화하여 학습과 교수를 최적화하는 분야.", "chapter_id": "13_Learning_Analytics_EDM", "chapter_ko": "Ch13: 학습분석학과 교육 데이터마이닝", "part": "Part II"}, {"term": "교육 데이터마이닝", "en": "Educational Data Mining", "def": "교육 맥락의 대규모 데이터에서 자동으로 패턴을 발견하는 계산적 접근.", "chapter_id": "13_Learning_Analytics_EDM", "chapter_ko": "Ch13: 학습분석학과 교육 데이터마이닝", "part": "Part II"}, {"term": "지식 추적", "en": "Knowledge Tracing", "def": "학습자의 지식 상태를 실시간으로 추정하는 모델링 기법.", "chapter_id": "13_Learning_Analytics_EDM", "chapter_ko": "Ch13: 학습분석학과 교육 데이터마이닝", "part": "Part II"}, {"term": "친화 공간", "en": "Affinity Spaces", "def": "공통 관심사를 중심으로 자발적으로 형성되는 비공식 학습 공동체 (Gee).", "chapter_id": "14_Video_Games_and_Learning", "chapter_ko": "Ch14: 비디오 게임과 학습", "part": "Part III"}, {"term": "게임 기반 학습", "en": "Game-Based Learning", "def": "게임의 몰입적 특성을 활용하여 학습 목표를 달성하는 교수 접근.", "chapter_id": "14_Video_Games_and_Learning", "chapter_ko": "Ch14: 비디오 게임과 학습", "part": "Part III"}, {"term": "시뮬레이션", "en": "Simulation", "def": "실세계 현상을 가상으로 모사하여 탐구와 실험을 가능케 하는 학습 도구.", "chapter_id": "14_Video_Games_and_Learning", "chapter_ko": "Ch14: 비디오 게임과 학습", "part": "Part III"}, {"term": "체화 인지", "en": "Embodied Cognition", "def": "인지가 신체적 경험과 감각운동적 상호작용에 기반한다는 관점.", "chapter_id": "15_Embodiment_and_Design", "chapter_ko": "Ch15: 체화와 학습 설계", "part": "Part III"}, {"term": "체화 설계", "en": "Embodied Design", "def": "신체 동작과 제스처를 학습 자원으로 활용하는 교수학습 설계 접근.", "chapter_id": "15_Embodiment_and_Design", "chapter_ko": "Ch15: 체화와 학습 설계", "part": "Part III"}, {"term": "감각운동 접지", "en": "Sensorimotor Grounding", "def": "추상적 개념을 구체적 감각운동 경험에 기반하여 이해하는 과정.", "chapter_id": "15_Embodiment_and_Design", "chapter_ko": "Ch15: 체화와 학습 설계", "part": "Part III"}, {"term": "탠저블 인터페이스", "en": "Tangible User Interface", "def": "물리적 객체 조작을 통해 디지털 정보와 상호작용하는 인터페이스.", "chapter_id": "16_Tangible_Full_Body_Interfaces", "chapter_ko": "Ch16: 탠저블 및 전신 인터페이스", "part": "Part III"}, {"term": "전신 인터페이스", "en": "Full-Body Interface", "def": "학습자의 몸 전체를 입력 장치로 활용하는 인터페이스.", "chapter_id": "16_Tangible_Full_Body_Interfaces", "chapter_ko": "Ch16: 탠저블 및 전신 인터페이스", "part": "Part III"}, {"term": "증강현실", "en": "Augmented Reality", "def": "실세계 위에 디지털 정보를 겹쳐 표시하여 인지적 경험을 확장하는 기술.", "chapter_id": "17_Augmented_Reality", "chapter_ko": "Ch17: 증강현실과 학습", "part": "Part III"}, {"term": "인지부하", "en": "Cognitive Load", "def": "학습 과정에서 작업기억에 가해지는 정보처리 부담의 총량.", "chapter_id": "17_Augmented_Reality", "chapter_ko": "Ch17: 증강현실과 학습", "part": "Part III"}, {"term": "모바일 학습", "en": "Mobile Learning", "def": "이동 가능한 디지털 기기를 활용하여 다양한 맥락에서 학습하는 방식.", "chapter_id": "18_Mobile_Learning", "chapter_ko": "Ch18: 모바일 학습", "part": "Part III"}, {"term": "원활한 학습", "en": "Seamless Learning", "def": "공식/비공식, 실내/실외 등 다양한 맥락을 가로지르며 연속적으로 이루어지는 학습.", "chapter_id": "18_Mobile_Learning", "chapter_ko": "Ch18: 모바일 학습", "part": "Part III"}, {"term": "맥락 인식", "en": "Context-Aware", "def": "학습자의 위치, 활동, 환경 등 맥락 정보를 자동으로 감지하여 적응적 학습을 지원하는 기술.", "chapter_id": "18_Mobile_Learning", "chapter_ko": "Ch18: 모바일 학습", "part": "Part III"}, {"term": "지식 구축", "en": "Knowledge Building", "def": "학습 공동체가 집단적으로 아이디어를 개선하고 새로운 지식을 창출하는 교육 접근.", "chapter_id": "19_Knowledge_Building", "chapter_ko": "Ch19: 지식 구축과 지식 창출", "part": "Part IV"}, {"term": "아이디어 개선", "en": "Idea Improvement", "def": "개인의 아이디어가 공동체의 담화를 통해 점진적으로 정교화되는 과정.", "chapter_id": "19_Knowledge_Building", "chapter_ko": "Ch19: 지식 구축과 지식 창출", "part": "Part IV"}, {"term": "Knowledge Forum", "en": "Knowledge Forum", "def": "Scardamalia & Bereiter가 개발한 지식 구축 지원 온라인 협력 플랫폼.", "chapter_id": "19_Knowledge_Building", "chapter_ko": "Ch19: 지식 구축과 지식 창출", "part": "Part IV"}, {"term": "인식론적 주체성", "en": "Epistemic Agency", "def": "학습자가 지식 생산의 주체로서 스스로 탐구 방향을 결정하고 책임지는 역량.", "chapter_id": "19_Knowledge_Building", "chapter_ko": "Ch19: 지식 구축과 지식 창출", "part": "Part IV"}, {"term": "컴퓨터 지원 협력학습", "en": "CSCL", "def": "테크놀로지를 매개로 한 협력학습의 설계와 연구를 다루는 분야.", "chapter_id": "20_CSCL", "chapter_ko": "Ch20: 컴퓨터 지원 협력학습", "part": "Part IV"}, {"term": "집단 인지", "en": "Group Cognition", "def": "개인의 인지를 넘어 집단 수준에서 발현되는 공유된 의미 구성과 문제 해결 과정.", "chapter_id": "20_CSCL", "chapter_ko": "Ch20: 컴퓨터 지원 협력학습", "part": "Part IV"}, {"term": "스크립트화된 협력", "en": "Scripted Collaboration", "def": "학습자의 협력 과정을 구조화된 역할·단계·규칙으로 안내하는 설계 전략.", "chapter_id": "20_CSCL", "chapter_ko": "Ch20: 컴퓨터 지원 협력학습", "part": "Part IV"}, {"term": "논증", "en": "Argumentation", "def": "주장·근거·반론을 구성하고 평가하는 담화적·인지적 과정.", "chapter_id": "21_Arguing_to_Learn", "chapter_ko": "Ch21: 논증을 통한 학습", "part": "Part IV"}, {"term": "Toulmin 모델", "en": "Toulmin's Model", "def": "주장·근거·보증·한정·반박으로 구성된 논증 구조 분석 프레임워크.", "chapter_id": "21_Arguing_to_Learn", "chapter_ko": "Ch21: 논증을 통한 학습", "part": "Part IV"}, {"term": "인식적 논증", "en": "Epistemic Argumentation", "def": "지식의 타당성과 정당화를 탐구하는 목적의 논증 활동.", "chapter_id": "21_Arguing_to_Learn", "chapter_ko": "Ch21: 논증을 통한 학습", "part": "Part IV"}, {"term": "비형식 학습", "en": "Informal Learning", "def": "공식 교육과정 밖에서 자발적으로 이루어지는 학습.", "chapter_id": "22_Museum_Informal_Learning", "chapter_ko": "Ch22: 박물관과 비형식 학습", "part": "Part IV"}, {"term": "자유선택 학습", "en": "Free-Choice Learning", "def": "학습자가 무엇을·언제·어떻게 학습할지 스스로 결정하는 학습 환경.", "chapter_id": "22_Museum_Informal_Learning", "chapter_ko": "Ch22: 박물관과 비형식 학습", "part": "Part IV"}, {"term": "가족 학습", "en": "Family Learning", "def": "가족 구성원 간의 대화와 상호작용을 통해 이루어지는 비형식 학습.", "chapter_id": "22_Museum_Informal_Learning", "chapter_ko": "Ch22: 박물관과 비형식 학습", "part": "Part IV"}, {"term": "습득 은유", "en": "Acquisition Metaphor", "def": "학습을 개인의 머릿속에 지식을 획득하는 과정으로 보는 관점.", "chapter_id": "23_Math_Learning", "chapter_ko": "Ch23: 수학 학습", "part": "Part V"}, {"term": "참여 은유", "en": "Participation Metaphor", "def": "학습을 공동체의 실천에 점진적으로 참여하는 과정으로 보는 관점.", "chapter_id": "23_Math_Learning", "chapter_ko": "Ch23: 수학 학습", "part": "Part V"}, {"term": "의사소통주의", "en": "Commognition", "def": "Sfard의 이론으로, 수학적 사고를 수학적 담화 실천으로 이해하는 접근.", "chapter_id": "23_Math_Learning", "chapter_ko": "Ch23: 수학 학습", "part": "Part V"}, {"term": "공진화적 연결", "en": "Coevolutionary Connection", "def": "과학교육과 학습과학이 상호 영향을 주고받으며 동시에 발전하는 관계.", "chapter_id": "24_Science_Learning", "chapter_ko": "Ch24: 과학 학습", "part": "Part V"}, {"term": "과학적 실천", "en": "Scientific Practices", "def": "NGSS에서 강조하는 질문하기, 모델링, 논증, 데이터 분석 등의 과학 탐구 활동.", "chapter_id": "24_Science_Learning", "chapter_ko": "Ch24: 과학 학습", "part": "Part V"}, {"term": "설계 원리", "en": "Design Principles", "def": "학습 환경 설계를 안내하는 연구 기반 지침.", "chapter_id": "24_Science_Learning", "chapter_ko": "Ch24: 과학 학습", "part": "Part V"}, {"term": "복잡계", "en": "Complex Systems", "def": "다수의 행위자가 상호작용하여 예측 불가능한 창발적 패턴을 만들어내는 시스템.", "chapter_id": "25_Complex_Systems", "chapter_ko": "Ch25: 복잡계와 학습과학", "part": "Part V"}, {"term": "창발", "en": "Emergence", "def": "개별 구성 요소의 단순한 상호작용에서 전체 시스템 수준의 새로운 속성이 나타나는 현상.", "chapter_id": "25_Complex_Systems", "chapter_ko": "Ch25: 복잡계와 학습과학", "part": "Part V"}, {"term": "에이전트 기반 모델링", "en": "Agent-Based Modeling", "def": "독립적 행위자들의 규칙 기반 상호작용을 시뮬레이션하여 복잡계 현상을 탐구하는 방법.", "chapter_id": "25_Complex_Systems", "chapter_ko": "Ch25: 복잡계와 학습과학", "part": "Part V"}, {"term": "역사적 사고", "en": "Historical Thinking", "def": "과거를 증거 기반으로 해석하고 사료를 비판적으로 분석하는 인지적 역량.", "chapter_id": "26_History_Learning", "chapter_ko": "Ch26: 역사 학습", "part": "Part V"}, {"term": "사료 읽기", "en": "Sourcing", "def": "사료의 출처, 저자, 맥락을 고려하여 비판적으로 해석하는 기술.", "chapter_id": "26_History_Learning", "chapter_ko": "Ch26: 역사 학습", "part": "Part V"}, {"term": "마스터 내러티브", "en": "Master Narrative", "def": "국가나 공동체가 공유하는 지배적인 역사 해석 프레임.", "chapter_id": "26_History_Learning", "chapter_ko": "Ch26: 역사 학습", "part": "Part V"}, {"term": "문식성", "en": "Literacy", "def": "텍스트를 읽고 쓰는 능력뿐 아니라 다양한 기호 체계를 해석·생산하는 역량.", "chapter_id": "27_Literacy_Learning", "chapter_ko": "Ch27: 문식성 학습", "part": "Part V"}, {"term": "멀티미디어 학습 원리", "en": "Multimedia Learning Principles", "def": "Mayer의 인지 이론에 기반한 텍스트+이미지 결합의 효과적 설계 원칙.", "chapter_id": "27_Literacy_Learning", "chapter_ko": "Ch27: 문식성 학습", "part": "Part V"}, {"term": "다중양식 문식성", "en": "Multimodal Literacy", "def": "텍스트, 이미지, 음성, 동영상 등 다양한 양식을 통합적으로 이해하고 생산하는 역량.", "chapter_id": "27_Literacy_Learning", "chapter_ko": "Ch27: 문식성 학습", "part": "Part V"}, {"term": "스튜디오 사고 습관", "en": "Studio Habits of Mind", "def": "예술 학습에서 길러지는 관찰·상상·표현·반성 등의 핵심 사고 성향.", "chapter_id": "28_Arts_Learning", "chapter_ko": "Ch28: 예술 학습", "part": "Part V"}, {"term": "메이커 운동", "en": "Maker Movement", "def": "직접 만들기와 프로토타이핑을 통한 학습을 강조하는 교육 운동.", "chapter_id": "28_Arts_Learning", "chapter_ko": "Ch28: 예술 학습", "part": "Part V"}, {"term": "예술적 정체성", "en": "Artistic Identity", "def": "예술 활동을 통해 구성되는 학습자의 자기 인식과 정체성.", "chapter_id": "28_Arts_Learning", "chapter_ko": "Ch28: 예술 학습", "part": "Part V"}, {"term": "문화적 자원", "en": "Cultural Resources", "def": "학습자의 문화적 배경, 언어, 실천에서 비롯된 지적·사회적 자산.", "chapter_id": "29_Cultural_Process", "chapter_ko": "Ch29: 문화적 학습 과정", "part": "Part VI"}, {"term": "문화반응적 교수", "en": "Culturally Responsive Teaching", "def": "학습자의 문화적 배경을 자산으로 활용하여 교수학습을 설계하는 접근.", "chapter_id": "29_Cultural_Process", "chapter_ko": "Ch29: 문화적 학습 과정", "part": "Part VI"}, {"term": "기금 of 지식", "en": "Funds of Knowledge", "def": "가정과 지역사회에서 축적된 문화적·실천적 지식 자원 (Moll et al.).", "chapter_id": "29_Cultural_Process", "chapter_ko": "Ch29: 문화적 학습 과정", "part": "Part VI"}, {"term": "흥미 발달", "en": "Interest Development", "def": "상황적 흥미에서 개인적 흥미로 점진적으로 발달하는 4단계 과정 (Renninger).", "chapter_id": "30_Meaningful_Learning", "chapter_ko": "Ch30: 의미있는 학습 설계", "part": "Part VI"}, {"term": "자기결정이론", "en": "Self-Determination Theory", "def": "자율성·유능감·관계성의 3대 기본심리욕구 충족이 내재적 동기를 촉진한다는 이론 (Deci & Ryan).", "chapter_id": "30_Meaningful_Learning", "chapter_ko": "Ch30: 의미있는 학습 설계", "part": "Part VI"}, {"term": "내재적 동기", "en": "Intrinsic Motivation", "def": "활동 자체의 즐거움과 만족에서 비롯되는 동기.", "chapter_id": "30_Meaningful_Learning", "chapter_ko": "Ch30: 의미있는 학습 설계", "part": "Part VI"}, {"term": "교수 내용 지식", "en": "Pedagogical Content Knowledge", "def": "특정 교과 내용을 효과적으로 가르치기 위한 교사의 전문 지식 (Shulman).", "chapter_id": "31_Teacher_Learning", "chapter_ko": "Ch31: 교사 학습의 진전", "part": "Part VI"}, {"term": "교육적 교육과정 자료", "en": "Educative Curriculum Materials", "def": "교사의 전문성 개발을 지원하도록 설계된 교육과정 자료.", "chapter_id": "31_Teacher_Learning", "chapter_ko": "Ch31: 교사 학습의 진전", "part": "Part VI"}, {"term": "실천 공동체", "en": "Community of Practice", "def": "공동의 관심사를 중심으로 지식과 실천을 공유하는 전문가 집단 (Wenger).", "chapter_id": "31_Teacher_Learning", "chapter_ko": "Ch31: 교사 학습의 진전", "part": "Part VI"}, {"term": "연구-실천 파트너십", "en": "Research-Practice Partnership", "def": "연구자와 실천가가 공동으로 문제를 정의하고 해결하는 장기적·호혜적 협력 구조.", "chapter_id": "32_Policy_RPP", "chapter_ko": "Ch32: 학습과학과 정책", "part": "Part VI"}, {"term": "상호 참여", "en": "Mutual Engagement", "def": "학습과학 연구자와 교육 정책 입안자가 양방향으로 영향을 주고받는 관계.", "chapter_id": "32_Policy_RPP", "chapter_ko": "Ch32: 학습과학과 정책", "part": "Part VI"}, {"term": "정책 도구", "en": "Policy Instruments", "def": "교육과정 표준, 평가 체계, 교사 연수 프로그램 등 정책적 수단.", "chapter_id": "32_Policy_RPP", "chapter_ko": "Ch32: 학습과학과 정책", "part": "Part VI"}, {"term": "깊은 학습", "en": "Deep Learning", "def": "단순 암기를 넘어 개념 간 관계, 전이, 문제 해결 역량을 추구하는 학습.", "chapter_id": "33_Future_Learning_Sciences", "chapter_ko": "Ch33: 2020년대 학습과학", "part": "Part VI"}, {"term": "형평성", "en": "Equity", "def": "모든 학습자에게 공정한 학습 기회와 자원을 보장하는 교육적 가치.", "chapter_id": "33_Future_Learning_Sciences", "chapter_ko": "Ch33: 2020년대 학습과학", "part": "Part VI"}, {"term": "연구-실천-정책 삼각", "en": "Research-Practice-Policy Triangle", "def": "학습과학 연구, 교육 실천, 교육 정책이 상호작용하며 교육 혁신을 추동하는 체계.", "chapter_id": "33_Future_Learning_Sciences", "chapter_ko": "Ch33: 2020년대 학습과학", "part": "Part VI"}]};
+    var COORDINATES_FLOW = {"01_Introduction_to_LS": {"x": -600, "y": -300}, "02_Foundations_of_LS": {"x": -400, "y": -300}, "03_Scaffolding": {"x": -200, "y": -300}, "04_Project_Based_Learning": {"x": 0, "y": -300}, "05_Metacognition_SRL": {"x": -600, "y": -120}, "06_Conceptual_Change": {"x": -400, "y": -120}, "07_Learning_in_Activity": {"x": -200, "y": -120}, "08_Cognitive_Apprenticeship": {"x": 0, "y": -120}, "09_Design_Based_Research": {"x": -200, "y": 0}, "10_Analyzing_Collaboration": {"x": 0, "y": 0}, "11_Microgenetic_Methods": {"x": 200, "y": 0}, "12_Assessment_in_Education": {"x": 400, "y": 0}, "13_Learning_Analytics_EDM": {"x": -200, "y": 180}, "14_Video_Games_and_Learning": {"x": 200, "y": 0}, "15_Embodiment_and_Design": {"x": 400, "y": 0}, "16_Tangible_Full_Body_Interfaces": {"x": 600, "y": 0}, "17_Augmented_Reality": {"x": 800, "y": 0}, "18_Mobile_Learning": {"x": 200, "y": 180}, "19_Knowledge_Building": {"x": -400, "y": 300}, "20_CSCL": {"x": -200, "y": 300}, "21_Arguing_to_Learn": {"x": 0, "y": 300}, "22_Museum_Informal_Learning": {"x": 200, "y": 300}, "23_Math_Learning": {"x": 0, "y": 300}, "24_Science_Learning": {"x": 200, "y": 300}, "25_Complex_Systems": {"x": 400, "y": 300}, "26_History_Learning": {"x": 600, "y": 300}, "27_Literacy_Learning": {"x": 0, "y": 480}, "28_Arts_Learning": {"x": 200, "y": 480}, "29_Cultural_Process": {"x": 400, "y": 300}, "30_Meaningful_Learning": {"x": 600, "y": 300}, "31_Teacher_Learning": {"x": 800, "y": 300}, "32_Policy_RPP": {"x": 1000, "y": 300}, "33_Future_Learning_Sciences": {"x": 400, "y": 480}};
+    var COORDINATES_CLUSTERS = {"01_Introduction_to_LS": {"x": -280, "y": -200}, "02_Foundations_of_LS": {"x": -244, "y": -110}, "03_Scaffolding": {"x": -280, "y": 7}, "04_Project_Based_Learning": {"x": -400, "y": -80}, "05_Metacognition_SRL": {"x": 120, "y": -400}, "06_Conceptual_Change": {"x": -489, "y": -44}, "07_Learning_in_Activity": {"x": 520, "y": -200}, "08_Cognitive_Apprenticeship": {"x": -280, "y": 200}, "09_Design_Based_Research": {"x": 520, "y": 200}, "10_Analyzing_Collaboration": {"x": 555, "y": -110}, "11_Microgenetic_Methods": {"x": 155, "y": -310}, "12_Assessment_in_Education": {"x": 555, "y": 290}, "13_Learning_Analytics_EDM": {"x": 120, "y": -192}, "14_Video_Games_and_Learning": {"x": -244, "y": 290}, "15_Embodiment_and_Design": {"x": -607, "y": -80}, "16_Tangible_Full_Body_Interfaces": {"x": -520, "y": -199}, "17_Augmented_Reality": {"x": -555, "y": -290}, "18_Mobile_Learning": {"x": -280, "y": 407}, "19_Knowledge_Building": {"x": -520, "y": -407}, "20_CSCL": {"x": 520, "y": 7}, "21_Arguing_to_Learn": {"x": 400, "y": -80}, "22_Museum_Informal_Learning": {"x": -400, "y": 320}, "23_Math_Learning": {"x": 310, "y": -44}, "24_Science_Learning": {"x": 520, "y": 407}, "25_Complex_Systems": {"x": 0, "y": -280}, "26_History_Learning": {"x": 192, "y": -80}, "27_Literacy_Learning": {"x": -89, "y": -244}, "28_Arts_Learning": {"x": -489, "y": 355}, "29_Cultural_Process": {"x": 280, "y": -199}, "30_Meaningful_Learning": {"x": -207, "y": -280}, "31_Teacher_Learning": {"x": 244, "y": -290}, "32_Policy_RPP": {"x": 400, "y": 320}, "33_Future_Learning_Sciences": {"x": 310, "y": 355}};
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var network = null;
+      var currentLayoutMode = 'flow';
+      var currentViewMode = 'chapters';
+      var physicsEnabled = true;
+
+      // Tab Navigation
+      var navButtons = document.querySelectorAll('.nav-tab-btn');
+      var tabPages = document.querySelectorAll('.tab-page');
+      navButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          navButtons.forEach(function(b) { b.classList.remove('active'); });
+          tabPages.forEach(function(p) { p.classList.remove('active'); });
+          btn.classList.add('active');
+          document.getElementById(btn.dataset.target).classList.add('active');
+          if (btn.dataset.target === 'tab-graph' && network) network.redraw();
+        });
+      });
+
+      // Theme Toggle
+      document.getElementById('theme-toggle-btn').addEventListener('click', function() {
+        document.body.classList.toggle('light-theme');
+      });
+
+      // Layout Mode
+      var layoutBtns = [document.getElementById('layout-flow'), document.getElementById('layout-organic'), document.getElementById('layout-clusters')];
+      layoutBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          layoutBtns.forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          if (btn.id === 'layout-flow') currentLayoutMode = 'flow';
+          else if (btn.id === 'layout-organic') currentLayoutMode = 'organic';
+          else currentLayoutMode = 'clusters';
+          rebuildGraph();
+        });
+      });
+
+      // View Mode
+      document.getElementById('view-mode-chapters').addEventListener('click', function() {
+        currentViewMode = 'chapters';
+        this.classList.add('active');
+        document.getElementById('view-mode-all').classList.remove('active');
+        rebuildGraph();
+      });
+      document.getElementById('view-mode-all').addEventListener('click', function() {
+        currentViewMode = 'all';
+        this.classList.add('active');
+        document.getElementById('view-mode-chapters').classList.remove('active');
+        rebuildGraph();
+      });
+
+      // Part & Paradigm Filters
+      document.getElementById('filter-part-select').addEventListener('change', rebuildGraph);
+      document.getElementById('filter-paradigm-select').addEventListener('change', rebuildGraph);
+
+      // Zoom Controls
+      document.getElementById('btn-zoom-in').addEventListener('click', function() { if(network) network.moveTo({scale: network.getScale() * 1.3}); });
+      document.getElementById('btn-zoom-out').addEventListener('click', function() { if(network) network.moveTo({scale: network.getScale() / 1.3}); });
+      document.getElementById('btn-fit-graph').addEventListener('click', function() { if(network) network.fit({animation:{duration:600}}); });
+      document.getElementById('btn-toggle-physics').addEventListener('click', function() {
+        physicsEnabled = !physicsEnabled;
+        if (network) network.setOptions({physics: {enabled: physicsEnabled}});
+      });
+
+      // Drawer Close
+      document.getElementById('drawer-close-btn').addEventListener('click', closeDetailDrawer);
+
+      // Global Search
+      document.getElementById('global-search-input').addEventListener('input', function() {
+        var q = this.value.trim().toLowerCase();
+        if (!q || !network) return;
+        var found = KNOWLEDGE_DATA.chapters.find(function(ch) {
+          return ch.ko_title.toLowerCase().indexOf(q) !== -1 || ch.en_title.toLowerCase().indexOf(q) !== -1 || ch.authors.toLowerCase().indexOf(q) !== -1;
+        });
+        if (found) selectAndFocusNode(found.folder);
+      });
+
+      function getPartColor(part) {
+        var colors = {'Part I':'#3B82F6','Part II':'#10B981','Part III':'#8B5CF6','Part IV':'#F59E0B','Part V':'#EC4899','Part VI':'#06B6D4'};
+        return colors[part] || '#6366F1';
+      }
+
+      function rebuildGraph() {
+        var partFilter = document.getElementById('filter-part-select').value;
+        var paradigmFilter = document.getElementById('filter-paradigm-select').value;
+        var nodes = [];
+        var edges = [];
+
+        KNOWLEDGE_DATA.chapters.forEach(function(ch) {
+          if (partFilter !== 'all' && ch.part !== partFilter) return;
+          if (paradigmFilter !== 'all' && !ch.paradigms.some(function(p) { return p.indexOf(paradigmFilter) !== -1; })) return;
+
+          var color = getPartColor(ch.part);
+          var shortName = ch.ko_title;
+
+          var nodeObj = {
+            id: ch.folder,
+            label: shortName,
+            shape: 'box',
+            margin: { top: 10, bottom: 10, left: 14, right: 14 },
+            color: {
+              background: '#131c2e',
+              border: color,
+              highlight: { background: color, border: '#ffffff' },
+              hover: { background: '#1e293b', border: color }
+            },
+            font: { color: '#ffffff', size: 12, face: 'Noto Sans KR, Inter, sans-serif', multi: 'md', bold: true },
+            borderWidth: 2.5,
+            shadow: { enabled: true, color: 'rgba(0,0,0,0.6)', size: 12, x: 0, y: 5 },
+            chapterData: ch,
+            nodeType: 'chapter'
+          };
+
+          if (currentLayoutMode === 'flow' && COORDINATES_FLOW[ch.folder]) {
+            nodeObj.x = COORDINATES_FLOW[ch.folder].x;
+            nodeObj.y = COORDINATES_FLOW[ch.folder].y;
+          } else if (currentLayoutMode === 'clusters' && COORDINATES_CLUSTERS[ch.folder]) {
+            nodeObj.x = COORDINATES_CLUSTERS[ch.folder].x;
+            nodeObj.y = COORDINATES_CLUSTERS[ch.folder].y;
+          }
+
+          nodes.push(nodeObj);
+        });
+
+        var nodeIds = new Set(nodes.map(function(n) { return n.id; }));
+
+        KNOWLEDGE_DATA.edges.forEach(function(e, idx) {
+          if (nodeIds.has(e.source) && nodeIds.has(e.target)) {
+            var edgeColor = '#94a3b8';
+            var dashes = false;
+            if (e.type === '비판/대안') { edgeColor = '#f43f5e'; dashes = [5, 5]; }
+            else if (e.type === '계승/발전') { edgeColor = '#38bdf8'; }
+            else if (e.type === '적용/실천') { edgeColor = '#34d399'; }
+            else if (e.type === '방법론적 확장') { edgeColor = '#a78bfa'; }
+            else if (e.type === '이론기반') { edgeColor = '#60a5fa'; }
+            else if (e.type === '상호보완') { edgeColor = '#fbbf24'; }
+
+            edges.push({
+              id: 'edge_' + idx, from: e.source, to: e.target, label: e.label,
+              font: { color: '#cbd5e1', size: 9, align: 'horizontal', background: 'rgba(15,23,42,0.85)', strokeWidth: 0 },
+              arrows: { to: { enabled: true, scaleFactor: 0.8 } },
+              color: { color: edgeColor, highlight: '#ffffff', hover: '#ffffff' },
+              dashes: dashes, width: 2,
+              smooth: { type: 'cubicBezier', roundness: 0.15 }
+            });
+          }
+        });
+
+        if (currentViewMode === 'all') {
+          KNOWLEDGE_DATA.chapters.forEach(function(ch) {
+            if (!nodeIds.has(ch.folder)) return;
+            ch.glossary.slice(0, 3).forEach(function(g, gIdx) {
+              var gId = 'concept_' + ch.folder + '_' + gIdx;
+              nodes.push({
+                id: gId, label: g.term, shape: 'ellipse',
+                color: { background: 'rgba(30,41,59,0.9)', border: '#64748b', highlight: { background: '#10b981', border: '#fff' } },
+                font: { color: '#e2e8f0', size: 9, face: 'Noto Sans KR' },
+                borderWidth: 1.5, nodeType: 'concept', parentChapter: ch.folder, conceptData: g
+              });
+              edges.push({ from: ch.folder, to: gId, color: { color: 'rgba(148,163,184,0.4)' }, width: 1, dashes: [3, 4] });
+            });
+          });
+        }
+
+        var container = document.getElementById('network-canvas');
+        var data = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
+
+        var physicsConfig = { enabled: physicsEnabled, stabilization: { iterations: 120 } };
+        if (currentLayoutMode === 'flow' || currentLayoutMode === 'clusters') {
+          physicsConfig.solver = 'barnesHut';
+          physicsConfig.barnesHut = { gravitationalConstant: -1800, centralGravity: 0.005, springLength: 160, springConstant: 0.02, damping: 0.8 };
+        } else {
+          physicsConfig.solver = 'forceAtlas2Based';
+          physicsConfig.forceAtlas2Based = { gravitationalConstant: -120, centralGravity: 0.005, springLength: 220, springConstant: 0.05, damping: 0.9 };
+        }
+
+        var options = { physics: physicsConfig, interaction: { hover: true, tooltipDelay: 100, zoomView: true, dragView: true, dragNodes: true } };
+
+        if (network) network.destroy();
+        network = new vis.Network(container, data, options);
+        network.once('stabilizationIterationsDone', function() {
+          network.fit({ animation: { duration: 600, easingFunction: 'easeInOutQuad' } });
+        });
+
+        network.on('click', function(params) {
+          if (params.nodes.length > 0) {
+            var clickedId = params.nodes[0];
+            var clickedNode = nodes.find(function(n) { return n.id === clickedId; });
+            if (clickedNode) {
+              if (clickedNode.nodeType === 'chapter') openDetailDrawer(clickedNode.chapterData);
+              else if (clickedNode.nodeType === 'concept') {
+                var parentCh = KNOWLEDGE_DATA.chapters.find(function(c) { return c.folder === clickedNode.parentChapter; });
+                if (parentCh) openDetailDrawer(parentCh);
+              }
+            }
+          }
+        });
+      }
+
+      function selectAndFocusNode(chapterFolder) {
+        if (!network) return;
+        network.selectNodes([chapterFolder]);
+        network.focus(chapterFolder, { scale: 1.15, animation: { duration: 600, easingFunction: 'easeInOutQuad' } });
+        var ch = KNOWLEDGE_DATA.chapters.find(function(c) { return c.folder === chapterFolder; });
+        if (ch) openDetailDrawer(ch);
+      }
+
+      function openDetailDrawer(ch) {
+        var drawer = document.getElementById('node-detail-drawer');
+        var badgesContainer = document.getElementById('drawer-badges');
+        badgesContainer.innerHTML = '';
+        var partNum = ch.part.replace('Part ', '');
+        var partClass = 'badge-p' + (['I','II','III','IV','V','VI'].indexOf(partNum) + 1);
+        badgesContainer.innerHTML += '<span class="badge ' + partClass + '">' + ch.part + '</span>';
+        ch.paradigms.forEach(function(p) {
+          badgesContainer.innerHTML += '<span class="badge" style="background:rgba(16,185,129,0.15); color:#6ee7b7; border:1px solid rgba(16,185,129,0.3);">' + p.split(' ')[0] + '</span>';
+        });
+
+        document.getElementById('drawer-title-text').innerText = ch.ko_title;
+        document.getElementById('drawer-subtitle-text').innerText = ch.en_title + ' — ' + ch.authors;
+
+        var summaryList = document.getElementById('drawer-summary-list');
+        summaryList.innerHTML = ch.summary.map(function(s) { return '<li>' + s + '</li>'; }).join('');
+
+        var glossaryList = document.getElementById('drawer-glossary-list');
+        glossaryList.innerHTML = ch.glossary.map(function(g) {
+          return '<div class="glossary-card"><div class="glossary-card-header"><span class="glossary-term">' + g.term + '</span><span class="glossary-en">' + g.en + '</span></div><p class="glossary-def">' + g.def + '</p></div>';
+        }).join('');
+
+        var connList = document.getElementById('drawer-connections-list');
+        var allConns = [];
+        ch.connections.outgoing.forEach(function(c) { allConns.push(Object.assign({}, c, { direction: 'outgoing' })); });
+        ch.connections.incoming.forEach(function(c) { allConns.push(Object.assign({}, c, { direction: 'incoming' })); });
+
+        if (allConns.length === 0) {
+          connList.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted);">직접 연계된 핵심 링크가 없습니다.</p>';
+        } else {
+          connList.innerHTML = allConns.map(function(c) {
+            var targetFolder = c.direction === 'outgoing' ? c.target : c.source;
+            var targetCh = KNOWLEDGE_DATA.chapters.find(function(item) { return item.folder === targetFolder; });
+            var targetTitle = targetCh ? targetCh.ko_title : targetFolder;
+            var arrowIcon = c.direction === 'outgoing' ? '→' : '←';
+            return '<div class="connection-pill" onclick="window.selectChapter(\'' + targetFolder + '\')"><div class="conn-info"><span class="conn-title">' + arrowIcon + ' ' + targetTitle + ': ' + c.label + '</span><span class="conn-desc">' + c.desc + '</span></div><span class="conn-badge">' + c.type + '</span></div>';
+          }).join('');
+        }
+
+        var actionsContainer = document.getElementById('drawer-actions-container');
+        actionsContainer.innerHTML =
+          '<a href="' + ch.folder + '/summary_quick.md" class="btn-action btn-outline" target="_blank"><i data-lucide="file-text"></i> 요약본</a>' +
+          '<a href="' + ch.folder + '/summary_detailed.md" class="btn-action btn-outline" target="_blank"><i data-lucide="book-open"></i> 심층 분석</a>' +
+          '<a href="' + ch.folder + '/educational_insights.md" class="btn-action btn-outline" target="_blank"><i data-lucide="graduation-cap"></i> 교육 접목</a>' +
+          '<a href="' + ch.folder + '/slide.html" class="btn-action btn-primary" target="_blank"><i data-lucide="presentation"></i> 슬라이드</a>';
+
+        lucide.createIcons();
+        drawer.classList.add('open');
+      }
+
+      function closeDetailDrawer() {
+        document.getElementById('node-detail-drawer').classList.remove('open');
+      }
+
+      window.selectChapter = function(folder) { selectAndFocusNode(folder); };
+      window.navToChapter = function(folder) { navButtons[0].click(); selectAndFocusNode(folder); };
+
+      // Tab 2: Tracks
+      function initTracksTab() {
+        var container = document.getElementById('tracks-content-list');
+        container.innerHTML = KNOWLEDGE_DATA.tracks.map(function(track) {
+          return '<div class="track-section-card"><div class="track-title-bar"><div class="track-icon-badge" style="background:' + track.color + '"><i data-lucide="' + track.icon + '"></i></div><div class="track-title-info"><h3>' + track.name + '</h3><p>' + track.description + '</p></div></div><div class="pathway-flow">' +
+            track.steps.map(function(step, sIdx) {
+              var ch = KNOWLEDGE_DATA.chapters.find(function(c) { return c.folder === step.ch; });
+              var shortTitle = ch ? ch.ko_title : step.ch;
+              return '<div class="pathway-step" onclick="window.navToChapter(\'' + step.ch + '\')"><span class="step-badge">STEP 0' + (sIdx + 1) + '</span><div class="step-ch-name">' + shortTitle + '</div><div class="step-role">' + step.role + '</div></div>';
+            }).join('') +
+          '</div></div>';
+        }).join('');
+      }
+
+      // Tab 3: Paradigms
+      function initParadigmsTab() {
+        var container = document.getElementById('paradigms-grid-container');
+        var pEntries = Object.entries(KNOWLEDGE_DATA.paradigms);
+        container.innerHTML = pEntries.map(function(entry) {
+          var pName = entry[0];
+          var pData = entry[1];
+          return '<div class="paradigm-card" style="border-top-color:' + pData.color + ';"><div class="paradigm-card-title">' + pName + '</div><p class="paradigm-card-desc">' + pData.desc + '</p><div class="paradigm-ch-tags">' +
+            pData.chapters.map(function(chId) {
+              var ch = KNOWLEDGE_DATA.chapters.find(function(c) { return c.folder === chId; });
+              var label = ch ? ch.ko_title.split(':')[0] : chId;
+              return '<span class="ch-chip" onclick="window.navToChapter(\'' + chId + '\')">' + label + '</span>';
+            }).join('') +
+          '</div></div>';
+        }).join('');
+      }
+
+      // Tab 4: Glossary
+      function initGlossaryTab() {
+        var chSelect = document.getElementById('glossary-chapter-filter');
+        chSelect.innerHTML = '<option value="all">모든 챕터 (All Chapters)</option>';
+        KNOWLEDGE_DATA.chapters.forEach(function(ch) {
+          var opt = document.createElement('option');
+          opt.value = ch.folder;
+          opt.innerText = ch.ko_title;
+          chSelect.appendChild(opt);
+        });
+        renderGlossaryItems();
+        document.getElementById('glossary-filter-input').addEventListener('input', renderGlossaryItems);
+        chSelect.addEventListener('change', renderGlossaryItems);
+      }
+
+      function renderGlossaryItems() {
+        var q = document.getElementById('glossary-filter-input').value.trim().toLowerCase();
+        var chFilter = document.getElementById('glossary-chapter-filter').value;
+        var grid = document.getElementById('glossary-items-grid');
+        var filtered = KNOWLEDGE_DATA.glossary.filter(function(item) {
+          if (chFilter !== 'all' && item.chapter_id !== chFilter) return false;
+          if (q) return item.term.toLowerCase().indexOf(q) !== -1 || item.en.toLowerCase().indexOf(q) !== -1 || item.def.toLowerCase().indexOf(q) !== -1;
+          return true;
+        });
+        document.getElementById('glossary-count-label').innerText = '총 ' + filtered.length + '개 용어 표시 중';
+        grid.innerHTML = filtered.map(function(item) {
+          return '<div class="glossary-item-card" onclick="window.navToChapter(\'' + item.chapter_id + '\')"><div class="glossary-card-top"><span class="term-ko">' + item.term + '</span><span class="term-en">' + item.en + '</span></div><p class="glossary-card-def">' + item.def + '</p><div class="glossary-card-footer"><span class="ch-ref-badge">' + item.chapter_ko + '</span><span style="font-size:0.7rem; color:var(--text-muted);">' + item.part + '</span></div></div>';
+        }).join('');
+      }
+
+      rebuildGraph();
+      initTracksTab();
+      initParadigmsTab();
+      initGlossaryTab();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
