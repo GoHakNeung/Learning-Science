@@ -236,7 +236,7 @@
   <main id="stage">
 
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
+    <section class="slide" data-index="0">
       <span class="slide-badge">Chapter 11 · Part II Methodologies</span>
       <h1 class="slide-title">Microgenetic Methods</h1>
       <p class="slide-subtitle">미시발생적 방법: 학습과 개념 변화의 순간순간(Moment-to-moment) 초정밀 추적</p>
@@ -397,7 +397,7 @@
     <section class="slide" data-index="5">
       <span class="slide-badge">원형 연구 사례 · Section 11.4</span>
       <h2 class="slide-title">숀펠드 등의 그래프 함수 학습 미시 분석 (1993)</h2>
-      <p class="slide-subtitle">고등학생 1명의 함수($y = mx + b$) 학습 과정을 수십 시간 비디오로 초밀도 분석</p>
+      <p class="slide-subtitle">고등학생 1명의 함수(y = mx + b) 학습 과정을 수십 시간 비디오로 초밀도 분석</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
           <h3>📊 연구 설계 및 방법론</h3>
@@ -410,7 +410,7 @@
         <div class="card">
           <h3>💡 학습과학적 핵심 발견</h3>
           <ul>
-            <li>$y$-절편과 기울기에 대한 이해는 단번에 오지 않음</li>
+            <li>y-절편과 기울기에 대한 이해는 단번에 오지 않음</li>
             <li>수많은 소박 직관과 지식 조각(p-prims)들이 갈등하고 결합되는 복잡한 나선형 궤적 실증</li>
             <li><strong>"지식은 덩어리가 아니라 미세 지식 조각들의 상호작용 네트워크이다"</strong></li>
           </ul>
@@ -587,8 +587,112 @@
       </div>
     </section>
 
-    <!-- Slide 11: Application to CS Education & Debugging -->
+    
+    <!-- Slide 11: Multimodal Data Collection & Synchronization -->
     <section class="slide" data-index="10">
+      <span class="slide-badge">데이터 수집 체계 · Section 11.3</span>
+      <h2 class="slide-title">미시발생 데이터 수집 기법과 다중 채널 동기화</h2>
+      <p class="slide-subtitle">학습자의 인지 궤적을 밀리초 단위로 포착하는 4대 관찰 채널</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>📹 1. 초고밀도 비디오 & 화면 녹화</h3>
+          <p>학습자의 표정, 제스처, 마우스 커서 궤적, IDE 화면 변경 사항을 프레임 단위로 캡처하여 동기화 기록</p>
+        </div>
+        <div class="card">
+          <h3>🗣️ 2. 생각 말하기 & 즉각적 발문 (Think-Aloud)</h3>
+          <p>과제 수행 중 자신의 사고 과정을 소리 내어 말하게 하거나, 결정적 순간에 연구자가 최소한의 자극 질문 투입</p>
+        </div>
+        <div class="card">
+          <h3>⌨️ 3. 키스트로크 & 인터랙션 로그 트레이스</h3>
+          <p>코드 입력, 백스페이스 삭제, 버튼 클릭, 시뮬레이션 파라미터 조작 시계열 이벤트 자동 저장</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>👁️ 4. 시선 추적 (Eye-Tracking) 결합</h3>
+          <p>텍스트와 그래프 사이의 시선 이동(Saccade) 및 고정(Fixation) 시간을 분석하여 주의 집중과 인지 부하 모니터링</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>미시발생 연구에서 다채널 데이터를 시간축(Timestamp) 기준으로 동기화하는 기술적 워크플로를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>단일 데이터원(예: 사후 인터뷰)만으로는 인지적 전이의 찰나를 놓치기 쉽습니다. 로그와 비디오, 시선 데이터가 결합될 때 비로소 인과 메커니즘이 투명하게 드러납니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>코딩 학습자의 디버깅 과정을 분석할 때 키로그와 시선 추적이 어떻게 상호 보완되는지 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: 5 Dimensions of Conceptual Change -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">변화의 5대 차원 · Section 11.5</span>
+      <h2 class="slide-title">미시발생 분석이 규명하는 학습 변화의 5대 차원</h2>
+      <p class="slide-subtitle">학습이 '어떻게' 일어나는가를 밝히는 로버트 시글러의 5대 분석 렌즈</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 원천 (Source)</h3>
+          <p>어떤 구체적 인지 갈등, 시각적 단서, 동료의 발언이 새로운 전략을 촉발했는가?</p>
+        </div>
+        <div class="card">
+          <h3>2. 경로 (Path)</h3>
+          <p>새 전략으로 바로 점프했는가, 아니면 중간 과도기 전략(Transitional)을 거쳤는가?</p>
+        </div>
+        <div class="card">
+          <h3>3. 속도 (Rate)</h3>
+          <p>개념 변화는 하룻밤 사이의 급격한 전환인가, 수 주에 걸친 완만한 점진적 교체인가?</p>
+        </div>
+        <div class="card">
+          <h3>4. 폭 (Breadth)</h3>
+          <p>새로 획득한 전략이 유사 과제(Near)와 다른 맥락(Far)으로 얼마나 광범위하게 일반화되는가?</p>
+        </div>
+        <div class="card highlight-card" style="grid-column: span 2;">
+          <h3>5. 가변성 (Variability)</h3>
+          <p>새로운 지식을 획득하기 직전, 학생의 사고는 얼마나 심하게 요동치고 방황(Cognitive Flux)하는가? ➔ <strong>"가변성은 발달과 도약의 전조 증상이다!"</strong></p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>시글러와 친(Siegler & Chinn)이 제시한 변화의 5대 속성(Source, Path, Rate, Breadth, Variability)을 분석 프레임워크로 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>특히 '가변성(Variability)'은 단순한 실수가 아니라, 기존 도식이 붕괴되고 새로운 전략을 탐색하는 창조적 불안정 상태(Critical Instability)임을 강조합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생이 오답을 번복하며 헤맬 때 교사가 즉각 개입해야 할지, 아니면 탐색의 가변성을 지켜봐야 할지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Knowledge in Pieces Integration -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">인지 모델 융합 · Section 11.4</span>
+      <h2 class="slide-title">조각난 지식(KiP) 이론과 미시발생 분석의 결합</h2>
+      <p class="slide-subtitle">순간순간의 대화 속에서 원초식(p-prims)이 활성화되고 조율되는 궤적 추적</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🧩 미세 인지 요소의 동적 활성화</h3>
+          <ul>
+            <li>학습자는 고정된 오개념을 가진 것이 아님</li>
+            <li>문제 화면의 미세한 시각 단서에 따라 서로 다른 현상학적 원초식(p-prims)이 경쟁적으로 활성화</li>
+            <li>미시발생 분석은 초 단위로 어떤 원초식이 소환되는지 가시화함</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>🔗 배위 클래스(Coordination Class)로의 진화</h3>
+          <ul>
+            <li>파편화된 원초식들이 피드백을 통해 점차 인과적으로 연결</li>
+            <li>다양한 물리적 맥락에서도 일관되게 적용되는 통합적 개념 구조 구축</li>
+            <li><strong>"미시발생은 개념 변화의 살아있는 생태계를 현미경으로 보는 것"</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>안드레아 디세사의 KiP 이론과 미시발생 방법론이 완벽한 이론-방법론적 짝(Pair)을 이룸을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>거시적 시험으로는 포착할 수 없는 지식의 미시적 요동과 재조직화 과정을 미시발생적 전사를 통해 증명합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>Chapter 06의 개념 변화 이론과 본 Chapter 11의 미시발생 방법론을 교차 연결해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Application to CS Education & Debugging -->
+    <section class="slide" data-index="13">
       <span class="slide-badge">컴퓨터교육 접목 · Chapter 11</span>
       <h2 class="slide-title">컴퓨터 프로그래밍 및 디버깅 궤적의 미시발생 분석</h2>
       <p class="slide-subtitle">키스트로크 로그, 에러 스택 트레이스, 멘탈 모델의 실시간 진화 추적</p>
@@ -620,7 +724,7 @@
     </section>
 
     <!-- Slide 12: Summary & Core Takeaways -->
-    <section class="slide" data-index="11">
+    <section class="slide" data-index="14">
       <span class="slide-badge">총괄 결론 · Chapter 11</span>
       <h2 class="slide-title">미시발생적 방법의 핵심 가치 총괄</h2>
       <p class="slide-subtitle">학습과학자가 기억해야 할 3대 미시발생 원리</p>
@@ -649,7 +753,7 @@
     </section>
 
     <!-- Slide 13: Looking Ahead to Chapter 12 -->
-    <section class="slide" data-index="12">
+    <section class="slide" data-index="15">
       <span class="slide-badge">다음 챕터 예고 · Part II</span>
       <h2 class="slide-title">다음 여정: Chapter 12 교육 평가 설계 (Assessment in Education)</h2>
       <p class="slide-subtitle">제임스 펠레그리노(James W. Pellegrino)의 평가 삼각형과 증거 중심 설계(ECD)</p>
@@ -680,7 +784,7 @@
 
   <footer>
     <div class="footer-left">Chapter 11: Microgenetic Methods (Bruce L. Sherin & Clark A. Chinn)</div>
-    <div class="footer-center" id="slide-counter">01 / 13</div>
+    <div class="footer-center" id="slide-counter">01 / 16</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
