@@ -212,174 +212,466 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 32 · Part VI Policy & Systems</span>
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 32 · Part VI Context</span>
       <h1 class="slide-title">Learning Sciences and Policy</h1>
       <p class="slide-subtitle">학습과학과 교육 정책: 상호 협력의 10년 — 교육 인프라스트럭처 재설계, RPP, 그리고 DBIR</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>William R. Penuel</strong> (UC Boulder), <strong>James P. Spillane</strong> (Northwestern Univ.), & <strong>Min Sun</strong> (Univ. of Washington)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 648–667)</p>
+          <p><strong>William R. Penuel</strong> (Univ of Colorado Boulder)<br/><strong>James P. Spillane</strong> (Northwestern Univ)<br/><strong>Min Sun</strong> (Univ of Washington)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 32</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (32.0 ~ 32.4)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>32.0 정책 협력의 전환</strong>: 미시적 교실에서 거시적 시스템 공학으로</li>
-            <li><strong>32.1 교육 인프라스트럭처</strong> (5대 요소) & <strong>MIST 프로젝트 (SNA)</strong></li>
-            <li><strong>32.2 연구-실천 파트너십 (RPPs)</strong> & <strong>DBIR 4대 원리</strong></li>
-            <li><strong>32.3 가족·지역사회 중심 접근</strong> (FLDC) & 정책 데이터 과학</li>
+            <li><strong>교실에서 시스템으로</strong>: 미시 수업 연구 20년에서 거시 교육 정책 공학으로</li>
+            <li><strong>교육 인프라스트럭처 (Infrastructure)</strong>: 교재, 평가, TPD, 분산 리더십의 정렬</li>
+            <li><strong>연구-실천 파트너십 (RPPs)</strong>: 교육청-연구자 간의 장기적 수평 동반자 관계</li>
+            <li><strong>디자인 기반 실행 연구 (DBIR)</strong>: 현장의 절박한 문제 해결과 대규모 스케일업</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 학습과학이 왜 개별 교실 연구를 넘어 교육 정책(Policy)과 시스템 차원의 교육 인프라스트럭처(Infrastructure) 재설계로 확장되었는지를 다룹니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>윌리엄 페뉴엘과 제임스 스필레인 교수는 연구-실천 파트너십(RPPs)과 분산 리더십(Distributed Leadership) 분야의 세계적 석학입니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학의 혁신적 이론들이 단일 교실의 '고립된 성공'에 머물지 않고, 교육청과 주 정부 차원의 대규모 정책과 인프라로 제도화되는 거시적 시스템 공학을 이해합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>윌리엄 페뉴엘(RPP/DBIR 창시자), 제임스 스필레인(분산 리더십 대가), 민 선(교육 정책 SNA 전문가) 교수가 공동 집필한 정책 학습과학의 이정표입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"아무리 훌륭한 수업 도구와 교육과정을 개발해도, 왜 학교와 교육청 정책이 받쳐주지 않으면 3년 만에 사라질까요?"로 시작하세요.</p>
+        <p>"아무리 훌륭한 수업 혁신도 왜 교육감이나 교장이 바뀌면 원래대로 돌아갈까요?"라는 질문으로 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: 32.1 Educational Infrastructure & MIST Project -->
+    <!-- Slide 2: Historical Transition -->
     <section class="slide" data-index="1">
-      <span class="slide-badge">교육 인프라 & SNA · Section 32.1</span>
-      <h2 class="slide-title">32.1 교육 인프라스트럭처와 MIST 프로젝트 (SNA)</h2>
-      <p class="slide-subtitle">수업 개선을 지탱하는 5대 인프라와 교사 조언 네트워크의 힘 (Cobb et al.; Sun et al.)</p>
+      <span class="slide-badge">역사적 대전환 · Section 32.0</span>
+      <h2 class="slide-title">미시적 교실 연구 20년에서 거시적 시스템 정책 공학으로</h2>
+      <p class="slide-subtitle">학습과학과 교육 정책학의 극적인 상호 만남과 통섭</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>🏗️ 교육 인프라스트럭처 5대 요소</h3>
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 초기 20년 (1991~2011): 섬의 딜레마</h3>
           <ul>
-            <li>1. <strong>교육과정 자료 및 표준</strong> (Curriculum)</li>
-            <li>2. <strong>평가 체제</strong> (3D Performance Assessment)</li>
-            <li>3. <strong>지속적 교사 연수</strong> (Collaborative TPD)</li>
-            <li>4. <strong>사회적 자원 및 규범</strong> (신뢰, 조언 네트워크)</li>
-            <li>5. <strong>분산 리더십</strong> (권한 공유 거버넌스)</li>
+            <li>소수 혁신 교실에서는 눈부신 성공을 거두었으나, 교실 밖 학교 시스템(시험, 행정, 예산)의 벽에 부딪혀 확산 실패</li>
+            <li><strong>"혁신의 섬(Islands of Excellence)"에 고립</strong>되는 한계 직면</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">📊 MIST 프로젝트 & SNA 분석</h3>
+          <h3 style="color: var(--accent-emerald);">✨ 최근 10년 (2011~현재): 시스템 인프라 재설계</h3>
           <ul>
-            <li>대규모 도시 구역(District) 중학교 수학 혁신 연구</li>
-            <li><strong>사회연결망분석(SNA)</strong>으로 교사 간 조언 네트워크(Advice Networks)를 분석한 결과, <strong>조언 연결 밀도가 높은 학교일수록 수업 혁신이 지속 정착</strong>함을 입증</li>
+            <li>교육 정책, 교육청 조직, 교사 연결망, 학부모 거버넌스까지 아우르는 <strong>거시적 교육 생태계 전체의 시스템 공학</strong>으로 연구 지평 확장</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>32.1절의 교육 인프라스트럭처(Educational Infrastructure) 5대 요소와 MIST 프로젝트의 사회연결망(SNA) 분석 결과를 다룹니다.</p>
+        <p>학습과학이 교실 내 미시 상호작용에서 교육청 및 국가 정책이라는 거시 시스템으로 연구 범위를 확장한 30년 역사를 조망합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>코헨과 스필레인(Cohen & Spillane)의 이론: 개별 교사의 열정에만 의존하는 개혁은 실패합니다. 교육과정, 평가, 연수, 리더십이 하나의 일관된 인프라로 엮여야 합니다.</p>
+        <p>페뉴엘 등(2022): 교실의 배움은 공중에 떠 있지 않습니다. 교육청의 인사, 평가 제도, 예산이라는 '교육 인프라'에 견고하게 닻을 내리고 있습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>학교 내 비공식적 동료 장학과 조언 네트워크의 중요성을 강조하세요.</p>
+        <p>수업 혁신을 가로막는 가장 큰 제도적 장벽(예: 상대평가 내신 시험, 행정 업무)을 짚어보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 32.2 RPPs & DBIR Framework -->
+    <!-- Slide 3: Educational Infrastructure 5 Pillars -->
     <section class="slide" data-index="2">
-      <span class="slide-badge">RPP & DBIR · Section 32.2</span>
-      <h2 class="slide-title">32.2 연구-실천 파트너십(RPPs)과 DBIR의 4대 원리</h2>
-      <p class="slide-subtitle">연구자와 교육청이 동등한 파트너로서 현안 문제를 공동 정의하고 지속 반복 개선 (Penuel et al.)</p>
-      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <span class="slide-badge">교육 인프라 · Section 32.1</span>
+      <h2 class="slide-title">교육 인프라스트럭처(Educational Infrastructure)의 5대 기둥</h2>
+      <p class="slide-subtitle">학습 혁신을 지속 가능하게 지탱하는 제도적·사회적 뼈대</p>
+      <div class="card-grid" style="grid-template-columns: repeat(5, 1fr); font-size: 0.85rem;">
         <div class="card highlight-card">
-          <h3>1. 실천의 핵심 문제 공동 정의</h3>
-          <p>연구자의 개인적 관심사가 아닌, 교육청과 현장 교사가 겪는 '가장 절박한 현안'에서 출발</p>
+          <h3>1. 표준 및 교재</h3>
+          <p>탐구 중심 차세대 교육과정과 교사용 교육과정 자료</p>
+        </div>
+        <div class="card">
+          <h3>2. 평가 체제</h3>
+          <p>지필 암기 시험을 대체하는 3차원 수행 평가</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>3. 지속적 TPD</h3>
+          <p>비디오 클럽과 실천 중심 교사 전문성 지원</p>
+        </div>
+        <div class="card">
+          <h3>4. 사회적 자원</h3>
+          <p>교사 간 상호 신뢰와 전문적 조언 연결망</p>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 지속적 반복 연구 (Iterative DBR)</h3>
-          <p>하향식 집행이 아니라, DBR 순환 주기를 통해 정책과 프로그램을 현장 피드백에 맞춰 리팩터링</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3. 다학제 수평적 협력 팀</h3>
-          <p>학습과학자, 교육 행정가, 교사, 정책 입안자가 위계 없이 대등한 파트너십 형성</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">4. 조직 역량의 내재화</h3>
-          <p>프로젝트 종료 후에도 학교 시스템 자체에 지속 가능한 연구·개선 역량이 남도록 인프라 구축</p>
+          <h3>5. 분산 리더십</h3>
+          <p>교장-수석교사-교사가 권한을 공유하는 문화</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>32.2절의 RPP(Research-Practice Partnerships)와 DBIR(Design-Based Implementation Research) 4대 원리를 체계화합니다.</p>
+        <p>원서 32.1절에서 규정하는 '교육 인프라스트럭처(Educational Infrastructure)'의 5대 구성 요소를 학습합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>RPP는 연구자가 학교를 단순한 '실험 대상'으로 삼던 착취적 관계를 종식하고, 현장의 진짜 문제를 함께 해결하는 상생의 연구 패러다임입니다.</p>
+        <p>5가지 요소 중 하나라도 엇박자(Misalignment)가 나면 혁신은 무너집니다. 교재는 탐구식인데 시험이 암기식이면 학생들은 결국 암기를 선택합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>교육청과 대학 연구진의 이상적인 협력 모델을 토론하세요.</p>
+        <p>우리나라 학교 현장에서 5대 기둥 간의 정렬(Alignment) 상태를 진단해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: 32.2.1 Carbon TIME & 32.3 Community Co-Design -->
+    <!-- Slide 4: Landmark MIST Project -->
     <section class="slide" data-index="3">
-      <span class="slide-badge">실제 사례 · Section 32.2.1 & 32.3</span>
-      <h2 class="slide-title">32.2.1 Carbon TIME 사례 & 가족·지역사회 공동 설계</h2>
-      <p class="slide-subtitle">교육과정-정책의 다층 정렬과 소외 계층 학부모의 정책 참여 (FLDC: Penuel et al.)</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🌿 Carbon TIME 프로젝트 (32.2.1)</h3>
-          <ul>
-            <li>기후 변화 및 탄소 순환 과학 탐구 교육과정</li>
-            <li>교재 개발 ➔ 3D 수행 평가 ➔ 온라인 TPD ➔ 주 교육청 과학 표준 정책을 완벽하게 통합 정렬(Systemic Alignment)</li>
-          </ul>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">👨‍👩‍👧 가족 리더십 디자인 (FLDC, 32.3)</h3>
-          <ul>
-            <li>소외 계층 학부모를 정책의 단순 수혜자가 아닌 <strong>교육 시스템 공동 설계자(Co-designers)</strong>로 격상</li>
-            <li>지역사회 문화적 가치를 학교 교육과정에 반영</li>
-          </ul>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>32.2.1절의 Carbon TIME 시스템 정렬 성공 사례와 32.3절의 가족 리더십 협력체(FLDC)를 분석합니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>Carbon TIME은 교재와 평가, 연수, 정책이 톱니바퀴처럼 맞물릴 때 비로소 교실의 과학 수업이 근본적으로 바뀔 수 있음을 보여줍니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>학교 정책 결정에서 학부모 참여의 새로운 지평을 논의하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 5: Summary & Looking Ahead to Ch 33 -->
-    <section class="slide" data-index="4">
-      <span class="slide-badge">결론 & 제3판 대단원 예고 · Section 32.4</span>
-      <h2 class="slide-title">32.4 Chapter 32 총괄 결론 & 제3판 최종장 Chapter 33 예고</h2>
-      <p class="slide-subtitle">교육 인프라와 정책 공학에서, 33개 챕터의 정점을 찍는 '학습과학 2020s 미래(Sawyer)'로!</p>
+      <span class="slide-badge">랜드마크 연구 · Section 32.1.2</span>
+      <h2 class="slide-title">폴 콥의 MIST 프로젝트: 대규모 교육구 수학 수업 혁신</h2>
+      <p class="slide-subtitle">Middle-School Mathematics and Institutional Setting of Teaching (Cobb et al.)</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🌟 Ch 32 교육 정책과 RPP의 핵심 교훈</h3>
+          <h3>📐 연구 개요 및 규모</h3>
           <ul>
-            <li>1. 교실 개혁을 넘어 5대 교육 인프라를 재설계하라</li>
-            <li>2. 연구-실천 파트너십(RPP)으로 현장 문제를 풀어라</li>
-            <li>3. SNA 조언 네트워크를 강화하여 지속성을 높여라</li>
-            <li>4. 가족과 지역사회를 정책 공동 설계자로 초대하라</li>
+            <li>미국 4개 대도시 대규모 교육구, 30개 중학교, 300명 이상의 수학교사를 대상으로 8년간 종단 연구</li>
+            <li>수학교사들의 교수법 개선이 왜 교육구마다 천차만별인가를 **제도적 조건(Institutional Settings)** 차원에서 규명</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 33 대단원 완결 예고: 2020년대 학습과학</h3>
-          <p><strong>The Learning Sciences in the 2020s: Implications for Schools and Beyond</strong></p>
-          <p><strong>R. Keith Sawyer (편저자 총괄 결론)</strong></p>
-          <p>창의성, 깊은 개념 학습, AI와 테크놀로지, 학교를 넘어선 미래 교육 생태계의 종합 설계도!</p>
+        <div class="card">
+          <h3>🎯 핵심 결론</h3>
+          <p>교사의 개인적 능력보다 **교장(Principal)의 교수 리더십, 수학 전문 코치(Coach)의 배치, 그리고 교육청 장학 정책의 일관성**이 교실 수업의 질을 결정함 실증</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 32(32.0~32.4)를 정리하고 『The Cambridge Handbook of the Learning Sciences』(3rd Ed.)의 대미를 장식하는 최종장 Chapter 33(The Learning Sciences in the 2020s: R. Keith Sawyer)을 예고합니다.</p>
+        <p>학습과학과 정책학의 역사적 합작품인 MIST 프로젝트의 설계와 정책적 성과를 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 33은 핸드북 전체 33개 챕터를 총괄 요약하며, 2020년대 이후 학습과학이 학교와 인류 사회에 던지는 비전을 제시합니다.</p>
+        <p>콥과 잭슨(Cobb & Jackson, 2011): 교육 혁신은 교실 문을 닫고 교사 혼자 분투하는 것이 아니라, 교육청 조직 전체가 함께 학습하는 시스템 문제입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>대망의 최종장 Chapter 33으로 나아갑니다.</p>
+        <p>학교장의 수업 지원 리더십이 교사들의 혁신 의지에 미치는 영향을 논의하세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 5: Social Network Analysis (SNA) -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">사회연결망분석 · Section 32.1.2</span>
+      <h2 class="slide-title">사회연결망분석(SNA): 교사 조언 네트워크의 위력</h2>
+      <p class="slide-subtitle">민 선(Min Sun) 등의 실증 발견: 교사들이 서로 묻고 도울 때 혁신이 정착된다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🕸️ 교사 조언 네트워크 (Advice Networks)</h3>
+          <ul>
+            <li>"수업에 어려움이 있을 때 누구에게 조언을 구하는가?" 사회연결망 매핑</li>
+            <li>조언 네트워크의 **밀도(Density)와 호혜성(Reciprocity)**이 높은 학교일수록 혁신 교육과정 실행도 2배 이상 상승 (Sun et al., 2014)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>💡 정책적 시사점</h3>
+          <p>탑다운식 지시보다 **교사 간의 비공식적 지식 공유 연결망(Social Capital)**을 활성화하는 공간과 시간(동학년 협의회)을 보장하는 것이 최고의 정책</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>민 선 교수의 사회연결망분석(SNA) 방법론과 교사 사회적 자본(Social Capital)의 중요성을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>스필레인과 선(2014): 혁신은 공문으로 전파되지 않고, 교무실 커피 머신 옆에서 나누는 교사 간의 신뢰와 조언을 타고 번져나갑니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 학교의 교사 조언 네트워크가 고립되어 있는지, 아니면 유기적으로 연결되어 있는지 진단해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Distributed Leadership Theory -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">분산 리더십 · Section 32.1</span>
+      <h2 class="slide-title">제임스 스필레인(James Spillane)의 분산 리더십 이론</h2>
+      <p class="slide-subtitle">위대한 단일 영웅 교장이 아닌, 리더-추종자-상황의 상호작용</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>리더들 (Leaders)</h3>
+          <p>교장, 교감, 부장교사, 수석교사, 동아리 리더의 다중 역할</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>추종자들 (Followers)</h3>
+          <p>상황에 따라 리더가 되기도 하고 지지자가 되기도 하는 유연한 역할 교대</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>상황과 도구 (Situation)</h3>
+          <p>수업 관찰지, 학업 데이터, 회의 프로토콜 등 상호작용을 매개하는 인공물</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>교육행정학의 패러다임을 바꾼 제임스 스필레인의 '분산 리더십(Distributed Leadership)' 이론을 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>스필레인(2006): 리더십은 교장의 머릿속에 든 카리스마가 아니라, 학교 구성원들이 인공물(도구)을 매개로 함께 업무를 조율하는 '분산된 실천(Distributed Practice)'입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교 내에서 권한을 분산하고 평교사들의 전문성을 극대화하는 수평적 의사결정 구조를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Research-Practice Partnerships (RPPs) -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">연구-실천 파트너십 · Section 32.2</span>
+      <h2 class="slide-title">윌리엄 페뉴엘의 연구-실천 파트너십 (RPPs) 4대 원리</h2>
+      <p class="slide-subtitle">학자들의 '상아탑 연구'와 현장의 '실천' 사이의 깊은 간극을 메우는 장기 동반자 관계</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr); font-size: 0.85rem;">
+        <div class="card highlight-card">
+          <h3>1. 실천의 핵심 문제</h3>
+          <p>교육청과 교사가 겪는 가장 절박한 현안에서 연구 출발</p>
+        </div>
+        <div class="card">
+          <h3>2. 지속적 반복 연구</h3>
+          <p>DBR 순환 주기로 정책과 프로그램을 끊임없이 수정</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 다학제 수평 팀</h3>
+          <p>학자, 행정가, 교사가 동등한 권한을 가진 파트너</p>
+        </div>
+        <div class="card">
+          <h3>4. 시스템 역량 내재화</h3>
+          <p>프로젝트 종료 후에도 학교 자체의 연구 역량 축적</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전 세계 교육 개혁의 표준 프레임워크로 자리 잡은 RPP(Research-Practice Partnerships)의 4대 핵심 원리를 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>페뉴엘과 코번(Coburn & Penuel, 2016): 연구자가 데이터를 뽑아먹고 떠나는 '착취적 연구'를 끝내고, 현장의 고통을 함께 나누는 장기적 파트너십이 필수입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>대학 연구소와 관할 교육청이 RPP 협약을 맺고 공동 프로젝트를 수행할 때의 기대 효과를 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Design-Based Implementation Research (DBIR) -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">실행 연구 방법론 · Section 32.2</span>
+      <h2 class="slide-title">디자인 기반 실행 연구 (DBIR): 정책을 실시간 리팩터링하다</h2>
+      <p class="slide-subtitle">배리 피시먼과 윌리엄 페뉴엘(Fishman et al., 2013)의 정책 DBR 프레임워크</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 전통적 정책 실행 (Waterfall)</h3>
+          <ul>
+            <li>정책 수립 ➔ 일방적 하달 ➔ 3년 뒤 사후 감사 평가 ➔ 참패 후 폐기</li>
+            <li>현장의 혼란을 중간에 수정할 피드백 루프가 완전히 단절됨</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ DBIR 실행 사이클 (Agile PDSA)</h3>
+          <ul>
+            <li><strong>90일 단기 Plan-Do-Study-Act 반복 사이클</strong>로 학교 현장 실행</li>
+            <li>문제 발생 시 정책 조항, 교재, 연수 방식을 실시간으로 기민하게 수정·보완(Agile Refactoring)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>DBR(디자인 기반 연구, Ch 09)이 정책 차원으로 확장된 DBIR(Design-Based Implementation Research)의 작동 방식을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>DBIR은 소프트웨어 개발의 애자일(Agile) 스프린트처럼, 정책을 현장 데이터에 맞추어 유연하게 반복 개선하는 최첨단 정책 공학입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교육 정책을 도입할 때 90일 단위의 PDSA 단기 파일럿 검증을 거치는 장점을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Case Study Carbon TIME -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">성공 사례 연구 · Section 32.2.1</span>
+      <h2 class="slide-title">Carbon TIME 프로젝트: NGSS 과학교육의 시스템적 정렬</h2>
+      <p class="slide-subtitle">탄소 순환과 기후 변화 교육과정을 주(State) 전체로 확산시킨 DBIR 성공 모델</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. NGSS 3D 단원 개발</h3>
+          <p>미시간 주립대 연구진이 탄소 순환 탐구 교재와 모델링 키트 설계</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 온라인 교사 TPD</h3>
+          <p>수백 명의 과학 교사가 참여하는 비디오 분석 및 수업 코칭 포럼</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>3. 주 교육청 정책 정렬</h3>
+          <p>주 표준화 학업성취도 평가와 교육청 장학 지침을 100% 일치시킴</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>DBIR의 가장 대표적 성공 사례인 'Carbon TIME(Transformations in Matter and Energy)' 프로젝트를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>송거(Songer)와 앤더슨(Anderson): Carbon TIME은 교재, 평가, TPD, 교육청 정책이 하나의 톱니바퀴처럼 맞물려 주 전체 학생들의 과학 탐구력을 비약적으로 향상시켰습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>기후 위기 교육과정을 전국 단위로 확산하기 위한 시스템 정렬 방안을 제안하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Family and Community Co-Design -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">학부모·지역사회 참여 · Section 32.3</span>
+      <h2 class="slide-title">가족 리더십 디자인 협력체(FLDC)와 풀뿌리 거버넌스</h2>
+      <p class="slide-subtitle">학부모를 수동적 민원인에서 교육 정책의 공동 설계자(Co-designers)로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>👨‍👩‍👧 FLDC (Family Leadership Design Collaborative)</h3>
+          <ul>
+            <li>소외 계층 학부모, 지역사회 활동가, 학교 행정가가 한자리에 모여 학교 규칙과 복지 정책을 평등하게 공동 설계</li>
+            <li>학교와 가정 간의 신뢰 장벽을 허물고 **'마을 전체가 아이를 키우는 교육 자치'** 실현</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚶 이동형 학습 (Learning on the Move)</h3>
+          <ul>
+            <li>모바일 GPS와 증강현실(AR)로 마을 역사를 탐구하며 지역사회 현안 해결</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>교육 정책이 관료 중심에서 벗어나 학부모와 지역사회가 주도하는 '풀뿌리 공동 설계(Co-design)'로 확장되는 흐름을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이시마루(Ann Ishimaru, 2019): 학부모는 학교의 고객이 아니라, 교육의 본질을 함께 고민하는 가장 든든한 공동 설계 파트너입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교운영위원회나 학부모 총회를 진정한 '교육 정책 공동 설계 워크숍'으로 혁신하는 방안을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: The Science of Scaling Up -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">스케일업의 과학 · Section 32.3</span>
+      <h2 class="slide-title">신시아 코번(Cynthia Coburn)의 진정한 스케일업(Scaling Up)</h2>
+      <p class="slide-subtitle">단순한 학교 수의 양적 확대를 넘어선 4대 질적 확산 차원</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr); font-size: 0.85rem;">
+        <div class="card highlight-card">
+          <h3>1. 심층적 변화 (Depth)</h3>
+          <p>피상적 활동 흉내가 아닌 교사의 교수 신념과 규범의 근본적 변화</p>
+        </div>
+        <div class="card">
+          <h3>2. 지속성 (Sustainability)</h3>
+          <p>외부 지원금이 끊겨도 학교 자체적으로 혁신을 유지하는 자생력</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 확산 (Spread)</h3>
+          <p>주변 학교와 교사들에게 정책의 기본 철학과 아이디어가 전파</p>
+        </div>
+        <div class="card">
+          <h3>4. 소유권 이전 (Shift)</h3>
+          <p>연구자의 소유에서 <strong>현장 교사와 교육청의 온전한 소유로 이전</strong></p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>신시아 코번(Cynthia Coburn, 2003)의 기념비적 '스케일업의 4대 차원(Depth, Sustainability, Spread, Ownership)'을 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>혁신 프로그램이 100개 학교에 보급되었더라도(Spread), 교사들의 신념이 바뀌지 않고(Depth) 지원금이 끊기자마자 사라진다면(Sustainability) 실패한 스케일업입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>정부 주도의 대규모 교육 사업들이 왜 종종 '보여주기식 숫자 채우기'로 끝나는지 코번의 4차원으로 분석해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Evidence-Based Policy Making -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">증거 기반 정책 · Section 32.4</span>
+      <h2 class="slide-title">정치적 이데올로기를 넘어선 학습과학적 실증 정책</h2>
+      <p class="slide-subtitle">뇌과학, 인지과학, 사회문화적 학습 연구 데이터를 바탕으로 한 정책 입법</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 정치적 이데올로기 중심 정책</h3>
+          <ul>
+            <li>정권이 바뀔 때마다 즉흥적으로 쏟아지는 포퓰리즘 입시/교육 공약</li>
+            <li>학생들의 인지 발달과 뇌과학적 원리를 무시하여 현장 피로감 극대화</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🔬 학습과학 기반 정책 (Evidence-Based Policy)</h3>
+          <ul>
+            <li>학습과학 연구진이 정책 입안자들에게 <strong>실증적 학습 데이터와 DBR 효과 분석 보고서 제공</strong></li>
+            <li>장기적이고 일관된 국가 교육 마스터플랜 수립</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학 연구가 국가 교육 정책 수립(Evidence-Based Policy Making)에 미쳐야 할 결정적 기여를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>국가교육위원회와 교육부는 직관이나 정치 논리가 아닌, 30년간 축적된 학습과학적 실증 연구 결과를 바탕으로 정책을 입안해야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학습과학자가 국가 교육과정 개정 위원회에서 수행해야 할 정책 자문 역할을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 32</span>
+      <h2 class="slide-title">국가 정보·AI 교육과정 필수화 정책과 RPP 인프라</h2>
+      <p class="slide-subtitle">미국 CSforALL 및 한국 정보과 시수 확대 정책의 RPP 성공 전략</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 CSforALL RPP 컨소시엄</h3>
+          <ul>
+            <li>대학 CS 교수, 교육청 장학관, 일선 SW 교사가 RPP 팀 결성</li>
+            <li>초·중등 단계별 컴퓨팅 교육과정, 평가 문항, 교원 양성 트랙을 원스톱으로 정렬</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 시스템적 안착 성공</h3>
+          <p>단순한 '컴퓨터실 보급'을 넘어, <strong>지속 가능한 SW 교사 수급과 교육과정 거버넌스 인프라</strong> 구축</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>정보(CS) 및 인공지능 교육의 국가적 필수화 정책이 성공하기 위해 RPP와 교육 인프라가 어떻게 작동해야 하는지 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>컴퓨팅 교육의 필수화는 교재만 만든다고 되지 않습니다. 교원 자격 체계, 교육청 인프라, 평가 시스템이 함께 움직여야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리나라 초·중등 정보 교육 시수 확대 정책을 성공시키기 위한 교육청-대학 RPP 모델을 제안하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 32.4</span>
+      <h2 class="slide-title">교실 혁신에서 교육 생태계 전체의 시스템 혁신으로</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 교육 정책의 3대 나침반</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>교육 인프라의 정렬</h3>
+          <p>교재, 평가, TPD, 리더십이 학습과학 원리와 하나의 시스템으로 완벽히 동기화</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>연구-실천 파트너십 (RPP)</h3>
+          <p>연구자와 현장 교사가 수평적 동반자가 되어 가장 절박한 현안을 함께 해결</p>
+        </div>
+        <div class="card">
+          <h3>질적 스케일업</h3>
+          <p>숫자 채우기식 보급을 넘어 심층적 변화(Depth)와 자생적 소유권(Ownership) 확립</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 32의 모든 핵심 교훈을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학습과학은 이제 실험실을 완전히 떠나, 수백만 학생과 교사들의 삶을 실질적으로 바꾸는 거대한 시스템 공학으로 성숙했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"여러분이 교육부 장관이라면 가장 먼저 개혁하고 싶은 교육 인프라 기둥은 무엇인가요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 33 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part VI</span>
+      <h2 class="slide-title">다음 여정: Chapter 33 학습과학의 미래 (The Future)</h2>
+      <p class="slide-subtitle">The Future of the Learning Sciences: 10 Grand Challenges (R. Keith Sawyer)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 32 vs Ch 33 연계성</h3>
+          <ul>
+            <li><strong>Ch 32 교육 정책과 RPP</strong>: 거시적 시스템 인프라와 대규모 교육 개혁</li>
+            <li><strong>Ch 33 학습과학의 미래</strong>: 본 핸드북의 대미를 장식하는 편저자 키스 소여(Keith Sawyer)의 <strong>학습과학 10대 미개척 프런티어와 미래 비전</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 33개 챕터 대장정의 위대한 피날레</h3>
+          <p>Part I 기초 ➔ Part II 방법론 ➔ Part III 테크놀로지 ➔ Part IV 협력 ➔ Part V 교과 ➔ Part VI 시스템을 거쳐, 학습과학의 미래로 비상합니다!</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 32를 마무리하고, 본 핸드북 33개 챕터 대장정의 마지막 장인 Chapter 33(The Future of the Learning Sciences)으로의 피날레를 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>편저자 키스 소여 교수가 제시하는 학습과학의 10대 그랜드 챌린지로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>마지막 Chapter 33을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 32: Learning Sciences and Policy (Penuel, Spillane, & Sun)</div>
-    <div class="footer-center" id="slide-counter">01 / 05</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
