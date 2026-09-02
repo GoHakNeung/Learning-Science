@@ -255,313 +255,475 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 18 · Part III Technology Finale</span>
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 18 · Part III Technology</span>
       <h1 class="slide-title">Mobile Learning</h1>
       <p class="slide-subtitle">모바일 학습: 다이나북의 비전에서 끊김 없는 유비쿼터스 개인 탐구로</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Roy Pea</strong> (Stanford) & <strong>Mike Sharples</strong> (The Open Univ.)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 363–384)</p>
+          <p><strong>Roy Pea</strong> (Stanford University)<br/><strong>Mike Sharples</strong> (The Open University)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 18</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (18.0 ~ 18.5)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>18.0 다이나북 비전 (Figure 18.1)</strong>: 1972년 앨런 케이의 예언</li>
-            <li><strong>18.1 끊김 없는 학습 (MSL, Table 18.1)</strong> 10대 핵심 특성</li>
-            <li><strong>18.2 모바일 학습 실천</strong>: 참여형 시뮬레이션(Fig 18.2) & 개인 탐구(Fig 18.3)</li>
-            <li><strong>18.3 이론적 토대</strong>: 맥락의 동적 구성, 분산 인지, 파괴적 혁신</li>
-            <li><strong>18.4 미래 도전</strong>: 주의 분산, 데이터 감시, 디지털 형평성</li>
+            <li><strong>다이나북 50년의 예언</strong>: 앨런 케이의 비전과 현대 모바일 무봉제 학습</li>
+            <li><strong>무봉제 학습 (MSL) 10대 차원</strong>: 형식/비형식, 시공간 초월, 물리-디지털 융합</li>
+            <li><strong>2대 대표 실천</strong>: 참여형 바이러스 시뮬레이션 & 야외 개인 탐구 프로젝트</li>
+            <li><strong>대화 학습 이론 (Conversation Theory)</strong>: 맥락을 스스로 직조하는 학습자 에이전시</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 제3부 테크놀로지 기반 학습(Part III)의 대단원을 장식하는 챕터로, 모바일 기기가 어떻게 교실의 벽을 허물고 전 생애에 걸친 '끊김 없는 탐구 생태계(Seamless Learning)'를 구축하는지 밝힙니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>스탠퍼드 대학교 로이 피 교수와 오픈 유니버시티 마이크 샤플스 교수는 모바일 학습 분야의 창시자들입니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>모바일 학습이 단순한 기기 휴대가 아니라, 학습자가 삶의 시공간과 맥락을 넘나들며 끊김 없이 지식을 탐구하는 '무봉제 학습(Seamless Learning)'임을 이해합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>스탠퍼드 대학교 로이 피 교수와 영국 오픈 유니버시티 마이크 샤플스 교수는 모바일 학습과 CSCL 분야의 세계적 최고 권위자들입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"스마트폰은 학생의 주의를 분산시키는 방해물일까요, 아니면 교실을 야외로 확장하는 가장 강력한 인지적 파트너일까요?"라는 질문으로 시작하세요.</p>
+        <p>"스마트폰이 교실에서 주의 분산의 주범인가, 아니면 역사상 가장 강력한 개인 학습 연구실인가?"를 질문하며 토론을 열어보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: 18.0 DynaBook Vision (Figure 18.1) -->
+    <!-- Slide 2: DynaBook Vision -->
     <section class="slide" data-index="1">
-      <span class="slide-badge">역사적 기원 · Section 18.0</span>
-      <h2 class="slide-title">18.0 50년의 예언: 앨런 케이의 다이나북 (DynaBook, 1972)</h2>
-      <p class="slide-subtitle">아이들이 야외 잔디밭에서 무선 태블릿으로 시뮬레이션을 공유하며 학습하는 미래 (Figure 18.1)</p>
-      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
-        <div class="img-zoom-card" onclick="openModal('images/fig18_1.png', 'Figure 18.1 Illustration by Alan Kay (1972) of children learning outdoors on wirelessly connected tablet computers (p. 377)')">
-          <img src="images/fig18_1.png" alt="Figure 18.1 DynaBook">
-          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
-        </div>
+      <span class="slide-badge">역사적 비전 · Section 18.0</span>
+      <h2 class="slide-title">50년의 예언: 앨런 케이의 다이나북(DynaBook, 1972)</h2>
+      <p class="slide-subtitle">모든 연령의 어린이를 위한 개인용 무선 포터블 컴퓨터의 탄생 (Figure 18.1)</p>
+      <div class="split-layout">
         <div class="card highlight-card">
-          <h3>📱 모바일 학습의 본질적 정의</h3>
+          <h3>📜 앨런 케이(Alan Kay)의 1972년 스케치</h3>
           <ul>
-            <li>"모바일 학습은 기기가 움직이는 것이 아니라, <strong>학습자가 다양한 삶의 맥락을 넘나들며 지식을 구성하는 과정</strong>이다."</li>
-            <li>정적 교실을 넘어 야외, 가정, 박물관 어디서나 탐구 지속</li>
+            <li>아이들이 야외 잔디밭에서 무선 태블릿을 들고 시뮬레이션을 주고받으며 학습</li>
+            <li>"책처럼 가볍고, 연필처럼 유연하며, 우주 전체를 시뮬레이션할 수 있는 메타 매체"</li>
+            <li><strong>본질적 전환</strong>: "기기가 이동하는 것이 아니라, 학습자가 이동하며 세계와 대화하는 것"</li>
           </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig18_1.png')">
+          <img src="images/fig18_1.png" alt="Figure 18.1 Alan Kay DynaBook Sketch">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 18.1)</div>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>원서 Figure 18.1의 앨런 케이 1972년 다이나북 원화와 함께 모바일 학습의 본질을 설명합니다.</p>
+        <p>원서 Figure 18.1의 다이나북 역사적 스케치를 통해 모바일 학습의 철학적 기원과 현대 스마트 기기의 뿌리를 규명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>앨런 케이가 꿈꾸었던 태블릿 PC의 비전은 단순한 전자 교과서가 아니라, 아이들이 스스로 프로그래밍하고 시뮬레이션을 돌리는 '동적 매체(Dynamic Medium)'였습니다.</p>
+        <p>앨런 케이의 비전은 50년이 지난 오늘날 iPad와 스마트폰으로 실현되었습니다. 진정한 모바일 학습은 수동적 영상 시청이 아닌 능동적 동적 모델링입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>도판을 확대하여 1972년에 상상했던 무선 네트워크 기반 학습의 디테일을 살펴보세요.</p>
+        <p>1972년의 다이나북 비전 중 현대 스마트폰이 이미 달성한 것과 아직 미진한 교육적 기능을 비교해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 18.1 Ten Characteristics of MSL (Table 18.1) -->
+    <!-- Slide 3: 10 Dimensions of MSL -->
     <section class="slide" data-index="2">
-      <span class="slide-badge">핵심 프레임워크 · Section 18.1</span>
-      <h2 class="slide-title">18.1 모바일 끊김 없는 학습 (MSL)의 10대 특성</h2>
-      <p class="slide-subtitle">형식-비형식, 물리-디지털, 시공간을 초월하는 통합 학습 생태계 (Table 18.1)</p>
-      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
-        <div class="card highlight-card">
-          <h3>🌉 경계의 허묾</h3>
-          <ul>
-            <li><strong>1. 형식 ↔ 비형식</strong>: 교실과 일상 야외의 연결</li>
-            <li><strong>2. 개인 ↔ 사회적</strong>: 자기주도 탐구와 동료 협력</li>
-            <li><strong>3. 시간 초월</strong>: 장기적 탐구 궤적 지속</li>
-            <li><strong>4. 공간 초월</strong>: 위치가 바뀌어도 맥락 유지</li>
-          </ul>
+      <span class="slide-badge">핵심 패러다임 · Section 18.1</span>
+      <h2 class="slide-title">모바일 끊김 없는 학습(MSL)의 10대 특성 차원</h2>
+      <p class="slide-subtitle">체치-체 룽(Chee-Kit Looi) 교수의 Mobile Seamless Learning 프레임워크 (Table 18.1)</p>
+      <div class="split-layout">
+        <div class="card-grid" style="grid-template-columns: 1fr; gap: 8px;">
+          <div class="card">
+            <h3>1. 형식 & 비형식 학습 결합</h3>
+            <p>교실 수업과 가정, 박물관, 야외 탐구의 경계 허물기</p>
+          </div>
+          <div class="card highlight-card">
+            <h3>2. 개인 & 사회적 협력 연결</h3>
+            <p>1인 1기기 개별 탐구와 클라우드 기반 모둠 협동의 동기화</p>
+          </div>
+          <div class="card">
+            <h3>3. 시공간 초월 & 물리-디지털 융합</h3>
+            <p>언제 어디서나 실제 사물 측정 데이터와 가상 모델의 결합</p>
+          </div>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🚀 데이터와 역량의 융합</h3>
-          <ul>
-            <li><strong>5. 유비쿼터스 지식 접근</strong>: 즉각적 클라우드 AI 연결</li>
-            <li><strong>6. 물리-디지털 융합</strong>: 센서 측정과 가상 모델</li>
-            <li><strong>7. 다중 기기 연동</strong>: 폰-태블릿-PC 동기화</li>
-            <li><strong>8. 고차원 사고 촉진</strong>: 단순 검색을 넘은 가설 검증</li>
-          </ul>
+        <div class="image-box" onclick="openModal('images/tab18_1.png')">
+          <img src="images/tab18_1.png" alt="Table 18.1 10 Dimensions of MSL">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Table 18.1)</div>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>원서 Table 18.1의 MSL(Mobile Seamless Learning) 10대 핵심 특성을 체계적으로 정리합니다.</p>
+        <p>원서 Table 18.1의 무봉제 모바일 학습(MSL: Mobile Seamless Learning) 10대 차원의 전체 구조를 조망합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>'끊김 없는 학습'이란 장소나 기기가 바뀌어도 학생의 학습 흐름과 탐구 데이터가 중단되지 않고 이어지는 상태를 의미합니다.</p>
+        <p>'무봉제(Seamless)'란 학습자가 장소나 기기가 바뀌어도 인지적 흐름이 끊기지 않고 연속적으로 학습 과제를 이어가는 상태를 의미합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>이어지는 슬라이드들에서 교실 안/밖의 대표 실천 사례 2종을 살펴봅니다.</p>
+        <p>학생들이 학교에서 시작한 프로젝트를 집에서 스마트폰과 PC로 이어갈 때 겪는 기술적/제도적 단절을 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: 18.2.1 Participatory Simulation Virus (Figure 18.2) -->
+    <!-- Slide 4: Bridging Formal and Informal -->
     <section class="slide" data-index="3">
-      <span class="slide-badge">교실 안 실천 · Section 18.2.1</span>
-      <h2 class="slide-title">18.2.1 참여형 바이러스 시뮬레이션 (Virus, Figure 18.2)</h2>
-      <p class="slide-subtitle">학생 자신이 시뮬레이션의 분산 에이전트가 되어 전염병 역학을 온몸으로 추론 (Colella, 2000)</p>
-      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
-        <div class="img-zoom-card" onclick="openModal('images/fig18_2.png', 'Figure 18.2 User and settings screens for the handheld Virus simulation (p. 381)')">
-          <img src="images/fig18_2.png" alt="Figure 18.2 Virus Simulation">
-          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
-        </div>
-        <div class="card highlight-card">
-          <h3>🦠 참여형 시뮬레이션 메커니즘</h3>
+      <span class="slide-badge">시공간 초월 · Section 18.1</span>
+      <h2 class="slide-title">형식-비형식 학습의 결합과 24/7 전생애적 학습 궤적</h2>
+      <p class="slide-subtitle">학교 교실의 8시간을 넘어 일상생활 24시간 전체를 배움의 장으로 확장</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🏫 교실(형식 학습)의 한계</h3>
           <ul>
-            <li>학생들은 손안의 모바일 기기를 들고 교실을 자유롭게 돌아다니며 악수</li>
-            <li>보이지 않는 바이러스가 전파되고, 기기 화면에 감염 증상 출현</li>
-            <li><strong>학습 효과</strong>: 학생들은 집단 토론을 통해 감염 경로와 면역 규칙을 스스로 역추론</li>
+            <li>45분 단위의 파편화된 수업 시간표</li>
+            <li>교과서 속 박제된 예시와 일상 삶의 괴리</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>🌍 모바일(무봉제 학습)의 브리지</h3>
+          <ul>
+            <li><strong>교실 ➔ 야외</strong>: 교실에서 배운 식물 광합성을 공원에서 직접 잎 사진을 찍고 센서로 측정</li>
+            <li><strong>야외 ➔ 가정</strong>: 수집한 데이터를 저녁에 집에서 태블릿으로 분석하고 포럼에 보고서 게시</li>
+            <li><strong>가정 ➔ 교실</strong>: 다음 날 아침 교실 전자칠판에 전교생 데이터가 통합 시각화</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>18.2.1절의 참여형 시뮬레이션(Participatory Simulations: Virus)과 WILD 프로젝트를 설명합니다.</p>
+        <p>모바일 기기가 어떻게 학교(Formal)와 일상(Informal)의 장벽을 허물고 24시간 연속 학습 궤적을 만드는지 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>학생들은 모니터 밖 관찰자가 아니라, 시뮬레이션 내부의 '살아있는 에이전트'가 됩니다. 이는 복잡계 과학 원리를 이해하는 가장 직관적인 체화 학습입니다.</p>
+        <p>루이(Looi et al., 2010)의 싱가포르 초등학교 종단 연구: 1:1 모바일 학습 환경을 구축한 학급이 1년 후 과학 탐구력과 자기주도학습력에서 압도적 성장을 보였습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>코로나19 팬데믹 상황에서 이러한 역학 시뮬레이션이 교육적으로 얼마나 유용했는지 상기하세요.</p>
+        <p>가정통신문 앱을 넘어, 학생의 탐구 데이터를 부모와 교사가 함께 공유하는 진정한 모바일 러닝 시나리오를 구상해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: 18.2.2 Personal Inquiry Project (Figure 18.3) -->
+    <!-- Slide 5: Case 1 - Virus Participatory Simulation -->
     <section class="slide" data-index="4">
-      <span class="slide-badge">교실 밖 실천 · Section 18.2.2</span>
-      <h2 class="slide-title">18.2.2 개인 탐구 프로젝트 (Personal Inquiry, Figure 18.3)</h2>
-      <p class="slide-subtitle">교실 대형 스크린과 모바일 기기가 동기화되어 야외 시민 과학 탐구를 안내 (Sharples et al.)</p>
-      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
-        <div class="img-zoom-card" onclick="openModal('images/fig18_3.png', 'Figure 18.3 Representation of personal inquiry process (p. 384)')">
-          <img src="images/fig18_3.png" alt="Figure 18.3 Personal Inquiry">
-          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🌿 야외 소음과 조류 생태 탐구</h3>
+      <span class="slide-badge">교실 안 실천 ① · Section 18.2.1</span>
+      <h2 class="slide-title">참여형 시뮬레이션: 바이러스 전파 게임 (Figure 18.2)</h2>
+      <p class="slide-subtitle">콜린스, 피, 로셸(Roschelle & Pea, 2002)의 핸드헬드 분산 인지 실험</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>🦠 바이러스 게임 메커니즘</h3>
           <ul>
-            <li>학생들이 야외에서 소음 센서로 데이터를 수집하고 사진 업로드</li>
-            <li>교실 벽면의 탐구 웹(Inquiry Web)에 실시간 집계 그래프 렌더링</li>
-            <li>가설 설정 ➔ 데이터 수집 ➔ 분석 ➔ 공유의 전 과정을 모바일이 비계화</li>
+            <li>모든 학생이 손에 모바일 기기를 쥐고 교실을 돌아다니며 친구와 가상 악수(근거리 통신)</li>
+            <li>누군가 1명이 보이지 않는 바이러스 보균자(Patient Zero)로 지정됨</li>
+            <li>기기 화면에 감염 여부(발열/증상)가 점진적으로 뜨면서 역학 조사 시작</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig18_2.png')">
+          <img src="images/fig18_2.png" alt="Figure 18.2 Virus Participatory Simulation">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 18.2)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 18.2의 바이러스 참여형 시뮬레이션을 통해 모바일 기기를 활용한 교실 내 협력적 복잡계 탐구 모델을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학생들은 수동적으로 지수함수 그래프를 보는 대신, 자신이 직접 전염병 전파 네트워크의 한 노드(Node)가 되어 감염 경로를 추적합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>코로나19 팬데믹 역학 조사와 이 시뮬레이션을 연결하여 학생들의 데이터 문해력을 기르는 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Distributed Cognition in Handhelds -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">분산 인지 모델 · Section 18.2.1</span>
+      <h2 class="slide-title">학생 자신이 에이전트가 되는 참여형 시뮬레이션</h2>
+      <p class="slide-subtitle">거시적 집단 패턴(Macro)과 미시적 개인 행동(Micro)의 연결</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🐜 1. 일인칭 시점의 에이전트 경험</h3>
+          <ul>
+            <li>개별 학생은 기기를 통해 오직 자신의 상태(체온, 이동 경로)만 제어</li>
+            <li>미시적 상호작용 규칙(가까이 가면 감염 확률 50%)을 온몸으로 체득</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>📊 2. 교실 전체 스크린의 거시적 창발(Emergence)</h3>
+          <ul>
+            <li>교실 앞 전자칠판에 실시간으로 감염자 수 R(t) 곡선과 네트워크 토폴로지 렌더링</li>
+            <li><strong>"내 작은 행동 하나가 전체 교실의 방역 붕괴를 초래했다!"</strong>는 시스템 사고 획득</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>18.2.2절의 Personal Inquiry 프로젝트 구조와 과학 탐구 프로세스를 분석합니다.</p>
+        <p>참여형 시뮬레이션이 복잡계 과학의 핵심인 '미시 규칙과 거시 창발(Emergence)'을 어떻게 직관화하는지 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>모바일 앱은 학생들에게 데이터 수집 폼뿐 아니라, "지금 어떤 가설을 검증하고 있는가?"를 상기시키는 메타인지적 길잡이 역할을 수행합니다.</p>
+        <p>윌렌스키와 레스닉(Wilensky & Resnick)의 StarLogo 연구와 맞닿아 있으며, 모바일 기기는 교실 전체를 분산 슈퍼컴퓨터로 변환합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>도판을 클릭하여 탐구 단계(Find a topic, Decide my question, Plan my investigation 등)의 원형 프로세스를 확인하세요.</p>
+        <p>교통 체증 시뮬레이션이나 주식 시장 가격 형성 시뮬레이션으로의 확장 방안을 토론하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 6: 18.3 Theory of Mobile Learning -->
-    <section class="slide" data-index="5">
-      <span class="slide-badge">이론적 토대 · Section 18.3</span>
-      <h2 class="slide-title">18.3 모바일 학습의 3대 이론적 토대</h2>
-      <p class="slide-subtitle">맥락의 동적 구성, 분산 인지 마인드툴, 그리고 전통 교실의 파괴적 혁신</p>
-      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <!-- Slide 7: Case 2 - Personal Inquiry Project -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">교실 밖 실천 ② · Section 18.2.2</span>
+      <h2 class="slide-title">개인 탐구(Personal Inquiry) 프로젝트: 야외 과학 센싱</h2>
+      <p class="slide-subtitle">마이크 샤플스(Mike Sharples) 연구팀의 nQuire 모바일 탐구 툴킷 (Figure 18.3)</p>
+      <div class="split-layout">
         <div class="card highlight-card">
-          <h3>18.3.1 맥락과 학습 (Context)</h3>
-          <p>맥락은 고정된 장소가 아니라, 학습자가 상호작용을 통해 동적으로 생성해 나가는 관계적 구성물(Construct)</p>
+          <h3>🌍 탐구 주제 및 활동 프로세스</h3>
+          <ul>
+            <li><strong>프로젝트 주제</strong>: "학교 운동장과 도로변 소음이 조류 서식지에 미치는 영향"</li>
+            <li><strong>야외 센싱</strong>: 태블릿 마이크와 센서로 위치별 데시벨(dB) 측정, 조류 출현 사진 촬영, GPS 좌표 자동 기록</li>
+            <li><strong>데이터 통합</strong>: 야외에서 업로드한 데이터가 nQuire 플랫폼 지도 위에 실시간 히트맵으로 생성</li>
+          </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">18.3.2 인지 증강 (Augmentation)</h3>
-          <p>모바일 기기는 지식 저장소가 아니라, 인간의 기억과 계산 역량을 확장하는 분산 인지 파트너(Mindtool)</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">18.3.3 파괴적 잠재력 (Disruption)</h3>
-          <p>전통적 은행저금식(Banking model) 주입 교실의 위계를 허물고, 학생에게 학습 주도권(Agency) 부여</p>
+        <div class="image-box" onclick="openModal('images/fig18_3.png')">
+          <img src="images/fig18_3.png" alt="Figure 18.3 Personal Inquiry Process Map">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 18.3)</div>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>18.3절의 3대 이론적 토대(18.3.1 맥락과 학습, 18.3.2 인지 증강, 18.3.3 파괴적 잠재력)를 체계적으로 분석합니다.</p>
+        <p>원서 Figure 18.3의 nQuire 개인 탐구(Personal Inquiry) 프로세스를 통해 과학자처럼 탐구하는 모바일 학습 모델을 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>모바일 학습 이론은 학습이 '장치' 안에서 일어나는 것이 아니라, 여러 맥락을 넘나드는 '대화와 탐구의 과정' 속에서 일어난다고 봅니다.</p>
+        <p>학생들은 교사가 정해준 정답을 외우는 것이 아니라, 스스로 가설을 세우고 실제 데이터를 수집·시각화하여 결론을 도출합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>스마트폰이 교실의 전통적 권력 구조를 어떻게 변화시키는지 토론하세요.</p>
+        <p>스마트폰 내장 센서(조도, 소음, 가속도계, 기압계)를 과학 수업에 활용할 수 있는 아이디어를 모아보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 7: 18.4 Future Trends & Challenges -->
-    <section class="slide" data-index="6">
-      <span class="slide-badge">미래 과제 · Section 18.4</span>
-      <h2 class="slide-title">18.4 미래 동향과 극복 과제: 주의 분산, 감시, 형평성</h2>
-      <p class="slide-subtitle">주의 경제(Attention Economy)의 극복과 데이터 윤리 거버넌스</p>
-      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">1. 주의 분산 극복</h3>
-          <p>SNS 알림으로 인한 인지 파편화를 방지하기 위해 자기조절학습(SRL) 및 포모도로 메타인지 훈련 결합</p>
+    <!-- Slide 8: Inquiry Map & Real-time Scaffolding -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">탐구 프로세스 · Section 18.2.2</span>
+      <h2 class="slide-title">탐구 맵(Inquiry Map)과 실시간 적응형 비계</h2>
+      <p class="slide-subtitle">샤플스의 8단계 순환형 탐구 모델과 동기화 아키텍처</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card">
+          <h3>1. 질문 발견</h3>
+          <p>호기심 기반 탐구 질문 및 연구 가설 설정</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 방법 설계</h3>
+          <p>어떤 센서로 어디서 데이터를 모을지 계획</p>
         </div>
         <div class="card">
-          <h3>2. 데이터 감시 및 프라이버시</h3>
-          <p>학생의 실시간 GPS 위치와 브라우징 데이터의 상업적 악용을 막는 교육적 데이터 거버넌스 수립</p>
+          <h3>3. 야외 수집</h3>
+          <p>모바일 기기로 사진, 소음, 위치 측정</p>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">3. 디지털 형평성 (Equity)</h3>
-          <p>BYOD(Bring Your Own Device)로 인한 격차를 해소하는 웹 기반 경량화 플랫폼 보급</p>
+          <h3>4. 분석 & 결론</h3>
+          <p>히트맵 그래프 분석 및 가설 검증 보고서 공유</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>18.4절에 제시된 모바일 학습의 3대 미래 쟁점(주의 분산, 프라이버시/감시, 디지털 형평성)을 다룹니다.</p>
+        <p>nQuire 소프트웨어가 제공하는 8단계 탐구 맵의 단계적 비계(Scaffolding) 구조를 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>스마트폰의 편의성 이면에 존재하는 '주의 파편화'와 '상시 감시'의 위험을 학습과학적으로 통제하는 지혜가 요구됩니다.</p>
+        <p>탐구 과정이 모바일 화면에 시각적 맵으로 표시되므로, 학생은 자신이 지금 어떤 단계에 있고 다음에 무엇을 해야 하는지 메타인지적으로 모니터링할 수 있습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>학생들의 스마트폰 과몰입을 건강한 탐구 몰입으로 전환하는 교수 전략을 논의하세요.</p>
+        <p>과학 전람회나 자유탐구 과제에 nQuire 방식의 탐구 맵을 도입했을 때의 장점을 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 8: Part III Grand Finale Table -->
-    <section class="slide" data-index="7">
-      <span class="slide-badge">Part III 대단원 · 총괄 맵</span>
-      <h2 class="slide-title">제3부 테크놀로지 기반 학습(Part III) 5개 챕터 총괄</h2>
-      <p class="slide-subtitle">게임, 체화 인지, 탠저블 공예, 증강현실, 모바일 유비쿼터스 탐구의 완벽한 조화</p>
-      <div class="table-container">
-        <table class="styled-table">
-          <thead>
-            <tr>
-              <th>챕터</th>
-              <th>테크놀로지 영역</th>
-              <th>핵심 메커니즘</th>
-              <th>대표 시스템 / 이론</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Ch 14 (Steinkuehler)</strong></td>
-              <td>비디오 게임과 학습</td>
-              <td>참여 아키텍처, 은밀한 평가</td>
-              <td>Foldit, WoW 문해력, 친화 공간</td>
-            </tr>
-            <tr>
-              <td><strong>Ch 15 (Abrahamson)</strong></td>
-              <td>체화 인지와 체화 설계</td>
-              <td>감각운동 스키마, 점진적 기호 매개</td>
-              <td>수학 심상 훈련기(MIT-P), GRASP</td>
-            </tr>
-            <tr>
-              <td><strong>Ch 16 (Parés)</strong></td>
-              <td>탠저블 및 전신 인터페이스</td>
-              <td>계산적 공예, 전신 인터랙션 공간</td>
-              <td>LilyPad E-Textiles, 안개의 나라</td>
-            </tr>
-            <tr>
-              <td><strong>Ch 17 (Schneider)</strong></td>
-              <td>증강현실(AR)과 학습과학</td>
-              <td>비가시적 개념 가시화, 오케스트레이션</td>
-              <td>HoloSpeaker, Tinker Table, EcoMOBILE</td>
-            </tr>
-            <tr>
-              <td><strong>Ch 18 (Pea)</strong></td>
-              <td>모바일 학습 (Mobile Learning)</td>
-              <td>끊김 없는 학습(MSL), 인지 증강</td>
-              <td>다이나북, 참여형 시뮬레이션, PI</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Part III: Technology 전체 5개 챕터의 거대한 학습 테크놀로지 프레임워크를 총괄 정리합니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>학습과학에서 테크놀로지는 결코 '교과서를 전달하는 파이프'가 아닙니다. 인간의 신체, 사물, 증강 시각, 모바일 네트워크와 결합하여 '새로운 앎의 양식(New Ways of Knowing)'을 창조하는 도구입니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>5개 테크놀로지 중 자신의 연구와 교육에 가장 영감을 준 기술을 꼽아보세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 9: Looking Ahead to Part IV Collaboration -->
+    <!-- Slide 9: Conversation Theory of Mobile Learning -->
     <section class="slide" data-index="8">
-      <span class="slide-badge">다음 파트 예고 · Part IV</span>
-      <h2 class="slide-title">다음 여정: 제4부 협력과 공동체(Part IV) 개막!</h2>
-      <p class="slide-subtitle">Chapter 19 지식 구축과 지식 창조 (Knowledge Building: Scardamalia & Bereiter)</p>
+      <span class="slide-badge">이론적 토대 ① · Section 18.3.1</span>
+      <h2 class="slide-title">샤플스의 대화 학습 이론 (Conversation Theory)</h2>
+      <p class="slide-subtitle">고든 패스크(Gordon Pask)의 대화 이론을 모바일 환경으로 재정립 (Figure 18.4)</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>👥 Part IV 협력과 공동체 4개 챕터 라인업</h3>
+          <h3>💬 3대 대화 층위 (Sharples, 2002)</h3>
           <ul>
-            <li><strong>Ch 19</strong>: 지식 구축과 지식 창조 (Scardamalia & Bereiter)</li>
-            <li><strong>Ch 20</strong>: 컴퓨터 지원 협력 학습 CSCL (Stahl, Koschmann, & Suthers)</li>
-            <li><strong>Ch 21</strong>: 논증 학습과 담화 (Andriessen & Baker)</li>
-            <li><strong>Ch 22</strong>: 실천 공동체와 정체성 (Lave & Wenger)</li>
+            <li><strong>자신과의 내적 대화</strong>: 수집한 데이터를 보며 자신의 선개념과 반성적 성찰</li>
+            <li><strong>동료 및 교사와의 사회적 대화</strong>: 메신저와 공유 보드를 통한 가설 검증 토론</li>
+            <li><strong>테크놀로지 시스템과의 상호작용 대화</strong>: 시뮬레이션 파라미터를 바꾸며 즉각적 피드백 수신</li>
           </ul>
         </div>
         <div class="card">
-          <h3>🚀 테크놀로지에서 집단 지성으로!</h3>
-          <p>개별 학습자와 도구의 상호작용을 넘어, 이제 집단 지성과 지식 구축 공동체라는 사회문화적 지평으로 나아갑니다!</p>
+          <h3>🎯 모바일 기기의 역할</h3>
+          <p>기기는 단순한 화면이 아니라, <strong>3가지 대화 층위를 시공간 제약 없이 매개하는 지능형 의사소통 오케스트레이터</strong></p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Part III의 완결을 축하하고, 다음 시간부터 펼쳐질 제4부 협력과 공동체(Part IV)의 장대한 여정을 예고합니다.</p>
+        <p>샤플스 교수가 정립한 '모바일 대화 학습 이론(Conversation Theory of Mobile Learning)'의 핵심 구조를 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 19는 스카다말리아와 베레이터 교수의 전설적인 '지식 구축(Knowledge Building)' 이론과 Knowledge Forum 환경을 다룹니다.</p>
+        <p>배움이란 본질적으로 나와 타인, 그리고 시스템과의 끊임없는 '대화와 합의(Reaching an Agreement)' 과정이며, 모바일은 이 대화의 연속성을 보장합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>Part III 완결을 축하하며 본 강의를 마칩니다. 수고하셨습니다!</p>
+        <p>생성형 AI 챗봇과의 대화가 샤플스의 대화 이론 3대 층위와 어떻게 결합될 수 있는지 토론하세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 10: Context as Synthesized -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">이론적 토대 ② · Section 18.3.2</span>
+      <h2 class="slide-title">맥락의 생성: 학습자가 스스로 직조하는 배움의 맥락</h2>
+      <p class="slide-subtitle">맥락은 고정된 물리적 장소가 아니라, 학습자의 탐구 활동을 통해 창조되는 것</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 고전적 맥락관 (Context as Container)</h3>
+          <p>교실, 집, 도서관을 학생이 들어가는 고정된 물리적 상자(컨테이너)로 취급</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 모바일 학습의 동적 맥락관 (Context as Synthesized)</h3>
+          <ul>
+            <li>지하철 안에서도 모바일 기기를 열고 논문을 읽으면 그 순간 그곳이 '연구실'이 됨</li>
+            <li>학습자는 관심사, 도구, 동료를 결합하여 <strong>스스로 맥락을 창출(Synthesize Context)하는 주체적 행위자(Agent)</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학에서 '맥락(Context)'의 정의를 정적인 장소에서 '학습자가 창조하는 동적 상태'로 전환하는 철학적 도약을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>듀이(Dewey)의 상황주의 철학: 학습자는 환경에 수동적으로 반응하는 존재가 아니라, 모바일 도구를 통해 환경과 능동적으로 관계를 맺습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 스마트폰을 통해 일상 공간(카페, 버스 등)을 학습 맥락으로 변환시켰던 경험을 나누어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Future Modalities of Mobile Learning -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">미래 학습 양식 · Section 18.4</span>
+      <h2 class="slide-title">차세대 모바일 학습: 마이크로 러닝과 개인화 AI 튜터</h2>
+      <p class="slide-subtitle">스마트워치, 지능형 푸시 알림, 대형 언어 모델(LLM)의 결합</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>⏱️ 마이크로 러닝 (Micro-learning)</h3>
+          <p>출퇴근 시간 3분 단위로 단어, 코딩 퀴즈를 푸는 초단기 마이크로 콘텐츠</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>🤖 모바일 AI 소크라틱 튜터</h3>
+          <p>학생이 야외에서 찍은 사진을 보고 실시간으로 질문을 던져주는 멀티모달 AI</p>
+        </div>
+        <div class="card">
+          <h3>⌚ 웨어러블 바이오피드백</h3>
+          <p>스마트워치 심박수로 스트레스·몰입도를 감지하여 적응형 휴식 권고</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>AI와 웨어러블 디바이스가 결합된 차세대 모바일 학습의 최신 트렌드를 전망합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>스마트폰 카메라로 꽃을 찍으면 "이 꽃의 암술과 수술 구조는 어떻게 생겼을까?"를 되물어주는 소크라테스식 AI 튜터링이 가능해졌습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>ChatGPT 모바일 보이스 모드를 활용한 1:1 회화/토론 학습의 장단점을 분석해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Digital Divide and Inclusion -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">디지털 격차 & 포용 · Section 18.4.3</span>
+      <h2 class="slide-title">스마트폰 주의 분산 극복과 공평한 디지털 포용</h2>
+      <p class="slide-subtitle">모바일 기기의 중독적 유혹을 넘어 생산적 학습 도구로 전환하는 정책</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">⚠️ 스마트폰 과몰입과 2차 디지털 격차</h3>
+          <ul>
+            <li>SNS, 숏폼 비디오, 게임 알림으로 인한 주의 집중력 저하</li>
+            <li>기기 보유 여부가 아니라 <strong>'기기를 생산적으로 활용하는 역량'의 격차(Usage Divide)</strong></li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🛡️ 자기조절학습(SRL) 비계와 공공 정책</h3>
+          <ul>
+            <li><strong>앱 사용 시간 모니터링 및 방해 금지 모드</strong>의 메타인지적 훈련</li>
+            <li>저소득층 학생을 위한 공공 와이파이 및 1인 1스마트 기기 보급 복지</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>모바일 기기의 교실 내 허용을 둘러싼 사회적 논쟁과, 학생들의 자기조절학습(SRL) 역량 강화 방안을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>단순한 '스마트폰 압수'는 능동적 디지털 시민성 함양을 가로막습니다. 기기를 지혜롭게 제어하는 자기조절 훈련이 필수입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교 내 스마트폰 전면 수거 정책과 1:1 수업 활용 정책 중 어느 방향이 더 교육적인지 찬반 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 18</span>
+      <h2 class="slide-title">앱 인벤터(App Inventor)와 모바일 앱 창작 교육</h2>
+      <p class="slide-subtitle">소비자(Consumer)에서 모바일 솔루션 창작자(Creator)로의 대전환</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📱 MIT 앱 인벤터 (App Inventor, Hal Abelson)</h3>
+          <ul>
+            <li>초·중등 학생도 블록 코딩으로 자신의 스마트폰에서 실제 구동되는 네이티브 앱 제작</li>
+            <li>GPS 센서, 카메라, 가속도계, 블루투스 통신 블록을 손쉽게 결합</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 사회 혁신 문제 해결 프로젝트</h3>
+          <ul>
+            <li><strong>시각장애인 안내 앱</strong>: 카메라로 사물을 인식해 음성으로 읽어주는 앱 코딩</li>
+            <li><strong>우리 동네 쓰레기 분리수거 맵</strong>: 학생들이 사진을 찍어 위치를 공유하는 공공 서비스 제작</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>모바일 기기를 단순한 소비 수단에서 컴퓨팅 사고력을 발휘하는 '창작의 플랫폼'으로 변환시키는 교육 모델을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>앱 인벤터는 학생들이 자신의 손안에 있는 기기를 직접 프로그래밍함으로써 막강한 기술적 자기효능감(Empowerment)을 얻게 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들이 우리 학교의 실생활 문제를 해결하기 위해 어떤 모바일 앱을 기획할 수 있을지 아이디어를 모아보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Grand Finale of Part III Technology -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">Part III 총괄 · Section 18.5</span>
+      <h2 class="slide-title">Part III 테크놀로지 대단원 결론: 기술은 맥락을 잇는 다리</h2>
+      <p class="slide-subtitle">학습과학이 밝혀낸 5대 차세대 테크놀로지 생태계 완성</p>
+      <div class="card-grid" style="grid-template-columns: repeat(5, 1fr); font-size: 0.85rem;">
+        <div class="card">
+          <h3>Ch 14. 비디오 게임</h3>
+          <p>몰입형 참여 아키텍처와 은밀한 평가</p>
+        </div>
+        <div class="card">
+          <h3>Ch 15. 체화 설계</h3>
+          <p>감각운동 스키마와 기호 매개 시퀀스</p>
+        </div>
+        <div class="card">
+          <h3>Ch 16. 탠저블 교구</h3>
+          <p>물질성, 계산적 공예, 전신 인터랙션</p>
+        </div>
+        <div class="card">
+          <h3>Ch 17. 증강현실</h3>
+          <p>비가시적 개념 시각화와 공동 시각 기반</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>Ch 18. 모바일 러닝</h3>
+          <p>시공간 초월 무봉제 탐구와 학습자 에이전시</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Part III (Learning with Technology: Ch 14~18) 5개 장의 대단원 결론을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>테크놀로지는 인간을 대체하는 것이 아니라, 인간의 신체, 사물, 사회적 대화, 삶의 맥락을 가장 유기적으로 연결해 주는 강력한 인지적 비계입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>5가지 기술 중 여러분의 교육 환경에 가장 먼저 융합하고 싶은 기술 조합을 선정해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Part IV Chapter 19 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 파트 예고 · Part IV</span>
+      <h2 class="slide-title">다음 여정: Part IV 함께 배우기 & Chapter 19 지식 구축</h2>
+      <p class="slide-subtitle">Part IV: Learning Together & Chapter 19: Knowledge Building (Marlene Scardamalia & Carl Bereiter)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🤝 Part IV 협력 학습의 대서사</h3>
+          <ul>
+            <li><strong>Ch 19 지식 구축 (Knowledge Building)</strong>: 아이디어를 개선 가능한 객체로 다루는 12대 원리</li>
+            <li><strong>Ch 20 CSCL</strong>: 컴퓨터 매개 협력 학습의 상호작용 메커니즘과 스크립트</li>
+            <li><strong>Ch 21 논쟁 학습 (Arguing to Learn)</strong>: 툴민 논증 구도와 담화 분석</li>
+            <li><strong>Ch 22 박물관 비형식 학습</strong>: 자유선택 학습과 가족 대화</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 개인 인지에서 '집단 지성'으로의 전환</h3>
+          <p>혼자 배우는 뇌에서 함께 아이디어를 창출하고 집단적 지식을 진화시키는 사회문화적 학습과학의 정수로 진입합니다.</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Part III 테크놀로지를 마치고, Part IV (Learning Together) 및 Chapter 19(Knowledge Building)로의 거대한 전환을 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>지식 구축 이론(Knowledge Building)의 창시자 말린 스카다말리아와 칼 베라이터 교수의 고전적 명저로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>Part IV를 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 18: Mobile Learning (Pea & Sharples)</div>
-    <div class="footer-center" id="slide-counter">01 / 09</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
