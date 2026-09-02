@@ -241,250 +241,466 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
+    <section class="slide" data-index="0">
       <span class="slide-badge">Chapter 15 · Part III Technology</span>
       <h1 class="slide-title">Embodiment and Embodied Design</h1>
       <p class="slide-subtitle">체화 인지와 체화 설계: 몸으로 배우는 수학·과학, 그리고 상호작용 인터페이스의 설계</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Dor Abrahamson</strong> (UC Berkeley) & <strong>Robb Lindgren</strong> (UIUC)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 302–323)</p>
+          <p><strong>Dor Abrahamson</strong> (UC Berkeley)<br/><strong>Robb Lindgren</strong> (UIUC)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 15</p>
         </div>
         <div class="card">
           <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>"Learning is Moving in New Ways"</strong>: 데카르트 이원론 극복</li>
-            <li><strong>체화 설계의 3대 축</strong>: 과제(Activities), 재료(Materials), 교수 촉진(Facilitation)</li>
-            <li><strong>수학 심상 훈련기 (MIT-P, Fig 15.1 & 15.2)</strong>: 손 높이 비례 조작</li>
-            <li><strong>GRASP 프로젝트 (Fig 15.3 & 15.4)</strong>: 전신 과학 시뮬레이션 & 유령 손</li>
+            <li><strong>데카르트 이원론 극복</strong>: 두뇌 중심주의에서 신체성(Embodiment)으로의 전환</li>
+            <li><strong>체화 인지의 3대 원리</strong>: Rhyme & Reason, Simulated Action, Breakdowns</li>
+            <li><strong>체화 설계 3대 축</strong>: 과제(Activities), 재료(Materials), 촉진(Facilitation)</li>
+            <li><strong>2대 대표 사례</strong>: MIT-P(수학 심상 훈련기) & GRASP(전신 과학 시뮬레이션)</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 추상적 수학·과학 개념이 어떻게 신체의 감각운동 스키마와 제스처로부터 발현되는지를 밝히고, 이를 지원하는 상호작용 테크놀로지 설계 원리를 제시합니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>도르 아브라함슨 교수와 롭 린드그렌 교수는 인지과학의 '체화 인지(Embodied Cognition)' 이론을 교육공학 및 인터페이스 설계로 발전시킨 대표적 학자들입니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전통적 인지주의의 두뇌 중심주의(Cerebro-centrism)를 비판하고, 인간의 모든 추상적 개념이 신체의 감각운동 스키마와 제스처에 뿌리박고 있음을 밝히는 체화 인지와 체화 설계 이론을 소개합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>도르 아브라함슨(UC Berkeley)과 롭 린드그렌(UIUC)은 체화 인지 이론을 교육 테크놀로지 및 인터랙션 디자인에 적용한 세계적 개척자들입니다. "학습은 새로운 방식으로 움직이는 것이다(Learning is moving in new ways)"가 본 챕터의 핵심 관통 명제입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"우리가 '분수'나 '미적분'을 생각할 때, 뇌 속에서 숫자가 돌아갈까요 아니면 과거에 손으로 무언가를 쪼개고 움직였던 감각이 돌아갈까요?"라는 질문으로 시작하세요.</p>
+        <p>"우리가 수직선에서 숫자가 커질 때 '오른쪽'이나 '위쪽'을 떠올리는 이유는 무엇일까요?"라는 신체적 은유 질문으로 도입하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: Core Embodiment Principles -->
+    <!-- Slide 2: 3 Principles of Embodiment -->
     <section class="slide" data-index="1">
       <span class="slide-badge">이론적 기초 · Section 15.1</span>
       <h2 class="slide-title">체화 인지의 3대 이론적 원리</h2>
-      <p class="slide-subtitle">두뇌 속 기호 조작이 아닌, 신체와 환경의 감각운동 상호작용 (Varela et al., 1991)</p>
+      <p class="slide-subtitle">신체와 환경의 역동적 결합을 설명하는 3대 인지 원리</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="card highlight-card">
-          <h3>1. 두 지각의 조율</h3>
-          <p><strong>Rhyme & Reason</strong></p>
-          <p>감각운동적 신체 직관(Rhyme)과 문화적 기호 표상(Reason)의 상호 협응</p>
+          <h3>1. 두 지각 양식의 조율<br/>(Rhyme and Reason)</h3>
+          <p><strong>감각운동 신체 직관(Rhyme)</strong>과 <strong>문화적 기호 표상(Reason)</strong>의 상호 협응</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">수학 공식 이전에 신체적 균형 감각이 선행해야 함</p>
         </div>
         <div class="card">
-          <h3>2. 시뮬레이션 지각</h3>
-          <p><strong>Motor Simulation</strong></p>
-          <p>수식이나 대상만 보아도 뇌는 과거 신체 움직임을 운동학적으로 내적 시뮬레이션</p>
+          <h3>2. 시뮬레이션으로서의 지각<br/>(Simulated Action)</h3>
+          <p>수식이나 도표를 볼 때 뇌는 과거 신체 조작을 <strong>운동학적으로 내적 시뮬레이션(Motor Simulation)</strong>함</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">3. 도구와 단절</h3>
-          <p><strong>Equipment & Breakdowns</strong></p>
-          <p>신체 움직임이 막히는 순간(Breakdown), 기호와 도구가 의미 있는 매개체로 등장</p>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 도구와 단절<br/>(Equipment & Breakdowns)</h3>
+          <p>신체적 행위가 막히는 순간(Breakdown), 기호와 인터페이스 도구가 의미 있는 매개체로 등장함</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>체화 인지 이론의 3대 핵심 원리(Rhyme & Reason, Motor Simulation, Breakdowns)를 체계적으로 설명합니다.</p>
+        <p>체화 인지의 3대 이론적 기둥(Rhyme & Reason, Simulated Action, Equipment & Breakdowns)을 체계화합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>하이데거의 도구 이론: 망치가 손에 익을 때는 망치를 의식하지 않지만(Ready-to-hand), 망치가 부러지는 순간(Breakdown) 비로소 '망치의 구조'를 반성하게 됩니다. 학습 설계도 이 '신체적 단절'을 정밀하게 설계해야 합니다.</p>
+        <p>인간은 기호를 추상적으로만 처리하지 않습니다. 글자를 읽거나 그래프를 볼 때도 뇌의 운동 피질(Motor Cortex)이 미세하게 발화하며 가상 신체 조작을 시뮬레이션합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>기호 표상 이전에 신체적 직관이 왜 선행해야 하는지 학생들에게 질문하세요.</p>
+        <p>기하학 증명을 할 때 손짓(제스처)을 쓰지 못하게 묶어두면 문제 해결 능력이 급격히 떨어지는 실험 사례를 언급하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 3 Design Challenges -->
+    <!-- Slide 3: Philosophical Roots of Embodiment -->
     <section class="slide" data-index="2">
+      <span class="slide-badge">철학적 계보 · Section 15.1</span>
+      <h2 class="slide-title">체화 인지의 3대 학문적 뿌리와 패러다임</h2>
+      <p class="slide-subtitle">현상학, 인지언어학, 생태심리학의 융합</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 현상학 & 에낙티비즘</h3>
+          <p><strong>바렐라, 톰슨, 로쉬 (1991)</strong></p>
+          <p>세계는 객관적으로 주어지는 것이 아니라, 생명체의 신체적 행동을 통해 생성(Enacted)되는 것</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 인지언어학 & 개념 은유</h3>
+          <p><strong>레이코프 & 누녜스 (2000)</strong></p>
+          <p>수학의 모든 공리는 "더하기는 물건 쌓기", "함수는 걷기"와 같은 <strong>신체 기반 개념 은유(Conceptual Metaphor)</strong></p>
+        </div>
+        <div class="card">
+          <h3>3. 생태심리학 & 어포던스</h3>
+          <p><strong>제임스 깁슨 (Gibson, 1979)</strong></p>
+          <p>환경은 행위자에게 물리적 행동 가능성(Affordance)을 직접 제공하며, 지각은 행동과 직결됨</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>체화 인지가 단순한 유행이 아니라 현상학, 인지언어학, 생태심리학에 깊은 뿌리를 둔 패러다임임을 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>조지 레이코프의 『수학이 태어난 곳(Where Mathematics Comes From)』: 수학적 무한, 미적분, 집합론조차 인간 신체의 감각운동 경험이 은유적으로 투사된 결과물입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"더 크다", "따뜻한 환대", "깊은 생각" 등 우리 일상어 속에 녹아 있는 신체 은유를 찾아보게 하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Gesture and Cognition -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">제스처와 사고 · Section 15.1</span>
+      <h2 class="slide-title">제스처(Gesture)와 인지: 사고의 신체적 전조</h2>
+      <p class="slide-subtitle">수잔 골딘-메도우(Goldin-Meadow)의 제스처-언어 불일치(Gesture-Speech Mismatch)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🖐️ 1. 제스처-언어 불일치 (Mismatch)</h3>
+          <ul>
+            <li>학생이 말로는 오답을 설명하면서도, <strong>손으로는 정답의 공간적 메커니즘을 가리키는 현상</strong></li>
+            <li>새로운 개념이 언어로 명시화되기 직전, <strong>신체가 먼저 지식을 획득했음을 보여주는 전조 지표</strong></li>
+            <li>제스처 불일치를 보이는 학생은 개념 변화와 학습 성공 확률이 압도적으로 높음</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🧠 2. 인지 부하 경감 (Offloading)</h3>
+          <ul>
+            <li>손을 움직여 설명할 때 작업기억의 인지 부하가 즉각 경감됨</li>
+            <li>제스처는 생각을 전달하는 수단일 뿐 아니라, <strong>생각 자체를 생성하고 정교화하는 인지 도구</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>제스처가 단순한 말의 보조물이 아니라 인지 발달과 개념 변화의 가장 선행하는 신체적 지표임을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>골딘-메도우(Goldin-Meadow, 2003): 보존 개념 실험에서 아동의 손가락 제스처를 관찰하면 말로 표현하기 전에 이미 보존 개념을 형성하고 있음을 감지할 수 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교사가 학생의 손짓을 관찰하여 '학습 준비도(Readiness to Learn)'를 포착하는 수업 관찰 훈련을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Embodied Design 3 Challenges -->
+    <section class="slide" data-index="4">
       <span class="slide-badge">설계 프레임워크 · Section 15.2</span>
-      <h2 class="slide-title">체화 설계를 위한 3대 설계 축 (Embodied Design)</h2>
-      <p class="slide-subtitle">기호 없는 신체 문제해결에서 점진적 기호 매개로의 발전 (Abrahamson, 2014)</p>
+      <h2 class="slide-title">체화 설계를 위한 3대 핵심 설계 축 (Embodied Design)</h2>
+      <p class="slide-subtitle">기호 없는 신체 조작에서 수학·과학적 정형화로 이어지는 3대 설계 차원</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="card highlight-card">
           <h3>1. 과제 설계 (Activities)</h3>
-          <p>숫자나 기호 없이, 오직 손이나 몸의 움직임만으로 목표 상태(초록색 화면)를 달성하는 감각운동 과제</p>
+          <p><strong>신체적 문제 해결</strong>: 기호나 공식 없이 오직 손과 몸의 움직임만으로 목표를 달성하는 원초적 과제 부여</p>
+        </div>
+        <div class="card">
+          <h3>2. 도구/재료 (Materials)</h3>
+          <p><strong>점진적 기호 덧씌우기</strong>: 빈 화면 ➔ 격자선 ➔ 축 눈금 ➔ 수식 기호로 이어지는 인터페이스 점진적 시퀀스</p>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 재료 설계 (Materials)</h3>
-          <p>모눈 격자, 눈금선, 숫자를 단계별로 덧씌워 신체 감각을 수학 기호로 번역 (Scaffolded Layering)</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">3. 교수 촉진 (Facilitation)</h3>
-          <p>정답 공식을 주지 않고 제스처 큐잉(Physical Cueing)과 발문으로 신체 속 수학 원리 발견 유도</p>
+          <h3>3. 교수 촉진 (Facilitation)</h3>
+          <p><strong>신체 큐잉과 담화 조율</strong>: 교사가 공식을 주입하지 않고 손짓과 시선 유도로 신체적 발견을 언어화하도록 촉진</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>체화 설계(Embodied Design)의 3가지 구성 요소(과제, 재료, 교수 촉진)의 상호작용을 설명합니다.</p>
+        <p>체화 설계(Embodied Design)의 3대 축인 과제(Activities), 재료(Materials), 촉진(Facilitation)을 정립합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>가장 핵심적인 원리는 '기호 없는 순수 조작'에서 시작하여, 신체 움직임을 최적화하기 위해 '기호를 도구로 도입'하는 점진적 궤적입니다.</p>
+        <p>체화 설계의 핵심은 '기호의 지연(Symbol Delay)'입니다. 수학 기호를 처음부터 주지 않고, 신체적 감각운동 스키마를 먼저 확립한 뒤 기호를 '도구'로서 제공합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>다음 슬라이드에서 실제 MIT-P 시스템의 도판과 함께 이 3대 축이 어떻게 구현되었는지 살펴봅니다.</p>
+        <p>기존 수학교육이 왜 "공식 먼저 외우고 문제 풀기"라는 반-체화적 순서로 진행되는지 비판적으로 성찰하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: MIT-P Case (Figure 15.1) -->
-    <section class="slide" data-index="3">
+    <!-- Slide 6: The Challenge of Activities -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">과제 설계 · Section 15.2.1</span>
+      <h2 class="slide-title">과제 설계(Activities): 비기호적 감각운동 문제 해결</h2>
+      <p class="slide-subtitle">수학 기호 없이 신체 움직임만으로 새로운 지각 운동 스키마 창출</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎮 비기호적 상호작용 과제</h3>
+          <ul>
+            <li>화면에 숫자, 수식, 문자 기호가 일절 나타나지 않음</li>
+            <li>목표는 오직 하나: <strong>"두 손을 움직여 화면을 초록색으로 유지하라!"</strong></li>
+            <li>학습자는 시행착오를 통해 "오른손이 왼손보다 2배 빠르게/높게 움직여야 함"을 신체적으로 체득</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 신체적 에이전시와 내적 피드백</h3>
+          <ul>
+            <li>시스템은 정답/오답 소리를 내지 않고 오직 화면 색상(녹색/적색) 피드백만 제공</li>
+            <li>학습자 스스로 움직임의 패턴을 조절하며 <strong>감각운동 협응(Sensorimotor Coordination)</strong> 형성</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>체화 설계의 제1과제인 '비기호적 활동 설계'의 원리와 인지적 의의를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>신체가 먼저 문제를 해결하면, 이후 도입되는 수학적 기호(1:2 비례식)는 외워야 할 짐이 아니라 내 신체 행동을 명쾌하게 설명해 주는 고마운 도구가 됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자전거 타기를 배울 때 물리 공식을 배우지 않고 몸으로 균형을 잡는 것과 수학 학습의 유사성을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: The Challenge of Materials -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">도구 설계 · Section 15.2.2</span>
+      <h2 class="slide-title">도구 및 재료 설계: 점진적 기호 매개 시퀀스</h2>
+      <p class="slide-subtitle">신체적 감각 위에 문화적 기호 표상을 층위별로 덧씌우는 인터페이스 공학</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card">
+          <h3>1단계: 빈 화면</h3>
+          <p><strong>순수 신체 조작</strong><br/>기호 없는 감각운동 탐색 및 녹색 화면 발견</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2단계: 모눈 격자</h3>
+          <p><strong>공간의 구조화</strong><br/>칸 수를 세며 높이 차이를 공간적으로 지각</p>
+        </div>
+        <div class="card">
+          <h3>3단계: 축 눈금</h3>
+          <p><strong>수량화 도입</strong><br/>각 손의 높이를 1, 2, 3, 4 숫자로 정량화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>4단계: 비례식 기호</h3>
+          <p><strong>수학적 형식화</strong><br/>1/2 = 2/4 = 3/6 기호와 신체 동작의 완전 일치</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>인터페이스 설계에서 기호를 단계별로 노출시키는 4단계 시퀀스의 정밀한 인지 메커니즘을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이를 '기호 매개적 층위화(Scaffolded Semiophoretic Layering)'라고 부릅니다. 단계마다 신체 감각과 문화적 기호가 1:1로 매핑됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>소프트웨어 UI 디자인에서 사용자의 인지 부하를 줄이기 위해 단계적 정보 공개가 어떻게 쓰이는지 연결하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: The Challenge of Facilitation -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">촉진 설계 · Section 15.2.3</span>
+      <h2 class="slide-title">교수 촉진(Facilitation): 신체 제스처 큐잉과 담화</h2>
+      <p class="slide-subtitle">교사의 손짓과 시선 유도를 통해 신체적 발견을 학술 언어로 승화</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🖐️ 1. 신체적 큐잉 (Physical Cueing)</h3>
+          <ul>
+            <li>교사는 말로 힌트를 주기 전에, 학생의 시야에서 손을 1:2 비율로 움직여 보임</li>
+            <li>학생의 무의식적 시각-운동 거울 뉴런을 자극하여 신체적 모방과 탐색 유도</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>💬 2. 반성적 담화 조율 (Reflective Discourse)</h3>
+          <ul>
+            <li>"네 손이 지금 어떻게 움직였는지 말로 설명해 볼래?"</li>
+            <li>신체적 감각을 명시적 어휘로 번역(Articulation)하게 하여 개념화 완성</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>체화 설계 환경에서 교사의 역할이 정답 전달자에서 '신체적 큐잉 퍼실리테이터'로 전환됨을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>교사의 미세한 제스처와 시선은 학생의 작업기억에 부담을 주지 않으면서도 강력한 비계(Scaffolding) 역할을 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 수업할 때 무의식적으로 사용하는 손짓이 학생들의 이해에 어떤 영향을 미치는지 되돌아보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Case 1 - MIT-P Overview -->
+    <section class="slide" data-index="8">
       <span class="slide-badge">사례 연구 ① · Section 15.3.1</span>
       <h2 class="slide-title">수학 심상 훈련기: MIT-P 시스템 (Figure 15.1)</h2>
-      <p class="slide-subtitle">두 손의 높이 비율($1:2$)을 유지해야만 화면이 초록색으로 변하는 상호작용 시스템</p>
-      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
-        <div class="img-zoom-card" onclick="openModal('images/fig15_1.png', 'Figure 15.1 The MIT-P set at a 1:2 ratio (Abrahamson, p. 324)')">
-          <img src="images/fig15_1.png" alt="Figure 15.1 The MIT-P">
-          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
-        </div>
+      <p class="slide-subtitle">도르 아브라함슨(Dor Abrahamson)의 비례(Proportion) 학습 체화 인터페이스</p>
+      <div class="split-layout">
         <div class="card highlight-card">
-          <h3>🎮 MIT-P 인터랙션 규칙</h3>
+          <h3>🎮 시스템 핵심 메커니즘</h3>
           <ul>
-            <li>학생은 양손에 센서를 잡고 화면 앞에서 손을 위아래로 움직임</li>
-            <li>시스템이 설정한 비례($1:2$)에 맞으면 <strong>초록색(Green)</strong>, 어긋나면 <strong>빨간색(Red)</strong> 피드백</li>
-            <li>학생은 "오른손이 왼손보다 2배 높이 있어야 한다"는 신체 감각을 먼저 발견</li>
+            <li><strong>인터랙션</strong>: 두 손의 높이 비율이 <strong>1:2</strong>일 때만 화면이 <strong>초록색</strong>으로 변함</li>
+            <li><strong>초기 오개념</strong>: "양손을 같은 높이 차이(예: 10cm)로 평행 이동하면 초록색이 유지될 것이다" (가법적 오개념)</li>
+            <li><strong>인지적 돌파</strong>: "손이 올라갈수록 두 손 사이의 간격이 더 벌어져야 초록색이 된다!" ➔ <strong>승법적(비례적) 직관 체득</strong></li>
           </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig15_1.png')">
+          <img src="images/fig15_1.png" alt="Figure 15.1 MIT-P 1:2 Ratio">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 15.1)</div>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>원서 Figure 15.1의 MIT-P(Mathematics Imagery Trainer for Proportion) 시스템 구조와 기본 인터랙션을 설명합니다.</p>
+        <p>학습과학의 대표적 체화 설계 시스템인 MIT-P(Mathematics Imagery Trainer for Proportion)의 하드웨어 및 상호작용 원리를 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>초기에는 아무런 숫자도 보이지 않습니다. 학생은 오직 신체적 균형 감각(Sensorimotor scheme)을 통해 화면을 초록색으로 유지하는 '동적 보존(Dynamical Conservation)'을 체득합니다.</p>
+        <p>초등학생들은 비례를 덧셈적 차이(가법적 사고)로 오해하기 쉽습니다. MIT-P는 손을 위로 올릴수록 간격이 기하급수적으로 벌어져야 초록색이 유지된다는 물리적 피드백을 통해 승법적 사고를 직관적으로 깨우치게 합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>도판을 클릭하여 확대하고, 학생의 손 위치와 화면 색상 피드백을 확인하세요.</p>
+        <p>체감형 센서(Kinect, Leap Motion)를 활용해 학교 교실에 MIT-P를 구현하는 방안을 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: MIT-P Display Progression (Figure 15.2) -->
-    <section class="slide" data-index="4">
-      <span class="slide-badge">기호 매개 시퀀스 · Section 15.3.1</span>
+    <!-- Slide 10: Case 1 - MIT-P 4 Stages -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">기호 매개 시퀀스 · Figure 15.2</span>
       <h2 class="slide-title">MIT-P 4단계 점진적 인터페이스 시퀀스 (Figure 15.2)</h2>
-      <p class="slide-subtitle">완전 빈 화면 (a) ➔ 격자선 (b) ➔ 눈금선 (c) ➔ 숫자 (d)로 이어지는 기호화의 사다리</p>
-      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
-        <div class="img-zoom-card" onclick="openModal('images/fig15_2.png', 'Figure 15.2 Schematic representation of MIT-P display configuration sequence (a. blank, b. grid, c. tick marks, d. numerals)')">
-          <img src="images/fig15_2.png" alt="Figure 15.2 MIT-P Display Sequence">
-          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
-        </div>
-        <div class="card highlight-card">
-          <h3>📈 4단계 인지적 도약</h3>
+      <p class="slide-subtitle">기호 없는 신체 감각운동 스키마에서 수학적 형식화로의 진화</p>
+      <div class="split-layout">
+        <div class="card">
+          <h3>📐 4단계 인지 진화 궤적</h3>
           <ul>
-            <li><strong>(a) Blank</strong>: 순수 신체 탐색</li>
-            <li><strong>(b) Grid</strong>: "왼손 1칸 갈 때 오른손 2칸" 격자 활용</li>
-            <li><strong>(c) Ticks</strong>: 높이 위치의 절대적 정량화</li>
-            <li><strong>(d) Numerals</strong>: "$\frac{1}{2} = \frac{2}{4}$가 내 손동작이었구나!"</li>
+            <li><strong>(a) Blank</strong>: 순수 손 감각 탐색 (오른손이 왼손의 2배 높이)</li>
+            <li><strong>(b) Grid</strong>: 격자선 도입으로 높이를 칸 수(Unit)로 인지</li>
+            <li><strong>(c) Numbered Grid</strong>: 축에 1, 2, 3, 4 숫자가 매겨지며 좌표화</li>
+            <li><strong>(d) Symbol</strong>: 1/2 = 2/4 = 3/6 = 4/8 비례식으로 완전 형식화</li>
           </ul>
         </div>
+        <div class="image-box" onclick="openModal('images/fig15_2.png')">
+          <img src="images/fig15_2.png" alt="Figure 15.2 MIT-P Display Sequence">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 15.2)</div>
+        </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>원서 Figure 15.2의 (a)부터 (d)까지 점진적 기호 매개(Scaffolded Layering) 과정을 상세히 분석합니다.</p>
+        <p>원서 Figure 15.2를 통해 신체 감각이 어떻게 수학적 등가 비례식(Equivalent Fractions)으로 번역되는지 시각적으로 증명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>학생들은 처음에 덧셈적 사고("오른손이 왼손보다 5cm 위에 있다")의 오류에 빠지지만, 손을 높이 올릴수록 간격이 2배로 벌어져야 함을 격자와 숫자를 통해 깨달으며 '곱셈적 비례 사고'로 도약합니다.</p>
+        <p>수학 기호는 학습의 '시작점'이 아니라 감각운동 탐색을 마친 후 주어지는 '최종 정착지'여야 함을 명쾌하게 보여줍니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>수학 교육에서 왜 공식 주입보다 이러한 점진적 시각·신체적 매개가 우수한지 토론하세요.</p>
+        <p>분수와 비례식 단원을 가르치는 수학교사에게 이 4단계 시퀀스를 어떻게 수업에 적용할지 제안해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 6: GRASP Project (Figures 15.3 & 15.4) -->
-    <section class="slide" data-index="5">
+    <!-- Slide 11: Case 2 - GRASP Project -->
+    <section class="slide" data-index="10">
       <span class="slide-badge">사례 연구 ② · Section 15.3.2</span>
-      <h2 class="slide-title">GRASP 전신 과학 시뮬레이션 & 유령 손 (Ghost Hands)</h2>
-      <p class="slide-subtitle">지구 자전축과 태양 입사각을 온몸으로 시뮬레이션하는 키넥트 모션 캡처 환경</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="img-zoom-card" onclick="openModal('images/fig15_3.png', 'Figure 15.3 A student using a hand gesture to represent the angle of light (Lindgren, p. 327)')">
-          <img src="images/fig15_3.png" alt="Figure 15.3 Gesture for Light Angle">
-          <span class="img-zoom-badge">🔍 Figure 15.3 확대</span>
+      <h2 class="slide-title">GRASP 전신 과학 시뮬레이션: 계절 변화와 각도</h2>
+      <p class="slide-subtitle">롭 린드그렌(Robb Lindgren)의 전신 모션 트래킹 과학 학습 환경 (Figure 15.3, 15.4)</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>🌍 전신 체화 과학 탐구 원리</h3>
+          <ul>
+            <li><strong>인터랙션</strong>: 학생이 직접 태양 광선이나 지구의 자전축이 되어 온몸을 기울이고 움직임</li>
+            <li><strong>오개념 극복</strong>: "계절 변화는 지구와 태양의 거리 때문"이라는 고질적 오개념을 <strong>"태양 광선의 입사각(Angle)과 단위면적당 에너지 밀도"</strong> 개념으로 전환</li>
+            <li>온몸을 90° 직각으로 세울 때 빛이 집중되고, 비스듬히 기울일 때 에너지가 분산됨을 신체로 체득</li>
+          </ul>
         </div>
-        <div class="img-zoom-card" onclick="openModal('images/fig15_4.png', 'Figure 15.4 A screenshot of the GRASP seasons simulation with ghost hands (Lindgren, p. 328)')">
-          <img src="images/fig15_4.png" alt="Figure 15.4 GRASP Simulation">
-          <span class="img-zoom-badge">🔍 Figure 15.4 확대</span>
+        <div class="image-box" onclick="openModal('images/fig15_4.png')">
+          <img src="images/fig15_4.png" alt="Figure 15.4 GRASP Seasons Simulation">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 15.4)</div>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>원서 Figure 15.3(신체 제스처 시연)과 Figure 15.4(GRASP 계절 시뮬레이션 및 유령 손 큐잉)를 분석합니다.</p>
+        <p>전신 모션 트래킹 기술을 과학 교육에 접목한 GRASP 프로젝트의 핵심 원리와 효과성을 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>'유령 손(Ghost Hands)'은 학생이 화면 속 시뮬레이션과 상호작용할 때, 이상적인 제스처 궤적을 반투명 그래픽으로 띄워 신체적 비계를 제공하는 획기적인 교수학습 도구입니다.</p>
+        <p>지구과학에서 계절의 원리는 학생들이 가장 이해하기 힘들어하는 3차원 공간 개념입니다. GRASP는 자신의 몸을 축으로 삼아 자전과 공전을 시뮬레이션하게 함으로써 개념 변화를 이끌어냅니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>학생들이 온몸을 움직여 계절 변화 원리를 배울 때 기억 유지도(Retention)가 왜 급상승하는지 짚어보세요.</p>
+        <p>전신 인터랙션이 데스크톱 마우스 클릭보다 과학 개념 이해와 기억 유지도에서 왜 더 우수한지 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 7: Application to CS & Physical Computing -->
-    <section class="slide" data-index="6">
+    <!-- Slide 12: Ghost Hands & Physical Cueing -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">신체 큐잉 기법 · Section 15.3.2</span>
+      <h2 class="slide-title">유령 손(Ghost Hands)과 신체적 큐잉 메커니즘</h2>
+      <p class="slide-subtitle">화면 속 반투명 가상 가이드라인을 통한 움직임 피드백 (Figure 15.3)</p>
+      <div class="split-layout">
+        <div class="card">
+          <h3>👻 유령 손(Ghost Hands)의 작동 원리</h3>
+          <ul>
+            <li>시뮬레이션 화면에 반투명한 전문가의 손/신체 가이드(Ghost Hands)가 표시됨</li>
+            <li>학생이 자신의 실제 손 제스처를 유령 손의 각도와 위치에 맞추도록 유도</li>
+            <li><strong>"언어적 지시 없이도 최적의 신체 제스처를 직관적으로 학습"</strong></li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig15_3.png')">
+          <img src="images/fig15_3.png" alt="Figure 15.3 Student Hand Gesture">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 15.3)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 15.3의 제스처 유도 기법인 '유령 손(Ghost Hands)'의 비계 메커니즘을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>신체적 큐잉은 텍스트 설명보다 인지 부하를 대폭 줄여주며, 학생이 즉각적으로 감각운동 스키마를 교정할 수 있게 돕습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>AR(증강현실) 스마트 글래스나 VR 컨트롤러에서 이러한 햅틱/비주얼 고스트 가이드가 어떻게 확장될 수 있는지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
       <span class="slide-badge">컴퓨터교육 접목 · Chapter 15</span>
       <h2 class="slide-title">체화 인지와 피지컬 컴퓨팅 / 로봇 코딩 교육</h2>
-      <p class="slide-subtitle">화면 속 코드를 넘어: 신체 제스처와 로봇의 물리적 움직임을 통한 알고리즘 체화</p>
+      <p class="slide-subtitle">알고리즘적 추상화를 신체 움직임과 물질적 센서로 체득</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🤖 피지컬 컴퓨팅 & 로봇 코딩</h3>
+          <h3>🤖 1. 신체적 알고리즘 시뮬레이션</h3>
           <ul>
-            <li>마이크로비트(Micro:bit), 아두이노 가속도 센서를 신체에 부착하고 제스처로 알고리즘 제어</li>
-            <li>로봇이 미로를 주행하는 물리적 궤적을 학생이 직접 걸어보며(Body-syntonic) 디버깅</li>
+            <li><strong>바디 신스(Body Syntonicity, Papert)</strong>: 학생 자신이 거북이(Turtle)가 되어 "앞으로 10보, 우회전 90도"를 몸으로 걸으며 루프와 회전각 이해</li>
+            <li>정렬 알고리즘(Sort)을 학생들이 직접 카드를 들고 바닥에서 자리를 바꾸며 체화</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🧩 바디 신토닉(Body-Syntonic) 프로그래밍</h3>
+        <div class="card">
+          <h3>🔌 2. 피지컬 컴퓨팅 & 탠저블 인터페이스</h3>
           <ul>
-            <li>파퍼트(Papert)의 로고 터틀: "내가 거북이라면 오른쪽으로 $90^\circ$ 회전하려면 어떻게 몸을 틀어야 할까?"</li>
-            <li>신체의 회전 감각이 각도 및 반복문 코딩 개념의 근원적 기반이 됨</li>
+            <li>마이크로비트, 아두이노, 모션 센서를 신체에 부착하여 <strong>동작 인식 코딩</strong> 구현</li>
+            <li>추상적 코드의 변수와 조건문이 신체 움직임에 즉각 반응하며 강력한 학습 동기 유발</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>체화 설계 원리를 정보 교육의 피지컬 컴퓨팅 및 파퍼트의 바디 신토닉(Body-syntonic) 코딩 학습에 접목합니다.</p>
+        <p>체화 인지 이론을 컴퓨터 프로그래밍 및 로봇 코딩 교육에 적용한 핵심 사례들을 제시합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>알고리즘의 '반복(Loop)'이나 '조건 분기(If-else)'는 추상적 텍스트가 아니라, 로봇과 신체의 공간적 움직임을 통해 가장 직관적으로 체화됩니다.</p>
+        <p>시모어 페퍼트(Seymour Papert)의 로고(LOGO) 터틀 그래픽은 체화 인지의 역사적 원형입니다. 코딩 교육은 화면 안의 텍스트 타이핑에 갇히지 않고 신체와 물질로 확장되어야 합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>아이들이 코딩할 때 손짓과 몸짓을 쓰는 모습을 관찰해 본 경험을 공유하세요.</p>
+        <p>알고리즘 수업에서 학생들에게 '인간 정렬 알고리즘 놀이'를 적용했을 때의 교육적 효과를 분석해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 8: Summary & Looking Ahead to Ch 16 -->
-    <section class="slide" data-index="7">
-      <span class="slide-badge">결론 & 다음 챕터 예고 · Part III</span>
-      <h2 class="slide-title">Chapter 15 결론 및 Chapter 16 탠저블 인터페이스 예고</h2>
-      <p class="slide-subtitle">학습은 새로운 방식으로 움직이는 것이다! (Learning is Moving in New Ways)</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>🌟 Ch 15 체화 설계의 3대 교훈</h3>
-          <ul>
-            <li>1. 기호 이전에 신체의 감각운동 스키마를 먼저 형성하라</li>
-            <li>2. 점진적 기호 덧씌우기(Scaffolded Layering)로 수학·과학을 번역하라</li>
-            <li>3. 유령 손(Ghost Hands)과 제스처로 과학적 메커니즘을 큐잉하라</li>
-          </ul>
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 15.4</span>
+      <h2 class="slide-title">"학습은 새로운 방식으로 움직이는 것이다"</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 체화 설계의 3대 핵심 명제</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>신체성이 지능의 기초</h3>
+          <p>마음은 두뇌 속 고립된 컴퓨터가 아니며, 신체와 환경의 감각운동 상호작용에서 추상적 사고가 발아함</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 16 예고: 탠저블 및 전신 인터페이스</h3>
-          <p><strong>Narcis Parés & Michael Eisenberg</strong></p>
-          <p>물리적 만질 수 있는 교구(Tangible)와 대규모 전신 인터랙션 공간이 여는 학습과학의 새로운 지평!</p>
+        <div class="card highlight-card">
+          <h3>기호의 지연과 도구화</h3>
+          <p>수학·과학 공식을 주입하지 말고, 신체적 발견을 명쾌히 설명하는 '도구'로서 기호를 덧씌울 것</p>
+        </div>
+        <div class="card">
+          <h3>차세대 인터페이스 혁신</h3>
+          <p>모션 트래킹, 탠저블 인터페이스, VR/AR을 통해 몸으로 배우는 풍부한 몰입형 학습 환경 창출</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 15의 핵심 통찰을 정리하고, 이어지는 Chapter 16(Tangible and Full-Body Interfaces in Learning)을 예고합니다.</p>
+        <p>Chapter 15의 모든 핵심 통찰을 "Learning is moving in new ways"라는 명제로 압축 정리합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 16은 본 장의 체화 인지 이론을 더욱 구체적인 하드웨어 탠저블 도구 및 전신 인터페이스 환경으로 확장합니다.</p>
+        <p>체화 설계는 테크놀로지가 지향해야 할 궁극의 방향이 '인간을 화면 앞에 묶어두는 것'이 아니라 '인간의 신체성을 온전히 깨우는 것'임을 역설합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>Chapter 15를 마치며 참석자들과 질의응답을 진행하세요.</p>
+        <p>"여러분이 설계하고 싶은 차세대 체화 학습 시스템은 어떤 모습인가요?"라는 질문으로 마무리하세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 15: Looking Ahead to Chapter 16 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part III</span>
+      <h2 class="slide-title">다음 여정: Chapter 16 탠저블 및 전신 인터페이스</h2>
+      <p class="slide-subtitle">Tangible and Full-Body Interfaces in Learning (Michael Horn & Robb Lindgren)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 15 vs Ch 16 연계성</h3>
+          <ul>
+            <li><strong>Ch 15 체화 인지와 체화 설계</strong>: 신체성(Embodiment)과 감각운동 스키마의 이론적 기초 및 설계 원리</li>
+            <li><strong>Ch 16 탠저블 & 전신 인터페이스</strong>: 실물 조작물(Tangible Blocks), 인터랙티브 테이블탑, 모션 센싱 전신 환경의 하드웨어/소프트웨어 엔지니어링</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 Part III 테크놀로지 대장정</h3>
+          <p>비디오 게임(Ch 14) ➔ 체화 설계(Ch 15) ➔ 탠저블 인터페이스(Ch 16) ➔ 증강현실(Ch 17) ➔ 모바일 러닝(Ch 18)으로 이어지는 차세대 테크놀로지 혁신</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 15를 마치고, 다음 챕터인 Chapter 16(Tangible and Full-Body Interfaces)과의 학술적 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>Chapter 15의 체화 설계 철학이 Chapter 16에서 물리적 조작물(Tangibles)과 전신 상호작용 하드웨어 기술로 구체화됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 16을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 15: Embodiment and Embodied Design (Abrahamson & Lindgren)</div>
-    <div class="footer-center" id="slide-counter">01 / 08</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
