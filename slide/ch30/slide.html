@@ -212,171 +212,477 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 30 · Part VI Motivation & Engagement</span>
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 30 · Part VI Context</span>
       <h1 class="slide-title">Designing for Meaningful Learning</h1>
       <p class="slide-subtitle">의미 있는 학습을 위한 교수설계: 흥미, 동기, 그리고 참여의 인지·사회적 조절 — 4단계 흥미 모델과 SSRL</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>K. Ann Renninger</strong> (Swarthmore College) & <strong>Sanna Järvelä</strong> (Univ. of Oulu)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 612–628)</p>
+          <p><strong>K. Ann Renninger</strong> (Swarthmore College)<br/><strong>Sanna Järvelä</strong> (University of Oulu, Finland)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 30</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (30.0 ~ 30.4)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>30.0 동적 삼위일체</strong>: 흥미, 동기, 참여의 융합</li>
-            <li><strong>30.1.1 4단계 흥미 발달 모델</strong> (Hidi & Renninger, 2006)</li>
-            <li><strong>30.2 조절의 3층위</strong>: SRL, CoRL, SSRL (사회적 공유 조절)</li>
-            <li><strong>30.3 5대 실증 연구 분석</strong> 및 맞춤형 교수설계 원리</li>
+            <li><strong>의미 있는 학습의 3요소</strong>: 흥미(Interest) × 동기(Motivation) × 참여(Engagement)</li>
+            <li><strong>4단계 흥미 발달 모델</strong>: 촉발된 상황 ➔ 유지된 상황 ➔ 태동하는 개인 ➔ 발달된 개인</li>
+            <li><strong>사회적으로 공유된 조절 (SSRL)</strong>: 소집단 협력에서의 감정·동기 공동 조절</li>
+            <li><strong>다중모달 학습 분석</strong>: 생체 센서와 AI 대시보드를 통한 몰입과 좌절 감지</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 학습과학에서 가장 주목받는 정의적·조절적 연구자들인 앤 레닌저 교수와 산나 예르벨라 교수가 집필한 챕터로, 흥미(Interest), 동기(Motivation), 참여(Engagement)의 상호작용 메커니즘을 규명합니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>학습자가 공부에 몰입하지 못하는 것은 지능 문제가 아니라, 환경이 흥미 발달과 동기 조절 비계를 적절히 제공하지 못하기 때문입니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"'재미있어 보이는 것(상황적 흥미)'과 '평생을 바쳐 탐구하고 싶은 것(개인적 흥미)'은 어떻게 다를까요?"로 시작하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 2: 30.1.1 Four-Phase Model of Interest -->
-    <section class="slide" data-index="1">
-      <span class="slide-badge">흥미 모델 · Section 30.1.1</span>
-      <h2 class="slide-title">30.1.1 히디 & 레닌저의 흥미 발달 4단계 모델</h2>
-      <p class="slide-subtitle">외부 자극의 일시적 촉발에서 장기적이고 자율적인 개인적 흥미로의 심화 (Hidi & Renninger)</p>
-      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
-        <div class="card highlight-card">
-          <h3>1단계: 촉발된 상황적 흥미 (Triggered)</h3>
-          <p>신기한 미디어, 인터랙티브 데모 등 외부 자극에 의해 일시적으로 주의가 집중된 상태</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2단계: 유지된 상황적 흥미 (Maintained)</h3>
-          <p>의미 있는 소집단 협력이나 프로젝트 활동 속에서 주의가 일정 기간 지속되는 상태</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3단계: 태동하는 개인적 흥미 (Emerging)</h3>
-          <p>스스로 질문을 품고 자율적으로 심화 자료를 탐색하며 지식을 축적하는 상태</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">4단계: 잘 발달된 개인적 흥미 (Well-Dev)</h3>
-          <p>높은 지식과 깊은 가치를 부여하며 어떤 난관과 실패도 인내하고 극복하는 안정된 성향</p>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>30.1.1절의 핵심 이론인 Hidi & Renninger(2006)의 '4단계 흥미 발달 모델'을 단계별로 분석합니다.</p>
+        <p>인지적 정보처리를 넘어, 학생의 '흥미(Interest)', '동기(Motivation)', '참여(Engagement)'를 체계적으로 설계하고 조절하는 의미 있는 학습(Meaningful Learning)의 정수를 학습합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>1~2단계는 상황적 흥미(외부 비계 필수)이고, 3~4단계는 개인적 흥미(내적 가치와 지식 기반)입니다. 교사는 1단계 촉발에 머무르지 않고 3~4단계로의 전이를 설계해야 합니다.</p>
+        <p>앤 레닌저 교수(흥미 이론 세계 1인자)와 산나 예르벨라 교수(SSRL 및 다중모달 AI 분석 최고 권위자)가 공동 집필한 동기 학습과학의 바이블입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>각 단계별로 교사가 제공해야 할 비계(Scaffolding)의 차이점을 논의하세요.</p>
+        <p>"아무리 완벽한 교재와 수업을 준비해도, 학생의 '흥미와 동기'가 꺼져 있다면 왜 학습이 실패할까요?"로 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 30.2 3 Levels of Regulation: SRL, CoRL, SSRL -->
-    <section class="slide" data-index="2">
-      <span class="slide-badge">협력적 조절 · Section 30.2</span>
-      <h2 class="slide-title">30.2 협력 학습 조절의 3대 층위: SRL, CoRL, SSRL</h2>
-      <p class="slide-subtitle">개인 두뇌의 독백에서 팀 전체가 함께 조절하는 '사회적으로 공유된 조절'로 (Järvelä et al.)</p>
+    <!-- Slide 2: The Trio of Meaningful Learning -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">의미 있는 학습 · Section 30.0</span>
+      <h2 class="slide-title">의미 있는 학습(Meaningful Learning)을 이끄는 동적 삼총사</h2>
+      <p class="slide-subtitle">고정된 성격 특성이 아니라, 교수 환경과의 상호작용 속에서 발달하는 역동적 프로세스</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="card highlight-card">
-          <h3>1. 자기 조절 (SRL)</h3>
-          <p><strong>Self-Regulation</strong></p>
-          <p>개별 학습자가 자신의 인지, 동기, 감정을 스스로 모니터링하고 통제하는 독립적 조절</p>
+          <h3>1. 흥미 (Interest)</h3>
+          <p>특정 주제에 주의를 집중하고 지속적으로 **다시 관여(Re-engage)**하려는 심리적 성향</p>
+        </div>
+        <div class="card">
+          <h3>2. 동기 (Motivation)</h3>
+          <p>목표를 세우고 장애물을 만나도 노력을 쏟아붓게 하는 **목표 지향적 추동력**</p>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 공동 조절 (CoRL)</h3>
-          <p><strong>Co-Regulation</strong></p>
-          <p>동료나 교사가 질문과 피드백을 통해 학습자의 조절 과정을 일시적으로 지지·유도</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3. 사회적 공유 조절 (SSRL)</h3>
-          <p><strong>Shared Regulation</strong></p>
-          <p>소집단 전체가 공동의 목표를 세우고, 협업 갈등 시 집단적 동기와 전략을 실시간 합의·재조정</p>
+          <h3>3. 참여 (Engagement)</h3>
+          <p>학습 활동에 온몸과 마음으로 뛰어드는 **외현적·내재적 관여의 총체**</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>30.2절의 산나 예르벨라 교수(Sanna Järvelä)의 조절 3대 층위(SRL ➔ CoRL ➔ SSRL)를 체계화합니다.</p>
+        <p>흥미, 동기, 참여의 상호의존적 관계와 이들이 고정된 특성이 아닌 '가변적 프로세스'임을 명확히 합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>하드윈과 예르벨라(Hadwin, Järvelä, & Miller, 2018)의 발견: 성공적인 협력 학습 그룹은 개별 조절(SRL)을 넘어, 팀 전체가 "우리의 현재 전략이 맞는가?"를 끊임없이 모니터링하는 SSRL을 활발히 가동합니다.</p>
+        <p>레닌저와 예르벨라(2022): "학생이 동기가 없다고 탓하지 마라. 동기는 잘 설계된 학습 환경에서 피어나는 꽃이다."</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>조별 과제에서 프리라이더(무임승차) 문제가 발생하는 원인을 SSRL의 부재 관점에서 설명하세요.</p>
+        <p>자신이 최근에 가장 깊게 몰입했던 학습 경험에서 흥미, 동기, 참여가 어떻게 맞물렸는지 회고해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: 30.3 Empirical Studies & Evidence -->
+    <!-- Slide 3: 4-Phase Model of Interest -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">흥미 발달 모델 · Section 30.1.1</span>
+      <h2 class="slide-title">히디 & 레닌저(Hidi & Renninger)의 4단계 흥미 발달 모델</h2>
+      <p class="slide-subtitle">외부의 반짝 호기심에서 평생을 이끄는 내면의 열정으로</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr); font-size: 0.85rem;">
+        <div class="card">
+          <h3>1단계: 촉발된 상황</h3>
+          <p><strong>Triggered Situational</strong><br/>화려한 영상, 퀴즈, 신기한 현상에 의한 일시적 주의 환기</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2단계: 유지된 상황</h3>
+          <p><strong>Maintained Situational</strong><br/>의미 있는 소집단 프로젝트와 긍정 피드백으로 주의 지속</p>
+        </div>
+        <div class="card">
+          <h3>3단계: 태동하는 개인</h3>
+          <p><strong>Emerging Individual</strong><br/>스스로 질문을 던지고 도서관이나 구글을 찾아보기 시작</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>4단계: 잘 발달된 개인</h3>
+          <p><strong>Well-Developed</strong><br/>깊은 지식과 가치를 부여하며 어떤 실패도 인내하고 지속</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전 세계 학습동기 연구의 표준인 히디와 레닌저(2006)의 '4단계 흥미 모델'을 완벽히 숙지합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>교사의 역할은 1단계의 '상황적 흥미'를 2~3단계의 '개인적 흥미'로 진화시키는 정교한 장기 비계를 설계하는 것입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신의 취미나 전공 분야가 1단계에서 4단계로 발전했던 계기들을 되짚어보게 하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Motivation Theories: SDT & Expectancy-Value -->
     <section class="slide" data-index="3">
-      <span class="slide-badge">실증 연구 · Section 30.3</span>
-      <h2 class="slide-title">30.3 흥미·동기·참여의 5대 대표 실증 연구 분석</h2>
-      <p class="slide-subtitle">비디오 분석과 맞춤형 질문 비계로 입증된 학습과학적 증거 (Alexander; Järvelä; Renninger)</p>
+      <span class="slide-badge">동기 이론의 정수 · Section 30.1.2</span>
+      <h2 class="slide-title">자기결정성(SDT)과 기대-가치 이론(Expectancy-Value)</h2>
+      <p class="slide-subtitle">인간이 몰입하고 노력하는 두 가지 거대한 심리학적 기둥</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>📹 Järvelä et al. (2016) 비디오 연구</h3>
+          <h3>🌟 자기결정성 이론 (Deci & Ryan, SDT)</h3>
           <ul>
-            <li>84시간의 소집단 협력 학습 비디오 로그 전수 분석</li>
-            <li><strong>고성취 소집단일수록 인지적 난관에 부딪혔을 때 SSRL(사회적 공유 조절)을 2배 이상 빈번하게 가동</strong>함을 실증</li>
+            <li><strong>자율성 (Autonomy)</strong>: 내가 선택하고 주도한다는 느낌</li>
+            <li><strong>유능감 (Competence)</strong>: 성장하고 숙달하고 있다는 성취감</li>
+            <li><strong>관계성 (Relatedness)</strong>: 타인과 연결되고 존중받는다는 소속감</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-indigo);">
+          <h3 style="color: var(--accent-indigo);">🎯 기대-가치 이론 (Wigfield & Eccles)</h3>
+          <ul>
+            <li><strong>성공 기대 (Expectancy)</strong>: "내가 노력하면 이 과제를 성공할 수 있는가?"</li>
+            <li><strong>과제 가치 (Task Value)</strong>: "이 과제가 내 삶에 얼마나 중요하고 유용한가?"</li>
+            <li><strong>동기 = 기대 × 가치</strong> (둘 중 하나가 0이면 동기는 0)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습동기를 뒷받침하는 핵심 이론인 자기결정성 이론(3대 기본 심리 욕구)과 기대-가치 모델을 비교 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학생이 공부를 거부할 때는 능력이 부족해서가 아니라, 선택권(자율성)이 박탈되었거나 과제의 가치를 느끼지 못하기 때문입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>수업에서 학생들에게 '선택권(Choice)'을 부여하는 3가지 실천 방안을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: 4 Dimensions of Engagement -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">참여의 4차원 · Section 30.1.3</span>
+      <h2 class="slide-title">참여(Engagement)의 4차원: 수동적 출석에서 에이전틱 참여로</h2>
+      <p class="slide-subtitle">존마셜 리브(Johnmarshall Reeve)의 4차원 참여 프레임워크</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr); font-size: 0.85rem;">
+        <div class="card">
+          <h3>1. 행동적 참여</h3>
+          <p><strong>Behavioral</strong><br/>수업 출석, 필기, 손들기, 과제 제출 등 외현적 행동</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 인지적 참여</h3>
+          <p><strong>Cognitive</strong><br/>심층 전략 사용, 메타인지적 점검, 오답 이유 탐구</p>
+        </div>
+        <div class="card">
+          <h3>3. 정서적 참여</h3>
+          <p><strong>Emotional</strong><br/>호기심, 즐거움, 열정 (지루함과 불안의 극복)</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>4. 에이전틱 참여</h3>
+          <p><strong>Agentic</strong><br/>교사에게 질문하고 과제 조건을 능동적으로 변경 제안</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>참여의 4대 차원을 이해하고, 특히 학습자가 환경을 주체적으로 바꾸는 '에이전틱 참여(Agentic Engagement)'의 중요성을 강조합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>단순히 조용히 앉아 있는 '얌전한 학생(행동적 참여)'을 넘어, "선생님, 이 과제를 이렇게 바꿔서 해봐도 될까요?"라고 묻는 에이전틱 학생을 길러야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들의 '에이전틱 참여'를 장려하기 위해 교실 문화를 어떻게 개방해야 할지 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: 3 Levels of Regulation: SRL, CoRL, SSRL -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">학습 조절 층위 · Section 30.2</span>
+      <h2 class="slide-title">학습 조절의 3대 층위: SRL ➔ CoRL ➔ SSRL</h2>
+      <p class="slide-subtitle">산나 예르벨라 & 앨리슨 해드윈(Hadwin, Järvelä, & Miller, 2018)의 조절 모델</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 자기 조절 (SRL)</h3>
+          <p><strong>Self-Regulation</strong><br/>개별 학습자가 혼자 자신의 인지와 동기를 모니터링하고 제어</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 공동 조절 (CoRL)</h3>
+          <p><strong>Co-Regulation</strong><br/>교사나 숙련된 동료가 일시적으로 조절을 비계(Scaffolding)해 줌</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>3. 사회적 공유 조절 (SSRL)</h3>
+          <p><strong>Socially Shared (SSRL)</strong><br/>팀 전체가 모여 <strong>공동의 목표, 동기, 전략을 함께 협상하고 조율</strong></p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>협력 학습에서 동기와 감정이 조율되는 3단계 위계(SRL, CoRL, SSRL)를 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>팀 프로젝트가 실패하는 이유는 지식이 부족해서가 아니라, 팀원들 간에 '동기적 갈등과 혼란'을 함께 조율하는 SSRL 역량이 없기 때문입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>팀원이 의욕을 잃고 침묵할 때 팀 전체가 어떻게 SSRL을 발휘해 동기를 되살릴 수 있을지 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: SSRL in Collaborative Challenges -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">협력적 동기 조절 · Section 30.2</span>
+      <h2 class="slide-title">협력 과제 위기 상황에서의 SSRL 스캐폴딩</h2>
+      <p class="slide-subtitle">인지적 과부하, 감정적 충돌, 동기 상실에 대처하는 팀 조절 프로토콜</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">⚡ 협력 학습의 3대 위기 지점</h3>
+          <ul>
+            <li><strong>인지적 위기</strong>: 과제가 너무 어려워 팀 전체가 길을 잃음 (Confusion)</li>
+            <li><strong>동기적 위기</strong>: "어차피 우리 팀은 망했다"는 집단 무력감 발생</li>
+            <li><strong>정서적 위기</strong>: 의견 충돌로 인한 감정 싸움과 냉기류</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🎯 Renninger et al. (2011) 맞춤 비계 연구</h3>
+          <h3 style="color: var(--accent-emerald);">🛡️ SSRL 개입 전략 (Järvelä et al.)</h3>
           <ul>
-            <li>학습자의 흥미 발달 단계에 따라 '상황적 흥미 집단'에는 탐색적 힌트를, '개인적 흥미 집단'에는 메타인지적 질문을 차별 제공</li>
-            <li><strong>맞춤형 비계 제공 시 수학 학업 성취도 및 지속 참여율 극대화</strong></li>
+            <li><strong>조절 프롬프트</strong>: "우리의 현재 목표는 무엇이며, 무엇이 막혔는가?" 자가 진단</li>
+            <li><strong>동기 회복 대화</strong>: 역할을 재분배하고 작은 성공을 축하하는 팀 문화</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>30.3절의 핵심 실증 연구들(Järvelä et al., 2016; Renninger et al., 2011)의 데이터와 시사점을 다룹니다.</p>
+        <p>소집단 협력 학습에서 발생하는 위기를 SSRL(사회적으로 공유된 조절)로 극복하는 구체적 메커니즘을 배웁니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>이 연구들은 흥미와 동기가 주관적인 느낌에 그치지 않고, 학습자의 비디오 행동 로그와 학업 성취 데이터로 정밀하게 측정 및 지원될 수 있음을 증명합니다.</p>
+        <p>예르벨라 연구팀은 비디오 및 생체 센서 분석을 통해 우수한 협력 그룹일수록 SSRL 발화 빈도가 3배 이상 높음을 증명했습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>인공지능 대시보드를 통해 학생 소집단의 SSRL 상태를 실시간 감지하는 미래 기술을 논의하세요.</p>
+        <p>팀 프로젝트 체크리스트에 '팀 동기 및 협력 상태 점검표'를 포함시키는 방안을 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: Summary & Looking Ahead to Ch 31 -->
-    <section class="slide" data-index="4">
-      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 30.4</span>
-      <h2 class="slide-title">30.4 Chapter 30 총괄 결론 & Chapter 31 교사 학습 예고</h2>
-      <p class="slide-subtitle">학습자의 흥미와 동기 조절에서, 이를 수업으로 구현하는 '교사 학습 연구(Fishman et al.)'로!</p>
+    <!-- Slide 8: Key Empirical Studies -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">실증 연구 · Section 30.3</span>
+      <h2 class="slide-title">흥미, 동기, 참여의 5대 대표 실증 연구 (Key Empirical Studies)</h2>
+      <p class="slide-subtitle">이론을 실증적으로 증명한 5대 랜드마크 연구와 교육 현장 발견점</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr); font-size: 0.85rem;">
+        <div class="card highlight-card">
+          <h3>1. Alexander et al. (2019)</h3>
+          <p><strong>다양한 진입점 (Multiple Access)</strong><br/>다양한 진입점 설계를 통해 소수자 및 소외계층 학생들의 과학 흥미 촉발</p>
+        </div>
+        <div class="card">
+          <h3>2. Cannady et al. (2019)</h3>
+          <p><strong>장기 진로 경로 (Pathways)</strong><br/>비형식 과학 캠프가 청소년들의 장기적 과학 진로 선택에 미치는 결정적 영향</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. Falk & Needham (2011)</h3>
+          <p><strong>박물관 ➔ 개인 흥미 전이</strong><br/>과학관 방문 경험이 지속적 개인 흥미로 진화하는 심리적 메커니즘 실증</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>4. Järvelä et al. (2016)</h3>
+          <p><strong>84시간 비디오 & SSRL</strong><br/>고성취 소집단일수록 인지적 충돌 시 SSRL(사회적 공유 조절) 발화 빈도가 3배 높음</p>
+        </div>
+        <div class="card">
+          <h3>5. Renninger et al. (2011)</h3>
+          <p><strong>수학 흥미 맞춤 질문 비계</strong><br/>학생의 흥미 발달 단계에 따라 맞춤화된 질문 비계가 수학 성취도를 극대화</p>
+        </div>
+        <div class="card" style="background: var(--surface-secondary);">
+          <h3>📊 실증적 총괄 함의</h3>
+          <p>흥미와 동기는 개인의 타고난 능력이 아니라, <strong>정교하게 설계된 환경에서 발달하는 가변적 과정</strong></p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 30.3절(summary_detailed.md lines 109-116)에 수록된 5대 핵심 실증 연구(Alexander, Cannady, Falk & Needham, Järvelä, Renninger)의 데이터와 학술적 결론을 완벽히 이해합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>특히 산나 예르벨라 연구팀의 84시간 비디오 분석(2016)은 학생들이 협력 학습에서 겪는 위기를 어떻게 SSRL로 극복하는지 결정적 증거를 제시했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>5가지 실증 연구 중 여러분의 교육 현장에 가장 직접적으로 적용할 수 있는 연구 발견점은 무엇인가요?</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Multimodal Learning Analytics (MMLA) -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">다중모달 분석 · Section 30.4</span>
+      <h2 class="slide-title">다중모달 학습 분석(MMLA): 몰입과 스트레스의 실시간 포착</h2>
+      <p class="slide-subtitle">피부전도도(GSR), 심박수, 시선추적, 안면표정 AI를 결합한 정서 분석</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🌟 Ch 30 의미 있는 학습의 핵심 교훈</h3>
+          <h3>📊 다중모달 데이터 스트림 (Järvelä et al., 2021)</h3>
           <ul>
-            <li>1. 흥미는 고정된 것이 아니라 4단계를 거쳐 발달한다</li>
-            <li>2. 상황적 흥미를 개인적 흥미로 발전시키는 비계를 짜라</li>
-            <li>3. 팀 협력에서 사회적으로 공유된 조절(SSRL)을 촉진하라</li>
-            <li>4. 학습자의 흥미 단계에 맞춰 차별화된 피드백을 제공하라</li>
+            <li><strong>스마트 워치/GSR 센서</strong>: 스트레스 및 생리적 각성(Physiological Arousal) 포착</li>
+            <li><strong>시선 추적기 (Eye-tracking)</strong>: 화면의 어느 지점에 공동 주의집중(Joint Attention)을 두고 있는지 추적</li>
+            <li><strong>안면 표정 AI</strong>: 혼란(Confusion), 지루함(Boredom), 깨달음(Eureka) 표정 실시간 감지</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 31 예고: 교사 학습 연구 (Teacher Learning)</h3>
-          <p><strong>Barry J. Fishman, Carol K. K. Chan, & Elizabeth A. Davis</strong></p>
-          <p>교사도 학습자이다! 교사 전문성 개발(PD), PCK(교수내용지식), 교사의 수업 노티싱(Teacher Noticing), 교육과정 비계!</p>
+        <div class="card">
+          <h3>🎯 실시간 적응형 비계 투입</h3>
+          <p>소집단 전체의 스트레스 수치가 임계점을 넘는 순간, AI가 교사에게 알람을 보내거나 화면에 **SSRL 힌트 팝업**을 자동 투입</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 30(30.0~30.4)을 정리하고 다음 Chapter 31(교사 학습 연구: Fishman et al.)을 예고합니다.</p>
+        <p>산나 예르벨라 교수 연구팀이 주도하는 최첨단 '다중모달 학습 분석(MMLA)'과 정서 추적 기술을 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 31은 학생의 학습을 변화시키려면 먼저 교사가 어떻게 배우고 성장하는지를 이해해야 한다는 '교사 학습의 과학'을 다룹니다.</p>
+        <p>설문지로 사후 측정하던 동기를 이제는 밀리초(ms) 단위의 생체 센서와 AI로 실시간 측정하여 즉각적 비계를 제공할 수 있게 되었습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>다음 Chapter 31로 나아갑니다.</p>
+        <p>생체 센서와 AI를 활용한 학습 정서 분석이 가져올 교육적 혜택과 프라이버시 윤리 문제를 토론하세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 10: AI Dashboards & Affective Tutoring -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">정서 AI 튜터 · Section 30.4</span>
+      <h2 class="slide-title">AI 대시보드와 적응형 감성 튜터링 (Affective Tutoring)</h2>
+      <p class="slide-subtitle">좌절(Frustration)을 '생산적 실패(Productive Failure)'로 전환시키는 정서 비계</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 혼란 감지 (Confusion)</h3>
+          <p>코드 에러가 5회 반복되고 마우스 클릭이 급격히 빨라지는 좌절 징후 포착</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 온화한 공감 피드백</h3>
+          <p><strong>"지금 풀리지 않아 답답하지? 이 에러는 전 세계 프로그래머 90%가 겪는 과정이야."</strong></p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>3. 메타인지 힌트 투입</h3>
+          <p>정답을 바로 주지 않고 "3번째 줄 변수 타입을 다시 한번 확인해 볼까?" 유도</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>생성형 AI와 지능형 튜터(ITS)가 단순 정답 피드백을 넘어 학습자의 정서와 동기를 지지하는 '감성 튜터링'으로 진화한 모습을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>디멜로와 그레이서(D'Mello & Graesser): 학습에서 혼란(Confusion)은 개념 변화를 위해 유익하지만, 이것이 좌절(Frustration)로 굳어지기 전에 개입해야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>AI 튜터가 학생에게 제공해야 할 가장 따뜻한 정서적 피드백 메시지를 작성해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Teacher Role in Motivation -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">교사의 역할 · Section 30.5</span>
+      <h2 class="slide-title">동기 촉진자로서의 교사: 자율성 지지 언어와 칭찬의 과학</h2>
+      <p class="slide-subtitle">캐롤 드웩(Carol Dweck)의 성장 마인드셋 칭찬과 통제적 언어 탈피</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 독이 되는 교사의 반응</h3>
+          <ul>
+            <li><strong>지능 칭찬</strong>: "넌 머리가 참 좋구나!" ➔ 실패를 두려워하고 도전을 기피하게 만듦</li>
+            <li><strong>통제적 지시</strong>: "선생님이 시키는 대로만 해!" ➔ 외적 보상과 처벌에 의존</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 힘이 되는 자율성 지지 반응</h3>
+          <ul>
+            <li><strong>과정/노력 칭찬</strong>: "끝까지 포기하지 않고 다른 전략을 시도한 끈기가 멋져!"</li>
+            <li><strong>이유 설명</strong>: "이 활동을 왜 하는지, 여러분의 삶에 왜 유용한지" 맥락 공유</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>교사의 언어 습관 하나가 학생의 내재적 동기와 성장 마인드셋을 어떻게 좌우하는지 실증 원리를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>리브(Reeve, 2009): 자율성 지지형 교실(Autonomy-supportive classroom)의 학생들은 학업 성취뿐 아니라 심리적 행복감과 창의성이 월등히 높습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 학창 시절 교사에게 들었던 말 중 가장 큰 용기를 주었던 말과 반대로 상처를 주었던 말을 회고하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Equity & Meaningful Learning -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">형평성과 동기 · Section 30.5</span>
+      <h2 class="slide-title">형평성과 의미 있는 학습: 모두를 위한 의미의 발견</h2>
+      <p class="slide-subtitle">소외계층 학습자에게 진정한 과제 가치(Task Value)와 자기효능감 선물하기</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>대표성 있는 롤모델</h3>
+          <p>자신과 비슷한 배경을 가진 선배와 전문가들의 성공 스토리 공유</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>지역사회 기여 과제</h3>
+          <p>내가 배우는 지식이 우리 동네와 가족의 문제를 해결하는 데 쓰인다는 효능감</p>
+        </div>
+        <div class="card">
+          <h3>공평한 성공 기회</h3>
+          <p>모든 학생이 '작은 성취의 기쁨(Micro-successes)'을 맛볼 수 있는 점진적 과제 설계</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>동기와 의미 있는 학습이 취약계층 학생들에게 미치는 교육 형평성의 결정적 가치를 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>레닌저와 예르벨라: 교육 형평성은 단순히 시설을 지원하는 것을 넘어, 모든 아이가 "내 배움이 세상에서 가장 가치 있다"고 느끼게 만드는 것입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학습 무기력에 빠진 학생에게 '작은 성공 경험'을 선물하는 맞춤형 프로젝트를 구안하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 30</span>
+      <h2 class="slide-title">코딩 흥미의 4단계 발달: 블록 코딩에서 오픈소스 기여로</h2>
+      <p class="slide-subtitle">엔트리/스크래치에서 깃허브(GitHub) 프로젝트로 이어지는 종단적 성장</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 단계별 코딩 교육 설계</h3>
+          <ul>
+            <li><strong>1단계 (촉발)</strong>: 화려한 블록 코딩 애니메이션과 피지컬 로봇 댄스 시연</li>
+            <li><strong>2단계 (유지)</strong>: 짝과 함께 만드는 간단한 2D 플랫포머 게임 제작</li>
+            <li><strong>3단계 (태동)</strong>: 파이썬 알고리즘을 스스로 독학하며 디스코드 커뮤니티 활동</li>
+            <li><strong>4단계 (발달)</strong>: 실제 사용자가 있는 오픈소스 소프트웨어 개발 및 릴리즈</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 교육적 시사점</h3>
+          <p>초등 단계의 일시적 호기심(1단계)을 중·고등 단계의 진로 몰입(4단계)으로 연결하는 **장기적 흥미 파이프라인(Interest Pipeline)** 구축 필수</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>컴퓨터 프로그래밍 교육에 히디 & 레닌저의 4단계 흥미 모델을 완벽하게 적용한 교육과정 설계 모델을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>많은 코딩 교육이 1단계(블록 코딩 체험)에서 끝나버려 학생들이 텍스트 코딩의 장벽을 넘지 못합니다. 2~3단계의 지지적 비계가 필수적입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>블록 코딩에서 텍스트 코딩(파이썬)으로 넘어갈 때 학생들의 흥미와 자신감이 꺾이지 않게 돕는 브릿지 전략을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 30.6</span>
+      <h2 class="slide-title">머리(Cognition)와 가슴(Emotion)이 함께 뛰는 배움</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 의미 있는 학습의 3대 나침반</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>흥미 발달의 사다리</h3>
+          <p>반짝이는 상황적 호기심을 평생을 지탱하는 내면의 지적 열정으로 양육</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>협력적 SSRL 조절</h3>
+          <p>소집단 협력 속에서 동기적 위기를 함께 극복하는 사회적 공유 조절 역량 체득</p>
+        </div>
+        <div class="card">
+          <h3>다중모달 정서 비계</h3>
+          <p>생체 센서와 AI 기술로 학생의 좌절을 감지하여 적시에 따뜻한 지적 비계 제공</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 30의 모든 핵심 교훈을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>진정한 배움은 차가운 컴퓨터식 계산이 아니라, 호기심에 눈을 반짝이고, 실패에 아쉬워하며, 동료와 함께 환호하는 뜨거운 인간적 축제입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"오늘 수업을 통해 여러분의 교육 현장에서 학생들의 '가슴'을 뛰게 할 한 가지 설계는 무엇인가요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 31 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part VI</span>
+      <h2 class="slide-title">다음 여정: Chapter 31 교사 학습과 전문성 발달</h2>
+      <p class="slide-subtitle">Teacher Learning Research and the Learning Sciences (Barry J. Fishman et al.)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 30 vs Ch 31 연계성</h3>
+          <ul>
+            <li><strong>Ch 30 의미 있는 학습</strong>: 학생의 흥미, 동기, 참여, SSRL 조절</li>
+            <li><strong>Ch 31 교사 학습</strong>: 이 모든 혁신을 교실에서 실행하는 <strong>교사들의 학습과 전문성 발달(TPCK, 비디오 클럽, 전문 학습 공동체 PLC)</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 교육 개혁의 핵심 주체인 '교사'에게로</h3>
+          <p>학생의 학습을 연구하던 학습과학이, 이제는 가르치는 주체인 '교사 자신의 배움'을 탐구하는 혁신적 장으로 나아갑니다.</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 30을 마무리하고, 다음 챕터인 Chapter 31(Teacher Learning)과의 이론적 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>미시간 대학교 배리 피시먼(Barry Fishman) 교수와 힐다 보르코(Hilda Borko) 교수의 교사 학습 연구로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 31을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 30: Designing for Meaningful Learning (Renninger & Järvelä)</div>
-    <div class="footer-center" id="slide-counter">01 / 05</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
