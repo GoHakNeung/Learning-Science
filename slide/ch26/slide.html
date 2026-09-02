@@ -243,260 +243,476 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 26 · Part V Historical Thinking</span>
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 26 · Part V Disciplines</span>
       <h1 class="slide-title">Learning History</h1>
-      <p class="slide-subtitle">역사 학습: 사실 암기에서 사료 비판과 역사적 사고력으로 — 1차·2차 개념과 마스터 내러티브 해체</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+      <p class="slide-subtitle">역사 학습: 사실 암기에서 사료 비판과 역사적 사고력으로 — 1차·2차 개념, 마스터 내러티브 해체, 그리고 민주시민 역량</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Mario Carretero</strong> (UAM & FLACSO) & <strong>Everardo Perez-Manjarrez</strong> (Harvard Univ.)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 534–553)</p>
+          <p><strong>Mario Carretero</strong> (Univ Autónoma de Madrid)<br/><strong>Everardo Perez-Manjarrez</strong> (Harvard Univ)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 26</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (26.0 ~ 26.3)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>26.0 역사적 사고의 본질</strong>: 단일 암기 탈피 & 사료 비판</li>
-            <li><strong>26.1 1차 개념 & 2차 메타개념</strong> (Table 26.1 & Figure 26.1)</li>
-            <li><strong>26.2 학교 마스터 내러티브의 6대 왜곡</strong> (영웅주의, 선악 이분법)</li>
-            <li><strong>26.3 다원적 역사 교육</strong>: 다성성(Polyphony) 복원 & 시민성</li>
+            <li><strong>역사적 사고(Historical Thinking)</strong>: 연도 암기에서 1차 사료 비판과 해석으로</li>
+            <li><strong>1차 실질 개념 vs 2차 절차적 메타개념</strong>: 사료 증거, 인과성, 맥락화, 변화</li>
+            <li><strong>마스터 내러티브(Master Narratives) 해체</strong>: 6대 왜곡 특성과 다원적 관점</li>
+            <li><strong>민주시민 역량</strong>: 과거를 통해 현재의 사회적 갈등을 비판적으로 조망하기</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 역사를 '연도와 사실 암기 과목'에서 '상충하는 1차 사료를 비판적으로 검증하고 해석하는 역사적 사고력(Historical Thinking)'으로 재정의하는 인지과학적·사회문화적 분석을 다룹니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>마리오 카레테로 교수는 역사 교육과 인지 발달, 국가주의 내러티브 연구의 세계적 석학입니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>역사 교육이 단순한 국가적 신화나 연도 암기를 넘어, 불완전한 사료를 교차 검증하고 다원적 관점을 구성하는 '역사적 사고력(Historical Thinking)'으로 거듭나는 과정을 이해합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>마리오 카레테로와 에버라도 페레즈 교수는 역사 인지 발달 및 국가 공식 역사 서사의 인지적 왜곡을 연구한 세계적 석학들입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"교과서에 실린 역사 이야기는 '과거에 일어난 팩트'일까요, 아니면 역사가들이 구성한 '하나의 해석'일까요?"라는 질문으로 시작하세요.</p>
+        <p>"역사 교과서에 쓰인 내용은 과연 100% 객관적 사실일까요, 아니면 역사가의 해석일까요?"로 토론을 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: 26.1 First- and Second-Order Concepts -->
+    <!-- Slide 2: Definition of Historical Thinking -->
     <section class="slide" data-index="1">
-      <span class="slide-badge">개념 체계 · Section 26.1</span>
-      <h2 class="slide-title">26.1 역사적 사고를 구성하는 1차 개념과 2차 메타개념</h2>
-      <p class="slide-subtitle">내용 지식(Substantive)과 역사학자의 탐구 도구(Procedural)의 이원 구조 (Lee; Seixas)</p>
+      <span class="slide-badge">학문적 정의 · Section 26.0</span>
+      <h2 class="slide-title">과거 사실 암기에서 '역사적 사고력'으로의 대전환</h2>
+      <p class="slide-subtitle">샘 와인버그(Sam Wineburg)의 '부자연스러운 행위(An Unnatural Act)'로서의 역사적 사고</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>🏛️ 1차 실질적 개념 (First-Order)</h3>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 전통적 역사관: 닫힌 내러티브 암기</h3>
           <ul>
-            <li><strong>역사의 내용 지식</strong>: 왕, 국가, 혁명, 봉건제, 민주주의, 경제</li>
-            <li><strong>인지 발달</strong>: 구체적 인격화(프랑스 혁명=나폴레옹)에서 제도적·구조적 상호작용 개념으로 고도화</li>
+            <li>연도, 조약, 위인, 사건의 이름을 시험용으로 기계적 암기</li>
+            <li>역사를 완성된 단 하나의 정답 이야기(Story)로 수용</li>
+            <li>자연스러운 일상적 사고(확증 편향, 도덕적 이분법)에 의존</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🔍 2차 절차적 메타개념 (Second-Order)</h3>
+          <h3 style="color: var(--accent-emerald);">💡 학습과학적 역사관: 역사적 사고 (Historical Thinking)</h3>
           <ul>
-            <li><strong>사료 증거 (Evidence)</strong>: 1차 사료의 신뢰성과 편향 검증</li>
-            <li><strong>인과 관계 (Causation)</strong>: 복합적 다중 원인 및 구조적 요인 분석</li>
-            <li><strong>역사적 맥락화 (Contextualization)</strong>: 당시 시대적 가치관으로 조망</li>
-            <li><strong>연속성과 변화 (Change & Continuity)</strong></li>
+            <li>상충하는 1차 사료(일기, 신문, 공문서)들을 비판적으로 비교·대조</li>
+            <li>당대 사람들의 시공간적 맥락 속으로 들어가 생각하는 <strong>'역사적 공감(Historical Empathy)'</strong></li>
+            <li>훈련을 통해서만 도달할 수 있는 <strong>부자연스럽고 엄밀한 비판적 인지 실천</strong></li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>26.1절의 핵심 이론인 1차 개념(내용 지식)과 2차 메타개념(절차적 탐구 도구)의 구분을 명확히 정립합니다.</p>
+        <p>샘 와인버그 교수가 왜 역사적 사고를 '부자연스러운 행위(Unnatural Act)'라고 불렀는지 그 인지적 깊이를 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>피터 리(Peter Lee)와 세이샤스(Peter Seixas)의 이론: 역사를 배운다는 것은 1차 사실을 많이 외우는 것이 아니라, 2차 메타개념을 통해 과거를 스스로 해석할 줄 아는 것입니다.</p>
+        <p>인간의 자연스러운 본능은 과거를 '현재의 내 잣대(Presentism)'로 심판하는 것입니다. 과거 사람들의 맥락 속으로 들어가는 것은 고도의 인지적 훈련이 필요합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>이어지는 슬라이드에서 1차 개념의 4대 발달 축(Table 26.1)을 살펴봅니다.</p>
+        <p>임진왜란이나 6.25 전쟁을 기록한 한국, 일본, 중국, 미국의 사료가 왜 서로 다른지 학생들과 비교해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: Table 26.1 Development of 4 Historical Concepts -->
+    <!-- Slide 3: 1st-Order vs 2nd-Order Concepts -->
     <section class="slide" data-index="2">
-      <span class="slide-badge">개념 발달 · Section 26.1 (Table 26.1)</span>
-      <h2 class="slide-title">Table 26.1 역사적 개념의 4대 인지 발달 축</h2>
-      <p class="slide-subtitle">구체적·정적 환원에서 추상적·동적 상호의존성 체계로의 진화 (Carretero & Perez-Manjarrez)</p>
-      <div class="table-container">
-        <table class="styled-table">
-          <thead>
-            <tr>
-              <th>발달 변화 축</th>
-              <th>역사 개념 영역</th>
-              <th>초기 순진한 이해 (Naive)</th>
-              <th>최종 성숙한 이해 (Mature)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td rowspan="2"><strong>구체적 ➔ 추상적</strong></td>
-              <td><strong>사실 (Facts)</strong></td>
-              <td>직접 지각되는 피상적 사건 암기</td>
-              <td>심층적 이론적 구조와 맥락적 정의</td>
-            </tr>
-            <tr>
-              <td><strong>제도 (Institutions)</strong></td>
-              <td>특정 영웅 인물의 인격화로 환원</td>
-              <td>사회적 제도 및 법률의 구조적 기능</td>
-            </tr>
-            <tr>
-              <td rowspan="2"><strong>정적 ➔ 동적</strong></td>
-              <td><strong>공존 현실 (Simultaneous)</strong></td>
-              <td>정치, 경제, 사회 영역이 분리되어 보임</td>
-              <td>다차원적 역사 현실의 상호작용 통합</td>
-            </tr>
-            <tr>
-              <td><strong>연속 현실 (Successive)</strong></td>
-              <td>사회 질서를 불변의 자연법칙으로 오해</td>
-              <td>역사적 변화와 생성을 상대화하여 이해</td>
-            </tr>
-          </tbody>
-        </table>
+      <span class="slide-badge">개념 체계 · Section 26.1</span>
+      <h2 class="slide-title">1차 실질적 개념 vs 2차 절차적 메타개념 (Table 26.1)</h2>
+      <p class="slide-subtitle">역사의 내용 지식과 역사가의 탐구 도구의 이원 구조</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🏛️ 1차 실질적 개념 (First-Order: Substantive)</h3>
+          <ul>
+            <li>역사의 내용 지식: 왕, 국가, 계급, 혁명, 봉건제, 민주주의</li>
+            <li><strong>발달 궤적</strong>: 단순 영웅 인물(나폴레옹) 중심 ➔ <strong>사회 구조와 제도적 상호작용 개념으로 심화</strong></li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-indigo);">
+          <h3 style="color: var(--accent-indigo);">🔍 2차 절차적 메타개념 (Second-Order: Procedural)</h3>
+          <ul>
+            <li><strong>사료 증거 (Evidence)</strong>: 신뢰성과 저자의 의도 평가</li>
+            <li><strong>인과성 (Causation)</strong>: 복합적 단기·장기 인과망 분석</li>
+            <li><strong>연속성과 변화 (Continuity & Change)</strong>: 발전과 퇴보의 공존</li>
+            <li><strong>역사적 중요성 (Historical Significance)</strong></li>
+          </ul>
+        </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>26.1절의 Table 26.1(역사 개념의 4대 발달 축)을 상세히 해설합니다.</p>
+        <p>원서 Table 26.1을 기반으로 1차 실질 개념과 2차 메타개념의 차이를 정립합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>아동은 역사를 '위인들의 행위 모음'으로 단순화하지만, 교육을 통해 사회 제도가 어떻게 형성되고 변화하는지 구조적으로 파악하게 됩니다.</p>
+        <p>리(Peter Lee)와 셰밀트(Denis Shemilt): 2차 메타개념(증거, 인과, 변화)을 갖추지 못한 학생은 역사적 사실(1차 개념)을 아무리 많이 외워도 역사적 사고를 할 수 없습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>학생들이 역사를 배울 때 겪는 인격화(Personalization)의 한계를 지적하세요.</p>
+        <p>프랑스 혁명을 배울 때 바스티유 감옥 습격(1차 사실)과 혁명의 복합 원인 분석(2차 인과 메타개념)의 차이를 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: Figure 26.1 Sourcing Heuristic & Columbus Engraving -->
+    <!-- Slide 4: Wineburg's 3 Sourcing Heuristics -->
     <section class="slide" data-index="3">
-      <span class="slide-badge">사료 비판 · Section 26.1</span>
-      <h2 class="slide-title">26.1 1차 사료 분석과 출처 확인 (Sourcing: Figure 26.1)</h2>
-      <p class="slide-subtitle">콜럼버스와 카시케 판화 분석: "역사 그림은 과거의 사진이 아닌, 시대의 해석적 산물이다"</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1.2fr;">
-        <div class="card highlight-card">
-          <h3>🔍 출처 확인(Sourcing) 휴리스틱</h3>
-          <ul>
-            <li><strong>초보자</strong>: 그림을 "당시 사건을 그대로 찍은 사진"으로 순진하게 신뢰</li>
-            <li><strong>역사가적 사고</strong>: 사건 100년 후 유럽 판화가(Theodore de Bry)가 그린 '역사학적 인공물'임을 간파</li>
-            <li>누가, 왜, 어떤 이데올로기로 제작했는가 비판적 질문</li>
-          </ul>
-        </div>
-        <div class="img-container" onclick="openModal('images/fig26_1.png')">
-          <img src="images/fig26_1.png" alt="Figure 26.1 Columbus receives presents from the Cacique">
-          <div class="img-caption">🔍 [Figure 26.1] 테오도르 드 브리의 판화 (1594) 사료 분석 (클릭하여 확대)</div>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>26.1절의 핵심 도판인 Figure 26.1(콜럼버스와 카시케 판화 분석)을 통해 와인버그(Wineburg)의 출처 확인(Sourcing) 휴리스틱을 설명합니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>카레테로의 실증 연구: 12~14세 학생들은 그림을 실재의 복사본으로 믿는 반면, 16세 이상과 전문가는 그림의 정치적 제작 의도를 읽어냅니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>사료를 볼 때 "이 문서는 누가, 누구를 위해 썼을까?"를 먼저 묻는 습관을 강조하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 5: 26.2 Master Narratives & 6 Distortions -->
-    <section class="slide" data-index="4">
-      <span class="slide-badge">내러티브 해체 · Section 26.2</span>
-      <h2 class="slide-title">26.2 학교 마스터 내러티브의 6대 인지·서사적 왜곡</h2>
-      <p class="slide-subtitle">국가 정체성 형성을 위해 조작된 공식 역사 서사의 인지적 함정 (Carretero & Bermudez, 2012)</p>
+      <span class="slide-badge">사료 비판 휴리스틱 · Section 26.1.2</span>
+      <h2 class="slide-title">샘 와인버그의 사료 분석 3대 핵심 휴리스틱</h2>
+      <p class="slide-subtitle">역사학자처럼 텍스트를 비판적으로 심문하는 3가지 읽기 전략</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">1. 허구적 주체 설정</h3>
-          <p>'우리 민족'이 수천 년 전부터 동일한 본질로 존재해 왔다는 신화적 주체 상정</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">2. 감정적 동일시</h3>
-          <p>역사적 고난과 승리를 나와 국가의 일체화로 받아들이며 무비판적 애국심 유도</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3. 영웅 중심주의</h3>
-          <p>구조적 원인을 지우고 소수 위인의 영웅적 결단으로 역사를 단순화</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-blue);">
-          <h3>4. 단선적 자유 탐색</h3>
-          <p>역사를 '자유와 영토 회복'을 향한 필연적인 단선적 진보 서사로 포장</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">5. 도덕적 선악 이분법</h3>
-          <p>아군(선) vs 적군(악)의 유치한 이분법으로 복합적 국제 갈등을 환원</p>
-        </div>
         <div class="card highlight-card">
-          <h3>6. 낭만적 본질주의</h3>
-          <p>민족의 문화적 본질이 불변의 순수성을 지닌다는 본질주의적 망상</p>
+          <h3>1. 출처 확인 (Sourcing)</h3>
+          <p><strong>"누가, 언제, 어떤 의도로 썼는가?"</strong><br/>본문을 읽기 전에 저자의 배경, 출판 맥락, 이해관계를 먼저 검토</p>
+        </div>
+        <div class="card">
+          <h3>2. 맥락화 (Contextualization)</h3>
+          <p><strong>"당시의 시대적 상황은 어떠했는가?"</strong><br/>사건이 일어났던 당시의 지리, 문화, 사회적 규범 속으로 텍스트를 배치</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 교차 대조 (Corroboration)</h3>
+          <p><strong>"다른 사료들도 일치하는가?"</strong><br/>여러 독립된 사료들을 서로 대조하여 진술의 일치성과 불일치 지점 발굴</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>26.2절(26.2.1~26.2.6)에 체계화된 학교 마스터 내러티브의 6가지 서사적 왜곡 구조를 분석합니다.</p>
+        <p>역사적 문해력의 핵심인 3대 사료 비판 휴리스틱(Sourcing, Contextualization, Corroboration)을 배웁니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>국가주의 역사 교육은 국민 통합을 위해 역사를 신화화하지만, 이는 비판적 사고력을 마비시키고 타국에 대한 배타적 민족주의를 조장합니다.</p>
+        <p>와인버그(1991): 고등학생들은 텍스트를 진실로 믿고 첫 문장부터 읽지만, 전문 역사가들은 텍스트 맨 아래 '각주와 저자(Source)'부터 먼저 확인합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>우리나라 역사 교과서에도 이러한 6대 왜곡 특성이 어떻게 나타나는지 성찰해 보세요.</p>
+        <p>오늘날 인터넷 가짜 뉴스를 판별할 때 와인버그의 3대 사료 비판 전략이 어떻게 직결되는지 연결하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 6: 26.3 Models of History Education & Polyphony -->
+    <!-- Slide 5: Case of Columbus Engraving -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">사료 분석 사례 · Figure 26.1</span>
+      <h2 class="slide-title">콜럼버스와 카시케 판화 분석: 사료는 인공물이다</h2>
+      <p class="slide-subtitle">테오도르 드 브리(Theodore de Bry, 1594) 판화의 비판적 해체 (Figure 26.1)</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>🔍 사료 비판 인지 분석</h3>
+          <ul>
+            <li><strong>초보 학생의 반응</strong>: "콜럼버스가 원주민 추장(Cacique)을 만나는 실제 장면을 찍은 그림이다" (무비판적 수용)</li>
+            <li><strong>역사적 사고자의 반응</strong>: "이 그림은 사건 발생 100년 후, 신대륙에 가보지도 않은 유럽 판화가가 유럽인의 정복 이데올로기를 정당화하기 위해 그린 **역사학적 인공물(Historiographic Artifact)**이다!"</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig26_1.png')">
+          <img src="images/fig26_1.png" alt="Figure 26.1 Columbus Engraving">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 26.1)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 26.1의 콜럼버스 판화 사례를 통해 시각 사료를 비판적으로 해체하는 역사적 사고 훈련을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>사료는 '과거로 통하는 투명한 창문'이 아니라, 특정인의 관점과 의도가 투영된 '불투명한 인공물'임을 깨닫는 것이 핵심입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>역사 다큐멘터리나 영화의 재연 장면을 볼 때 어떤 비판적 시각을 가져야 할지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Deconstructing Master Narratives -->
     <section class="slide" data-index="5">
-      <span class="slide-badge">미래 모델 · Section 26.3</span>
-      <h2 class="slide-title">26.3 다원적 역사 교육: 다성성(Polyphony) 복원과 시민성</h2>
-      <p class="slide-subtitle">단일 승자 서사에서 소수자의 목소리와 공공 기억의 장소(Memory Sites) 비판으로</p>
+      <span class="slide-badge">마스터 내러티브 비판 · Section 26.2</span>
+      <h2 class="slide-title">공식 학교 역사의 6대 마스터 내러티브 왜곡</h2>
+      <p class="slide-subtitle">국가 정체성 형성을 위해 역사를 신화화하는 6가지 인지·서사적 함정</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr); font-size: 0.85rem;">
+        <div class="card">
+          <h3>1. 허구적 주체 상정</h3>
+          <p>수천 년 전 고대인과 현대인을 동일한 '우리 민족'으로 등치</p>
+        </div>
+        <div class="card">
+          <h3>2. 감정적 동일시</h3>
+          <p>역사적 사건을 나와 국가의 일체화로 몰입 (비판적 거리 상실)</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>3. 영웅주의 신화</h3>
+          <p>복잡한 사회구조를 배제하고 소수 영웅의 결단으로 환원</p>
+        </div>
+        <div class="card">
+          <h3>4. 단선적 진보관</h3>
+          <p>역사를 '자유와 독립'을 향한 필연적인 승리의 서사로 왜곡</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">5. 도덕적 선악 이분법</h3>
+          <p>아군(선) vs 적군(악)의 유치한 대립으로 갈등 단순화</p>
+        </div>
+        <div class="card">
+          <h3>6. 낭만적 본질주의</h3>
+          <p>민족성이 영원불변하다는 비과학적 본질주의 오류</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>카레테로 교수가 밝혀낸 공식 국가 역사 교과서의 6대 마스터 내러티브 왜곡 특성을 비판적으로 점검합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>마스터 내러티브는 국민 통합에는 기여하지만, 학생들의 비판적 인지 능력을 마비시키고 타민족에 대한 배타성을 키울 위험이 큽니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리나라 역사 교과서나 미디어에 녹아 있는 '영웅주의 신화'나 '선악 이분법' 사례를 찾아보게 하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Historical Empathy and Presentism -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">역사적 공감 · Section 26.3</span>
+      <h2 class="slide-title">시대착오(Presentism) 극복과 역사적 공감(Historical Empathy)</h2>
+      <p class="slide-subtitle">과거 사람들을 "미개하고 어리석다"고 심판하지 않고 당대의 눈으로 이해하기</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🗣️ 열린 다성성 (Polyphony)의 복원</h3>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 시대착오적 현재주의 (Presentism)</h3>
           <ul>
-            <li>단 하나의 공식 내러티브가 아닌, 피지배자, 여성, 이민자, 노동자의 목소리 공존</li>
-            <li>상충하는 사료들을 대조하며 <strong>다원적 관점(Perspective Taking)</strong> 형성</li>
+            <li>현대 21세기의 지식, 윤리, 가치관으로 500년 전 사람들의 결정을 비웃고 단죄함</li>
+            <li>"그들은 왜 과학적인 의학 대신 주술을 믿었을까? 바보 같네!" (역사적 맥락 무시)</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🏛️ 공공 역사와 기억의 장소 해체</h3>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 역사적 공감 (Historical Perspective-Taking)</h3>
           <ul>
-            <li>박물관 전시와 기념비가 역사를 어떻게 '정치적으로 소비'하는지 비판적 분석</li>
-            <li>21세기 민주시민으로서의 성찰적 역사 의식(Historical Consciousness) 고양</li>
+            <li>당시 사람들의 제한된 지식, 공포, 종교적 세계관, 경제적 제약 속으로 진입</li>
+            <li><strong>"그 시대의 조건에서는 그 선택이 가장 합리적인 최선이었을 수 있다"</strong>는 다원적 이해</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>26.3절의 다원적 역사 교육 모델과 공공 역사(Public History) 비판을 다룹니다.</p>
+        <p>역사 교육의 핵심 목표인 '시대착오(Presentism)' 극복과 '역사적 공감(Historical Empathy)'의 차이를 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>역사 학습의 궁극적 목표는 과거의 정답을 외우는 것이 아니라, 과거의 다양한 목소리를 통해 현재의 민주적 시민 사회를 성찰하는 것입니다.</p>
+        <p>역사적 공감은 과거인의 악행을 옹호하는 것이 아니라, "인간은 자신이 처한 시대적 조건의 산물"임을 겸허히 깨닫는 인지적 능력입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>논쟁적인 역사적 기념비 철거 문제를 사료 비판적 관점에서 토론하세요.</p>
+        <p>조선시대 노비제도나 중세 마녀재판을 당대 사람들의 시각에서 분석하는 수업 활동을 토론하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 7: Summary & Looking Ahead to Ch 27 -->
-    <section class="slide" data-index="6">
-      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 26.4</span>
-      <h2 class="slide-title">26.4 Chapter 26 총괄 결론 & Chapter 27 문해력 학습 예고</h2>
-      <p class="slide-subtitle">역사 사료의 비판적 해석에서 텍스트 읽기와 쓰기의 인지과학, '문해력 학습 연구'로!</p>
+    <!-- Slide 8: Multi-Causality & Contingency -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">인과와 우연성 · Section 26.3</span>
+      <h2 class="slide-title">복합 인과성(Multi-Causality)과 역사적 우연성(Contingency)</h2>
+      <p class="slide-subtitle">"역사는 필연적 진보가 아니라 수많은 우연과 인간 선택의 산물이다"</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>장기적 구조 요인 (Long-term)</h3>
+          <p>지리 환경, 인구 변동, 경제 체제 등 수십 년에 걸친 심층 구조적 조건</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>단기적 촉발 요인 (Triggers)</h3>
+          <p>사라예보 암살 사건, 기근, 외교적 실책 등 찰나의 폭발 계기</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>역사적 우연성 (Contingency)</h3>
+          <p><strong>"만약 그 전투에서 비가 오지 않았다면?"</strong><br/>역사의 대안적 경로(Counterfactuals)를 상상하며 행위자 주체성 인식</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>역사적 인과 관계의 복합성(구조적 요인 + 촉발 요인 + 우연성)을 분석하는 법을 배웁니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>가상 역사(Counterfactual History) 사고 실험은 역사가 정해진 운명이 아니라 인간들의 치열한 선택의 결과임을 깨닫게 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"만약 고구려가 삼국을 통일했다면?"과 같은 가상 역사 질문을 비판적 역사 탐구로 유도하는 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Digital History & Big Data -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">디지털 역사학 · Section 26.4</span>
+      <h2 class="slide-title">디지털 역사 탐구: 온라인 1차 사료 아카이브와 역사 GIS</h2>
+      <p class="slide-subtitle">스탠퍼드 SHEG(Stanford History Education Group)와 디지털 사료 플랫폼</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🌟 Ch 26 역사 학습 연구의 핵심 교훈</h3>
+          <h3>📂 SHEG Reading Like a Historian</h3>
           <ul>
-            <li>1. 역사는 닫힌 사실이 아니라 사료로 구성된 해석이다</li>
-            <li>2. 1차 개념(제도화)과 2차 메타개념(사료, 인과)을 습득하라</li>
-            <li>3. 출처 확인(Sourcing)으로 사료의 의도를 꿰뚫어라</li>
-            <li>4. 마스터 내러티브의 6대 왜곡을 해체하고 다성성을 복원하라</li>
+            <li>수천 점의 미국사/세계사 1차 사료를 교실 수업용으로 편집하여 무료 제공</li>
+            <li>학생들이 3~4개의 상충하는 일기와 신문 기사를 읽고 직접 역사 소논문 작성</li>
+            <li>미국 수만 개 학교에 도입된 가장 성공적인 역사 DBR 프로그램</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 27 예고: 문해력 학습 (Learning to Be Literate)</h3>
-          <p><strong>Peter Smagorinsky & Richard E. Mayer</strong></p>
-          <p>텍스트 이해와 작문의 인지과학! 선택-조직-통합(SOI) 모델과 디지털 시대의 다중 문해력(Multiliteracies) 탐구!</p>
+        <div class="card">
+          <h3>🗺️ 역사 GIS 및 시계열 지도</h3>
+          <ul>
+            <li>노예 무역선의 항로, 전쟁 전선 이동, 도시 산업화 과정을 디지털 지도 위에 시각화</li>
+            <li>공간과 시간의 융합적 역사 탐구 지원</li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 26(26.0~26.4)을 정리하고 다음 Chapter 27(문해력 학습 연구: Smagorinsky & Mayer)을 예고합니다.</p>
+        <p>스탠퍼드 대학교 SHEG 프로젝트를 중심으로 디지털 역사 교육의 최신 혁신 사례를 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 27은 인지심리학의 거두 리처드 메이어 교수와 문학교육학자 피터 스마고린스키 교수가 밝히는 읽기·쓰기의 심층 인지 메커니즘을 다룹니다.</p>
+        <p>디지털 아카이브의 보급으로 이제 교실의 학생들도 국립중앙박물관이나 의회도서관의 희귀 사료를 직접 열람하며 역사학자처럼 탐구할 수 있게 되었습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>다음 Chapter 27로 나아갑니다.</p>
+        <p>조선왕조실록 웹사이트(sillok.history.go.kr)를 활용한 학생 사료 탐구 수업을 기획해 보세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 10: Democratic Citizenship & Controversial History -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">민주시민 역량 · Section 26.4</span>
+      <h2 class="slide-title">논쟁적 역사와 다원적 해석을 통한 비판적 민주시민 교육</h2>
+      <p class="slide-subtitle">역사는 고정된 암기 지식이 아니라, 민주 사회의 합의를 이끄는 토론의 광장</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 다원적 해석 인정</h3>
+          <p>동일한 사건도 계급, 성별, 민족에 따라 서로 다르게 기억될 수 있음을 수용</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 증거 기반 토론</h3>
+          <p>감정적 혐오와 선동을 배격하고 엄밀한 역사적 증거로 타인을 설득하는 규범</p>
+        </div>
+        <div class="card">
+          <h3>3. 과거와 현재의 성찰</h3>
+          <p>과거의 인권 침해와 역사적 과오를 반성하며 더 정의로운 미래 사회 설계</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>역사 학습의 궁극적 지향점인 '성숙한 민주시민성(Democratic Citizenship)' 함양의 가치를 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>역사적 사고력을 갖춘 시민은 정치 권력의 역사 왜곡과 포퓰리즘 선동에 휘둘리지 않는 비판적 주체로 성장합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>식민지 근대화론이나 과거사 청산과 같은 논쟁적 역사 주제를 교실에서 다루는 원칙을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Inquiry-Based Classroom Pedagogy -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">교실 수업 실천 · Section 26.5</span>
+      <h2 class="slide-title">질문 중심 역사 탐구(Inquiry-Based History)의 4단계</h2>
+      <p class="slide-subtitle">교과서 요약 암기 수업을 전복하는 사료 기반 탐구 워크플로</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card">
+          <h3>1. 중심 질문</h3>
+          <p><strong>Central Question</strong><br/>"누가 보스턴 차 사건을 먼저 시작했는가?"</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 사료 비교</h3>
+          <p><strong>Corroboration</strong><br/>목격자 A(영국군) vs B(식민지 주민) 증언 대조</p>
+        </div>
+        <div class="card">
+          <h3>3. 모둠 토론</h3>
+          <p><strong>Discussion</strong><br/>사료의 신뢰성과 저자의 편향을 논쟁</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>4. 역사 논증문</h3>
+          <p><strong>Historical Essay</strong><br/>증거를 인용하여 자신의 역사적 해석 서술</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>실제 학교 교실에서 실행할 수 있는 질문 중심 역사 탐구(Inquiry-Based History) 4단계를 배웁니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>중심 질문(Central Historical Question)은 예/아니오로 끝나지 않고, 사료를 읽어야만 답할 수 있는 지적 긴장감을 품고 있어야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>한국사 단원에서 학생들의 열띤 논쟁을 유발할 수 있는 매력적인 중심 질문 3가지를 만들어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Teacher Professionalism in History -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">교사 전문성 · Section 26.5</span>
+      <h2 class="slide-title">역사 교사의 역할: 이야기꾼에서 '사료 탐구 퍼실리테이터'로</h2>
+      <p class="slide-subtitle">흥미진진한 옛날이야기 전달을 넘어 학생들의 비판적 사료 심문을 스캐폴딩</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>👨‍🏫 전통적 역사 교사 (Storyteller)</h3>
+          <ul>
+            <li>드라마틱하고 재미있는 옛날이야기로 학생들의 흥미 유발</li>
+            <li>한계: 학생들은 재미있게 듣지만 스스로 사료를 비판하는 역량은 기르지 못함</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>🔍 현대적 역사 교사 (Facilitator)</h3>
+          <ul>
+            <li>학생들이 다룰 적절한 난도의 1차 사료 세트(Document Sets)를 엄선하여 큐레이션</li>
+            <li>"이 문장에서 저자가 왜 이 단어를 썼을까?" 메타인지적 발문 비계 투입</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>역사 교사의 교수학적 내용 지식(PCK)과 수업 정체성의 변화를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>교사는 모든 역사적 사건의 정답을 아는 백과사전이 아니라, 학생들이 스스로 증거를 찾도록 돕는 역사학적 코치(Coach)여야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들이 고문서의 어려운 한자어나 옛 말투 때문에 포기하지 않도록 사료를 수정(Modified Documents)하는 전략을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 26</span>
+      <h2 class="slide-title">인터랙티브 역사 타임라인 코딩과 디지털 아카이브</h2>
+      <p class="slide-subtitle">자바스크립트와 파이썬 웹 크롤링을 활용한 역사 데이터 사이언스</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 디지털 인문학(Digital Humanities) 코딩 프로젝트</h3>
+          <ul>
+            <li><strong>텍스트 마이닝</strong>: 조선왕조실록 빅데이터에서 '역병', '기근', '과거' 단어 출현 빈도 시계열 분석</li>
+            <li><strong>인터랙티브 타임라인</strong>: TimelineJS나 D3.js로 인물과 사건의 복합 인과 관계 인터랙티브 시각화</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 교육적 가치</h3>
+          <p>인문학적 사료 비판(History)과 데이터 분석 알고리즘(CS)이 융합된 **21세기형 융합 리터러시(Interdisciplinary Literacy)** 체득</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>역사 교육과 컴퓨터 과학(데이터 사이언스, 웹 코딩)의 융합 모델인 '디지털 인문학(Digital Humanities)' 프로젝트를 소개합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>파이썬 자연어 처리(NLP)를 통해 수천 페이지의 역사 사료에서 숨겨진 감정선과 네트워크를 시각화하는 연구가 활발합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들이 학교의 100년 역사를 디지털 아카이브 웹사이트로 코딩하는 프로젝트를 기획해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 26.6</span>
+      <h2 class="slide-title">역사적 사고: 과거를 통해 현재를 비판하는 지적 무기</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 역사 학습의 3대 나침반</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>사료 비판 휴리스틱</h3>
+          <p>출처 확인, 맥락화, 교차 대조를 통해 텍스트의 불투명성과 저자의 의도를 심문</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>마스터 내러티브 해체</h3>
+          <p>선악 이분법과 영웅주의 신화를 넘어 다원적 관점과 복합 인과성을 인정</p>
+        </div>
+        <div class="card">
+          <h3>민주시민성의 성장</h3>
+          <p>과거의 상처와 갈등을 증거 기반으로 토론하며 더 성숙한 민주 사회 합의 도출</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 26의 모든 핵심 교훈을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>역사적 사고력은 과거의 망령에 갇히지 않고, 미래의 열린 가능성을 향해 나아가는 가장 지혜로운 인문학적 나침반입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"오늘 수업을 통해 '역사를 공부하는 진짜 이유'에 대한 여러분의 생각이 어떻게 바뀌었나요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 27 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part V</span>
+      <h2 class="slide-title">다음 여정: Chapter 27 리터러시 학습 (Literacy Learning)</h2>
+      <p class="slide-subtitle">캐롤 리(Carol D. Lee) & 피터 스마고린스키(Peter Smagorinsky)의 문해력 연구</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 26 vs Ch 27 연계성</h3>
+          <ul>
+            <li><strong>Ch 26 역사 학습</strong>: 1차 사료 텍스트 비판, 맥락화, 역사적 인과 내러티브</li>
+            <li><strong>Ch 27 리터러시 학습</strong>: 문학 텍스트 해석, 문화적 모델링(Cultural Modeling), 다중양식 문해력(Multimodal Literacies), 디지털 리터러시</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 Part V 교과별 학습의 인문학적 심화</h3>
+          <p>역사(26) ➔ 리터러시(27) ➔ 예술(28)로 이어지는 인간의 상징 체계와 의미 구성의 정점</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 26을 마무리하고, 다음 챕터인 Chapter 27(Literacy Learning)과의 이론적 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>노스웨스턴 대학교 캐롤 리 교수의 문화적 모델링(Cultural Modeling) 이론과 문학 텍스트 해석 연구로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 27을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 26: Learning History (Mario Carretero & Everardo Perez-Manjarrez)</div>
-    <div class="footer-center" id="slide-counter">01 / 07</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
