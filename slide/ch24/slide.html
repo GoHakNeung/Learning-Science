@@ -230,261 +230,465 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 24 · Part V Science Inquiry</span>
-      <h1 class="slide-title">Science Education and the Learning Sciences</h1>
-      <p class="slide-subtitle">과학교육과 학습과학: 공진화하는 두 학문의 역사와 미래 — 3차원 탐구 학습에서 네트워크 시민 리터러시로</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 24 · Part V Disciplines</span>
+      <h1 class="slide-title">Science Education & Learning Sciences</h1>
+      <p class="slide-subtitle">과학교육과 학습과학: 공진화하는 두 학문의 역사와 미래 — 3차원 탐구 학습에서 포용적 과학 리터러시로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Nancy Butler Songer</strong> (Drexel) & <strong>Yael Kali</strong> (Univ. of Haifa)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 490–511)</p>
+          <p><strong>Nancy Butler Songer</strong> (Drexel University)<br/><strong>Yael Kali</strong> (University of Haifa)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 24</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (24.0 ~ 24.5)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>24.0 50년 공진화</strong>: 지식 통합, 스캐폴딩, DBR의 산실</li>
-            <li><strong>24.1 지식 통합 (Knowledge Integration)</strong> 프레임워크</li>
-            <li><strong>24.2 NGSS 3차원 학습</strong> (실천 SEP + 개념 DCI + 횡단 CCC)</li>
-            <li><strong>24.3 탐구·공학 설계</strong> (Figure 24.1) & BioKIDS / WISE</li>
-            <li><strong>24.4 네트워크 사회의 포용성</strong> & 가짜 뉴스 대응 시민 과학</li>
+            <li><strong>학문적 공진화(Co-evolution)</strong>: 50년간 학습과학 이론과 과학교육 개혁의 상호 촉진</li>
+            <li><strong>지식 통합 (Knowledge Integration)</strong>: 마샤 린의 4단계 개념 조율 프레임워크</li>
+            <li><strong>NGSS 3차원 학습</strong>: 실천(SEP) + 핵심개념(DCI) + 횡단개념(CCC)</li>
+            <li><strong>현상 기반 탐구와 공학 설계</strong>: 요리책 실험을 넘어선 모델링과 CER 실천</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 과학교육과 학습과학이 지난 50년간 어떻게 상호 영향을 주고받으며 공진화(Co-evolution)해 왔는지 밝히고, NGSS 3차원 학습과 지식 통합(Knowledge Integration)의 원리를 정립합니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>낸시 버틀러 송거 교수(BioKIDS 개발자)와 야엘 칼리 교수(TELS/WISE 지식 통합 설계자)는 과학교육 테크놀로지 및 커리큘럼 디자인 연구의 세계적 권위자들입니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>과학교육과 학습과학이 지난 수십 년간 어떻게 상호 이론과 실천을 주고받으며 '공진화(Co-evolution)'해왔는지를 규명하고, 차세대 과학교육(NGSS 3D Learning)의 정수를 파악합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>낸시 송거와 야엘 칼리 교수는 미국과 이스라엘에서 국가 수준 과학교육과정 개혁과 기술 기반 과학 탐구 환경(TELS, WISE)을 이끈 최고 권위자들입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"왜 교과서에 나오는 '요리책 실험(Cookbook lab)'은 학생들의 실제 과학적 사고력을 길러주지 못할까요?"라는 질문으로 시작하세요.</p>
+        <p>"우리가 학교 다닐 때 했던 과학 실험은 왜 대부분 '답이 정해진 요리책 따라하기'였을까요?"로 토론을 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: 24.1 Knowledge Integration Framework -->
+    <!-- Slide 2: Co-evolution of Fields -->
     <section class="slide" data-index="1">
-      <span class="slide-badge">핵심 이론 · Section 24.1</span>
-      <h2 class="slide-title">24.1 과학 지식의 상황성과 지식 통합 (Knowledge Integration)</h2>
-      <p class="slide-subtitle">오개념을 지우는 것이 아니라, 아이디어를 도출·추가·구별·통합하는 동적 과정 (Linn & Eylon)</p>
-      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
-        <div class="card highlight-card">
-          <h3>1. 도출 (Elicit)</h3>
-          <p>일상 경험에서 나온 학생들의 직관적 아이디어 레퍼토리를 자유롭게 표출</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 추가 (Add)</h3>
-          <p>시뮬레이션과 실험을 통해 과학적으로 타당한 새로운 증거와 개념 추가</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">3. 구별 (Distinguish)</h3>
-          <p>상충하는 아이디어들을 증거에 입각하여 비교하고 조건별로 세분화</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">4. 통합 (Reflect)</h3>
-          <p>반성적 숙고를 통해 다양한 현상을 설명하는 일관된 개념 네트워크로 통합</p>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>24.1절의 마샤 린과 엘론(Linn & Eylon)의 '지식 통합(Knowledge Integration)' 프레임워크 4단계를 설명합니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>전통 교육은 학생의 직관을 '틀린 오개념'으로 규정하고 지우려 했으나, 지식 통합론은 직관적 아이디어가 학습의 귀중한 출발점(Starting resources)임을 강조합니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>TELS와 WISE 플랫폼이 어떻게 컴퓨터 시뮬레이션으로 증거를 제공하는지 연결하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 3: 24.2.1 1996 NSES vs 2013 NGSS -->
-    <section class="slide" data-index="2">
-      <span class="slide-badge">표준 개혁 · Section 24.2 (Table 24.1)</span>
-      <h2 class="slide-title">24.2.1 과학 교육과정의 패러다임 전환: 1996 NSES vs 2013 NGSS</h2>
-      <p class="slide-subtitle">내용(지식)과 탐구(스킬)를 분리하던 시대에서 융합된 3차원 수행 기대로의 도약</p>
+      <span class="slide-badge">학문적 공진화 · Section 24.0</span>
+      <h2 class="slide-title">50년간의 상호 발전적 동반자: 학습과학과 과학교육</h2>
+      <p class="slide-subtitle">학습 이론이 교실을 바꾸고, 교실의 실천이 학습 이론을 진화시키는 공진화(Co-evolution)</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">📜 과거: 1996 NSES (분리형 표준)</h3>
+        <div class="card highlight-card">
+          <h3>🧬 학습과학 ➔ 과학교육 기여</h3>
           <ul>
-            <li><strong>지식과 탐구의 이원화</strong>: 내용 표준(Content Standard)과 탐구 표준(Inquiry Standard)이 별도로 서술</li>
-            <li><strong>한계</strong>: 교과서 사실 암기 수업과 절차적 실험이 따로따로 진행됨</li>
+            <li>상황 인지(Situated Cognition), 지식 통합(KI), 스캐폴딩(Scaffolding) 이론 공급</li>
+            <li>디자인 기반 연구(DBR)를 통한 첨단 디지털 과학 탐구 툴킷(WISE, BioKIDS) 개발</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🚀 혁신: 2013 NGSS (3차원 통합 표준)</h3>
+        <div class="card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🚀 과학교육 ➔ 학습과학 기여</h3>
           <ul>
-            <li><strong>3-Dimensional Learning</strong>: 과학 실천(SEP) + 핵심 개념(DCI) + 횡단 개념(CCC)의 완벽한 융합</li>
-            <li><strong>수행 기대(PE)</strong>: "생태계 변화가 개체군에 미치는 영향을 증거 기반 논증으로 구성하라"</li>
+            <li>차세대 과학 표준(NGSS)을 통해 <strong>'실천 중심(Practice-based)' 학습 모델</strong>을 국가 표준으로 제도화</li>
+            <li>대규모 다인수 학급에서의 형성평가 및 교사 전문성 발달 실증 데이터 제공</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>24.2절의 Table 24.1에 제시된 미국 국가 과학 표준의 역사적 전환(1996 NSES ➔ 2013 NGSS)을 분석합니다.</p>
+        <p>과학교육과 학습과학의 역사적 상호의존성과 공진화 메커니즘을 정립합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>NGSS의 획기적인 점은 학생이 무엇을 '알고 있는가'가 아니라, 개념을 활용하여 무엇을 '수행(Perform)할 수 있는가'로 표준을 재정의한 것입니다.</p>
+        <p>송거와 칼리(2022): 과학교육은 학습과학 이론이 실제 학교 현장의 정책과 교육과정으로 구현되는 가장 선도적인 시험대였습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>우리나라 2022 개정 과학과 교육과정의 핵심 아이디어 및 탐구 실천과 비교해 보세요.</p>
+        <p>과학과 공학이 서로를 발전시키는 관계처럼, 교육학과 학습과학의 융합 시너지를 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: 24.2.2 NGSS 3D Learning Architecture -->
+    <!-- Slide 3: Knowledge Integration Framework -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">지식 통합 모델 · Section 24.1</span>
+      <h2 class="slide-title">마샤 린(Marcia Linn)의 지식 통합 프레임워크 (KI)</h2>
+      <p class="slide-subtitle">파편화된 직관적 아이디어들을 증거 기반의 일관된 과학 지식망으로 조율</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card">
+          <h3>1. 도출 (Elicit)</h3>
+          <p>학생이 가진 일상 경험의 다양한 선개념과 직관을 자유롭게 꺼내놓음</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 추가 (Add)</h3>
+          <p>실험과 컴퓨터 시뮬레이션을 통해 새로운 과학적 증거와 개념 투입</p>
+        </div>
+        <div class="card">
+          <h3>3. 구별 (Distinguish)</h3>
+          <p>상충되는 아이디어들의 적용 조건과 타당성을 비판적으로 대조·선별</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>4. 통합 (Reflect)</h3>
+          <p>검증된 개념들을 일관된 인과적 체계로 반성적 종합 및 멘탈 모델 수정</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>과학교육의 대표적 인지 모델인 마샤 린(Marcia Linn) 교수의 4단계 '지식 통합(Knowledge Integration: KI)' 프레임워크를 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>KI 모델은 학생의 오개념을 '지워야 할 쓰레기'로 보지 않고, 정교화의 '출발 원자재(Repertoire of ideas)'로 존중합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>열전도율 수업에서 "쇠젓가락이 나무젓가락보다 더 차갑게 느껴지는 이유"를 4단계 KI로 어떻게 가르칠지 설계해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: WISE & TELS Digital Environments -->
     <section class="slide" data-index="3">
-      <span class="slide-badge">3차원 학습 · Section 24.2 (Table 24.2)</span>
-      <h2 class="slide-title">24.2.2 NGSS 3차원 학습 (3D Learning) 입체 구조</h2>
-      <p class="slide-subtitle">과학·공학 실천(SEP) × 교과 핵심 개념(DCI) × 횡단 개념(CCC)의 상호작용 (NRC, 2013)</p>
+      <span class="slide-badge">디지털 탐구 환경 · Section 24.1</span>
+      <h2 class="slide-title">웹 기반 과학 탐구 환경: WISE & TELS 플랫폼</h2>
+      <p class="slide-subtitle">보이지 않는 미시적 세계(열, 분자, 화학 반응)를 가시화하는 컴퓨터 비계</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🧪 WISE (Web-based Inquiry Science Environment)</h3>
+          <ul>
+            <li>학생들이 웹 브라우저에서 분자 운동 시뮬레이션을 조작하며 가설 검증</li>
+            <li>실시간 프롬프트 질문과 동료 간 온라인 토론 게시판 내장</li>
+            <li>전 세계 수백만 명의 학생이 사용하는 오픈소스 과학 탐구 플랫폼</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 학습과학적 효과</h3>
+          <ul>
+            <li>추상적인 화학 결합과 열역학 법칙의 <strong>동적 시각화(Dynamic Visualizations)</strong></li>
+            <li>수동적 교과서 읽기 집단 대비 개념 이해도 및 문제해결력 50% 이상 향상</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학 역사상 가장 성공적인 기술 기반 과학 교육 프로젝트인 WISE(Web-based Inquiry Science Environment)의 구조를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>린(Linn)과 칼리(Kali): WISE는 단순한 교육용 소프트웨어가 아니라, 20년간의 DBR(디자인 기반 연구)을 통해 축적된 인지적 스캐폴딩의 집약체입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>PhET 시뮬레이션이나 WISE를 실제 과학 수업에 도입할 때 교사의 발문 전략을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Paradigm Shift to NGSS -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">교육과정 대혁신 · Section 24.2</span>
+      <h2 class="slide-title">1996 NSES에서 2013 차세대 과학 표준(NGSS)으로</h2>
+      <p class="slide-subtitle">지식과 탐구의 분리를 극복하고 '3차원 융합 학습'으로 대전환 (Table 24.1)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 과거: 1996 국립과학교육표준 (NSES)</h3>
+          <ul>
+            <li>'교과 내용 지식(Content)'과 '탐구 스킬(Inquiry)'을 별개의 장으로 분리 서술</li>
+            <li>결과: 교실에서는 탐구 없이 내용 암기만 시험으로 출제되는 파행 초래</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 현재: 2013 차세대 과학 표준 (NGSS)</h3>
+          <ul>
+            <li>지식, 실천, 횡단 개념이 완전히 결합된 <strong>'3차원 수행 기대치(Performance Expectations)'</strong> 기술</li>
+            <li>"학생은 [핵심개념]을 이해하기 위해 [과학 실천]을 수행하여 [횡단개념]을 증명해야 한다"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>미국 및 글로벌 과학교육의 기준점인 차세대 과학 표준(NGSS: Next Generation Science Standards)의 역사적 탄생 배경을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>NRC 프레임워크(2012)와 NGSS(2013)는 학습과학 연구자(Krajcik, Reiser, Songer 등)들이 대거 주도하여 만든 학습과학 중심 교육과정의 결정판입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리나라 2022 개정 교육과정의 '과정 중심 평가'와 '핵심 아이디어/과학적 탐구'가 NGSS와 어떻게 부합하는지 비교해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: NGSS 3D Learning Structure -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">NGSS 3차원 학습 · Section 24.2</span>
+      <h2 class="slide-title">NGSS 3차원 학습(3-Dimensional Learning) 아키텍처</h2>
+      <p class="slide-subtitle">과학·공학 실천(SEP) × 교과 핵심 개념(DCI) × 횡단 개념(CCC)의 완벽한 결합</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="card highlight-card">
           <h3>1. 과학·공학 실천 (SEP)</h3>
-          <p>질문하기, 모델 개발, 증거 기반 논증, 데이터 분석 및 해석 등 8대 과학 실천</p>
+          <p><strong>Science & Engineering Practices</strong><br/>질문하기, 모델 개발, 데이터 분석, <strong>증거 기반 논증(CER)</strong>, 설명 구축</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 교과 핵심 개념 (DCI)</h3>
-          <p>물리, 생명, 지구우주, 공학 기술 영역의 가장 핵심적인 원리와 불변의 빅 아이디어</p>
+        <div class="card">
+          <h3>2. 교과 핵심 개념 (DCI)</h3>
+          <p><strong>Disciplinary Core Ideas</strong><br/>물리, 화학, 생명과학, 지구우주과학의 도메인 핵심 원리</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">3. 횡단 개념 (CCC)</h3>
-          <p><strong>원인과 결과</strong>, 패턴, 시스템과 모델, 구조와 기능 등 모든 과학 분과를 관통하는 렌즈</p>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>24.2절과 Table 24.2의 NGSS 3차원 학습(3D Learning) 아키텍처를 상세히 설명합니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>3차원 학습은 줄타기와 같습니다. 세 줄(실천, 개념, 횡단)이 꼬여 하나의 굵은 밧줄이 될 때 학생들은 과학자처럼 사고할 수 있습니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>이어지는 슬라이드에서 이를 실천하는 교실 탐구와 공학 설계(Figure 24.1)를 살펴봅니다.</p>
-      </div>
-    </section>
-
-    <!-- Slide 5: 24.3 Traditional vs Research-Based Pedagogy (Figure 24.1) -->
-    <section class="slide" data-index="4">
-      <span class="slide-badge">교수학습 혁신 · Section 24.3</span>
-      <h2 class="slide-title">24.3 교실에서의 과학 탐구와 공학 설계 (Figure 24.1)</h2>
-      <p class="slide-subtitle">요리책 실험에서 실제 자연 현상(Phenomena) 기반 가설 검증 및 공학적 프로토타이핑으로</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1.2fr;">
-        <div class="card highlight-card">
-          <h3>🔍 연구 기반 과학 교실의 특징</h3>
-          <ul>
-            <li><strong>현상 기반 시작</strong>: 설명되지 않는 자연 현상이나 사회적 공학 딜레마에서 출발</li>
-            <li><strong>증거 기반 모델링</strong>: 학생 스스로 데이터를 수집하고 인과 관계를 시뮬레이션</li>
-            <li><strong>공학 설계 루프</strong>: 문제 정의 ➔ 설계 ➔ 테스트 ➔ 반복 개선(Iterate)</li>
-          </ul>
-        </div>
-        <div class="img-container" onclick="openModal('images/fig24_1.png')">
-          <img src="images/fig24_1.png" alt="Figure 24.1 Features of Science Investigation and Engineering Design">
-          <div class="img-caption">🔍 [Figure 24.1] 전통 과학 교실과 연구 기반 과학 탐구/공학 설계의 비교 (클릭하여 확대)</div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 횡단 개념 (CCC)</h3>
+          <p><strong>Crosscutting Concepts</strong><br/>패턴(Patterns), 인과관계(Cause & Effect), 시스템 모델, 에너지와 물질</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>24.3절의 핵심 도판인 Figure 24.1(전통 과학 수업과 연구 기반 탐구/공학 설계의 대조)을 분석합니다.</p>
+        <p>NGSS의 3대 기둥(SEP, DCI, CCC)이 로프(Rope)의 세 가닥처럼 꼬여서 하나의 견고한 과학적 소양을 형성함을 밝힙니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>NRC(2019) 보고서 기반: 전통 과학 수업은 교사가 정답을 알려주고 학생이 확인하는 반면, 혁신적 과학 교실은 학생들이 실제 증거를 바탕으로 지식을 스스로 구축합니다.</p>
+        <p>어느 한 차원이라도 결여되면 진정한 과학 학습이 아닙니다. 학생들은 개념(DCI)을 외우는 것이 아니라 실천(SEP)을 통해 횡단 원리(CCC)를 체득합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>학생들에게 도판을 확대하여 보게 하고, 좌측의 전통 방식과 우측의 탐구 실천 차이를 설명하세요.</p>
+        <p>특정 단원(예: 광합성)을 3차원 학습 표준(SEP+DCI+CCC) 형태로 재작성해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 6: 24.3.1 BioKIDS & WISE Curricula -->
-    <section class="slide" data-index="5">
-      <span class="slide-badge">대표 프로젝트 · Section 24.3.1</span>
-      <h2 class="slide-title">24.3.1 BioKIDS와 WISE: 테크놀로지 기반 탐구 커리큘럼</h2>
-      <p class="slide-subtitle">모바일 센서 야외 탐구(BioKIDS)와 컴퓨터 시뮬레이션 지식 통합(WISE) (Songer, 2006; Linn)</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🌿 BioKIDS 프로젝트 (Songer, 2006)</h3>
-          <ul>
-            <li>모바일 핸드헬드 기기를 들고 학교 숲의 생물 다양성 데이터 수집</li>
-            <li>수집된 동물/식물 데이터를 기반으로 생태계 먹이사슬 인과 관계 모델링</li>
-            <li>도시 소외지역 학생들의 복합 추론(Complex Reasoning) 발달 입증</li>
-          </ul>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">💻 WISE & TELS 환경 (Kali et al., 2008)</h3>
-          <ul>
-            <li>분자 열운동, 온실 효과 등 비가시적 과학 현상을 동적 시뮬레이션으로 조작</li>
-            <li>'증거 바구니'에 데이터를 모아 과학적 논증 에세이 작성 스캐폴딩</li>
-          </ul>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>24.3.1절에 제시된 대표적인 학습과학 기반 과학 탐구 시스템인 BioKIDS와 WISE를 다룹니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>테크놀로지는 단순히 책을 컴퓨터로 옮긴 것이 아니라, 학생들이 직접 데이터를 수집하고 비가시적 미시 세계를 조작할 수 있는 '인지적 어포던스'를 제공합니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>야외 모바일 탐구와 실내 가상 시뮬레이션의 결합 방안을 논의하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 7: 24.4 Citizen Science & Critical Literacy -->
+    <!-- Slide 7: Traditional vs Phenomenon-based Pedagogy -->
     <section class="slide" data-index="6">
-      <span class="slide-badge">네트워크 사회 · Section 24.4</span>
-      <h2 class="slide-title">24.4 네트워크 사회의 과학: 시민 과학과 가짜 뉴스 대응</h2>
-      <p class="slide-subtitle">기후 위기, 감염병, 허위 정보(Misinformation)에 맞서는 비판적 과학 리터러시 (Kali et al.)</p>
+      <span class="slide-badge">수업 패러다임 · Section 24.3</span>
+      <h2 class="slide-title">요리책 실험(Cookbook) vs 현상 기반 과학·공학 설계</h2>
+      <p class="slide-subtitle">정답 확인용 매뉴얼 따라하기에서 실세계 미스터리 탐구로 (Figure 24.1)</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">🌐 시민 과학 (Citizen Science)과 형평성</h3>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 전통 요리책 실험 (Cookbook Labs)</h3>
           <ul>
-            <li>소외계층 및 다문화 청소년이 실제 지역 환경 데이터 측정에 참여</li>
-            <li>'모든 이를 위한 과학(Science for All)'을 실현하고 과학자 정체성 고양</li>
+            <li>칠판에 공식을 적고 ➔ 매뉴얼 1~5단계 순서대로 시약을 섞음 ➔ 교과서 정답 확인</li>
+            <li>실패하면 "실험이 망했다"며 수치를 조작함 (사고력 0% 훈련)</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">🛡️ 허위 정보(Misinformation) 판별 역량</h3>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 현상 기반 탐구 (Phenomenon-Based)</h3>
           <ul>
-            <li>소셜 미디어에 떠도는 백신/기후 음모론에 대한 증거 기반 비판적 평가</li>
-            <li>출처의 신뢰성, 데이터의 통계적 타당성을 검증하는 시민적 소양 육성</li>
+            <li>당황스러운 실제 자연 현상(예: 물고기 집단 폐사)을 영상으로 목격 ➔ 가설 수립</li>
+            <li>센서와 모델링 도구로 데이터를 수집하고 공학적 정화 필터를 반복 설계(Iterate)</li>
+            <li><strong>학생이 진짜 과학자/공학자가 되는 진정성(Authenticity)</strong></li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>24.4절의 과학 교육의 포용성(Equity)과 초연결 네트워크 사회에서의 비판적 과학 리터러시를 다룹니다.</p>
+        <p>전통적 '요리책 실험'의 폐해를 극복하고, 실제 자연 현상(Phenomena)에서 출발하는 탐구 및 공학 설계 수업의 전환을 강조합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>현대 사회에서 과학 교육은 미래 과학자 양성을 넘어, 민주시민이 일상적 건강과 환경 문제에 대해 합리적 결정을 내릴 수 있는 생존 기술입니다.</p>
+        <p>크라직과 라이저(Krajcik & Reiser): 매력적인 현상(Anchoring Phenomena)은 학생들에게 "이 미스터리를 꼭 풀고 싶다"는 강력한 내적 동기를 유발합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>유튜브나 틱톡의 유사과학 영상을 비판적으로 검증하는 수업 설계를 토론하세요.</p>
+        <p>단원 도입부에서 학생들의 호기심을 폭발시킬 수 있는 '앵커링 현상(Anchoring Phenomenon)' 사례를 발굴해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 8: Summary & Looking Ahead to Ch 25 -->
+    <!-- Slide 8: Landmark Project BioKIDS -->
     <section class="slide" data-index="7">
-      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 24.5</span>
-      <h2 class="slide-title">24.5 Chapter 24 총괄 결론 & Chapter 25 역사 학습 예고</h2>
-      <p class="slide-subtitle">과학적 증거 검증에서 과거 사료의 비판적 해석, '역사 학습 연구(VanSledright)'로!</p>
+      <span class="slide-badge">사례 연구 · Section 24.3</span>
+      <h2 class="slide-title">BioKIDS 프로젝트: 학교 생태계 다양성 탐구</h2>
+      <p class="slide-subtitle">낸시 송거(Nancy Songer, 2006)의 모바일 야외 센싱 및 증거 기반 과학 교육</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🌟 Ch 24 과학 학습 연구의 핵심 교훈</h3>
+          <h3>🐞 BioKIDS 탐구 프로세스</h3>
           <ul>
-            <li>1. 과학교육과 학습과학은 지난 50년간 공진화해 왔다</li>
-            <li>2. 지식 통합: 도출 ➔ 추가 ➔ 구별 ➔ 반성적 통합</li>
-            <li>3. NGSS 3차원: 실천(SEP) + 핵심개념(DCI) + 횡단개념(CCC)</li>
-            <li>4. 현상 기반 탐구와 공학 설계 루프를 구현하라</li>
+            <li>초등학생들이 모바일 PDA를 들고 학교 운동장과 화단에서 곤충, 조류, 식물 서식 조사</li>
+            <li>수집된 생물 종 데이터를 클라우드에 업로드하여 생태계 먹이사슬 네트워크 모델링</li>
+            <li><strong>"어느 구역의 생물 다양성이 높고 그 이유는 무엇인가?"</strong> 증거 기반 논증문 작성</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 25 예고: 역사 학습 연구 (History Learning)</h3>
-          <p><strong>Bruce A. VanSledright & Margarita Limón</strong></p>
-          <p>단일 교과서 암기에서 탈피! 상충하는 1차 사료(Primary Sources)의 출처 확인(Sourcing)과 역사적 사고력의 세계로!</p>
+        <div class="card">
+          <h3>🎯 8년간의 종단 성과</h3>
+          <p>도심 소외계층 학생들의 복합 과학 탐구력과 데이터 분석 능력이 주 단위 표준화 시험에서 상위권으로 도약하는 탁월한 성과 증명</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 24(24.0~24.5)를 마무리하고 다음 Chapter 25(역사 학습 연구)를 예고합니다.</p>
+        <p>낸시 송거 교수가 개발한 대표적 학습과학 과학 커리큘럼인 BioKIDS 프로젝트의 구조와 성공 요인을 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 25는 과학의 경험적 데이터 검증과 대비되는 역사의 1차 사료 해석 및 관점주의 사고를 다룹니다.</p>
+        <p>BioKIDS는 모바일 야외 센싱(Ch 18), 증거 기반 논증(Ch 21), NGSS 3차원 학습이 완벽히 융합된 최고의 종합 실천 사례입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>다음 Chapter 25로 나아갑니다.</p>
+        <p>학교 주변 자연 환경을 활용한 생물 다양성 탐구 수업을 기획해 보세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 9: Model-Based Inquiry -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">모델링 과학 · Section 24.3</span>
+      <h2 class="slide-title">모델 기반 과학 탐구(Model-Based Inquiry)</h2>
+      <p class="slide-subtitle">머릿속 멘탈 모델을 그림, 물리 모형, 컴퓨터 시뮬레이션으로 외재화</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 초기 모델 구성</h3>
+          <p>현상을 관찰한 후 "왜 이런 일이 일어났는가?"에 대한 최초 가설 다이어그램 작성</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 실험을 통한 검증</h3>
+          <p>실험 데이터와 상충되는 모순을 발견하고 모델의 결함을 디버깅</p>
+        </div>
+        <div class="card">
+          <h3>3. 합의 모델로 진화</h3>
+          <p>소집단 및 교실 전체 토론을 통해 가장 정교한 **최종 과학적 합의 모델(Consensus Model)**로 완성</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>과학자의 핵심 실천인 '모델 기반 탐구(Model-Based Inquiry)'의 3단계 순환 과정을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>슈바르츠(Schwarz et al., 2009): 모델링 역량은 과학 지식을 이해하는 것뿐 아니라 지식이 어떻게 생성되고 수정되는지를 깨닫게 하는 메타인식적 능력입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>냄새가 퍼지는 현상(확산)을 학생들이 입자 모델 다이어그램으로 그리게 하고 수정시키는 활동을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Scientific Discourse and CER -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">과학 담화 · Section 24.3</span>
+      <h2 class="slide-title">과학적 담화와 CER(주장-증거-추론) 논증 글쓰기</h2>
+      <p class="slide-subtitle">"내가 맞다"고 우기는 것이 아니라 과학적 증거와 원리로 설명하는 훈련</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📝 CER 프레임워크 (McNeill & Krajcik)</h3>
+          <ul>
+            <li><strong>Claim (주장)</strong>: 연구 질문에 대한 직접적인 결론 답변</li>
+            <li><strong>Evidence (증거)</strong>: 데이터 그래프, 관찰 측정치, 통계 수치</li>
+            <li><strong>Reasoning (추론)</strong>: 과학적 법칙과 원리를 인용하여 증거가 왜 주장을 지지하는지 정당화</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🗣️ 교실 담화 촉진 (Talk Moves)</h3>
+          <ul>
+            <li>"친구의 증거에 대해 어떻게 생각하나요?"</li>
+            <li>"그 추론을 뒷받침하는 또 다른 과학적 법칙이 있을까요?"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>과학 교실에서 가장 널리 쓰이는 CER(Claim-Evidence-Reasoning) 글쓰기 및 담화 촉진 기법을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>맥닐과 크라직(2012): CER은 학생들이 단순히 감이나 직관으로 말하지 않고, 과학적 데이터와 이론으로 소통하는 학술적 문해력을 기릅니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들의 과학 서술형 평가 채점 루브릭에 CER 3요소를 어떻게 배점할지 설계해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Teacher Professional Development -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">교사 전문성 · Section 24.4</span>
+      <h2 class="slide-title">교실 혁신을 이끄는 과학 교사 학습 공동체</h2>
+      <p class="slide-subtitle">교과 지식(CK)과 교수학적 내용 지식(PCK)을 함께 성장시키는 비디오 분석</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>수업 비디오 클럽</h3>
+          <p>자신의 과학 수업 비디오를 동료 교사들과 함께 보며 학생들의 개념적 혼란 지점 분석</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>탐구 교육과정 공동 설계</h3>
+          <p>DBR 방식으로 NGSS 3차원 단원을 함께 설계하고 교실에서 실행 후 반복 수정</p>
+        </div>
+        <div class="card">
+          <h3>담화 분석 도구 (T-SEDA)</h3>
+          <p>교사 자신의 질문 패턴과 학생 발화 시간을 정량 측정하여 탐구 중심 발문으로 개선</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>과학교육 혁신이 성공하기 위해 교사 전문성 개발(PD)이 어떤 형태로 이루어져야 하는지 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>일회성 강의식 연수는 교사의 행동을 바꾸지 못합니다. 자신의 교실 비디오를 성찰하는 교사 전문 학습 공동체(PLC)가 핵심입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>과학과 교사 연구회에서 수업 나눔을 진행할 때 가장 효과적인 피드백 방식을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Equity and Citizen Science -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">형평성과 포용 · Section 24.5</span>
+      <h2 class="slide-title">기후 위기 시대의 참여적 시민 과학(Citizen Science)</h2>
+      <p class="slide-subtitle">모든 학생을 지역사회 환경 문제를 해결하는 '과학 시민(Science Citizens)'으로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌍 시민 과학 (Citizen Science) 프로젝트</h3>
+          <ul>
+            <li>학생들이 우리 동네 미세먼지 수치, 하천 수질, 야생 조류 개체수를 측정해 글로벌 데이터베이스에 기여</li>
+            <li>교과서 속 추상적 과학이 아닌 **'내 삶과 지역사회를 바꾸는 살아있는 과학'** 체득</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🛡️ 정의롭고 포용적인 과학 교육 (Justice-Centered)</h3>
+          <ul>
+            <li>환경 오염이 빈곤층 지역에 집중되는 환경 불평등(Environmental Injustice) 문제 비판</li>
+            <li>소외계층 학생들에게 과학적 탐구를 통한 지역사회 변혁 에이전시 부여</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>과학교육의 지향점이 단순 입시를 넘어 기후 위기와 사회 정의를 다루는 '시민 과학(Citizen Science)'으로 확장됨을 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>칼라바라-브레턴(Calabrese Barton): 과학 교육은 학생들에게 "과학자들의 정답을 복제하는 것"이 아니라 "자신의 커뮤니티를 개선하는 지적 무기"를 쥐어주는 것입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 학교 주변의 환경 문제(소음, 미세먼지, 쓰레기)를 해결하기 위한 시민 과학 프로젝트를 기획해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 24</span>
+      <h2 class="slide-title">컴퓨팅 사고와 과학 모델링의 융합 (CT + Science)</h2>
+      <p class="slide-subtitle">NetLogo와 블록 코딩으로 구현하는 가상 과학 실험실</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 계산 과학 모델링 (Computational Modeling)</h3>
+          <ul>
+            <li><strong>물리 법칙 시뮬레이션</strong>: 중력 가속도와 마찰력 수식을 코드로 작성해 포물선 운동 궤적 렌더링</li>
+            <li><strong>생태계 포식자-피식자 모델</strong>: 토끼와 늑대의 번식/포식 확률 알고리즘을 코딩해 개체군 진동 시뮬레이션</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 교육적 가치</h3>
+          <p>수학 공식(DCI)과 알고리즘 코딩(SEP)이 융합되어, 학생이 스스로 법칙을 프로그래밍하고 검증하는 <strong>최고 수준의 융합 인지(Interdisciplinary Cognition)</strong> 달성</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>컴퓨터 과학의 프로그래밍이 과학 탐구의 '계산 모델링(Computational Modeling)' 도구로 완벽히 융합되는 모델을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>윌렌스키와 센구프타(Wilensky & Sengupta, 2016): 컴퓨터 코딩은 과학 법칙을 가장 정밀하게 표현하고 실행해볼 수 있는 현대 과학의 필수 언어입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>엔트리나 스크래치로 중학교 태양계 행성 공전 궤도 모델을 구현하는 프로젝트를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 24.6</span>
+      <h2 class="slide-title">과학자처럼 탐구하고 공학자처럼 설계하는 미래 교육</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 과학교육 혁신의 3대 나침반</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>지식 통합의 지혜</h3>
+          <p>오개념을 배척하지 않고 풍부한 시뮬레이션과 증거를 통해 점진적 통합과 개념 변화 유도</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>NGSS 3차원 실천</h3>
+          <p>지식 암기에서 벗어나 과학·공학 실천(SEP)과 횡단 개념(CCC)을 융합한 3D 탐구 수행</p>
+        </div>
+        <div class="card">
+          <h3>포용적 시민 과학</h3>
+          <p>기후 위기 시대에 모든 학생이 지역사회 문제를 해결하는 주체적 과학 시민으로 성장</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 24의 모든 핵심 통찰을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>과학교육과 학습과학의 공진화는 교육이 어떻게 학생들을 능동적 탐구자이자 책임 있는 지구 시민으로 길러낼 수 있는지를 보여준 가장 찬란한 성취입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"여러분의 과학 수업을 3차원 탐구로 혁신하기 위해 가장 먼저 바꿀 한 가지는 무엇인가요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 25 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part V</span>
+      <h2 class="slide-title">다음 여정: Chapter 25 복잡계 학습 (Complex Systems)</h2>
+      <p class="slide-subtitle">유리 윌렌스키(Uri Wilensky) & 마이클 제이콥슨(Michael Jacobson)의 복잡계 사고</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 24 vs Ch 25 연계성</h3>
+          <ul>
+            <li><strong>Ch 24 과학 학습</strong>: 모델 기반 탐구, NGSS 3차원 실천, 지식 통합</li>
+            <li><strong>Ch 25 복잡계 학습</strong>: 자연과 사회의 창발적 패턴을 이해하는 <strong>에이전트 기반 모델링(NetLogo), 탈중심적 사고(Decentralized Thinking), 복잡계 시스템 역학</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 Part V 교과별 학습의 지평 확장</h3>
+          <p>수학(23) ➔ 과학(24) ➔ 복잡계(25)로 이어지는 현대 첨단 융합 지식의 핵심 심화</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 24를 마무리하고, 다음 챕터인 Chapter 25(Complex Systems in the Learning Sciences)와의 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>넷로고(NetLogo)의 창시자 유리 윌렌스키 교수의 에이전트 기반 복잡계 시뮬레이션 연구로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 25를 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 24: Science Education and the Learning Sciences (Songer & Kali)</div>
-    <div class="footer-center" id="slide-counter">01 / 08</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
