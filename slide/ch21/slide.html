@@ -212,260 +212,478 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 21 · Part IV Discourse Engine</span>
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 21 · Part IV Together</span>
       <h1 class="slide-title">Arguing to Learn</h1>
       <p class="slide-subtitle">논증을 통한 학습: 이기기 위한 논쟁에서 개념적 이해와 지식 구성을 위한 대화로</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Jerry Andriessen</strong> (Wise & Munro) & <strong>Michael Baker</strong> (CNRS & Telecom Paris)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 423–442)</p>
+          <p><strong>Jerry Andriessen</strong> (Wise & Munro, Netherlands)<br/><strong>Michael Baker</strong> (CNRS & Telecom Paris, France)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 21</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (21.0 ~ 21.10)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>21.0 논증 학습 vs 논증을 통한 학습</strong>: 협력적 의미구성의 도구</li>
-            <li><strong>21.1 논증 이론 3대 토대</strong>: 툴민 6요소, 월턴 대화 유형, 화용-변증법</li>
-            <li><strong>21.2~21.6 사회-인지적 갈등 & 정서적 안전성</strong> (Emotional Safety)</li>
-            <li><strong>21.9 디지털 논증 비계</strong>: 대화 게임(Digalo), 논증 지도(Belvedere), WISE</li>
+            <li><strong>논증 학습의 패러다임</strong>: 수사학적 승패(Debate)에서 협력적 지식 탐구(Co-inquiry)로</li>
+            <li><strong>툴민(Toulmin)의 6대 논증 구조</strong>: 주장, 자료, 영장, 뒷받침, 반론, 한정어</li>
+            <li><strong>5대 인지·사회적 메커니즘</strong>: 인지 갈등, 편향 극복, 추론 명시화, 정서 안전</li>
+            <li><strong>에듀테크 도구</strong>: Belvedere, Digalo 등 시각적 논증 다이어그램 시스템</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 협력 학습과 집단 인지의 핵심 엔진인 '논증(Argumentation)'을 다루며, 상대를 굴복시키는 승패 토론이 아니라 대상 영역의 심층 개념을 함께 탐구하는 '논증을 통한 학습(Arguing to Learn)'의 메커니즘을 밝힙니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>네덜란드의 제리 안드리센과 프랑스 국립과학연구원(CNRS)의 마이클 베이커 교수는 교육적 논증 대화 분석 및 다이어그램 도구 연구의 세계적 권위자들입니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>논증(Argumentation)이 단순한 '말싸움 기술'이 아니라, 개념 변화와 깊은 학술적 지식 구성을 견인하는 가장 강력한 인지·사회적 학습 엔진임을 이해합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>제리 안드리센과 마이클 베이커는 유럽과 전 세계를 무대로 컴퓨터 매개 논증 학습(CSCL Argumentation)을 개척한 세계적 거장들입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"토론 수업에서 학생들이 상대를 이기려고만 하다가 감정이 상하는 문제를 어떻게 해결할 수 있을까요?"라는 질문으로 시작하세요.</p>
+        <p>"우리는 왜 토론을 할 때 상대방을 이기려고만 하고, 배움의 기회로 삼지 못할까요?"라는 질문으로 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: 21.0 Learning to Argue vs Arguing to Learn -->
+    <!-- Slide 2: Learning to Argue vs Arguing to Learn -->
     <section class="slide" data-index="1">
-      <span class="slide-badge">개념 구분 · Section 21.0</span>
-      <h2 class="slide-title">21.0 논증 학습(Learning to Argue) vs 논증을 통한 학습</h2>
-      <p class="slide-subtitle">수사학적 기법의 습득을 넘어, 개념적 공간을 탐구하는 인식적 도구로서의 논증</p>
+      <span class="slide-badge">핵심 개념 · Section 21.0</span>
+      <h2 class="slide-title">논증 학습(Learning to Argue) vs 논증을 통한 학습(Arguing to Learn)</h2>
+      <p class="slide-subtitle">수사학적 웅변술에서 협력적 개념 탐구로의 인식론적 전환</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">⚔️ 논증 학습 (Learning to Argue)</h3>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 논증 학습 (Learning to Argue)</h3>
           <ul>
-            <li>수사학적 웅변 및 디베이트 승리 기술 습득</li>
-            <li>상대방의 논리적 허점을 공격하고 자신의 주장 관철</li>
-            <li><strong>초점</strong>: 설득력과 논증 스킬 그 자체</li>
+            <li>토론 대회에서 심사위원을 설득하고 상대를 굴복시키는 수사학적 기술</li>
+            <li>자신의 주장을 방어하는 데만 집착하고 새로운 지식의 수용을 거부</li>
+            <li>승패 중심(Win-Loss)의 대립적 변론</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🔍 논증을 통한 학습 (Arguing to Learn)</h3>
+          <h3 style="color: var(--accent-emerald);">💡 논증을 통한 학습 (Arguing to Learn)</h3>
           <ul>
-            <li>주장, 근거, 반론의 교환을 통해 <strong>지식 영역의 심층 원리 탐구</strong></li>
-            <li>자신의 암묵적 전제를 명시화하고 동료와 함께 멘탈 모델 수정</li>
-            <li><strong>초점</strong>: <strong>개념적 재구조화 (Conceptual Restructuring)</strong></li>
+            <li>주장, 근거, 반론을 주고받으며 <strong>대상 영역의 숨겨진 원리와 구조를 함께 발견</strong></li>
+            <li>상대방의 반박을 환영하며 내 지식의 한계를 수정하는 <strong>개념 변화(Conceptual Change)</strong> 지향</li>
+            <li>공동 탐구(Co-inquiry) 중심의 협력적 대화</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>21.0절의 핵심 개념인 '논증 학습(수사학 기술)'과 '논증을 통한 학습(개념적 이해의 도구)'을 엄밀히 대비합니다.</p>
+        <p>'논증을 배우는 것'과 '논증을 통해 도메인 지식을 배우는 것'의 결정적 차이를 명쾌히 대조합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>학습과학이 주목하는 논증은 승패를 가리는 디베이트가 아니라, 학생들이 미지의 문제 공간(Space of Debate)을 함께 탐험하며 더 나은 설명을 구축하는 '협력적 인식 활동'입니다.</p>
+        <p>안드리센과 베이커(2022): 논증을 통한 학습은 학생이 자신의 멘탈 모델을 언어로 명시화하고 동료의 비판을 통해 이론을 다듬는 최고의 학습 메커니즘입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>과학과 수학 교과에서 왜 논증이 개념 이해의 필수 엔진인지 질문을 던지세요.</p>
+        <p>기존의 찬반 토론 수업이 왜 종종 '소모적인 말꼬리 잡기'로 전락하는지 그 원인을 짚어보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 21.1 Three Theoretical Foundations -->
+    <!-- Slide 3: Toulmin's Model of Argumentation -->
     <section class="slide" data-index="2">
-      <span class="slide-badge">이론적 토대 · Section 21.1</span>
-      <h2 class="slide-title">21.1 현대 논증 이론의 3대 기둥</h2>
-      <p class="slide-subtitle">툴민의 6요소 모델, 월턴의 대화 유형론, 그리고 판 에메렌의 화용-변증법</p>
+      <span class="slide-badge">논증 이론 ① · Section 21.1</span>
+      <h2 class="slide-title">스티븐 툴민(Stephen Toulmin)의 6대 논증 구조 모델</h2>
+      <p class="slide-subtitle">학습과학에서 논증의 구조적 정밀도를 분석하는 표준 프레임워크</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="card highlight-card">
-          <h3>1. 툴민의 6요소 모델</h3>
-          <p><strong>Stephen Toulmin (1958)</strong></p>
-          <p>주장(Claim), 자료(Data), 보증(Warrant), 뒷받침(Backing), 반론(Rebuttal), 한정(Qualifier) 구조화</p>
+          <h3>1. 주장 (Claim)</h3>
+          <p>화자가 청자에게 받아들이도록 요구하는 결론</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 월턴의 대화 유형론</h3>
-          <p><strong>Douglas Walton (1998)</strong></p>
-          <p>설득, 협상, 정보요구 중 <strong>'탐구(Inquiry)'와 '심의(Deliberation)'</strong>가 학습의 핵심</p>
+        <div class="card">
+          <h3>2. 자료 (Data/Grounds)</h3>
+          <p>주장을 뒷받침하는 관찰 사실, 실험 수치, 증거</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">3. 화용-변증법 (Pragma)</h3>
-          <p><strong>Van Eemeren & Grootendorst</strong></p>
-          <p>의견 차이를 합리적으로 해결하는 비판적 토론 규범</p>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 보증/영장 (Warrant)</h3>
+          <p>자료에서 주장으로 건너가는 논리적 연결 원리/법칙</p>
         </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>21.1절에 제시된 학습과학의 3대 논증 이론(Toulmin, Walton, Van Eemeren)을 정립합니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>툴민의 모델은 주장의 정당성을 검증하는 구조적 틀을 제공하며, 월턴의 이론은 대화의 목표가 '상대 굴복'이 아니라 '진리 탐구'가 되어야 함을 규정합니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>이어지는 슬라이드들에서 논증이 어떻게 학습자의 인지적 갈등을 유발하고 해결하는지 살펴봅니다.</p>
-      </div>
-    </section>
-
-    <!-- Slide 4: 21.2 & 21.3 Socio-Cognitive Conflict & Development -->
-    <section class="slide" data-index="3">
-      <span class="slide-badge">학습 메커니즘 · Section 21.2~21.3</span>
-      <h2 class="slide-title">21.2 사회-인지적 갈등과 21.3 논증 기술의 발달</h2>
-      <p class="slide-subtitle">동료의 반론이 만드는 인지적 불평형과 아동의 '내편 편향(Myside bias)' 극복</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>⚡ 21.2 사회-인지적 갈등 (Doise & Mugny)</h3>
-          <ul>
-            <li>자신의 주장과 상반된 동료의 반론을 마주할 때 피아제식 <strong>인지적 불평형(Disequilibration)</strong> 발생</li>
-            <li>갈등을 해소하기 위해 자신의 가정을 재검토하고 더 정교한 개념 모델로 재구성</li>
-          </ul>
+        <div class="card">
+          <h3>4. 뒷받침 (Backing)</h3>
+          <p>보증의 타당성을 입증하는 학문적 이론이나 공리</p>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">📉 21.3 발달적 난제: 내편 편향 (Myside bias)</h3>
-          <ul>
-            <li>초등 아동은 자신의 주장을 뒷받침하는 근거만 찾고 반증을 외면하는 경향 (Kuhn, 1991)</li>
-            <li>타인의 관점을 고려하고 반론을 예측하는 <strong>'역지사지 스캐폴딩'</strong> 필요</li>
-          </ul>
+          <h3 style="color: var(--accent-rose);">5. 반론 (Rebuttal)</h3>
+          <p>주장이 성립하지 않는 예외 조건 및 반증 사례</p>
+        </div>
+        <div class="card">
+          <h3>6. 한정어 (Qualifier)</h3>
+          <p>"아마도", "반드시" 등 주장의 확실성 정도 표기</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>21.2절의 사회-인지적 갈등 메커니즘과 21.3절의 아동기 논증 발달의 한계(내편 편향)를 설명합니다.</p>
+        <p>스티븐 툴민(1958)의 6대 논증 구조 요소를 이해하고, 학생들이 수준 높은 과학적 주장을 구성하도록 돕는 분석 틀을 배웁니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>동료와의 건강한 인지적 갈등은 뇌 속 멘탈 모델을 뒤흔들어 깊은 개념 변화를 이끄는 가장 강력한 에너지입니다.</p>
+        <p>초보 학습자는 단순한 '주장+자료'에 머물지만, 숙련된 학습자는 '보증(Warrant)'과 '반론(Rebuttal)'을 고려하여 주장을 정교화합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>어떻게 하면 인지적 갈등이 감정적 싸움으로 변질되지 않게 막을 수 있을까요? 다음 슬라이드에서 답을 찾습니다.</p>
+        <p>학생들의 발표 문장에서 '자료'와 '보증'이 누락된 사례를 찾아 첨삭하는 활동을 해보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: 21.4 & 21.5 Reasoning Skills & Emotional Safety -->
+    <!-- Slide 4: Douglas Walton's Dialogue Types -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">논증 이론 ② · Section 21.1</span>
+      <h2 class="slide-title">더글러스 월턴(Douglas Walton)의 대화 유형론</h2>
+      <p class="slide-subtitle">학습이 일어나는 핵심 대화: '탐구(Inquiry)'와 '심의(Deliberation)'</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>💬 6대 대화 유형</h3>
+          <ul>
+            <li><strong>설득 (Persuasion)</strong>: 내 입장을 믿게 만들기</li>
+            <li><strong>탐구 (Inquiry)</strong>: <strong>진리를 찾기 위한 객관적 증거 수집</strong></li>
+            <li><strong>심의 (Deliberation)</strong>: <strong>공동의 최적 행동 방안 합의</strong></li>
+            <li><strong>협상 (Negotiation)</strong>: 이익의 거래와 타협</li>
+            <li><strong>정보 요청 (Information-seeking)</strong>: 지식 묻고 답하기</li>
+            <li><strong>에리스틱 (Eristic)</strong>: 감정적 승패 싸움</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>🎯 학습과학의 초점</h3>
+          <p>에리스틱(말싸움)과 단순 정보 요청을 넘어, **'탐구형 대화(Inquiry Dialogue)'와 '심의형 대화(Deliberative Dialogue)'**로 교실 담화를 전환시킬 때 가장 깊은 인지적 학습이 창발함</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>월턴의 대화 유형론을 통해 교실에서 권장해야 할 대화 형태(탐구, 심의)와 경계해야 할 형태(에리스틱)를 구분합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>탐구형 대화는 참여자들이 '무지의 상태'에서 출발하여 확고한 증거를 바탕으로 지식을 축적해 나가는 과학적 대화입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>모둠 토론이 감정 싸움(Eristic)으로 번지는 것을 막기 위한 대화 그라운드 룰(Ground Rules)을 수립하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Socio-Cognitive Conflict -->
     <section class="slide" data-index="4">
-      <span class="slide-badge">사회정서 역동 · Section 21.4~21.5</span>
-      <h2 class="slide-title">21.4 추론 능력 향상과 21.5 소집단 내 정서적 안전성</h2>
-      <p class="slide-subtitle">자신의 불완전한 아이디어를 드러낼 수 있는 심리적 안정감과 체면 유지(Face-saving)</p>
+      <span class="slide-badge">인지적 메커니즘 · Section 21.2</span>
+      <h2 class="slide-title">사회-인지적 갈등과 개념 변화(Conceptual Change)</h2>
+      <p class="slide-subtitle">동료의 반론에 부딪힐 때 발생하는 피아제식 인지적 불평형(Disequilibrium)</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🧠 21.4 암묵적 가정의 명시화 (Externalization)</h3>
+          <h3>⚡ 인지적 불평형의 발생 경로</h3>
           <ul>
-            <li>말로 설명하고 반론에 답하는 과정에서 자신의 지식 공백(Gaps) 자각</li>
-            <li>비판적 평가 기준(Epistemic Criteria)을 스스로 내면화하여 메타인지 고도화</li>
+            <li>혼자 생각할 때는 완벽해 보였던 내 논리가 동료의 예리한 반박에 의해 붕괴됨</li>
+            <li>"어라? 내가 왜 이 변수를 고려하지 못했지?"라는 <strong>지적 위기(Cognitive Crisis)</strong> 직면</li>
+            <li>기존의 오개념 도식을 버리고 더 정교한 상위 개념으로 도약하는 계기 마련</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🛡️ 21.5 정서적 안전성 (Emotional Safety)</h3>
+        <div class="card">
+          <h3>🌱 개념 변화의 성공 요건</h3>
           <ul>
-            <li>비판이 사람에 대한 인신공격이 아니라 <strong>'아이디어에 대한 탐구'</strong>라는 교실 신뢰 구축</li>
-            <li>동료의 체면(Face)을 살려주는 정중한 대인 윤리(Interpersonal Ethics) 훈련</li>
+            <li>반론이 인신공격이 아니라 <strong>객관적 증거에 기반한 인식적 도전</strong>이어야 함</li>
+            <li>학습자에게 대안 이론을 탐색하고 수정할 수 있는 충분한 시간과 비계 제공</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>21.4절의 추론 및 메타인지 역량과 21.5절의 정서적 안전성(Emotional Safety) 이론을 다룹니다.</p>
+        <p>논증 과정에서 마주하는 인지적 갈등이 어떻게 Chapter 06의 '개념 변화'를 촉발하는 핵심 엔진이 되는지 연결합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>베이커, 안드리센, 얘르벨래(Baker, Andriessen, & Järvelä, 2013)의 연구: 협력적 논증은 고도의 사회정서적 과제이며, 감정적 위협을 느끼는 순간 인지적 학습은 즉각 중단됩니다.</p>
+        <p>누스바움과 시나트라(Nussbaum & Sinatra, 2003): 논증적 텍스트를 읽고 반박문을 작성한 학생들이 일반 텍스트를 읽은 학생보다 오개념 수정률이 3배 높았습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>교사가 비판적 피드백을 주고받는 규범을 어떻게 모델링해야 하는지 토론하세요.</p>
+        <p>학생들이 틀린 개념을 쉽게 인정하지 않으려 할 때 교사가 반증 실험을 어떻게 투입해야 할지 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 6: 21.7 Arguing to Learn in Context -->
+    <!-- Slide 6: Myside Bias & Perspective-Taking -->
     <section class="slide" data-index="5">
-      <span class="slide-badge">교과 적용 · Section 21.7</span>
-      <h2 class="slide-title">21.7 교과 맥락 속에서의 논증 학습 실천</h2>
-      <p class="slide-subtitle">과학적 증거 검증, 역사적 1차 사료 대조, 그리고 사회과학적 쟁점(SSI) 심의</p>
+      <span class="slide-badge">발달적 메커니즘 · Section 21.3</span>
+      <h2 class="slide-title">내편 편향(Myside Bias)의 극복과 다관점 조망</h2>
+      <p class="slide-subtitle">인간의 자연스러운 인지적 결함을 치료하는 역지사지 논증 스캐폴딩</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 내편 편향 (Myside Bias, Perkins)</h3>
+          <ul>
+            <li>자신의 입장을 지지하는 증거만 편식하고, 반대 증거는 의도적으로 무시·왜곡하는 인간의 본능</li>
+            <li>나이와 지능에 상관없이 훈련받지 않은 모든 사람에게 강력하게 작동</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 다관점 조망 (Perspective-Taking) 훈련</h3>
+          <ul>
+            <li><strong>역할 전환 논증</strong>: 상대방의 입장이 되어 그 입장을 가장 강력하게 옹호하는 변론서 작성</li>
+            <li>반대편 주장의 논리적 타당성을 이해할 때 비로소 진정한 비판적 사고력 완성</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>논증 학습이 인간의 고질적인 '내편 편향(Myside Bias)'을 극복하고 성숙한 시민적 합리성을 기르는 경로임을 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>디애나 쿤(Deanna Kuhn, 1991)의 기념비적 연구: 성인의 50% 이상이 자신의 의견에 대한 대안적 관점을 전혀 제시하지 못하는 내편 편향에 갇혀 있음을 증명했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>수업에서 학생들에게 '입장을 바꾸어 반론하기(Devil's Advocate)' 게임을 적용해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Externalization & Epistemic Criteria -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">추론적 메커니즘 · Section 21.4</span>
+      <h2 class="slide-title">암묵적 가정의 명시화(Externalization)와 평가 기준</h2>
+      <p class="slide-subtitle">머릿속 직관을 언어와 도표로 표상할 때 일어나는 메타인지적 명료화</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 가설의 외재화</h3>
+          <p>모호한 직관을 글과 다이어그램으로 표현하는 순간 논리적 빈틈(Gap)이 스스로 드러남</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 인식적 기준 내면화</h3>
+          <p><strong>"이 증거는 믿을 만한가?", "표본 크기는 충분한가?"</strong> 등의 학술적 평가 기준 습득</p>
+        </div>
+        <div class="card">
+          <h3>3. 메타인지적 반성</h3>
+          <p>내가 왜 이렇게 생각했는지 자신의 사고 과정 자체를 검토하는 2차 인지 활성화</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>논증을 구성하는 행위 자체가 어떻게 사고를 명료하게 만들고 과학적 인식 기준을 내면화시키는지 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>콜린스의 인지적 도제 이론과 직결되며, 논증은 '머릿속 사고 과정을 가시화(Making Thinking Visible)'하는 최고의 도구입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들에게 "주장을 할 때는 반드시 '왜냐하면'과 '그 근거는'을 붙여 말하기" 규칙을 훈련시키세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Social Dynamics & Psychological Safety -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">사회정서적 역동 · Section 21.5</span>
+      <h2 class="slide-title">체면 위협(Face-Threatening) 방지와 심리적 안전감</h2>
+      <p class="slide-subtitle">아이디어에 대한 비판이 인격에 대한 공격으로 오인되지 않게 하는 소통 윤리</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">⚠️ 체면 손상과 방어적 폐쇄</h3>
+          <ul>
+            <li>반박을 당했을 때 학생이 창피함(Humiliation)이나 공격으로 느끼면 입을 닫아버림</li>
+            <li>정서적 위협 상태에서는 뇌의 전두엽 인지 기능이 차단되고 방어 기제만 작동</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🛡️ 심리적 안전감(Psychological Safety) 구축</h3>
+          <ul>
+            <li><strong>"사람을 비판하지 말고 아이디어를 비판하라"</strong> 규범 정립</li>
+            <li>완곡한 어조(Hedging)와 질문형 반박(Socratic questioning)을 권장하는 담화 스캐폴딩</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>논증 학습이 성공하기 위해 반드시 확보되어야 할 교실 내 정서적 안전성과 체면 유지(Face-saving)의 중요성을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>베이커(Baker, 2002): 논증은 매우 고위험의 사회적 행위입니다. 친절하고 협력적인 교실 문화 없이는 진정한 학술적 논쟁이 불가능합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"친구의 의견에 반대할 때 상처 주지 않고 말하는 3가지 문장 템플릿"을 학생들과 함께 만들어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Co-inquiry in Argumentation -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">협력적 논증 · Section 21.6</span>
+      <h2 class="slide-title">대립적 승패(Debate)에서 공동의 진리 탐구(Co-inquiry)로</h2>
+      <p class="slide-subtitle">상대를 굴복시키는 것이 아니라, 함께 산을 오르듯 진리를 찾아가는 논증</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>논쟁 공간 탐색 (Exploration)</h3>
+          <p>문제에 얽힌 다양한 변수와 이해관계자들의 관점을 지도 그리듯 함께 조망</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>가설의 공동 수정 (Co-refinement)</h3>
+          <p>"너의 반박을 들으니 내 가설의 이 부분을 이렇게 수정하면 더 완벽해지겠네!"</p>
+        </div>
+        <div class="card">
+          <h3>통합적 결론 도출 (Consensus)</h3>
+          <p>양측의 타당한 근거를 모두 포괄하는 상위 수준의 종합(Synthesis) 창출</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>협력적 논증(Collaborative Argumentation)이 궁극적으로 지향하는 '공동 탐구(Co-inquiry)'의 이상적 모습을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>안드리센과 베이커: 최고의 논증 학습은 토론이 끝났을 때 승자와 패자가 갈리는 것이 아니라, 참여자 모두가 "우리가 함께 더 현명해졌다"고 느끼는 것입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>토론 수업의 최종 평가를 '어느 팀이 이겼는가'가 아니라 '어느 팀이 더 훌륭한 합의안을 도출했는가'로 바꾸어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Argumentation Software Tools -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">에듀테크 도구 · Section 21.9</span>
+      <h2 class="slide-title">시각적 논증 매핑 소프트웨어: Belvedere, Digalo, Argunet</h2>
+      <p class="slide-subtitle">복잡한 논증 구조를 2D 노드-링크 그래프로 가시화하는 컴퓨터 비계</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🗺️ 시각적 논증 맵 (Argument Diagrams)</h3>
+          <ul>
+            <li><strong>Belvedere (Suthers et al.)</strong>: 주장(초록색 상자), 데이터(노란색 상자), 보증(화살표)을 연결</li>
+            <li><strong>Digalo / Argunet</strong>: 찬성(지지선), 반대(충돌선), 질문(점선)을 색상으로 시각화</li>
+            <li>복잡한 텍스트 줄글보다 논리적 오류와 결함을 즉각 식별 가능</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 학습과학적 효과</h3>
+          <ul>
+            <li>학생들이 <strong>'근거 없는 주장'이나 '반론이 누락된 지점'</strong>을 시각적으로 쉽게 발견</li>
+            <li>논증 다이어그램을 작성한 집단이 훨씬 더 깊고 체계적인 소논문을 작성함 실증</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>컴퓨터 기반 논증 시각화 도구(Computer-Supported Argument Visualization: CSAV)의 기능과 교육적 효과를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>서더스(Suthers, 2003): 표상적 지도(Representational Guidance) 효과 — 인터페이스의 시각적 형태가 학생들의 사고와 대화 패턴을 유도합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>Kialo나 Miro와 같은 현대 온라인 논증 툴을 수업에 도입하는 방안을 모색하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Application to Science Education -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">교과 접목 ① · Section 21.7</span>
+      <h2 class="slide-title">과학 교육에서의 CER(주장-증거-추론) 논증 실천</h2>
+      <p class="slide-subtitle">맥닐과 크라직(McNeill & Krajcik)의 과학적 논증 교육 프레임워크</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="card highlight-card">
-          <h3>🔬 과학 교육 (Science)</h3>
-          <p>가설과 관찰 데이터의 정합성 검증, 이상 현상(Anomalous data)에 대한 반론을 통한 오개념 수정</p>
+          <h3>Claim (주장)</h3>
+          <p><strong>"연못의 물고기가 떼죽음한 이유는 공장의 폐수 유출 때문이다."</strong><br/>현상에 대한 과학적 결론 진술</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">📜 역사 교육 (History)</h3>
-          <p>단일 교과서 암기 탈피, 상충하는 1차 역사 사료들을 대조하며 역사 해석의 다원성과 관점주의 학습</p>
+        <div class="card">
+          <h3>Evidence (증거)</h3>
+          <p><strong>"폐수 배출구 하류의 pH가 4.2로 강산성이며 중금속 농도가 10배 높았다."</strong><br/>실제 측정 데이터</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">🌍 사회·윤리 쟁점 (SSI)</h3>
-          <p>기후 변화, 유전자 편집, AI 윤리 등 정답이 없는 복합 딜레마에 대해 과학적 증거와 도덕적 가치를 심의</p>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>21.7절의 교과별 논증 학습 실천(과학, 역사, 사회과학 SSI)을 체계적으로 비교 분석합니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>교과마다 논증의 규칙과 정당화 기준(Epistemic Criteria)이 다릅니다. 과학에서는 경험적 증거가, 역사에서는 출처의 맥락이, SSI에서는 가치 조율이 핵심입니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>자신의 전공 교과에서 가장 효과적인 논증 과제 주제를 구상해 보세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 7: 21.9 Electronic Environments & Argument Maps -->
-    <section class="slide" data-index="6">
-      <span class="slide-badge">디지털 비계 · Section 21.9</span>
-      <h2 class="slide-title">21.9 디지털 환경에서의 논증: 대화 게임과 논증 지도</h2>
-      <p class="slide-subtitle">Belvedere, Digalo, WISE를 통한 논리 구조의 시각화와 스캐폴딩</p>
-      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
-        <div class="card highlight-card">
-          <h3>🎮 21.9.1 대화 게임 비계 (Digalo)</h3>
-          <p>'주장하기', '이유묻기', '반박하기' 버튼을 누르며 대화 턴을 게임 규칙처럼 수행하도록 구조화</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🗺️ 21.9.3 논증 지도 (Belvedere, Argunet)</h3>
-          <p>주장, 근거, 반론을 노드와 화살표 다이어그램으로 시각화하여 논리적 비약과 미탐구 영역을 가시화</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet); grid-column: span 2;">
-          <h3 style="color: var(--accent-violet);">🔬 21.9.4 과학 탐구 통합 환경 (WISE, SenseMaker)</h3>
-          <p>시뮬레이션 조작과 증거 바구니(Evidence Basket)를 결합하여, 학생들이 실험 데이터를 끌어다 논증을 완성하도록 지원 (Linn et al.)</p>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>Reasoning (추론)</h3>
+          <p><strong>"어류는 pH 5.5 이하에서 아가미 세포가 파괴되어 질식사한다는 생물학 법칙."</strong><br/>원리와 연결</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>21.9절(21.9.1~21.9.4)에 제시된 디지털 논증 지원 테크놀로지를 설명합니다.</p>
+        <p>미국 차세대 과학교육 표준(NGSS)의 핵심 실천인 CER(Claim-Evidence-Reasoning) 프레임워크를 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>서더스와 훈트하우젠(Suthers & Hundhausen, 2003)의 연구: 논증 지도(Argument Map)라는 표상적 도구는 학생들이 근거 없는 주장을 삼가고 증거 기반 담화를 지속하도록 유도합니다.</p>
+        <p>CER은 툴민 논증 모델을 초·중등 과학교육에 맞게 간결화한 것으로, 학생들이 단순 암기에서 벗어나 과학자처럼 증거 기반 추론을 하게 합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>텍스트 토론보다 다이어그램 논증 지도가 주는 인지적 이점을 짚어주세요.</p>
+        <p>과학 실험 보고서 양식을 기존의 '결과 및 고찰'에서 'CER 논증문'으로 바꾸는 방안을 제안하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 8: Summary & Looking Ahead to Ch 22 -->
-    <section class="slide" data-index="7">
-      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 21.10</span>
-      <h2 class="slide-title">21.10 Chapter 21 총괄 결론 & Chapter 22 박물관 학습 예고</h2>
-      <p class="slide-subtitle">교실을 넘어 박물관과 과학관으로 확장되는 비형식 학습(Informal Learning)의 세계로!</p>
+    <!-- Slide 12: History and SSI Dilemmas -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">교과 접목 ② · Section 21.7</span>
+      <h2 class="slide-title">역사 1차 사료 비판과 과학-기술-사회(SSI) 논쟁</h2>
+      <p class="slide-subtitle">정답이 없는 복합 딜레마에 대한 증거 기반 다원적 가치 심의</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>🌟 Ch 21 논증 학습의 핵심 교훈</h3>
+        <div class="card">
+          <h3>📜 역사 사료 비판 (Wineburg)</h3>
           <ul>
-            <li>1. 이기려 하지 말고, 개념 공간을 탐구하라</li>
-            <li>2. 사회-인지적 갈등을 멘탈 모델 수정의 촉매로 삼아라</li>
-            <li>3. 정서적 안전성을 보장하여 아이디어를 보호하라</li>
-            <li>4. 논증 지도(Argument Map)로 논리적 구조를 시각화하라</li>
+            <li>동일한 역사적 사건(예: 독립 선언, 전쟁)을 기록한 상충하는 일기, 신문, 공문서 대조</li>
+            <li>"저자의 출처와 의도는 무엇인가?"를 따지는 <strong>비판적 사료 논증</strong></li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 22 예고: 박물관에서의 비형식 학습</h3>
-          <p><strong>Kevin Crowley, Palmyre Pierroux, & Karen Knutson</strong></p>
-          <p>학교 밖 박물관, 과학관, 미술관에서 가족과 공동체가 만들어내는 생생한 비형식(Informal) 학습 생태계!</p>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>🧬 SSI 딜레마 심의 (Socio-Scientific Issues)</h3>
+          <ul>
+            <li>원자력 발전, 유전자 가위(CRISPR), AI 자율무기 등 윤리적 쟁점</li>
+            <li>과학적 팩트와 사회적 가치관을 분별하며 최적의 정책 대안을 모색하는 <strong>민주 시민 논증</strong></li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 21(21.0~21.10)을 마무리하고, Part IV의 마지막 챕터인 Chapter 22(박물관 비형식 학습)를 예고합니다.</p>
+        <p>논증 학습이 역사 교육과 현대 과학기술사회(SSI) 딜레마 수업에서 발휘하는 비판적 민주시민 교육의 가치를 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 22는 교실을 벗어나 박물관과 과학관의 전시물 속에서 가족과 공동체가 어떻게 협력적 대화를 나누는지 밝힙니다.</p>
+        <p>SSI 논증은 학생들이 "과학은 객관적 사실만 다루는 것이 아니라 사회적 가치 판단과 결합된다"는 것을 깨닫게 합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>수고하셨습니다! 다음 Chapter 22로 나아갑니다.</p>
+        <p>"자율주행차의 트롤리 딜레마"를 주제로 학생들과 논증 수업을 설계해 보세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 21</span>
+      <h2 class="slide-title">코드 리뷰와 소프트웨어 아키텍처 의사결정 논증</h2>
+      <p class="slide-subtitle">"왜 이 알고리즘과 디자인 패턴을 선택했는가?"에 대한 엔지니어링 변론</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 코드 리뷰에서의 CER 구조</h3>
+          <ul>
+            <li><strong>Claim (제안)</strong>: "이 중첩 루프를 해시맵(HashMap) 기반 조회의 O(N)으로 리팩토링해야 합니다."</li>
+            <li><strong>Evidence (증거)</strong>: "데이터 10만 건 벤치마크 결과 실행 시간이 12초에서 0.05초로 단축되었습니다."</li>
+            <li><strong>Reasoning (이론)</strong>: "시간 복잡도 O(N^2)과 O(N)의 빅오 표기법 계산 및 메모리 트레이드오프 분석."</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🏗️ 아키텍처 결정 기록 (ADR: Architecture Decision Record)</h3>
+          <p>전문 개발팀이 사용하는 ADR 문서는 툴민 논증 구조와 완벽히 일치하는 소프트웨어 공학의 정수</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>논증 구조(Toulmin / CER)가 실무 소프트웨어 개발의 '코드 리뷰' 및 '아키텍처 결정 기록(ADR)'과 완벽히 합치됨을 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>훌륭한 소프트웨어 엔지니어는 코드를 빠르게 짜는 사람이 아니라, "왜 이 아키텍처를 선택했는지"를 팀원들에게 논리적으로 변론할 수 있는 사람입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생 코딩 과제에 "자신의 코드 설계 근거를 CER 형식으로 3줄 요약하여 제출하기"를 적용해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 21.8</span>
+      <h2 class="slide-title">이기기 위한 말싸움이 아닌 함께 깨닫는 대화의 예술</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 논증 학습의 3대 나침반</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>공동 탐구로서의 논증</h3>
+          <p>상대를 굴복시키는 것이 아니라 동료의 반론을 거름 삼아 함께 더 깊은 진리로 도약</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>사고의 시각적 외재화</h3>
+          <p>툴민 모델과 논증 다이어그램으로 생각의 뼈대를 가시화하여 비판적 점검</p>
+        </div>
+        <div class="card">
+          <h3>사회정서적 안전성</h3>
+          <p>사람을 존중하고 아이디어를 비판하는 성숙한 학술적 대화 규범 확립</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 21의 모든 핵심 교훈을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>논증을 통한 학습은 분열과 혐오가 넘쳐나는 현대 사회에서 서로 다른 생각을 지닌 타인과 합리적으로 소통하고 공존하는 민주 시민의 핵심 자산입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"오늘 수업 이후 여러분의 대화 방식에서 바꾸고 싶은 한 가지는 무엇인가요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 22 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part IV</span>
+      <h2 class="slide-title">다음 여정: Chapter 22 박물관 및 비형식 학습 환경</h2>
+      <p class="slide-subtitle">Informal Learning in Museums and Beyond (Leona Schauble & Kevin Crowley)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 21 vs Ch 22 연계성</h3>
+          <ul>
+            <li><strong>Ch 21 논증을 통한 학습</strong>: 학교 및 온라인 담화에서의 논리적 증거 기반 상호작용</li>
+            <li><strong>Ch 22 박물관 및 비형식 학습</strong>: 과학관, 미술관, 동물원 등 학교 밖 비형식 환경에서의 <strong>자유선택 학습(Free-choice Learning), 가족 대화, 전시물 상호작용</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 Part IV 협력 학습의 피날레</h3>
+          <p>지식구축(19) ➔ CSCL(20) ➔ 논증학습(21) ➔ 박물관 비형식 학습(22)으로 완성되는 사회적 배움의 지평</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 21을 마무리하고, Part IV의 마지막 장인 Chapter 22(Museums and Informal Learning)와의 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>피츠버그 대학교 케빈 크라울리 교수와 레오나 샤우블 교수의 박물관 가족 대화 및 비형식 과학 탐구 연구로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 22를 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 21: Arguing to Learn (Jerry Andriessen & Michael Baker)</div>
-    <div class="footer-center" id="slide-counter">01 / 08</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
