@@ -212,171 +212,473 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 33 · Part VI Grand Finale</span>
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 33 · Part VI Context</span>
       <h1 class="slide-title">The Learning Sciences in the 2020s</h1>
-      <p class="slide-subtitle">2020년대의 학습과학: 학교와 그 너머를 위한 혁신적 함의 — 30년의 성찰과 미래 교육 종합 설계도</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+      <p class="slide-subtitle">2020년대의 학습과학: 학교와 그 너머를 위한 혁신적 함의 — 30년의 성찰, 교수주의의 극복, 그리고 미래 교육 설계도</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
-          <h3>👥 편저자 및 출처</h3>
-          <p><strong>R. Keith Sawyer</strong> (University of North Carolina at Chapel Hill)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 668–688)</p>
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>R. Keith Sawyer</strong><br/>(University of North Carolina at Chapel Hill — 핸드북 총괄 편저자)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 33</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (33.0 ~ 33.3)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>33.0 30년사 총괄</strong>: 암기형 교수주의(Instructionism)의 종말</li>
-            <li><strong>33.1 학교 개혁의 5대 기둥</strong>: 증거, 평가, 교육과정, 교사, 생태계</li>
-            <li><strong>33.1.4 규율 있는 즉흥 교사</strong> (Disciplined Improviser)</li>
-            <li><strong>33.2 2020s 미래 연구 지평</strong>: 인지-사회문화 통섭 & AI 공존</li>
+            <li><strong>교수주의(Instructionism)의 종언</strong>: 산업화 시대 암기 교육의 완전한 극복</li>
+            <li><strong>21세기 미래 학교 5대 기둥</strong>: 깊은 이해, 형성평가, 빅 아이디어, 즉흥 교사, 생태계</li>
+            <li><strong>2020년대 3대 연구 지평</strong>: 인지-사회문화 통섭, 정의와 형평성, AI와 공진화</li>
+            <li><strong>33개 챕터 총결산</strong>: 지식 창조 사회를 이끄는 학습과학의 미래 비전</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 『The Cambridge Handbook of the Learning Sciences』(3판)의 총괄 편저자인 R. 키스 소이어 교수가 집필한 마지막 결론 챕터로, 33개 챕터 전체의 지혜를 총괄 통합하고 2020년대 이후의 학습 혁명 비전을 제시합니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>소이어 교수는 창의성(Creativity)과 그룹 지니어스(Group Genius) 연구의 거두로, 21세기 혁신 경제에 필요한 인간의 배움을 설계하는 과학적 청사진을 제공합니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>『The Cambridge Handbook of the Learning Sciences (3판)』 33개 챕터 대장정의 총괄 결론으로서, 편저자 키스 소여 교수가 제시하는 30년의 학문적 성찰과 미래 2020년대 교육 대변혁의 종합 설계도를 마스터합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>키스 소여(R. Keith Sawyer) 교수는 창의성, 협력적 즉흥, 학습과학의 세계적 최고 권위자이자 본 핸드북 1, 2, 3판의 총괄 에디터입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"우리가 33개 챕터를 통해 배운 학습과학의 단 하나의 핵심 메시지는 무엇일까요?"로 시작하세요.</p>
+        <p>"33개 챕터를 관통하며 여러분이 마주한 '학습과학'의 가장 위대한 통찰 한 가지는 무엇이었나요?"로 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: 33.0 Death of Instructionism to Deeper Learning -->
+    <!-- Slide 2: 30 Years of Learning Sciences -->
     <section class="slide" data-index="1">
-      <span class="slide-badge">패러다임 혁명 · Section 33.0</span>
-      <h2 class="slide-title">33.0 교수주의(Instructionism)의 종말과 깊은 학습(Deeper Learning)</h2>
-      <p class="slide-subtitle">1991년 태동부터 30년간 학습과학이 이룩한 가장 위대한 지적 성취 (R. Keith Sawyer)</p>
+      <span class="slide-badge">30년의 성찰 · Section 33.0</span>
+      <h2 class="slide-title">1991년 태동에서 2020년대까지: 교수주의의 완전한 종언</h2>
+      <p class="slide-subtitle">공장형 암기 교육(Instructionism)에서 활기찬 지식 창조 공동체로의 대혁명</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">❌ 산업화 시대 교수주의 (Instructionism)</h3>
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 산업화 시대: 교수주의 (Instructionism)</h3>
           <ul>
-            <li>탈맥락화된 파편적 사실과 공식을 교사가 주입</li>
-            <li>학생은 수동적 암기 후 1회성 객관식 시험으로 서열화</li>
-            <li>21세기 혁신 지식 사회에서 완전히 무용함 입증</li>
+            <li>지식을 탈맥락화된 사실과 공식 조각들로 환원</li>
+            <li>교사는 일방적 지식 전달자, 학생은 수동적 수용자</li>
+            <li>결과: 시험이 끝나면 90% 증발하는 피상적 암기(Shallow Learning)</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">✅ 2020s 학습과학 패러다임</h3>
+          <h3 style="color: var(--accent-emerald);">✨ 2020년대: 학습과학 패러다임</h3>
           <ul>
-            <li><strong>협력적 담화와 인공물을 매개로 지식을 창조(Knowledge Building)</strong></li>
-            <li>핵심 개념(Big Ideas) 중심의 <strong>깊은 개념 학습(Deeper Learning)</strong>과 전이</li>
-            <li>체화된 인지, 복잡계 모델링, AI 기술의 유기적 융합</li>
+            <li>학습은 협력적 담화와 도구를 매개로 **새로운 지식을 창조하고 조율하는 사회문화적 실천**</li>
+            <li>학생은 문제 해결자이자 에이전트, 교사는 지적 도제이자 즉흥 퍼실리테이터</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>33.0절의 교수주의(Instructionism) 극복과 깊은 개념 학습(Deeper Learning)으로의 패러다임 전환을 총괄 정리합니다.</p>
+        <p>지난 30년간 학습과학이 이룩한 가장 위대한 학문적 성취인 '교수주의(Instructionism)의 완전한 극복'을 선언합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>소이어(Sawyer, p. 668): 학습과학의 지난 30년 연구는 "인간은 수동적 주입을 통해서는 결코 깊은 개념적 이해에 도달할 수 없다"는 사실을 의심의 여지 없이 증명했습니다.</p>
+        <p>소여(Sawyer, 2022): 인공지능이 모든 단순 지식을 대체하는 21세기 혁신 경제에서, 교수주의 방식의 주입식 교육은 명백한 교육적 재앙입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>학교 현장이 아직도 교수주의의 잔재에서 벗어나지 못하는 이유를 토론하세요.</p>
+        <p>우리나라 교실 풍경에서 여전히 남아있는 교수주의적 관행들을 비판적으로 짚어보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 33.1.4 Teacher as Disciplined Improviser -->
+    <!-- Slide 3: Pillar 1 Evidence of Learning -->
     <section class="slide" data-index="2">
-      <span class="slide-badge">미래 교사상 · Section 33.1.4</span>
-      <h2 class="slide-title">33.1.4 미래의 교사상: '규율 있는 즉흥 연주가'</h2>
-      <p class="slide-subtitle">정해진 스크립트를 읊는 연기자가 아닌, 탄탄한 지식 위에서 반응하는 재즈 뮤지션 (Sawyer, 2004, 2019)</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>📐 탄탄한 구조와 규율 (Discipline)</h3>
-          <ul>
-            <li>교과 도메인의 깊은 개념적 지식(PCK)</li>
-            <li>학습 발달 궤적(Learning Progression)에 대한 이해</li>
-            <li>명확한 수업 목표와 탐구 활동의 뼈대</li>
-          </ul>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🎷 창의적 즉흥 연주 (Improvisation)</h3>
-          <ul>
-            <li>학생들이 돌발적으로 던지는 참신한 아이디어와 오개념을 포착(Noticing)</li>
-            <li>실시간 담화의 흐름을 조율하며 <strong>학생 스스로 결론을 도출하도록 즉흥적 비계(Scaffolding) 변주</strong></li>
-          </ul>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>33.1.4절의 소이어 교수의 대표적 이론인 '규율 있는 즉흥 연주가(Disciplined Improviser)'로서의 교사상을 다룹니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>재즈 연주자가 화성학(규율)을 완벽히 이해해야 자유로운 즉흥 연주를 하듯, 교사 역시 교과 내용과 학습 궤적을 꿰뚫고 있어야 학생들의 즉흥적 발언을 학문적 탐구로 이끌 수 있습니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>수업 지도안의 경직성과 즉흥성의 균형을 논의하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 4: 33.2 Future Horizons: Emergence & Justice -->
-    <section class="slide" data-index="3">
-      <span class="slide-badge">미래 연구 지평 · Section 33.2</span>
-      <h2 class="slide-title">33.2 2020년대 학습과학 연구의 3대 미래 지평</h2>
-      <p class="slide-subtitle">개인 인지와 사회문화의 통섭, 형평성과 정의(Justice), 그리고 AI 시대의 공존 (Sawyer et al.)</p>
+      <span class="slide-badge">미래 학교 기둥 ① · Section 33.1.1</span>
+      <h2 class="slide-title">학습의 증거: '깊은 개념적 이해(Deeper Learning)'</h2>
+      <p class="slide-subtitle">단순 정답 맞히기에서 실세계 복합 문제를 해결하는 실천 역량으로</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 멘탈 모델의 구조화</h3>
+          <p>지식들을 분절된 조각이 아닌 인과적·위계적 개념망으로 연결</p>
+        </div>
         <div class="card highlight-card">
-          <h3>1. 창발적 통섭 (Emergence)</h3>
-          <p>뇌과학·개인 인지와 집단 상호작용의 사회문화적 과정을 <strong>'사회적 창발'</strong> 이론으로 통합</p>
+          <h3>2. 유연한 학습 전이</h3>
+          <p><strong>Transfer</strong><br/>익숙한 교과서 문제를 넘어 낯선 실세계 맥락에 지식을 적응적 적용</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 형평성과 정의 (Justice)</h3>
-          <p>소외 계층의 문화적 자산을 중심에 두고 교육 시스템의 차별을 해체하는 정의 지향 학습과학</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3. AI와 인간 지능의 공존</h3>
-          <p>생성형 AI와 지능형 에이전트 환경에서 인간의 비판적 사고와 집단 창의성을 증폭시키는 설계</p>
+        <div class="card">
+          <h3>3. 학문적 실천 참여</h3>
+          <p>과학자처럼 모델링하고, 역사가처럼 사료를 비판하며, 프로그래머처럼 디버깅</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>33.2절의 2020년대 학습과학 3대 미래 연구 지평을 체계화합니다.</p>
+        <p>학습과학이 정의하는 '학습의 증거(Evidence of Learning)'가 어떻게 깊은 개념적 이해(Deeper Learning)와 실천 역량으로 전환되었는지 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>학습과학은 더 이상 인지주의 vs 사회문화주의의 이분법에 갇히지 않고, '사회적 창발(Social Emergence)'을 통해 미시와 거시를 통합합니다.</p>
+        <p>펠레그리노(Pellegrino, 2012): 깊은 학습은 인지적(문제해결), 대인관계적(협력/소통), 개인내적(메타인지/성장마인드셋) 역량의 통합체입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>생성형 AI 시대에 인간 교사와 학습과학의 역할을 토론하세요.</p>
+        <p>학생이 "진짜로 개념을 이해했다"는 것을 판별할 수 있는 최고의 질문을 만들어 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: Grand Finale: 33 Chapters Completed! -->
-    <section class="slide" data-index="4">
-      <span class="slide-badge">대단원 완결 · 33/33 Complete</span>
-      <h2 class="slide-title">33.3 『학습과학 핸드북』(3판) 33개 챕터 대단원의 완결</h2>
-      <p class="slide-subtitle">기초 이론에서 교과 지식, 테크놀로지, 협력, 그리고 정책까지: 21세기 미래 교육을 향하여!</p>
+    <!-- Slide 4: Pillar 2 Assessment & Accountability -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">미래 학교 기둥 ② · Section 33.1.2</span>
+      <h2 class="slide-title">평가의 대전환: 줄세우기에서 '실시간 형성평가와 학습분석'으로</h2>
+      <p class="slide-subtitle">펠레그리노(Pellegrino)의 평가 삼각형과 다중모달 AI 형성평가</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>🎉 6개 Part 총 33개 챕터 여정 완주</h3>
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 과거: 1회성 총괄 지필 시험 (Autopsy)</h3>
           <ul>
-            <li>Part I: 기초 이론 (구성주의, 스캐폴딩, 인지적 도제)</li>
-            <li>Part II: 연구 방법론 (DBR, 영상분석, EDM, ENA)</li>
-            <li>Part III: 테크놀로지 (체화 인지, 게임, 텐저블)</li>
-            <li>Part IV: 협력과 공동체 (CSCL, 지식창조, 동료학습)</li>
-            <li>Part V: 교과 지식 (수학, 과학, 복잡계, 역사, 예술)</li>
-            <li>Part VI: 현장 적용 & 미래 (문화, 동기, 교사, 정책, 미래)</li>
+            <li>학기 말에 1번 치르고 점수로 학생을 서열화(Rank-ordering)</li>
+            <li>이미 학습이 다 끝난 뒤에 치르는 '부검(Autopsy)'식 평가</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🌟 최종 결론: 지식 창조 사회의 인간</h3>
-          <p><strong>"Learning is the process of becoming a creative participant in a collaborative knowledge-building culture."</strong></p>
-          <p>모든 학습자가 능동적 지식 창조자로 피어나는 미래 교육 생태계를 만들어 갑니다!</p>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 미래: 실시간 적응형 형성평가 (Checkup)</h3>
+          <ul>
+            <li>시뮬레이션 로그 데이터와 비디오 분석을 통해 **학습이 진행되는 바로 그 순간(In-situ)** 개념적 병목을 진단</li>
+            <li>학생의 성장을 돕는 맞춤형 비계와 피드백 즉시 공급</li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>핸드북 전체 33개 챕터의 대단원을 완결 짓고, 6개 Part 전체의 유기적 지식 지도를 기념합니다.</p>
+        <p>평가(Assessment)의 본질이 '판정(Grading)'에서 '학습 지원(Learning Support)'으로 거듭나는 평가 혁신을 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>이로써 1991년 태동한 학습과학 30년사의 정수를 담은 캠브리지 핸드북 제3판 전 33개 챕터의 정밀 분석과 디지털 슬라이드 배포가 100% 완성되었습니다.</p>
+        <p>Chapter 12와 13의 정수: 디지털 학습 분석(EDM/LA) 기술과 인지 진단 모델이 결합하여 시험 없는 상시 형성평가가 가능해졌습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>청중 및 학습자들에게 전체 학습과학 여정을 마친 소회와 실천 다짐을 요청하며 강의를 감동적으로 마무리하세요.</p>
+        <p>우리 교육에서 수능/내신 상대평가를 절대평가 및 과정 중심 포트폴리오로 전환하기 위한 로드맵을 토론하세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 5: Pillar 3 Curriculum & Learning Progressions -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">미래 학교 기둥 ③ · Section 33.1.3</span>
+      <h2 class="slide-title">교육과정: 1인치 깊이의 나열에서 '학습 발달 궤적(LP)'으로</h2>
+      <p class="slide-subtitle">"A Mile Wide and an Inch Deep" 백과사전식 커리큘럼의 해체</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>빅 아이디어 (Big Ideas)</h3>
+          <p>수백 개의 자잘한 사실 대신, 각 학문의 근본을 이루는 소수의 핵심 원리에 집중</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>학습 발달 궤적 (LP)</h3>
+          <p><strong>Learning Progressions</strong><br/>초보자의 직관에서 전문가의 세련된 이론으로 성장하는 나선형 발달 경로</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>학제간 융합 (Crosscutting)</h3>
+          <p>수학, 과학, 역사, 코딩, 예술이 실세계 프로젝트 안에서 자연스럽게 융합</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>교육과정 설계의 최신 표준인 '학습 발달 궤적(Learning Progressions: LP)'과 빅 아이디어 중심 교육과정을 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>브루너의 나선형 교육과정과 NGSS의 결합: 학생은 동일한 빅 아이디어를 학년이 올라감에 따라 더 높은 정교도로 반복 탐구합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교과서의 지나치게 방대한 분량을 과감히 덜어내고 핵심 개념을 깊게 탐구하는 'Less is More' 철학을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Pillar 4 The Teacher of the Future -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">미래 학교 기둥 ④ · Section 33.1.4</span>
+      <h2 class="slide-title">미래의 교사상: '규율 있는 즉흥 연주가(Disciplined Improviser)'</h2>
+      <p class="slide-subtitle">키스 소여(Keith Sawyer)의 재즈 즉흥 수업과 교사의 전문적 자율성</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎷 구조(Structure)와 즉흥(Improvisation)의 공존</h3>
+          <ul>
+            <li><strong>탄탄한 구조 (Structure)</strong>: 교육과정의 핵심 목표와 정교한 스캐폴딩 도구 완비</li>
+            <li><strong>창의적 즉흥 (Improvisation)</strong>: 학생들의 돌발 질문, 오개념, 예측 못한 아이디어에 유연하게 반응하여 수업 경로를 실시간 재조율</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>👩‍🏫 AI 시대 교사의 독보적 가치</h3>
+          <p>지식 전달은 AI가 1초 만에 대신하지만, 교실의 복잡한 인간적 담화를 조율하고 정서적으로 공감하는 **'재즈 마에스트로'로서의 교사 역할은 결코 대체 불가**</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>소여 교수가 주창한 미래 교사의 이상형인 '규율 있는 즉흥 연주가(Disciplined Improviser)'의 개념을 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>소여(2004, 2011): 훌륭한 수업은 미리 짜인 대본을 완벽히 읽는 연극이 아니라, 학생들과 실시간으로 호흡하며 새로운 멜로디를 만드는 재즈 잼 세션입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 수업 중에 학생의 예상치 못한 질문에 즉흥적으로 대응하여 대박 수업을 만들었던 경험을 나누어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Pillar 5 Stakeholder Ecosystems -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">미래 학교 기둥 ⑤ · Section 33.1.5</span>
+      <h2 class="slide-title">이해관계자 연대: 학교 담장을 넘어서는 생태계</h2>
+      <p class="slide-subtitle">가정, 박물관, 메이커스페이스, 온라인 커뮤니티, 지역사회의 유기적 연결</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>학교와 박물관 연계</h3>
+          <p>교실 이론과 현장 실물 유물/체험의 무봉제 탐구 (Ch 22)</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>가정 및 일상 문화</h3>
+          <p>학생들의 문화적 자산(Funds of Knowledge) 인정 (Ch 29)</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>정책 및 RPP 연대</h3>
+          <p>교육청, 대학 연구진, 지자체의 제도적 인프라 지지 (Ch 32)</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학교가 고립된 섬이 아니라, 지역사회 전체를 아우르는 '학습 생태계의 허브'로 거듭나는 5번째 기둥을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>아프리카 속담 "한 아이를 키우려면 온 마을이 필요하다"는 학습과학의 생태학적 학습 환경 설계(Ecological Systems)와 완벽히 일치합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 학교가 지역 도서관, 과학관, IT 기업과 연계할 수 있는 상생 프로젝트를 제안해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Future Frontier 1 Social Emergence -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">미래 연구 지평 ① · Section 33.2.1</span>
+      <h2 class="slide-title">개인 인지와 사회문화의 통섭: '사회적 창발(Social Emergence)'</h2>
+      <p class="slide-subtitle">키스 소여의 메타 이론: 뇌 속의 신경 인지와 교실의 담화 상호작용의 완벽한 융합</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🧠 미시: 개인 뇌와 인지 (Micro)</h3>
+          <ul>
+            <li>작업기억, 스키마, 메타인지, 감정 조절, 신경생리학적 뇌 가소성</li>
+            <li>개별 참여자는 담화에 자신의 인지적 기여를 투입</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-indigo);">
+          <h3 style="color: var(--accent-indigo);">🌊 거시: 사회적 창발 (Social Emergence)</h3>
+          <ul>
+            <li>개인들의 상호작용 속에서 **소집단 집단 지성(Group Cognition)**과 교실 문화 창발</li>
+            <li>창발된 문화는 다시 개인의 두뇌와 사고를 하향식(Top-down)으로 재구성</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>키스 소여 교수의 대표 저서 『Social Emergence (2005)』를 바탕으로 인지주의와 사회문화주의의 이분법을 통섭하는 메타 이론을 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>소여: "개인 인지와 사회적 담화는 동전의 양면이다. 둘 중 하나만을 고집하는 것은 학습의 절반을 버리는 것과 같다."</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>소집단 대화가 개인의 뇌 신경망 형성에 미치는 상호 피드백 루프를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Future Frontier 2 Equity & Justice -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">미래 연구 지평 ② · Section 33.2.2</span>
+      <h2 class="slide-title">정의와 형평성의 학습과학 (Justice-Oriented Learning Sciences)</h2>
+      <p class="slide-subtitle">모든 아동의 문화적 존엄성과 지적 잠재력을 꽃피우는 교육 정의</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>문화적 자산화</h3>
+          <p>소수자 아동의 언어와 일상 지식을 정규 학술 탐구의 당당한 출발점으로 승격</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>인식적 권력 해체</h3>
+          <p>교실 내 특정 성별이나 계층이 발언권을 독점하지 않도록 담화 권력 민주화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>사회 변혁적 에이전시</h3>
+          <p>지식을 배워 자신의 지역사회 불평등과 환경 정의를 개선하는 주체적 시민 양성</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>2020년대 학습과학의 가장 뜨거운 화두인 '정의 지향 학습과학(Justice-Oriented Learning Sciences)'의 비전을 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>나시르와 소여: 학습과학은 단순한 효율성 공학이 아니라, 인간의 해방과 평등을 향한 도덕적·사회적 헌신입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 학교 수업에서 소외되는 학생이 단 한 명도 없도록 보장하는 가장 구체적인 실천 방안을 제안하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Future Frontier 3 AI & Human Learning -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">미래 연구 지평 ③ · Section 33.2.3</span>
+      <h2 class="slide-title">인공지능(AI)과 인간 학습의 공진화: 생성형 AI 시대</h2>
+      <p class="slide-subtitle">인간을 대체하는 AI가 아니라, 인간의 지능을 무한히 증폭시키는 협력적 파트너</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🤖 AI의 역할: 인지적 비계 (Cognitive Scaffolding)</h3>
+          <ul>
+            <li>학생의 사고를 도발하는 소크라틱 대화형 질문 생성</li>
+            <li>개별 학생의 오개념과 감정 상태에 맞춘 초개인화 적응형 학습 지원</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-indigo);">
+          <h3 style="color: var(--accent-indigo);">🧑‍🎓 인간의 역할: 고차원적 비판과 지혜 (Wisdom)</h3>
+          <ul>
+            <li>AI 생성물의 할루시네이션과 윤리적 편향을 비판적으로 심문</li>
+            <li>공동체의 복합 난제를 해결하는 윤리적 가치 판단과 공감적 리더십 발휘</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>생성형 AI(ChatGPT 등) 시대에 학습과학이 제시하는 '인간-AI 상호 스캐폴딩'의 미래상을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>소여(2022): AI가 발달할수록 암기식 지식의 가치는 폭락하고, 학습과학이 강조해 온 '비판적 사고, 협력, 메타인지, 창의성'의 가치는 무한대로 상승합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들에게 AI 툴 사용을 금지해야 할지, 아니면 비판적 협업 파트너로 가르쳐야 할지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Group Genius and Knowledge Creation -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">창의성과 집단 지성 · Section 33.3</span>
+      <h2 class="slide-title">21세기 지식 창조 사회를 이끄는 '집단 천재성(Group Genius)'</h2>
+      <p class="slide-subtitle">고립된 단일 천재의 신화를 깨고, 상호작용 속에서 불꽃처럼 튀는 협력적 창의성</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>아이디어의 작은 불꽃</h3>
+          <p>누군가의 불완전한 제안이 동료의 귀를 거치며 새로운 가설로 점화</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>건설적 갈등과 합성</h3>
+          <p>서로 다른 관점이 충돌하며 어느 한 명의 머리에도 없던 혁신적 해법 창발</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>공공 지식으로 승격</h3>
+          <p>지식포럼, 깃허브, 논문 등 커뮤니티 전체가 활용할 수 있는 공유 자산화</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>소여 교수의 대표 명저 『Group Genius: The Creative Power of Collaboration (2007)』의 핵심 철학을 교육에 적용합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>비틀즈의 음악, 구글의 알고리즘, 백신 개발 등 인류의 모든 위대한 혁신은 한 천재의 단독 산물이 아닌 '집단 천재성(Group Genius)'의 결과였습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 학교 수업을 '개인 평가 경쟁'에서 '집단 지성 창출 축제'로 바꿀 수 있는 방안을 모색하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Innovation Economy and Lifelong Learning -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">혁신 경제와 미래 · Section 33.3</span>
+      <h2 class="slide-title">혁신 경제에서 살아남는 평생 협력적 학습자 양성</h2>
+      <p class="slide-subtitle">정답이 없는 미래 사회에서 가장 강력한 생존 무기는 '학습하는 법을 배우는 것(Learn to Learn)'</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🚀 21세기 핵심 역량 4C의 완성</h3>
+          <ul>
+            <li><strong>Critical Thinking (비판적 사고)</strong>: 사료 비판(Ch 26), 툴민 논증(Ch 21)</li>
+            <li><strong>Collaboration (협력)</strong>: CSCL(Ch 20), 집단 인지(Ch 19), SSRL(Ch 30)</li>
+            <li><strong>Communication (소통)</strong>: 다중문해력(Ch 27), 코모그니션(Ch 23)</li>
+            <li><strong>Creativity (창의성)</strong>: 스튜디오 사고(Ch 28), 즉흥 수업(Ch 33)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🌱 평생 학습 에이전시 (Lifelong Agency)</h3>
+          <p>졸업장으로 끝나는 배움이 아니라, 급변하는 기술과 사회 속에서 끊임없이 메타인지를 발휘하며 성장하는 자기조절적 주체</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학의 33개 챕터가 21세기 핵심 역량(4C: Critical Thinking, Collaboration, Communication, Creativity)을 어떻게 완벽히 뒷받침하는지 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>OECD Education 2030의 학생 행위주체성(Student Agency)과 변혁적 역량이 학습과학 연구와 100% 궤를 같이합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>4C 역량 중 여러분이 학생들에게 가장 강력하게 길러주고 싶은 한 가지 역량과 그 교수법을 나눠보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 33</span>
+      <h2 class="slide-title">모두를 위한 컴퓨팅 사고(CT)와 인공지능 리터러시</h2>
+      <p class="slide-subtitle">학습과학과 컴퓨터 과학 교육의 궁극적 융합과 미래 교육과정</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 보편적 기본 소양으로서의 CS</h3>
+          <ul>
+            <li>알고리즘적 추론, 패턴 분해, 추상화, 자동화는 프로그래머만의 기술이 아닌 모든 민주 시민의 사고 도구</li>
+            <li>블록 코딩에서 텍스트 코딩, 오픈소스 기여로 이어지는 체계적 발달 궤적</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🧠 인간 중심 AI 교육 (Human-Centered AI)</h3>
+          <ul>
+            <li>인공지능의 수학적·통계적 원리 이해와 함께, 윤리적 딜레마(프라이버시, 알고리즘 편향)를 비판하는 소양</li>
+            <li>기계와 공존하며 인류를 더 이롭게 하는 착한 기술 창작자 양성</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>컴퓨터 과학(CS) 교육이 학습과학 이론의 온실이자 가장 강력한 마이크로월드로 자리매김한 종합적 위상을 확인합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>윙(Jeannette Wing)의 컴퓨팅 사고력(CT)과 시모어 페퍼트의 구성주의가 2020년대 AI 교육의 핵심 기둥으로 완성되었습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>초·중등 AI 교육에서 '코딩 기술'과 '비판적 윤리성'을 균형 있게 가르치는 통합 수업을 구상해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Grand Master Summary of 33 Chapters -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">33개 챕터 총결산 · Master Summary</span>
+      <h2 class="slide-title">『Cambridge Handbook of Learning Sciences』 33개 챕터 총결산</h2>
+      <p class="slide-subtitle">인간 배움의 비밀을 밝혀낸 6대 파트의 위대한 여정</p>
+      <div class="card-grid" style="grid-template-columns: repeat(6, 1fr); font-size: 0.7rem;">
+        <div class="card">
+          <h3>Part I 기초</h3>
+          <p>Ch 1~8: 스캐폴딩, PBL, 메타인지, 개념변화, 인지도제</p>
+        </div>
+        <div class="card">
+          <h3>Part II 방법론</h3>
+          <p>Ch 9~13: DBR, 대화분석, 미시발생, 평가삼각형, LA/EDM</p>
+        </div>
+        <div class="card">
+          <h3>Part III 기술</h3>
+          <p>Ch 14~18: 게임, 체화인지, 탠저블, AR, 모바일학습</p>
+        </div>
+        <div class="card">
+          <h3>Part IV 협력</h3>
+          <p>Ch 19~22: 지식구축, CSCL, 논쟁학습, 박물관 비형식</p>
+        </div>
+        <div class="card">
+          <h3>Part V 교과</h3>
+          <p>Ch 23~28: 수학, 과학, 복잡계, 역사, 리터러시, 예술</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>Part VI 시스템</h3>
+          <p>Ch 29~33: 문화, 동기/SSRL, 교사학습, RPP, 미래</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>본 핸드북 전체 33개 챕터의 거대한 지식 지도(MOC)를 한눈에 조망하고, 각 파트 간의 유기적 통섭을 완성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>기초 이론(I) ➔ 연구 방법론(II) ➔ 매체 도구(III) ➔ 사회적 상호작용(IV) ➔ 교과별 전문성(V) ➔ 교육 시스템 및 미래(VI)로 이어지는 완벽한 학문적 건축물입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>전체 6개 파트 중 여러분의 교육 철학을 가장 근본적으로 뒤흔든 파트와 챕터를 꼽아보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Epilogue Toward the Horizon -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">에필로그 · The Horizon</span>
+      <h2 class="slide-title">새로운 교육의 지평을 향하여: 미래를 만드는 학습과학자들에게</h2>
+      <p class="slide-subtitle">"배움이란 인간이 서로를 마주 보며 함께 더 지혜로워지는 가장 아름다운 기적이다"</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌟 우리의 사명 (Our Mission)</h3>
+          <ul>
+            <li>지식을 머리에 채워 넣는 낡은 공장형 교실을 멈추고</li>
+            <li>모든 아이가 탐구하고, 질문하고, 반박하며, 함께 새로운 세계를 창조하는 **'살아있는 지식 창조 생태계'**를 설계하는 것</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🚀 미래를 향한 초대</h3>
+          <p style="font-size: 1.1rem; line-height: 1.6; color: var(--text-primary);">
+            <strong>"교실 문을 열고, 동료와 손을 잡으며, 학습과학의 따뜻한 지혜로 미래 교육의 새벽을 함께 열어갑시다!"</strong>
+          </p>
+          <p style="margin-top: 12px; color: var(--text-muted); font-size: 0.85rem;">— <em>The Cambridge Handbook of the Learning Sciences</em> 전 33장 대장정을 마치며 —</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>33개 챕터 전체의 대미를 장식하며, 학습과학자 및 교육자로서의 숭고한 사명과 미래 교육을 향한 감동적인 비전을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학습과학의 모든 이론과 데이터는 결국 하나의 목표를 향합니다: "모든 인간이 자신의 존엄한 지적 잠재력을 남김없이 꽃피우는 더 정의롭고 지혜로운 사회를 만드는 것."</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>전체 33장 여정을 마친 소감과, 앞으로 자신의 교육 및 연구 현장에서 실천할 단 하나의 다짐을 나누며 강의를 감동적으로 마무리하세요.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">The Cambridge Handbook of the Learning Sciences (3rd Ed.) — All 33 Chapters Complete!</div>
-    <div class="footer-center" id="slide-counter">01 / 05</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
