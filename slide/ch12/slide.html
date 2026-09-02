@@ -258,7 +258,7 @@
   <main id="stage">
 
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
+    <section class="slide" data-index="0">
       <span class="slide-badge">Chapter 12 · Part II Methodologies</span>
       <h1 class="slide-title">Assessment in Education</h1>
       <p class="slide-subtitle">학습과학 관점의 교육 평가 설계: 평가 삼각형, 증거 중심 설계, 그리고 균형 잡힌 평가 체제</p>
@@ -533,8 +533,132 @@
       </div>
     </section>
 
-    <!-- Slide 10: Application to CS Education & Auto-grading -->
+    
+    <!-- Slide NEW 1: 3 Pillars of Assessment Triangle -->
     <section class="slide" data-index="9">
+      <span class="slide-badge">이론 아키텍처 · Section 12.2.1</span>
+      <h2 class="slide-title">평가 삼각형 3대 축의 유기적 정렬 메커니즘</h2>
+      <p class="slide-subtitle">인지(Cognition), 관찰(Observation), 해석(Interpretation)의 삼위일체</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>🧠 1. 인지 (Cognition)</h3>
+          <p><strong>"학습자는 지식을 어떻게 표상하고 발전시키는가?"</strong></p>
+          <p>도메인 내 지식 구조, 오개념, 발달 궤적(Learning Progression)에 대한 이론적 모델</p>
+        </div>
+        <div class="card">
+          <h3>👀 2. 관찰 (Observation)</h3>
+          <p><strong>"어떤 과제가 학생의 역량을 증명하는가?"</strong></p>
+          <p>인지적 과정을 자극하고 드러나게 만드는 실제적 문항, 시뮬레이션, 수행 과제</p>
+        </div>
+        <div class="card">
+          <h3>📐 3. 해석 (Interpretation)</h3>
+          <p><strong>"관찰된 증거로부터 어떻게 역량을 추론하는가?"</strong></p>
+          <p>통계적 심리측정 모형(IRT, 베이지안 네트워크, BKT)을 통한 역량 확률 계산</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>평가 삼각형의 세 꼭짓점이 분리되지 않고 상호 긴밀히 정렬되어야만 신뢰할 수 있는 평가가 됨을 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>인지 이론 없는 평가는 피상적 암기 측정에 머물며, 해석 도구 없는 관찰은 주관적 편향에 빠집니다. 세 요소의 정렬이 핵심입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>기존 학교 시험에서 '인지 모델'이 결여되어 발생하는 부작용(단순 암기 문제)을 비판적으로 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide NEW 2: 5 Models of ECD -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">설계 공학 · Section 12.2.3</span>
+      <h2 class="slide-title">증거 중심 설계(ECD)의 5대 핵심 모델 구조</h2>
+      <p class="slide-subtitle">로버트 미슬레비(Robert Mislevy)의 엄밀한 증거 기반 평가 공학</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card">
+          <h3>1. 학생 모델 (Student Model)</h3>
+          <p>측정하고자 하는 잠재 역량, 지식, 기술, 오개념 변수의 집합 (무엇을 평가할 것인가?)</p>
+        </div>
+        <div class="card">
+          <h3>2. 증거 모델 (Evidence Model)</h3>
+          <p>학생의 행동 산출물에서 점수를 채점(Scoring Rule)하고 통계적으로 연결하는 규칙</p>
+        </div>
+        <div class="card">
+          <h3>3. 과제 모델 (Task Model)</h3>
+          <p>증거를 이끌어내기 위해 학생에게 제시되는 과제의 환경, 도구, 제약 조건 설계</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>4. 조립 및 전달 모델 (Assembly & Delivery)</h3>
+          <p>컴퓨터 적응형 시험(CAT) 및 시뮬레이션 환경에서 문항을 실시간 배정하고 렌더링</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>현대 에듀테크 및 지능형 튜터링 시스템 평가 설계의 표준인 ECD 5대 모델을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>ECD는 "문항을 먼저 만들고 사후에 끼워 맞추는" 주먹구구식 출제를 방지하고, 역량 정의로부터 과제 설계까지 연역적으로 구축합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>복잡한 코딩 평가나 게임 기반 평가를 만들 때 ECD 모델이 왜 필수적인지 분석하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide NEW 3: Formative Feedback 3 Questions -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">피드백 공학 · Section 12.3.1</span>
+      <h2 class="slide-title">학습을 돕는 형성평가 피드백의 3대 핵심 질문</h2>
+      <p class="slide-subtitle">해티와 팀펄리(Hattie & Timperley, 2007)의 피드백 루프 아키텍처</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>🎯 1. 어디로 가는가?<br/>(Where am I going?)</h3>
+          <p><strong>목표의 명료화(Feed Up)</strong>: 학습자가 도달해야 할 성공 기준(Rubric)과 표준을 명확히 제시</p>
+        </div>
+        <div class="card">
+          <h3>📍 2. 지금 어디에 있는가?<br/>(How am I going?)</h3>
+          <p><strong>현재 상태 진단(Feed Back)</strong>: 목표 상태와 현재 수행 사이의 간극(Gap)을 구체적 증거로 피드백</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>🚀 3. 다음엔 무엇을 할 것인가?<br/>(Where to next?)</h3>
+          <p><strong>도약 전략 안내(Feed Forward)</strong>: 간극을 좁히기 위해 실행해야 할 구체적인 다음 인지적 학습 활동 제시</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>단순한 점수 통보가 아닌, 학생의 실질적 인지 성장을 견인하는 형성적 피드백의 3단계를 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>"틀렸으니 다시 해라"는 피드백이 아닙니다. 목표(Feed Up), 현재 위치(Feed Back), 다음 단계(Feed Forward)가 연결될 때 자기조절학습이 촉진됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>AI 튜터가 학생에게 제공해야 할 가장 이상적인 피드백 메시지의 구조를 설계해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide NEW 4: Systemic Coherence in Assessment -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">평가 생태계 · Section 12.4</span>
+      <h2 class="slide-title">균형 잡힌 평가 체제의 3대 정렬성 (Systemic Alignment)</h2>
+      <p class="slide-subtitle">교실 형성평가와 국가 대규모 총괄평가의 조화로운 통합</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 포괄성 (Comprehensiveness)</h3>
+          <p>단일 시험에 의존하지 않고, 다양한 목적과 형식의 다채널 평가 포트폴리오 구축</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 일관성 (Coherence)</h3>
+          <p>교실 내 매일의 형성평가와 연말 총괄평가가 동일한 인지 학습 모델(Learning Progression)을 공유</p>
+        </div>
+        <div class="card">
+          <h3>3. 지속성 (Continuity)</h3>
+          <p>학습자의 시간 경과에 따른 종단적 성장 궤적을 지속적으로 추적하고 환류</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>펠레그리노 위원회가 권고한 3대 평가 시스템 원칙(포괄성, 일관성, 지속성)을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>총괄평가와 형성평가는 상호 모순되는 것이 아니라, 동일한 학습 진행 경로를 기반으로 상이한 시공간 해상도에서 작동하는 보완재여야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>국가 수준 수능 시험과 학교 내 수행평가가 어떻게 일관성을 유지할 수 있을지 정책적 대안을 모색하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Application to CS Education & Auto-grading -->
+    <section class="slide" data-index="13">
       <span class="slide-badge">컴퓨터교육 접목 · Chapter 12</span>
       <h2 class="slide-title">컴퓨터 소프트웨어 교육 및 자동 채점(Auto-grading) 평가</h2>
       <p class="slide-subtitle">테스트 통과 여부를 넘어선 ECD 기반 소프트웨어 공학 역량 다차원 평가</p>
@@ -565,7 +689,7 @@
     </section>
 
     <!-- Slide 11: Summary & Core Takeaways -->
-    <section class="slide" data-index="10">
+    <section class="slide" data-index="14">
       <span class="slide-badge">총괄 결론 · Chapter 12</span>
       <h2 class="slide-title">학습과학 기반 교육 평가 설계의 핵심 통찰</h2>
       <p class="slide-subtitle">학습과학자가 기억해야 할 3대 평가 설계 원리</p>
@@ -594,7 +718,7 @@
     </section>
 
     <!-- Slide 12: Looking Ahead to Chapter 13 -->
-    <section class="slide" data-index="11">
+    <section class="slide" data-index="15">
       <span class="slide-badge">다음 챕터 예고 · Part II</span>
       <h2 class="slide-title">다음 여정: Chapter 13 학습분석학 & 교육데이터마이닝 (LA & EDM)</h2>
       <p class="slide-subtitle">라이언 베이커(Ryan S. Baker)와 조지 시멘스(George Siemens)의 빅데이터 학습과학</p>
@@ -625,7 +749,7 @@
 
   <footer>
     <div class="footer-left">Chapter 12: Assessment in Education (James W. Pellegrino)</div>
-    <div class="footer-center" id="slide-counter">01 / 12</div>
+    <div class="footer-center" id="slide-counter">01 / 16</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
