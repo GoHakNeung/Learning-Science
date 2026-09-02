@@ -232,7 +232,7 @@
   <main id="stage">
 
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
+    <section class="slide" data-index="0">
       <span class="slide-badge">Chapter 14 · Part III Technology Opening</span>
       <h1 class="slide-title">Video Games and Learning</h1>
       <p class="slide-subtitle">비디오 게임과 학습: 문화, 참여 아키텍처, 그리고 게임 기반 학습과학</p>
@@ -464,7 +464,7 @@
         <div class="card highlight-card">
           <h3>📊 메타분석 결과 (Clark et al., 2016)</h3>
           <ul>
-            <li>디지털 게임 기반 학습은 강의식 수업 대비 <strong>학업 성취도 효과 크기 $d \approx 0.33 \sim 0.50$</strong></li>
+            <li>디지털 게임 기반 학습은 강의식 수업 대비 <strong>학업 성취도 효과 크기 d ≈ 0.33 ~ 0.50</strong></li>
             <li>지식 유지도(Retention)와 복합 문제해결력에서 압도적 우위</li>
           </ul>
         </div>
@@ -487,8 +487,136 @@
       </div>
     </section>
 
-    <!-- Slide 9: Application to CS Education & Game-Making -->
+    
+    <!-- Slide NEW 1: Gee's Learning Principles -->
     <section class="slide" data-index="8">
+      <span class="slide-badge">학습 이론 · Section 14.1.4</span>
+      <h2 class="slide-title">제임스 폴 지(Gee)의 게임 기반 핵심 학습 원리</h2>
+      <p class="slide-subtitle">21세기 고차원적 인지를 견인하는 좋은 비디오 게임의 설계 철학</p>
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card highlight-card">
+          <h3>🎭 1. 정체성 & 에이전시 (Identity)</h3>
+          <p>아바타와의 동일시를 통해 "나는 역사를 이끄는 지도자/생태학자"라는 강력한 인식적 주체성을 획득하고 실패를 즐김</p>
+        </div>
+        <div class="card">
+          <h3>🏖️ 2. 샌드박스와 안전한 실패 (Sandbox)</h3>
+          <p>현실의 치명적 위험 없이 가설을 마음껏 시도하고 파괴하며 배우는 안전한 실험 공간 제공</p>
+        </div>
+        <div class="card">
+          <h3>📍 3. 맥락화된 의미 구성 (Situated Meaning)</h3>
+          <p>단어와 개념이 추상적 텍스트가 아니라, 게임 속 시각적 객체와 행동의 맥락 속에서 생생히 체득됨</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>🔄 4. 숙달과 도전의 순환 (Cycles of Expertise)</h3>
+          <p>하나의 보스를 격파하여 전략을 숙달(Mastery)하면, 다음 스테이지에서 규칙이 바뀌어 새로운 탐색을 요구</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>언어학자 제임스 폴 지 교수가 정립한 게임 기반 학습의 4대 핵심 기둥을 심층 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>좋은 게임은 플레이어에게 지루함(너무 쉬움)과 불안(너무 어려움) 사이의 '기분 좋은 좌절(Pleasantly Frustrating)' 상태를 끊임없이 유지시킵니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교 교육과정이 왜 게임처럼 '숙달과 도전의 순환'을 만들어내지 못하는지 비교 분석해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide NEW 2: Stealth Assessment Deep Architecture -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">평가 혁신 · Section 14.1.3</span>
+      <h2 class="slide-title">은밀한 평가(Stealth Assessment)의 심층 ECD 아키텍처</h2>
+      <p class="slide-subtitle">발레리 슈트(Valerie Shute)의 Physics Playground 역량 측정 메커니즘</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎮 게임 내 상호작용 로그 (Telemetry)</h3>
+          <ul>
+            <li>공을 목표 지점으로 보내기 위해 그린 지렛대, 도르래, 진자의 각도와 길이</li>
+            <li>실패 후 재시도까지 걸린 시간(Latency) 및 전략 변경 횟수</li>
+            <li>마우스 드로잉의 정밀도와 물리 엔진 시뮬레이션 결과</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-indigo);">
+          <h3 style="color: var(--accent-indigo);">📐 베이지안 네트워크 잠재 역량 추론</h3>
+          <ul>
+            <li><strong>뉴턴 역학 개념 이해도</strong>: 에너지 보존, 토크, 중력 가속도 역량 확률 계산</li>
+            <li><strong>비인지적 역량 (끈기/Grit)</strong>: 포기하지 않고 대안을 그리는 '지속성(Persistence)' 실시간 산출</li>
+            <li><strong>"시험 없는 시험": 학습자에게 불안감을 주지 않는 무봉제(Seamless) 평가</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 12의 ECD 프레임워크가 게임 기반 학습에서 '은밀한 평가'로 완벽히 구현된 사례를 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>슈트(Shute, 2011)는 Newton's Playground 게임에서 학생들의 텔레메트리 데이터를 통해 전통 지필 검사보다 더 높은 예측 타당도로 물리 역량과 끈기를 측정했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>은밀한 평가가 교실의 기말고사를 대체할 수 있을지에 대한 가능성과 한계를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide NEW 3: Affinity Spaces & Participatory Culture -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">사회문화적 맥락 · Section 14.1.4</span>
+      <h2 class="slide-title">친화 공간(Affinity Spaces)과 참여적 지식 생태계</h2>
+      <p class="slide-subtitle">게임 밖 포럼, 위키, 모딩(Modding) 커뮤니티에서 폭발하는 집단 지성</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>📖 1. 위키 & 공략 가이드 작성</h3>
+          <p>수백 명의 게이머들이 수천 페이지의 데이터 테이블을 작성하고 학술 논문 수준의 분석글 게시</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>🛠️ 2. 모딩(Modding)과 창작</h3>
+          <p>게임 코드를 수정하여 새로운 맵, 캐릭터, 물리 법칙을 프로그래밍하고 전 세계에 배포</p>
+        </div>
+        <div class="card">
+          <h3>🤝 3. 수평적 피어 튜터링</h3>
+          <p>나이와 직업에 상관없이 전문 지식을 가진 누구나 마스터가 되어 초보자를 스캐폴딩</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>게임 학습이 게임 화면 안에서 끝나지 않고 거대한 '친화 공간(Affinity Space)'으로 확장됨을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>친화 공간은 스카다말리아의 '지식 구축 공동체(Knowledge Building)'와 레이브-벵거의 '실천 공동체(CoP)'가 디지털 공간에서 가장 이상적으로 발현된 형태입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 참여해 본 게임 커뮤니티나 인터넷 팬덤 공간에서의 배움 경험을 나누어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide NEW 4: Serious Games vs Commercial Games Meta-Analysis -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">효과성 메타분석 · Section 14.2</span>
+      <h2 class="slide-title">게임 기반 학습의 효과성 메타분석과 성공 요건</h2>
+      <p class="slide-subtitle">학습 효과 크기(d ≈ 0.33 ~ 0.50)와 교육적 성패를 가르는 3대 설계 원칙</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📊 대규모 메타분석 실증 증거</h3>
+          <ul>
+            <li><strong>Clark et al. (2016)</strong>: 168개 연구 메타분석 결과 게임 기반 학습 집단이 일반 수업 대비 효과 크기 <strong>d = 0.33</strong> 우위</li>
+            <li><strong>지식 파지(Retention)</strong>에서 특히 강력한 장기 기억 지속 효과 증명</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🔑 성공을 위한 3대 설계 원칙</h3>
+          <ul>
+            <li><strong>내적 통합(Intrinsic Integration)</strong>: 학습 개념이 게임 플레이 조작과 인과적으로 결합되어야 함</li>
+            <li><strong>교사의 디브리핑(Debriefing)</strong>: 게임 후 교사와 함께 개념을 구조화하고 성찰하는 세션 필수</li>
+            <li><strong>협력적 게임 플레이</strong>: 동료와 전략을 논의할 때 개념적 학습 극대화</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>게임 기반 학습의 실증적 효과성 데이터(메타분석)와 교육적 성공을 보장하는 핵심 설계 조건을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>게임만 던져준다고 학습이 저절로 일어나지 않습니다. 게임 플레이와 교실 내 디브리핑 토론이 결합될 때 최고의 시너지가 발생합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교실 수업에서 게임을 활용할 때 교사의 디브리핑 질문을 어떻게 구성해야 할지 설계해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Application to CS Education & Game-Making -->
+    <section class="slide" data-index="12">
       <span class="slide-badge">컴퓨터교육 접목 · Chapter 14</span>
       <h2 class="slide-title">컴퓨터 프로그래밍 교육과 게임 제작 (Game-Making)</h2>
       <p class="slide-subtitle">게임 플레이어(Consumer)에서 게임 창작자(Creator)로의 도약 (Kafai & Burke, 2015)</p>
@@ -518,7 +646,7 @@
     </section>
 
     <!-- Slide 10: Summary & Core Takeaways -->
-    <section class="slide" data-index="9">
+    <section class="slide" data-index="13">
       <span class="slide-badge">총괄 결론 · Chapter 14</span>
       <h2 class="slide-title">비디오 게임과 학습의 핵심 통찰 총괄</h2>
       <p class="slide-subtitle">학습과학자가 기억해야 할 3대 게임 기반 학습 원리</p>
@@ -547,7 +675,7 @@
     </section>
 
     <!-- Slide 11: Looking Ahead to Chapter 15 -->
-    <section class="slide" data-index="10">
+    <section class="slide" data-index="14">
       <span class="slide-badge">다음 챕터 예고 · Part III</span>
       <h2 class="slide-title">다음 여정: Chapter 15 체화 인지와 체화 설계 (Embodied Design)</h2>
       <p class="slide-subtitle">도르 아브라함슨(Dor Abrahamson)과 롭 린드그렌(Robb Lindgren)의 몸으로 배우는 테크놀로지</p>
@@ -578,7 +706,7 @@
 
   <footer>
     <div class="footer-left">Chapter 14: Video Games and Learning (Steinkuehler & Squire)</div>
-    <div class="footer-center" id="slide-counter">01 / 11</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
