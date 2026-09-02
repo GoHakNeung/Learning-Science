@@ -241,252 +241,478 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
+    <section class="slide" data-index="0">
       <span class="slide-badge">Chapter 17 · Part III Technology</span>
       <h1 class="slide-title">Augmented Reality in the Learning Sciences</h1>
       <p class="slide-subtitle">증강현실과 학습과학: 현실과 가상의 융합, 비가시적 개념의 시각화, 그리고 교실 오케스트레이션</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Bertrand Schneider</strong> & <strong>Iulian Radu</strong> (Harvard University)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 340–362)</p>
+          <p><strong>Bertrand Schneider</strong> (Harvard University)<br/><strong>Iulian Radu</strong> (Harvard University)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 17</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (17.0 ~ 17.4)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>17.0 AR 정의 & 원리</strong>: 현실 유지 + 3D 실시간 정합</li>
-            <li><strong>17.1 현실-가상 연속체 (Fig 17.1)</strong> & 3대 차원(디스플레이, 트래킹, 인터랙션)</li>
-            <li><strong>17.2 3대 분석 렌즈 (Table 17.1)</strong>: 개념적(HoloSpeaker), 사회적(Tinker Table), 정서적(EcoMOBILE)</li>
-            <li><strong>17.3 미래 과제</strong>: WebXR 보급, 노코드 저작 도구, 프라이버시 윤리</li>
-            <li><strong>17.4 결론</strong>: 비가시적 지식의 공간화와 사회적 협력</li>
+            <li><strong>현실-가상 연속체</strong>: 물리 현실에 디지털 3D 정보를 정밀 정합하는 AR 기술</li>
+            <li><strong>3대 이론적 렌즈</strong>: 개념적(비가시화), 사회·맥락적(공동 시각 기반), 정서적(몰입)</li>
+            <li><strong>3대 랜드마크 사례</strong>: HoloSpeaker(물리), TinkerTable(물류), EcoMOBILE(생태)</li>
+            <li><strong>교실 오케스트레이션</strong>: 교사의 수업 조율 및 인지 부하 관리 설계</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 물리적 현실 세계 위에 3D 디지털 정보를 덧씌우는 '증강현실(AR)'이 인지 부하 감소, 개념적 공간화, 그리고 교실 협력 오케스트레이션에 미치는 혁신적 영향을 탐구합니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>하버드 대학교 슈나이더 교수와 라두 교수는 교육용 AR 분야의 메타분석과 실제 시스템(HoloSpeaker, Tinker Table)을 개발한 세계적 석학들입니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>증강현실(AR)이 단순한 시각적 효과를 넘어, 학생들의 개념 이해, 소집단 협력, 교사의 교실 조율을 어떻게 혁신하는지 학습과학적 3대 렌즈로 체계화합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>하버드 대학교 베르트랑 슈나이더와 율리안 라두 교수는 "AR 기술 자체가 좋은 것도 나쁜 것도 아니며, 학습과학적 설계 원리와 결합될 때만 교육적 위력을 발휘한다"고 천명합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"물리학에서 자기장이나 전류처럼 눈에 보이지 않는 개념을 학생들에게 어떻게 보여줄 수 있을까요?"라는 질문으로 시작하세요.</p>
+        <p>"완전 가상현실(VR)과 비교했을 때, 교실 수업에서 증강현실(AR)이 갖는 독보적 장점은 무엇일까요?"를 질문하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: Reality-Virtuality Continuum (Figure 17.1) -->
+    <!-- Slide 2: Reality-Virtuality Continuum -->
     <section class="slide" data-index="1">
-      <span class="slide-badge">연속체 모델 · Section 17.1</span>
-      <h2 class="slide-title">17.1 현실-가상 연속체 (Figure 17.1)와 AR의 3대 차원</h2>
-      <p class="slide-subtitle">Milgram & Kishino (1994)의 혼합현실 스펙트럼과 AR 설계 공간</p>
-      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
-        <div class="img-zoom-card" onclick="openModal('images/fig17_1.png', 'Figure 17.1 The reality-virtuality continuum (Milgram & Kishino, p. 356)')">
-          <img src="images/fig17_1.png" alt="Figure 17.1 Continuum">
-          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
-        </div>
+      <span class="slide-badge">기술 정의 · Section 17.1</span>
+      <h2 class="slide-title">현실-가상 연속체(Continuum)와 증강현실의 정의</h2>
+      <p class="slide-subtitle">밀그램과 키시노(Milgram & Kishino, 1994)의 혼합 현실(MR) 스펙트럼 (Figure 17.1)</p>
+      <div class="split-layout">
         <div class="card highlight-card">
-          <h3>🎮 17.1 AR의 3대 설계 차원</h3>
+          <h3>📐 혼합 현실(MR) 스펙트럼의 위치</h3>
           <ul>
-            <li><strong>17.1.1 디스플레이 (Display)</strong>: HMD(HoloLens), 모바일(Pokemon GO), 프로젝터(AR Sandbox)</li>
-            <li><strong>17.1.2 트래킹 (Tracking)</strong>: 마커, SLAM 평면 인식, 센서 융합(GPS+IMU)</li>
-            <li><strong>17.1.3 인터랙션 (Interaction)</strong>: 터치스크린, 3D 제스처 모션, 물리 탠저블 조작</li>
+            <li><strong>완전 물리 현실</strong>: 순수한 아날로그 교실 및 자연 환경</li>
+            <li><strong>증강현실 (AR)</strong>: 실제 환경을 보면서 디지털 3D 정보를 공간 정합(Spatial Overlay)</li>
+            <li><strong>증강가상 (AV)</strong>: 가상 공간 속에 실제 카메라 영상 투영</li>
+            <li><strong>완전 가상현실 (VR)</strong>: 외부 물리 세계와 완전히 차단된 몰입형 가상 공간</li>
           </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig17_1.png')">
+          <img src="images/fig17_1.png" alt="Figure 17.1 Reality-Virtuality Continuum">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 17.1)</div>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>원서 Figure 17.1의 현실-가상 연속체와 AR의 3대 설계 차원(17.1.1 Display, 17.1.2 Tracking, 17.1.3 Interaction)을 체계적으로 설명합니다.</p>
+        <p>원서 Figure 17.1을 통해 물리 현실과 가상현실 사이의 스펙트럼에서 AR의 고유한 위치와 기술적 정의(Azuma, 1997)를 정립합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>완전 가상현실(VR)이 사용자를 현실에서 차단한다면, 증강현실(AR)은 물리적 맥락과 동료 학습자를 시야에 유지한 채 협력할 수 있다는 결정적 교육적 장점을 가집니다.</p>
+        <p>AR은 물리 세계를 지우지 않고 보존하기 때문에, 학생 간의 눈맞춤(Eye contact)과 교실 내 실제 교구 조작을 방해하지 않는 결정적 장점이 있습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>도판을 클릭하여 확대하고, AR 샌드박스, 포켓몬고, 스마트글래스의 위치를 확인하세요.</p>
+        <p>포켓몬 고(Pokémon GO)의 대중적 성공 요인과 교육용 AR의 유사점을 비교해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 3 Theoretical Lenses (Table 17.1) -->
+    <!-- Slide 3: 3 Technical Design Dimensions -->
     <section class="slide" data-index="2">
-      <span class="slide-badge">이론 렌즈 · Section 17.2</span>
-      <h2 class="slide-title">17.2 학습과학이 주목하는 AR의 3대 이론적 렌즈</h2>
-      <p class="slide-subtitle">개념적 이해, 사회적 협력, 그리고 정서적 몰입의 삼위일체 (Table 17.1)</p>
+      <span class="slide-badge">설계 공간 · Section 17.1</span>
+      <h2 class="slide-title">증강현실 시스템의 3대 기술 설계 차원</h2>
+      <p class="slide-subtitle">디스플레이, 트래킹, 인터랙션의 상호작용 아키텍처</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 디스플레이 (Display)</h3>
+          <ul>
+            <li><strong>스마트폰/태블릿</strong>: 휴대형 핸드헬드 AR</li>
+            <li><strong>스마트 안경(HMD)</strong>: 홀로렌즈 양손 자유형</li>
+            <li><strong>프로젝터 (SAR)</strong>: 책상/벽면 공간 투영</li>
+          </ul>
+        </div>
         <div class="card highlight-card">
-          <h3>1. 개념적 렌즈</h3>
-          <p><strong>Conceptual Lens (17.2.1)</strong></p>
-          <p>비가시적 현상 가시화, 분할 주의 효과 제거, 공간적 인접성 보장</p>
+          <h3>2. 트래킹 (Tracking)</h3>
+          <ul>
+            <li><strong>마커 기반</strong>: QR/이미지 패턴 인식</li>
+            <li><strong>마커리스(SLAM)</strong>: 바닥·벽면 3D 공간 복원</li>
+            <li><strong>위치/센서</strong>: GPS, 자이로, 나침반 결합</li>
+          </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 사회·맥락적 렌즈</h3>
-          <p><strong>Socio-contextual (17.2.2)</strong></p>
-          <p>공동 시각적 기반(Shared Ground), 교실 오케스트레이션 지원</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">3. 정서적 렌즈</h3>
-          <p><strong>Affective Lens (17.2.3)</strong></p>
-          <p>생생한 야외 현장 탐구 몰입, 호기심과 놀이성(Playfulness) 증진</p>
+        <div class="card">
+          <h3>3. 인터랙션 (Interaction)</h3>
+          <ul>
+            <li><strong>터치스크린</strong>: 2D 핀치 줌 및 탭</li>
+            <li><strong>3D 제스처</strong>: 손가락 핀치 및 에어 탭</li>
+            <li><strong>탠저블 교구</strong>: 실물 마커 블록 조작</li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>원서 Table 17.1에 제시된 AR의 3대 분석 렌즈(Conceptual, Socio-contextual, Affective)를 정립합니다.</p>
+        <p>AR 하드웨어와 소프트웨어를 구성하는 3대 설계 차원(Display, Tracking, Interaction)의 스펙트럼을 체계화합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>AR은 단순히 신기한 시각 효과가 아닙니다. 인지과학의 이중부호화 및 분할주의 이론, 사회문화주의의 공동 주의집중 이론을 구현하는 학술적 매체입니다.</p>
+        <p>스마트폰 기반 AR은 보급이 쉽지만 한 손을 써야 하는 제약이 있고, HMD는 몰입감과 양손 조작이 우수하지만 비용과 착용감이 과제입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>이어지는 슬라이드들에서 3개 렌즈를 대표하는 실증 시스템 3종을 심층 탐구합니다.</p>
+        <p>교실 환경에서 태블릿 AR과 HMD 스마트 안경 중 어떤 방식이 더 현실적인지 토론하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: Conceptual Lens & HoloSpeaker (Figure 17.2) -->
+    <!-- Slide 4: 3 Theoretical Lenses Overview -->
     <section class="slide" data-index="3">
-      <span class="slide-badge">사례 ① · Section 17.2.1</span>
-      <h2 class="slide-title">17.2.1 개념적 렌즈: 홀로스피커 (HoloSpeaker, Figure 17.2)</h2>
-      <p class="slide-subtitle">보이지 않는 자기장과 음파 진동을 물리적 스피커 위에 3D로 실시간 렌더링 (Radu & Schneider, 2019)</p>
-      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
-        <div class="img-zoom-card" onclick="openModal('images/fig17_2.png', 'Figure 17.2 The HoloSpeaker system as seen through AR headset (Radu & Schneider, p. 361)')">
-          <img src="images/fig17_2.png" alt="Figure 17.2 HoloSpeaker">
-          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
+      <span class="slide-badge">이론 체계 · Section 17.2</span>
+      <h2 class="slide-title">증강현실의 학습과학적 3대 분석 렌즈 (Table 17.1)</h2>
+      <p class="slide-subtitle">개념적 이해, 사회적 협력, 정서적 몰입을 견인하는 3대 메커니즘</p>
+      <div class="split-layout">
+        <div class="card-grid" style="grid-template-columns: 1fr; gap: 8px;">
+          <div class="card highlight-card">
+            <h3>🧠 1. 개념적 렌즈 (Conceptual Lens)</h3>
+            <p>보이지 않는 미시 세계(자기장, 전류, 분자)를 시각화하고 공간적 인접성으로 인지 부하 감소</p>
+          </div>
+          <div class="card">
+            <h3>🤝 2. 사회·맥락적 렌즈 (Socio-Contextual Lens)</h3>
+            <p>공동 시각적 기반(Shared Visual Ground)을 형성하여 동료 간 대화와 교사의 수업 조율 지원</p>
+          </div>
+          <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+            <h3>🌿 3. 정서적 렌즈 (Affective Lens)</h3>
+            <p>야외 생태계와 역사적 유적지 현장에서 장소 기반(Place-based) 탐구 몰입감 극대화</p>
+          </div>
         </div>
-        <div class="card highlight-card">
-          <h3>🔊 홀로스피커의 물리-가상 융합</h3>
-          <ul>
-            <li>스마트폰에 연결된 실제 물리적 스피커 분해 조작</li>
-            <li>코일의 전류, 영구자석의 자기장, 진동판의 음파 파동을 3D 홀로그램으로 공간 정합</li>
-            <li><strong>학습 효과</strong>: 전자기 유도 공식의 암기 없이 물리적 직관과 메커니즘을 완벽히 이해</li>
-          </ul>
+        <div class="image-box" onclick="openModal('images/tab17_1.png')">
+          <img src="images/tab17_1.png" alt="Table 17.1 AR Learning Benefits">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Table 17.1)</div>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>원서 Figure 17.2의 HoloSpeaker 시스템을 통해 '비가시적 과학 원리의 가시화' 메커니즘을 설명합니다.</p>
+        <p>원서 Table 17.1을 기반으로 AR이 학습에 주는 3대 혜택(개념적, 사회적, 정서적)을 구조화합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>학생들은 물리적 물체를 만지며 동시에 증강된 힘의 장(Field)을 눈으로 봅니다. 이는 교재 그림을 보며 머릿속으로 상상해야 했던 극심한 인지 부하를 단번에 해결합니다.</p>
+        <p>단순히 신기한 기술(Novelty Effect)을 넘어, 인지적 부하 경감과 협력적 상호작용 촉진이라는 실질적 교육 효과 메커니즘을 밝힙니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>도판을 확대하여 두 학생이 홀로렌즈를 끼고 스피커를 관찰하는 모습을 확인하세요.</p>
+        <p>자신이 담당하는 교과에서 보이지 않아 가르치기 힘든 개념(예: 원자 결합, 전자기파)을 떠올려보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: Socio-contextual Lens & Tinker Table (Figure 17.3) -->
+    <!-- Slide 5: Conceptual Lens Deep Dive -->
     <section class="slide" data-index="4">
-      <span class="slide-badge">사례 ② · Section 17.2.2</span>
-      <h2 class="slide-title">17.2.2 사회·맥락적 렌즈: 팅커 테이블과 교실 오케스트레이션</h2>
-      <p class="slide-subtitle">직업학교 물류 교육을 위한 탠저블 AR 테이블과 교사 통제 시스템 (Figure 17.3)</p>
-      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
-        <div class="img-zoom-card" onclick="openModal('images/fig17_3.png', 'Figure 17.3 The Tinker Table project (Schneider et al., p. 366)')">
-          <img src="images/fig17_3.png" alt="Figure 17.3 Tinker Table">
-          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
+      <span class="slide-badge">개념적 렌즈 · Section 17.2.1</span>
+      <h2 class="slide-title">비가시적 과학 원리의 가시화와 분할 주의 제거</h2>
+      <p class="slide-subtitle">마이어(Mayer)의 멀티미디어 원리와 공간적 인접성(Spatial Contiguity)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 전통적 실험의 분할 주의 (Split-Attention)</h3>
+          <ul>
+            <li>물리적 실험 기구 ➔ 교과서 회로도 ➔ 오실로스코프 화면을 번갈아 쳐다봄</li>
+            <li>시선 전환 과정에서 시공간적 통합을 위한 작업기억 낭비(외재적 인지 부하)</li>
+          </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🎼 교실 오케스트레이션 도구</h3>
+          <h3 style="color: var(--accent-emerald);">✨ AR 기반 공간적 통합 오버레이</h3>
           <ul>
-            <li><strong>Tinker Table</strong>: 나무 블록을 놓으면 최적 물류 경로 프로젝션</li>
-            <li><strong>TinkerCards</strong>: 교사가 카드를 올려 전체 시뮬레이션 즉각 동결(Freeze) ➔ 강의 전환</li>
-            <li><strong>TinkerBoard</strong>: 벽면 스크린에 각 모둠의 문제해결 상태 실시간 대시보드</li>
+            <li>실제 회로 위에 전자의 이동 속도와 전압 차이가 색상/화살표로 직접 오버레이됨</li>
+            <li><strong>지각과 추상 모델의 완벽한 1:1 매핑</strong>으로 개념적 이해도 40% 이상 향상 실증</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>원서 Figure 17.3의 Tinker Table 프로젝트와 딜렌부르크 교수의 '교실 오케스트레이션(Classroom Orchestration)' 이론을 분석합니다.</p>
+        <p>AR이 어떻게 멀티미디어 학습 이론의 '공간적 인접성 원리'를 극대화하여 인지 부하를 줄이는지 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>아무리 훌륭한 테크놀로지라도 교사가 교실의 수업 흐름을 장악하고 통제할 수 없다면 혼란에 빠집니다. TinkerCards는 교사의 교수 주도권을 완벽히 지원합니다.</p>
+        <p>전통적 실험에서 학생들은 눈앞의 물리 기구와 칠판의 수식을 연결하지 못해 좌절합니다. AR은 보이지 않는 힘과 장(Field)을 실물 위에 직접 투영합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>테크놀로지 기반 수업에서 교사의 통제권과 학생의 자율성이 어떻게 조화를 이루어야 하는지 토론하세요.</p>
+        <p>물리 실험실에서 전기 회로를 조립할 때 AR 안내선이 주는 인지적 비계 효과를 토론하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 6: Affective Lens & EcoMOBILE (Figure 17.4) -->
+    <!-- Slide 6: Case 1 - HoloSpeaker System -->
     <section class="slide" data-index="5">
-      <span class="slide-badge">사례 ③ · Section 17.2.3</span>
-      <h2 class="slide-title">17.2.3 정서적 렌즈: 에코모바일 야외 생태 탐구 (Figure 17.4)</h2>
-      <p class="slide-subtitle">실제 호숫가에서 수질을 측정하며 가상 분자와 생태계 역사를 증강 (Dede et al.)</p>
-      <div class="card-grid" style="grid-template-columns: 1.1fr 0.9fr;">
-        <div class="img-zoom-card" onclick="openModal('images/fig17_4.png', 'Figure 17.4 EcoMOBILE outdoor learning environment (Dede et al., p. 369)')">
-          <img src="images/fig17_4.png" alt="Figure 17.4 EcoMOBILE">
-          <span class="img-zoom-badge">🔍 클릭하여 300 DPI 원서 도판 확대</span>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">🌿 생생한 야외 현장 탐구</h3>
+      <span class="slide-badge">사례 연구 ① · Section 17.2.1</span>
+      <h2 class="slide-title">홀로스피커(HoloSpeaker): 전자기장과 음파 3D 시각화</h2>
+      <p class="slide-subtitle">율리안 라두 & 베르트랑 슈나이더(Radu & Schneider, 2019)의 HMD AR 시스템 (Figure 17.2)</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>🔊 시스템 메커니즘 및 학습 효과</h3>
           <ul>
-            <li>스마트폰을 들고 호숫가를 걸으며 실제 용존산소량(DO) 측정</li>
-            <li>물속 박테리아와 오염원 이동 궤적을 3D AR로 오버레이</li>
-            <li>교실을 벗어난 생생한 정서적 몰입과 생태계 책임감 고취</li>
+            <li><strong>실물 조작</strong>: 실제 스마트폰에 연결된 분해 가능한 스피커 교구</li>
+            <li><strong>AR 오버레이</strong>: 영구자석 주위의 자기장 선, 코일에 흐르는 전류의 방향, 공기 입자의 압축-팽창 종파(음파) 3D 렌더링</li>
+            <li><strong>실증 결과</strong>: 2D 비디오나 교과서 학습 집단 대비 <strong>전자기 유도와 파동 전파 메커니즘의 인과적 추론 점수 대폭 상승</strong></li>
           </ul>
         </div>
+        <div class="image-box" onclick="openModal('images/fig17_2.png')">
+          <img src="images/fig17_2.png" alt="Figure 17.2 HoloSpeaker System">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 17.2)</div>
+        </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>원서 Figure 17.4의 EcoMOBILE 야외 학습 환경을 통해 AR이 학습자의 정서와 현장 탐구 동기를 어떻게 극대화하는지 설명합니다.</p>
+        <p>원서 Figure 17.2의 홀로스피커(HoloSpeaker) 사례를 통해 개념적 렌즈가 실제 물리 교육에 구현된 전형을 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>크리스 디디(Chris Dede) 교수의 연구: 학생들은 실제 호숫가라는 진정성 있는 맥락(Authentic context)에서 AR 데이터를 보며 깊은 환경학자 정체성을 체화합니다.</p>
+        <p>학생들은 스피커 진동판이 떨릴 때 공기 분자들이 어떻게 밀려나고 소리가 전달되는지 온몸으로 직관화할 수 있습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>교실 안 수업과 야외 AR 탐구의 유기적 결합 방안을 논의하세요.</p>
+        <p>중·고등학교 전자기 단원에서 학생들이 가장 헷갈려하는 플레밍의 왼손 법칙을 AR로 어떻게 가르칠지 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 7: 17.3 The Future of Educational AR -->
+    <!-- Slide 7: Socio-Contextual Lens & Shared Ground -->
     <section class="slide" data-index="6">
-      <span class="slide-badge">미래 과제 · Section 17.3</span>
-      <h2 class="slide-title">17.3 교육용 AR의 미래 동향과 3대 극복 과제</h2>
-      <p class="slide-subtitle">접근성, 교사용 저작 도구, 그리고 상시 녹화 카메라의 윤리적 프라이버시</p>
-      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
-        <div class="card highlight-card">
-          <h3>1. 접근성 및 WebXR</h3>
-          <p>고가 HMD 보급의 한계를 넘어 스마트폰과 크롬 브라우저에서 바로 구동되는 WebXR 플랫폼 확산</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 교사용 저작 도구</h3>
-          <p>코딩을 모르는 교사도 직관적인 드래그 앤 드롭으로 3D AR 교재를 커스텀 제작할 수 있는 저작 환경</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">3. 카메라 프라이버시 & 윤리</h3>
-          <p>교실 내 상시 영상 인식 카메라와 시선 추적 데이터의 보호 및 데이터 거버넌스 수립</p>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>17.3절의 미래 교육용 AR 발전 과제(접근성, 저작 도구, 프라이버시/윤리, AI 적응형 AR)를 체계적으로 분석합니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>AR이 일선 교실에 성공적으로 안착하려면, 교사가 수업 목표에 맞게 콘텐츠를 직접 수정할 수 있는 교사 주도성이 보장되어야 합니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>스마트 글래스가 교실에 도입될 때 발생할 수 있는 프라이버시 이슈를 토론하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 8: Summary & Looking Ahead to Ch 18 -->
-    <section class="slide" data-index="7">
-      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 17.4</span>
-      <h2 class="slide-title">17.4 Chapter 17 총괄 결론 & Chapter 18 모바일 학습 예고</h2>
-      <p class="slide-subtitle">언제 어디서나 이동하며 탐구하는 모바일 유비쿼터스 학습의 세계로!</p>
+      <span class="slide-badge">사회·맥락 렌즈 · Section 17.2.2</span>
+      <h2 class="slide-title">공동 시각적 기반(Shared Ground)과 소집단 협력 증진</h2>
+      <p class="slide-subtitle">서로의 시선과 조작을 실시간으로 확인하며 형성되는 상호주관성</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🌟 Ch 17 증강현실의 3대 핵심 교훈</h3>
+          <h3>👀 1. 지시어의 명료화 (Deictic Reference)</h3>
           <ul>
-            <li>1. 비가시적 개념을 3D로 시각화하여 인지 부하를 줄여라</li>
-            <li>2. 공동 시각 기반으로 협력과 교실 오케스트레이션을 지원하라</li>
-            <li>3. 야외 현장 맥락과 결합하여 진정한 몰입을 이끌어라</li>
+            <li>"저기 빨간색으로 흐르는 전류 봐봐"처럼 가상 객체를 손가락으로 가리키며(Pointing) 대화 가능</li>
+            <li>모호한 언어적 설명에 드는 소통 비용(Grounding Cost)을 극적으로 절감</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 18 예고: 모바일 학습 (Mobile Learning)</h3>
-          <p><strong>Roy Pea & Mike Sharples</strong></p>
-          <p>손안의 스마트폰과 태블릿이 교실과 일상, 야외를 넘나들며 만드는 끊김 없는(Seamless) 유비쿼터스 탐구 학습의 미래!</p>
+        <div class="card">
+          <h3>🤝 2. 대등한 참여와 공동 문제 해결</h3>
+          <ul>
+            <li>동일한 3D 홀로그램을 여러 각도에서 동시에 관찰하며 다양한 관점(Perspective) 공유</li>
+            <li>특정 학생의 화면 독점을 방지하고 소집단 전원의 능동적 참여 유도</li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 17(17.0~17.4)을 완벽히 마무리하고, Part III의 피날레 챕터인 Chapter 18(Mobile Learning)을 예고합니다.</p>
+        <p>AR이 소집단 협력 학습(CSCL)에서 의사소통의 '공동 기반(Grounding)'을 어떻게 강화하는지 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 18은 모바일 기기가 교실 벽을 허물고 어떻게 평생에 걸친 개인화된 탐구 네트워크를 형성하는지 밝힙니다.</p>
+        <p>클라크와 브레넌(Clark & Brennan, 1991)의 담화 이론: 공동의 시각적 대상이 존재할 때 대화의 오류가 줄어들고 협력적 지식 구축이 가속화됩니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>다음 Chapter 18로 계속해서 나아갑니다.</p>
+        <p>줌(Zoom) 화면 공유와 AR 공동 시각 공간의 질적인 협업 상호작용 차이를 비교해 보세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 8: Case 2 - TinkerTable Logistics -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">사례 연구 ② · Section 17.2.2</span>
+      <h2 class="slide-title">팅커 테이블(TinkerTable): 물류 창고 설계와 직업 교육</h2>
+      <p class="slide-subtitle">피에르 딜렌부르(Pierre Dillenbourg, EPFL)의 탠저블 AR 테이블탑 (Figure 17.3)</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>📦 시스템 아키텍처 및 교육 효과</h3>
+          <ul>
+            <li><strong>대상</strong>: 스위스 직업학교 물류 창고 관리 견습생들</li>
+            <li><strong>인터랙션</strong>: 테이블 위에 소형 미니어처 선반 블록을 손으로 배치하면, 천장 프로젝터가 <strong>지게차 이동 동선, 병목 구간, 안전사고 위험도</strong>를 실시간 시뮬레이션</li>
+            <li><strong>직업적 숙련도</strong>: 창고 공간 최적화와 동선 효율화 역량을 놀이처럼 체득</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig17_3.png')">
+          <img src="images/fig17_3.png" alt="Figure 17.3 TinkerTable Logistics System">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 17.3)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 17.3의 팅커 테이블(TinkerTable) 사례를 통해 직업 교육 및 복합 시스템 설계에 적용된 탠저블 AR을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>손으로 만지는 물리 블록과 컴퓨터의 즉각적 물리/물류 시뮬레이션이 결합되어 직관적 시행착오와 반성적 토론을 자극합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>도시 계획, 건축 설계, 공장 자동화 교육에 팅커 테이블을 응용하는 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Classroom Orchestration -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">교실 오케스트레이션 · Section 17.2.2</span>
+      <h2 class="slide-title">교사의 실시간 오케스트레이션(Orchestration) 지원</h2>
+      <p class="slide-subtitle">스마트 글래스를 착용한 교사가 교실 전체 소집단의 학습 상태를 실시간 진단</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>📊 실시간 상태 모니터링</h3>
+          <p>교사가 모둠을 바라보면 각 팀 머리 위에 <strong>진도율, 오답률, 토론 참여도</strong> 아이콘이 AR로 표시됨</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>🚨 위기 모둠 선제적 개입</h3>
+          <p>헛바퀴를 돌거나(Wheel-spinning) 침묵에 빠진 고착 모둠을 즉각 식별하여 맞춤형 비계 투입</p>
+        </div>
+        <div class="card">
+          <h3>⏱️ 교실 시간 관리</h3>
+          <p>전체 활동 남은 시간과 다음 단계 전환 알림을 교사의 시야에 조용히 제시하여 흐름 유지</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>AR이 학생뿐 아니라 교사의 다중 모둠 수업 통제(Classroom Orchestration)를 돕는 혁신적 도구임을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>딜렌부르의 '교실 오케스트레이션' 개념: 30명의 학생이 모둠 활동을 할 때 교사는 극심한 인지 부하를 겪습니다. AR 대시보드는 교사의 주의 분배를 최적화합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교사용 스마트 안경이 교실에 도입될 때 발생할 수 있는 교사-학생 관계의 윤리적 쟁점을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Affective Lens & Place-Based Learning -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">정서적 렌즈 · Section 17.2.3</span>
+      <h2 class="slide-title">정서적 렌즈: 장소 기반 증강현실과 야외 생태 탐구</h2>
+      <p class="slide-subtitle">실제 연못, 숲, 역사 유적지를 무대로 펼쳐지는 위치 기반(Location-based) 탐구</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌿 장소 기반 학습 (Place-Based Learning)</h3>
+          <ul>
+            <li>박제된 교실을 벗어나 실제 연못가에 서서 GPS 기반 AR 모바일 기기 구동</li>
+            <li>"내가 서 있는 바로 이 물속의 용존산소량과 수중 생태계"를 직접 조사하는 강력한 진정성(Authenticity)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎭 정서적 몰입과 환경 감수성</h3>
+          <ul>
+            <li>가상의 생태학자 캐릭터로부터 미션을 부여받는 <strong>참여형 롤플레잉(Participatory Simulation)</strong></li>
+            <li>환경 오염의 심각성을 현장에서 체감하며 생태 시민성 형성</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>AR이 장소 기반 학습과 결합하여 학생들의 환경 감수성과 과학 탐구 동기를 어떻게 고취하는지 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>교과서 속 가상의 호수가 아닌, 우리 동네 하천에서 환경 데이터를 수집할 때 학습의 의미 구성(Sense-making)이 극대화됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 학교 주변의 지리적/역사적 공간을 활용한 야외 AR 탐구 수업을 구상해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Case 3 - EcoMOBILE Project -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">사례 연구 ③ · Section 17.2.3</span>
+      <h2 class="slide-title">에코모바일(EcoMOBILE): 연못 생태계 수질 센서 융합 탐구</h2>
+      <p class="slide-subtitle">크리스 데디(Chris Dede, Harvard)의 스마트폰 AR 야외 과학 탐구 (Figure 17.4)</p>
+      <div class="split-layout">
+        <div class="card highlight-card">
+          <h3>🔬 시스템 구성 및 탐구 프로세스</h3>
+          <ul>
+            <li><strong>위치 기반 AR 퀘스트</strong>: 스마트폰으로 연못 주변 핫스팟(Hotspot)에 도착하면 가상 생태계 데이터 언락</li>
+            <li><strong>물리적 센서 융합</strong>: 버니어(Vernier) 수질 센서를 연못에 담가 실제 용존산소량(DO)과 pH 측정</li>
+            <li><strong>3D 가상 시각화</strong>: 물속 미생물의 호흡과 광합성 과정을 3D 애니메이션으로 오버레이</li>
+          </ul>
+        </div>
+        <div class="image-box" onclick="openModal('images/fig17_4.png')">
+          <img src="images/fig17_4.png" alt="Figure 17.4 EcoMOBILE Augmented Reality Simulation">
+          <div class="image-caption">🔍 클릭하여 고해상도 확대 (Figure 17.4)</div>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Figure 17.4의 에코모바일(EcoMOBILE) 프로젝트를 통해 모바일 AR과 물리 센서가 결합된 최고의 야외 생태 탐구 모델을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>데디 교수 연구팀은 실내 가상 생태계(EcoMUVE)와 야외 AR(EcoMOBILE)을 교차 연계하여 학생들의 복잡계 인과 추론 능력을 비약적으로 향상시켰습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>야외 스마트폰 탐구 시 안전사고 예방과 학생 주의 분산 방지 대책을 함께 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Cognitive Overload & Tunnel Vision -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">설계 주의점 · Section 17.3</span>
+      <h2 class="slide-title">AR 설계의 함정: 인지 과부하와 터널 비전(Tunnel Vision)</h2>
+      <p class="slide-subtitle">화려한 그래픽의 역효과를 방지하는 학습과학적 설계 수칙</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">⚠️ AR의 주요 부작용</h3>
+          <ul>
+            <li><strong>시각적 과밀(Visual Clutter)</strong>: 화면에 너무 많은 텍스트와 3D 효과가 떠서 핵심 정보 차단</li>
+            <li><strong>터널 비전 (Tunnel Vision)</strong>: 스마트폰 화면만 쳐다보느라 주변 실제 환경과 동료를 보지 못함</li>
+            <li><strong>신기 효과 (Novelty Effect)</strong>: 기술의 신기함에만 흥분하고 실제 학습에는 집중하지 못함</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🛡️ 학습과학적 처방</h3>
+          <ul>
+            <li><strong>최소주의 정보 표시</strong>: 결정적 순간에만 필요한 비계 힌트 노출</li>
+            <li><strong>화면 밖 상호작용 강제</strong>: 동료와 토론하거나 실물을 조작해야만 다음 단계로 진행</li>
+            <li><strong>교사의 사전 브리핑 & 사후 디브리핑 필수 결합</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>AR을 잘못 설계했을 때 발생하는 인지 과부하와 주의 분산 현상을 짚고, 이를 방지하는 가이드라인을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>라두(Radu, 2014)의 메타분석: AR 환경에서 인터페이스가 조잡하면 오히려 일반 교과서보다 학업 성취도가 떨어질 수 있음을 경고했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>스마트폰 화면을 보느라 실제 자연을 보지 못하는 '스마트폰 맹시' 현상을 방지할 수업 규칙을 설계해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 17</span>
+      <h2 class="slide-title">AR 기반 알고리즘 시각화 및 공간 컴퓨팅 코딩</h2>
+      <p class="slide-subtitle">3차원 공간에서 데이터 구조와 로봇 제어 코드를 증강 시각화</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 알고리즘 3D 공간 시각화</h3>
+          <ul>
+            <li><strong>트리 및 그래프 순회</strong>: 2D 종이가 아닌 교실 공간에 3D 바이너리 트리를 띄우고 노드를 탐색</li>
+            <li><strong>스택과 큐 (Stack & Queue)</strong>: 데이터가 쌓이고 빠져나가는 과정을 실제 상자 위에 3D 애니메이션으로 오버레이</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🤖 증강 로보틱스 (Augmented Robotics)</h3>
+          <ul>
+            <li>로봇이 주행할 경로와 센서 감지 범위를 바닥에 AR로 실시간 투영</li>
+            <li>자율주행 코딩의 디버깅 과정을 직관적으로 지원</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>증강현실 기술을 컴퓨터 프로그래밍 및 자료구조 알고리즘 교육에 접목한 최신 응용 사례를 소개합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>공간 컴퓨팅(Spatial Computing) 시대에는 코딩 결과물이 모니터 밖 3차원 물리 공간과 상호작용하므로 AR 기반 시각화가 필수적입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들이 엔트리나 스크래치에서 AR 카메라 블록을 활용해 인터랙티브 콘텐츠를 제작하는 프로젝트를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 17.4</span>
+      <h2 class="slide-title">증강현실이 재정의하는 미래 교실의 3대 가치</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 증강현실의 3대 핵심 명제</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>비가시적 세계의 개방</h3>
+          <p>보이지 않는 미시적 물리·생물 법칙을 실물 위에 3D로 시각화하여 개념적 돌파구 제공</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>공동 시각 기반 형성</h3>
+          <p>물리 현실을 지우지 않고 보존하여 학생 간 대화와 교사의 실시간 수업 오케스트레이션 지원</p>
+        </div>
+        <div class="card">
+          <h3>장소와 배움의 결합</h3>
+          <p>교실 밖 실제 연못과 역사 유적지를 가장 생생한 진정성 있는 탐구 실험실로 변환</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 17의 핵심 교훈을 3대 축(비가시화, 공동 기반, 장소성)으로 압축 정리합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>증강현실은 가상에 몰입하여 현실을 잊는 기술이 아니라, '현실 세계를 더욱 깊고 풍성하게 이해하게 만드는 증강 렌즈'입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"여러분의 교실에 AR 스마트 안경이 보급된다면 가장 먼저 시도하고 싶은 수업은 무엇인가요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 18 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part III</span>
+      <h2 class="slide-title">다음 여정: Chapter 18 모바일 러닝 (Mobile Learning)</h2>
+      <p class="slide-subtitle">체치-체 룽(Chee-Kit Looi) 교수의 무봉제(Seamless) 모바일 학습 패러다임</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 17 vs Ch 18 연계성</h3>
+          <ul>
+            <li><strong>Ch 17 증강현실(AR)</strong>: 공간 정합 정보와 비가시적 개념 시각화에 집중된 몰입형 인터페이스</li>
+            <li><strong>Ch 18 모바일 러닝</strong>: 1인 1디바이스를 통해 학교와 가정, 교실과 야외를 끊김 없이 연결하는 <strong>무봉제 학습(Seamless Learning) 10대 차원</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 Part III 테크놀로지의 피날레</h3>
+          <p>게임(14) ➔ 체화설계(15) ➔ 탠저블(16) ➔ 증강현실(17) ➔ 모바일러닝(18)으로 완성되는 첨단 학습 환경</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 17을 마무리하고, Part III의 마지막 장인 Chapter 18(Mobile Learning)과의 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>싱가포르 국립교육원(NIE) 루이 치킷 교수의 1:1 모바일 무봉제 학습 연구로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 18을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 17: Augmented Reality in the Learning Sciences (Schneider & Radu)</div>
-    <div class="footer-center" id="slide-counter">01 / 08</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
