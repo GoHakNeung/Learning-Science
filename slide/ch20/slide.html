@@ -212,266 +212,475 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 20 · Part IV CSCL Core</span>
-      <h1 class="slide-title">Computer-Supported Collaborative Learning</h1>
-      <p class="slide-subtitle">CSCL: 컴퓨터 지원 협력 학습 — 개인의 뇌를 넘어 집단 인지와 상호작용적 의미구성으로</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 20 · Part IV Together</span>
+      <h1 class="slide-title">Computer-Supported Collaborative Learning (CSCL)</h1>
+      <p class="slide-subtitle">컴퓨터 지원 협력 학습: 개인의 뇌를 넘어 집단 인지와 상호작용적 의미구성으로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Gerry Stahl</strong>, <strong>Timothy Koschmann</strong>, & <strong>Daniel D. Suthers</strong></p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 401–422)</p>
+          <p><strong>Gerry Stahl</strong> (Drexel University)<br/><strong>Timothy Koschmann</strong> (Southern Illinois Univ)<br/><strong>Daniel D. Suthers</strong> (University of Hawaii)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 20</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (20.0 ~ 20.5)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>20.0 CSCL 정의</strong>: 함께 학습하는 과정을 매개하는 기술</li>
-            <li><strong>20.1 교육 속 CSCL</strong>: 협동(분업) vs 협력(공동 해결)</li>
-            <li><strong>20.2 5대 역사적 패러다임 전환</strong> (개인 ➔ 집단, 표상 ➔ 의미구성)</li>
-            <li><strong>20.3 집단 인지 & VMT 시스템</strong>: 지표적 참조(Deictic Referencing)</li>
-            <li><strong>20.4 미래 연구 과제</strong>: 멀티모달 분석 & 오케스트레이션 스크립트</li>
+            <li><strong>CSCL의 학문적 정의</strong>: 컴퓨터가 매개하는 소집단 협력 및 집단 의미구성</li>
+            <li><strong>협동(Cooperative) vs 협력(Collaborative)</strong>: 단순 분업을 넘어선 공동 해결</li>
+            <li><strong>집단 인지 (Group Cognition)</strong>: 상호작용 발화 흐름 속에서 출현하는 지능</li>
+            <li><strong>VMT 시스템</strong>: 이중 상호작용 공간, 지표적 참조, 협업 스크립팅</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 학습과학의 대표 분과인 CSCL(Computer-Supported Collaborative Learning)의 역사적 기원과 이론적 기초를 정립하는 챕터로, 지능이 개인의 뇌 속에 갇힌 것이 아니라 소집단의 상호작용 속에서 출현하는 '집단 인지(Group Cognition)'임을 규명합니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>게리 스탈, 티모시 코슈만, 대니얼 서더스는 CSCL이라는 학문 분야를 창시하고 저널(ijCSCL)을 설립한 3대 개척자들입니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학의 가장 강력한 분과인 CSCL(Computer-Supported Collaborative Learning)의 역사적 출현, 이론적 토대(집단 인지), 상호작용 분석 방법론을 체계화합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>게리 스탈, 티모시 코슈만, 대니얼 서더스는 CSCL의 창시자이자 20년 이상 인터내셔널 저널(ijCSCL)을 이끌어온 세계적 석학들입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"두 사람이 함께 수학 문제를 풀 때 일어나는 번뜩이는 통찰은 누구의 머릿속에서 나온 것일까요?"라는 질문으로 시작하세요.</p>
+        <p>"조별 과제를 할 때 왜 학생들은 '각자 맡아서 합치기(분업)'만 하고 '진짜 협력'을 하지 못할까요?"라는 질문으로 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: 20.1 CSCL within Education & Cooperative vs Collaborative -->
+    <!-- Slide 2: Definition of CSCL -->
     <section class="slide" data-index="1">
-      <span class="slide-badge">교육적 위치 · Section 20.1</span>
-      <h2 class="slide-title">20.1 교육 속의 CSCL: 협동(Cooperative) vs 협력(Collaborative)</h2>
-      <p class="slide-subtitle">단순한 과제 분업을 넘어, 공동 문제 공간(JPS)을 구축하는 진정한 협력의 조건</p>
+      <span class="slide-badge">학문적 정의 · Section 20.0</span>
+      <h2 class="slide-title">CSCL의 본질: 상호작용적 의미구성(Meaning Making)</h2>
+      <p class="slide-subtitle">단순한 IT 도구 활용을 넘어 집단적 지식 구성을 매개하는 디지털 생태계</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">🧩 협동 학습 (Cooperative Learning)</h3>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 오해: 컴퓨터 보조 수업 (CAI)</h3>
           <ul>
-            <li>과제를 여러 조각으로 나누어 각자 수행 (분업식 진행)</li>
-            <li>마지막에 개별 결과물을 물리적으로 합침</li>
-            <li><strong>한계</strong>: 상호작용적 의미구성이나 개념적 갈등 조정이 일어나지 않음</li>
+            <li>컴퓨터는 지식을 주입하고 채점하는 '자동 튜터'에 불과</li>
+            <li>학습자는 모니터와 1:1로 고립되어 드릴식 반복 훈련 수행</li>
+            <li>사회적 상호작용과 동료 학습의 완전한 배제</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🤝 협력 학습 (Collaborative Learning)</h3>
+          <h3 style="color: var(--accent-emerald);">💡 CSCL의 본질적 지향점</h3>
           <ul>
-            <li>문제해결의 모든 단계를 <strong>처음부터 끝까지 함께(Jointly)</strong> 수행</li>
-            <li><strong>공동 문제 공간 (Joint Problem Space: JPS)</strong>을 지속적으로 유지·조율</li>
-            <li><strong>효과</strong>: 개인의 지식을 초월하는 새로운 집단적 통찰 창출</li>
+            <li>컴퓨터는 <strong>학습자들 간의 풍부한 대화와 협력을 매개(Mediate)하는 플랫폼</strong></li>
+            <li>개별 머릿속 지식 측정이 아닌 <strong>소집단의 '상호작용적 의미구성(Interactional Meaning Making)' 과정</strong> 연구</li>
+            <li>비고츠키의 사회문화적 인지 이론의 디지털 실현</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>20.1절의 핵심 주제인 '협동(Cooperative)'과 '협력(Collaborative)'의 본질적 차이를 명확히 구분합니다.</p>
+        <p>CSCL이 단순한 기술 활용이 아니라 '상호작용적 의미구성'을 핵심 연구 대상으로 삼는 독자적 학습과학 분야임을 명확히 합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>로셸과 티즐리(Roschelle & Teasley, 1995)의 정의: 협력은 단순한 노동 분업이 아니라, 공유된 이해를 구축하고 유지하기 위한 동기화된 지속적 활동입니다.</p>
+        <p>코슈만(Koschmann, 1996): CSCL은 전통 인지주의와 CAI의 폐단을 극복하고 '사회적 실천 속의 배움'을 탐구하는 새로운 패러다임입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>모둠 과제에서 "너는 1번 풀고, 나는 2번 풀자"는 협동이지 협력이 아님을 지적하세요.</p>
+        <p>온라인 줌 소회의실이나 슬랙(Slack) 채널이 진정한 CSCL 공간이 되기 위해 필요한 조건을 토론하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 20.2 Five Historical Paradigm Shifts -->
+    <!-- Slide 3: Cooperative vs Collaborative -->
     <section class="slide" data-index="2">
-      <span class="slide-badge">패러다임 전환 · Section 20.2</span>
-      <h2 class="slide-title">20.2 CSCL의 5대 역사적 패러다임 전환 (Paradigm Shifts)</h2>
-      <p class="slide-subtitle">인지과학과 컴퓨터 교육의 전통적 전제를 전복하며 탄생한 CSCL의 학문적 궤적</p>
-      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
-        <div class="card highlight-card">
-          <h3>1. AI 튜터 ➔ 협력 지원 기술 (20.2.2)</h3>
-          <p>교사를 대체하는 지능형 컴퓨터에서, <strong>동료 간 사회적 상호작용을 촉진하고 매개하는 기술</strong>로 전환</p>
+      <span class="slide-badge">개념 구분 · Section 20.1.3</span>
+      <h2 class="slide-title">협동(Cooperative) vs 협력(Collaborative)의 본질적 차이</h2>
+      <p class="slide-subtitle">로셸과 틸(Roschelle & Teasley, 1995)의 고전적 구분</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>🚫 협동 (Cooperative Learning: 분업)</h3>
+          <ul>
+            <li>전체 과제를 N개로 쪼개어 각자 따로 수행한 뒤 사후에 합침</li>
+            <li>문제 해결 과정에서 상호작용이나 인지적 갈등이 거의 발생하지 않음</li>
+            <li>"너는 1번 풀고, 나는 2번 풀어서 제출하자" (단순 취합)</li>
+          </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 개인 ➔ 상호작용 소집단 (20.2.3)</h3>
-          <p>분석 단위를 고립된 개별 학습자의 뇌에서 <strong>소집단의 담화와 상호작용 연쇄</strong>로 이동</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">3. 심적 표상 ➔ 상호작용적 의미구성 (20.2.4)</h3>
-          <p>머릿속 멘탈 모델 측정에서 <strong>대화와 도구 조작 속에서 일어나는 의미 협상</strong> 분석으로 전환</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">4. 양적 비교 ➔ 미시 사례분석 (20.2.5)</h3>
-          <p>사전-사후 검사 점수 비교에서 <strong>에스노메소돌로지 대화분석(CA) 및 상호작용분석(IA)</strong>으로 전환</p>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3 style="color: var(--accent-indigo);">✨ 협력 (Collaborative Learning: 공진화)</h3>
+          <ul>
+            <li>처음부터 끝까지 <strong>하나의 공유된 문제 공간(Joint Problem Space)</strong>을 함께 유지</li>
+            <li>끊임없는 대화, 반박, 조율을 통해 어느 한 명의 머릿속에도 없던 새로운 해결책 창발</li>
+            <li><strong>집단 지성(Group Cognition)의 진정한 발현</strong></li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>20.2절(20.2.1~20.2.5)에 제시된 CSCL의 5대 패러다임 전환을 체계적으로 설명합니다.</p>
+        <p>협동(Cooperative: 분업)과 협력(Collaborative: 공동 의미구성)의 질적 차이를 명쾌히 대조합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>CSCL은 데카르트적 개인주의 인지과학에 반기를 들고, 지능과 학습이 사회적 기호와 도구의 매개를 통해 일어난다는 비고츠키-가핑클-헤겔의 철학적 계보를 잇습니다.</p>
+        <p>로셸과 틸(1995): "협력은 공유된 문제 공간(JPS: Joint Problem Space)을 구축하고 지속적으로 수리(Repair)해 나가는 동기화된 사회적 활동이다."</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>CSCL이 단순한 기술 적용 분야가 아니라 인지과학 전체의 패러다임을 바꾼 혁명임을 강조하세요.</p>
+        <p>대학생 조별 과제가 협동(단순 짜깁기)에 머물지 않고 진짜 협력(공동 모델링)으로 발전하려면 어떤 과제를 주어야 할지 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: 20.3.1 Group Cognition & Intersubjectivity -->
+    <!-- Slide 4: 5 Historical Paradigm Shifts -->
     <section class="slide" data-index="3">
-      <span class="slide-badge">핵심 이론 · Section 20.3.1</span>
-      <h2 class="slide-title">20.3.1 새로운 학습관: 집단 인지 (Group Cognition)</h2>
-      <p class="slide-subtitle">개인의 두개골을 넘어 소집단 대화와 도구의 상호작용 속에서 출현하는 지능 (Stahl, 2006)</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+      <span class="slide-badge">패러다임 전환 · Section 20.2</span>
+      <h2 class="slide-title">CSCL 성립을 이끈 5대 역사적 패러다임 전환</h2>
+      <p class="slide-subtitle">고립된 인공지능 연구에서 사회적 상호작용 학문으로의 대진화</p>
+      <div class="card-grid" style="grid-template-columns: repeat(5, 1fr); font-size: 0.85rem;">
+        <div class="card">
+          <h3>1. 커뮤니티</h3>
+          <p>개별 연구 ➔ 국제 ISLS 학회 및 ijCSCL 창간</p>
+        </div>
         <div class="card highlight-card">
-          <h3>🧠 집단 인지 (Group Cognition)의 원리</h3>
-          <ul>
-            <li>학습은 단일 개인의 뇌 속에서만 일어나는 것이 아님</li>
-            <li>소집단 구성원들이 주고받는 발화의 연쇄, 제스처, 공유 화면 조작 속에서 <strong>새로운 의미가 창발(Emerge)</strong></li>
-            <li>개인 인지는 이러한 집단 인지 과정이 내면화된 결과물임</li>
-          </ul>
+          <h3>2. 기술 지향점</h3>
+          <p>교사 대체 AI ➔ 동료 간 대화 매개 기술</p>
+        </div>
+        <div class="card">
+          <h3>3. 분석 단위</h3>
+          <p>개별 학습자 ➔ <strong>상호작용하는 소집단(Group)</strong></p>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🌐 상호주관성 (Intersubjectivity)</h3>
-          <ul>
-            <li>타인의 마음을 완벽히 읽는 것이 아니라, <strong>"우리가 지금 동일한 상황을 공유하고 있는가?"</strong>를 대화로 확인</li>
-            <li>불일치(Breakdown) 발생 시 수리(Repair) 작업을 통해 공통 기반 재구축</li>
-          </ul>
+          <h3>4. 인지의 본질</h3>
+          <p>뇌 속 심적 표상 ➔ <strong>상호작용적 의미구성</strong></p>
+        </div>
+        <div class="card">
+          <h3>5. 연구 방법론</h3>
+          <p>사전-사후 검사 ➔ <strong>미시 대화분석(CA)</strong></p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>20.3.1절의 집단 인지(Group Cognition)와 상호주관성(Intersubjectivity) 이론을 분석합니다.</p>
+        <p>CSCL이 탄생하게 된 5대 패러다임 전환 축을 체계화합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>게리 스탈 교수의 핵심 주장: "작은 소집단이야말로 인지가 창발하는 가장 작고 풍요로운 분석 단위이다."</p>
+        <p>특히 분석 단위를 '개인'에서 '소집단(Small Group)'으로 전환한 것은 학습과학 역사상 가장 급진적인 인식론적 도약이었습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>이어지는 슬라이드에서 이를 지원하기 위한 대표 소프트웨어 VMT를 살펴봅니다.</p>
+        <p>연구 논문을 쓸 때 "개인의 점수 향상"이 아닌 "소집단 담화의 질적 진화"를 종속변수로 삼는 의미를 토론하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: 20.3.2 VMT System & Deictic Referencing -->
+    <!-- Slide 5: Gerry Stahl's Group Cognition -->
     <section class="slide" data-index="4">
-      <span class="slide-badge">시스템 설계 · Section 20.3.2</span>
-      <h2 class="slide-title">20.3.2 가상 수학 팀 (VMT)과 지표적 참조 도구</h2>
-      <p class="slide-subtitle">텍스트 채팅과 공유 기하학 판의 실시간 연동 및 시선 동기화 (Stahl, 2009)</p>
+      <span class="slide-badge">핵심 이론 ① · Section 20.3.1</span>
+      <h2 class="slide-title">게리 스탈(Gerry Stahl)의 집단 인지(Group Cognition)</h2>
+      <p class="slide-subtitle">"지식과 통찰은 어떤 단일 개인의 뇌 속에도 존재하지 않는다"</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>📐 이중 상호작용 공간 (Dual Space)</h3>
+          <h3>🧠 집단 인지(Group Cognition)의 정의</h3>
           <ul>
-            <li><strong>담화 공간</strong>: 실시간 동기식 텍스트 채팅창</li>
-            <li><strong>작업 공간</strong>: 다중 사용자가 동시에 도형을 작도하는 GeoGebra 화이트보드</li>
-            <li>두 공간의 조작 로그가 하나의 시간축에 완벽히 동기화 기록</li>
+            <li>소집단이 복잡한 수학·과학 문제를 함께 풀 때 창출되는 지적 성취</li>
+            <li>참여자 A의 불완전한 제안 ➔ B의 수정 ➔ C의 도구 조작 ➔ A의 종합으로 이어지는 <strong>대화 턴(Turn)의 상호작용적 연쇄 속에서 창발(Emerge)</strong></li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🎯 지표적 참조 (Deictic Referencing)</h3>
+        <div class="card">
+          <h3>📐 개인 인지와 집단 인지의 상호구성</h3>
           <ul>
-            <li>채팅창에서 "저기 있는 저 선(that line)"이라고 타이핑하며 화살표로 화이트보드의 선분 지목</li>
-            <li>원격 참여자들의 <strong>시선과 주의(Joint Attention)</strong>를 정확한 작도 위치로 즉각 정렬</li>
+            <li>개인은 집단 담화에 기여하고(Externalization), 집단 담화의 성과를 다시 개인 머릿속으로 내면화(Internalization)</li>
+            <li><strong>집단 인지가 개인 인지의 상위 원천이자 비계</strong></li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>20.3.2절의 VMT(Virtual Math Teams) 시스템 아키텍처와 지표적 참조(Deictic Referencing)의 학습과학적 중요성을 설명합니다.</p>
+        <p>게리 스탈의 대표 저작 『Group Cognition (2006)』의 핵심 철학과 인지 모델을 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>온라인 협업에서 "그거 있잖아 저거"라는 모호한 지시어는 혼란을 야기합니다. VMT의 지표적 화살표 도구는 원격 참여자 간의 상호주관성을 비약적으로 높입니다.</p>
+        <p>수학 정리의 증명 과정에서 핵심 아이디어는 A, B, C 누구 한 사람의 것이 아니라, 대화의 상호작용적 공간(Inter-mental space)에서 피어난 집단적 산물입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>원격 협업 툴(Figma, Miro, Google Docs)에서 실시간 커서가 왜 강력한지 VMT 이론과 연결하세요.</p>
+        <p>팀 브레인스토밍에서 "내가 혼자 생각했을 땐 도저히 떠오르지 않던 아이디어가 대화 중에 튀어나온 경험"을 공유해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 6: 20.3.3 Micro Conversation Analysis & Sequentiality -->
+    <!-- Slide 6: Suthers' Intersubjective Meaning Making -->
     <section class="slide" data-index="5">
-      <span class="slide-badge">분석 방법론 · Section 20.3.3~20.3.5</span>
-      <h2 class="slide-title">20.3.3 미시 대화분석(CA)과 순차성(Sequentiality)</h2>
-      <p class="slide-subtitle">발화를 쪼개어 코딩하지 않고, 대화 턴(Turn)의 연쇄 맥락 속에서 의미 구성을 추적</p>
+      <span class="slide-badge">핵심 이론 ② · Section 20.3.1</span>
+      <h2 class="slide-title">상호주관적 의미구성(Intersubjective Meaning Making)</h2>
+      <p class="slide-subtitle">대니얼 서더스(Daniel Suthers, 2006)의 기호적 협상과 공동 주의집중</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 지각적 기반 공유</h3>
+          <p>화면의 그래프나 코드의 동일한 부분을 함께 바라보는 <strong>공동 주의집중(Joint Attention)</strong></p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 기호적 조율 (Uptake)</h3>
+          <p>동료가 던진 단어나 제스처를 내가 이어받아(Uptake) 의미를 확장하고 변형</p>
+        </div>
+        <div class="card">
+          <h3>3. 상호주관성 달성</h3>
+          <p>서로가 "우리가 같은 것을 이해하고 있다"는 확신과 합의에 도달하는 지속적 수리(Repair)</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>서더스 교수의 '상호주관적 의미구성(Intersubjective Meaning Making)' 모델의 미시적 작동 단계를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>서더스는 "협력이란 단순히 정보를 교환하는 파이프라인이 아니라, 여러 사람이 함께 기호(Semiotics)를 주무르는 조각(Sculpting) 행위"라고 정의합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>소통이 어긋났을 때(Breakdown) 참여자들이 어떤 언어적/비언어적 수리(Repair)를 하는지 관찰해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: VMT (Virtual Math Teams) -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">랜드마크 시스템 · Section 20.3.2</span>
+      <h2 class="slide-title">가상 수학 팀(Virtual Math Teams: VMT) 시스템</h2>
+      <p class="slide-subtitle">온라인 분산 환경에서 소집단 협력 기하학 탐구를 지원하는 표준 플랫폼</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">❌ 정적 코딩 체계의 한계</h3>
+        <div class="card highlight-card">
+          <h3>📐 시스템 핵심 아키텍처</h3>
           <ul>
-            <li>발화 하나하나를 '질문', '동의', '반박'으로 독립 분류</li>
-            <li><strong>맹점</strong>: 앞 발화와의 인과적 맥락과 턴 사이의 의미 협상 과정이 증발함</li>
+            <li><strong>지오지브라 (GeoGebra Multi-user)</strong>: 다자간 동시 조작 가능한 동적 기하 화이트보드</li>
+            <li><strong>텍스트 채팅창</strong>: 실시간 수식 및 수학적 담화 교환</li>
+            <li><strong>동기화 타임라인</strong>: 과거 모든 조작과 발화 턴을 1초 단위로 재생(Replay) 가능</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 10년간의 종단 연구 성과</h3>
+          <p>지리적으로 멀리 떨어진 3~4명의 중·고등학생들이 수개월간 VMT에 접속하여, 대학 수준의 비유클리드 기하학 정리를 협력적으로 증명하는 집단 인지 실증 (Stahl, 2009)</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>CSCL 역사상 가장 정밀하게 설계되고 분석된 랜드마크 시스템인 VMT(Virtual Math Teams)의 구조와 연구 성과를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>VMT는 시각적 기하 작도와 텍스트 대화가 어떻게 상호 보완되며 고차원 수학적 추론을 형성하는지 증명한 교과서적 사례입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>화상 회의 툴에 동적 수학 소프트웨어(GeoGebra)가 연동되었을 때의 시너지를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Deictic Referencing & Dual Space -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">인터페이스 비계 · Section 20.3.2</span>
+      <h2 class="slide-title">이중 공간(Dual Space)과 지표적 참조(Deictic Referencing)</h2>
+      <p class="slide-subtitle">분산된 참여자 간의 시선과 발화를 100% 동기화하는 인터페이스 공학</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🏹 지표적 참조 도구 (Deictic Referencing Tool)</h3>
+          <ul>
+            <li>채팅창에서 메시지를 보낼 때, 화이트보드의 특정 선분이나 각도를 화살표로 클릭</li>
+            <li>메시지와 함께 화살표가 화면에 꽂히며 <strong>"내가 말하는 '이 선분'이 바로 저것임"을 명확히 지시</strong></li>
+            <li>온라인 의사소통의 모호성과 지시적 실패를 완벽히 해결</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🪟 이중 상호작용 공간 (Dual Space)</h3>
+          <ul>
+            <li><strong>개념 공간 (Conceptual Space)</strong>: 기하 도형을 직접 조작하고 변형하는 화이트보드</li>
+            <li><strong>담화 공간 (Discourse Space)</strong>: 조작의 이유와 수학적 논리를 설명하는 채팅창</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>VMT의 핵심 특허 기술인 '지표적 참조(Deictic Referencing)'가 어떻게 원격 협업의 인지 부하를 줄이는지 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>"저기 위에 있는 세 번째 점"이라는 모호한 말 대신, 정확한 시각적 포인팅 화살표가 연결될 때 공동 주의집중이 완성됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>슬랙이나 디스코드에서 화면 캡처 및 주석 기능이 왜 협업 효율을 극대화하는지 연결해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Collaboration Scripts -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">협업 스크립팅 · Section 20.3.3</span>
+      <h2 class="slide-title">피에르 딜렌부르의 협력 학습 스크립트 (Collaboration Scripts)</h2>
+      <p class="slide-subtitle">자발적 협력이 실패할 때 개입하는 사회적·인지적 역할 배정 구조</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 역할 배정 (Roles)</h3>
+          <p>한 명은 <strong>'설명자(Explainer)'</strong>, 다른 한 명은 <strong>'비판적 질문자(Questioner)'</strong> 역할을 교대로 수행</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 활동 시퀀스 (Phases)</h3>
+          <p>[개별 읽기] ➔ [동료 피드백] ➔ [반박 작성] ➔ [공동 합의안 도출]로 이어지는 엄격한 단계 설계</p>
+        </div>
+        <div class="card">
+          <h3>3. 과잉 스크립팅(Over-scripting) 경계</h3>
+          <p>스크립트가 너무 경직되면 학생들의 자발적 탐구와 창의성이 질식할 위험성(Dillenbourg, 2002)</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>협력 학습이 방임되지 않고 높은 학술적 성과를 내도록 이끄는 '협업 스크립트(Collaboration Scripts)'의 설계 원리를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>딜렌부르(Dillenbourg, 2002): 스크립트는 학생들의 대화 자유를 억압하는 것이 아니라, 고차원적 인지 갈등과 반성적 대화를 촉발하는 지적 가이드레일입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>모둠 토론 수업에서 침묵을 방지하기 위한 가장 효과적인 역할 분담 스크립트를 기획해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Conversation Analysis in CSCL -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">미시 분석 방법론 · Section 20.3.4</span>
+      <h2 class="slide-title">대화분석(CA)과 발화 턴(Turn)의 시계열 연쇄 분석</h2>
+      <p class="slide-subtitle">정적 코딩 스킴의 한계를 넘어 발화의 순차적 맥락성(Sequentiality) 규명</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 고전적 정적 코딩 (Coding Schemes)</h3>
+          <ul>
+            <li>개별 발화를 낱개로 잘라내어 "질문: 1개, 답변: 2개"로 빈도 통계 집계</li>
+            <li>앞선 발화가 뒷 발화에 미친 인과적 영향과 상호작용 맥락 증발</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">✅ 순차성 분석 (Sequential Turn Analysis)</h3>
+          <h3 style="color: var(--accent-emerald);">🔬 민속방법론 대화분석 (CA: Conversation Analysis)</h3>
           <ul>
-            <li>에스노메소돌로지(민속방법론) 대화분석(CA) 적용</li>
-            <li>A의 발화에 대해 B가 어떻게 반응했는가(인접 쌍: Adjacency Pairs)를 통해 실제 소통된 의미 규명</li>
+            <li>인접 쌍(Adjacency Pairs)과 턴 테이킹(Turn-taking) 구조 정밀 전사</li>
+            <li><strong>참여자 스스로가 상대방의 말을 어떻게 이해하고 반응했는지를 참여자 내재적 관점에서 추적</strong></li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>20.3.3절과 20.3.4절의 CSCL 미시 상호작용 분석 방법론을 다룹니다.</p>
+        <p>CSCL 연구의 정체성이자 가장 핵심적인 방법론인 대화분석(CA)과 인터랙션 분석의 원리를 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>코슈만과 스탈 교수는 양적 빈도 코딩이 협력의 질적 메커니즘을 왜곡한다고 강력히 비판했습니다. 발화의 맥락적 순차성을 추적하는 것이 CSCL 연구의 정수입니다.</p>
+        <p>가핑클(Garfinkel)과 색스(Sacks)의 민속방법론: 사람들은 대화의 턴을 조직함으로써 세상의 의미를 함께 직조합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>대화분석(CA)의 제퍼슨 전사법이 연구자에게 주는 엄밀성을 설명하세요.</p>
+        <p>학생들의 온라인 채팅 로그를 분석할 때 단순 단어 빈도 분석과 턴 연쇄 분석의 차이를 비교하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 7: 20.4 Future Directions & Multimodality -->
-    <section class="slide" data-index="6">
-      <span class="slide-badge">미래 연구 · Section 20.4</span>
-      <h2 class="slide-title">20.4 CSCL의 미래 동향: 멀티모달 융합과 오케스트레이션</h2>
-      <p class="slide-subtitle">시선 추적(Dual Eye-Tracking), 생체 신호, 그리고 적응형 협업 스크립트</p>
+    <!-- Slide 11: Social Loafing & Positive Interdependence -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">사회적 규범 · Section 20.4</span>
+      <h2 class="slide-title">사회적 태만(Social Loafing) 방지와 긍정적 상호의존성</h2>
+      <p class="slide-subtitle">존슨 앤 존슨(Johnson & Johnson)의 성공적인 협력 학습 5대 조건</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="card highlight-card">
-          <h3>1. 멀티모달 상호작용 (MMLA)</h3>
-          <p>텍스트 로그를 넘어 이중 안구 추적(Gaze Synchrony), 표정, 제스처, 생체 신호를 융합 분석</p>
+          <h3>1. 긍정적 상호의존성</h3>
+          <p><strong>"우리는 함께 가라앉거나 함께 뜬다"</strong><br/>팀원의 성공 없이는 나의 성공도 없는 과제 구조</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 오케스트레이션 스크립트</h3>
-          <p>모둠 간 지식 불균형과 무임승차를 방지하고 최적의 협업 역할을 부여하는 스마트 스크립트</p>
+        <div class="card">
+          <h3>2. 개별 책무성</h3>
+          <p>무임승차를 방지하기 위해 각자의 기여도와 학습 성과를 개별적으로도 명확히 확인</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">3. 글로벌 크로스보더 협력</h3>
-          <p>언어와 문화가 다른 다국적 학습자들이 실시간 AI 통역을 매개로 함께 복잡 문제를 해결</p>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 촉진적 상호작용</h3>
+          <p>서로를 격려하고 칭찬하며 지적 성장을 지지해 주는 정서적 안전감 형성</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>20.4절의 미래 연구 과제(멀티모달 학습분석학, 협업 스크립트, 글로벌 협업)를 조망합니다.</p>
+        <p>협력 학습이 실패하는 대표적 요인(무임승차, 사회적 태만)을 방지하는 사회적 상호의존성 설계를 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>최신 CSCL은 AI 기반 협업 스크립트와 시선 동기화 분석을 통해 실시간으로 집단 인지의 질을 진단하고 개입합니다.</p>
+        <p>CSCL 시스템은 대시보드를 통해 각 참여자의 발화 및 작업 기여도를 시각화함으로써 자연스러운 개별 책무성을 유도합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>AI가 협력 학습의 중재자(Mediator)로 어떻게 기여할 수 있는지 토론하세요.</p>
+        <p>팀 프로젝트 평가 시 '개인 점수'와 '팀 점수'의 균형을 맞추는 채점 루브릭을 설계해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 8: Summary & Looking Ahead to Ch 21 -->
-    <section class="slide" data-index="7">
-      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 20.5</span>
-      <h2 class="slide-title">20.5 Chapter 20 총괄 결론 & Chapter 21 논증 학습 예고</h2>
-      <p class="slide-subtitle">아이디어를 발전시키는 핵심 담화 메커니즘, '논증 학습(Arguing to Learn)'으로!</p>
+    <!-- Slide 12: Socio-Cognitive Conflict -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">인식적 긴장 · Section 20.4</span>
+      <h2 class="slide-title">사회-인지적 갈등(Socio-Cognitive Conflict)의 생산적 해결</h2>
+      <p class="slide-subtitle">피아제와 비고츠키의 만남: 의견 불일치는 개념 변화의 가장 강력한 촉매제</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>🌟 Ch 20 CSCL의 핵심 교훈</h3>
+        <div class="card">
+          <h3>⚡ 갈등의 불가피성과 가치</h3>
           <ul>
-            <li>1. 인지는 두개골 속이 아니라 상호작용 속에서 피어난다</li>
-            <li>2. 분업(협동) 대신 진정한 공동 문제 공간(협력)을 구축하라</li>
-            <li>3. 지표적 참조 도구로 시선과 담화를 동기화하라</li>
-            <li>4. 턴의 연쇄 맥락(순차성)을 미시 분석하라</li>
+            <li>협력 학습에서 의견 충돌은 피해야 할 문제가 아니라 <strong>개념적 성장의 결정적 기회</strong></li>
+            <li>동료의 반박에 부딪힐 때 자신의 암묵적 가정을 명시적으로 되돌아보게 됨 (메타인지 활성화)</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 21 예고: 논증 학습 (Arguing to Learn)</h3>
-          <p><strong>Jerry Andriessen & Michael Baker</strong></p>
-          <p>상호작용적 의미구성의 핵심 엔진! 주장, 근거, 반론을 통해 집단 지성을 한 단계 도약시키는 논증 담화의 세계!</p>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>🤝 생산적 조율 (Productive Co-regulation)</h3>
+          <ul>
+            <li>인신공격으로 흐르지 않고 논리와 증거를 통해 대안을 탐색하는 <strong>'인식적 갈등 해결'</strong></li>
+            <li>CSCL 인터페이스는 논쟁 구조도와 증거 매핑 툴을 통해 이를 지원</li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 20(20.0~20.5)을 마무리하고, CSCL 환경에서 가장 핵심적인 담화 형태인 Chapter 21(Arguing to Learn)을 예고합니다.</p>
+        <p>사회-인지적 갈등(Socio-Cognitive Conflict)이 어떻게 학생들의 기존 도식을 깨고 새로운 개념으로 도약하게 하는지 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 21은 학생들이 서로의 주장을 비판하고 대안을 조율하는 '논증(Argumentation)'이 어떻게 심층 학습을 이끄는지 밝힙니다.</p>
+        <p>도이즈와 무니(Doise & Mugny, 1984): 동료 간의 인지적 갈등을 겪은 아동이 혼자 과제를 푼 아동보다 피아제 보존 개념 과제에서 훨씬 더 뛰어난 전이를 보였습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>다음 Chapter 21로 나아갑니다.</p>
+        <p>모둠 내에서 갈등이 생겼을 때 교사가 즉시 개입하여 해결해 주어야 할지, 아니면 학생들 스스로 조율하게 두어야 할지 토론하세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 20</span>
+      <h2 class="slide-title">페어 프로그래밍(Pair Programming)과 실시간 협업 코딩</h2>
+      <p class="slide-subtitle">VS Code Live Share, 구글 Colab을 활용한 동기식 집단 코딩</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>👥 드라이버(Driver)와 내비게이터(Navigator)</h3>
+          <ul>
+            <li><strong>드라이버</strong>: 키보드를 쥐고 실제 코드를 타이핑하며 미시적 문법 구현</li>
+            <li><strong>내비게이터</strong>: 전체 알고리즘의 거시적 흐름을 검토하고 잠재적 버그를 지적</li>
+            <li>15분마다 역할을 교대하여 완벽한 상호 스캐폴딩 달성</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>⚡ 실시간 동시 협업 코딩 (Live Share)</h3>
+          <ul>
+            <li>서로 다른 컴퓨터에서 동일한 소스 코드를 동시에 편집하고 디버깅</li>
+            <li>에러 발생 시 음성 채팅과 커서 포인팅으로 실시간 문제 해결</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>CSCL의 협업 스크립트와 집단 인지 모델이 소프트웨어 공학의 '페어 프로그래밍'에 구현된 사례를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>페어 프로그래밍은 단독 프로그래밍 대비 코드 결함률을 15% 이상 낮추고, 초보 학습자의 프로그래밍 불안감을 현저히 줄여줍니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>코딩 실력 차이가 큰 두 학생을 페어로 묶었을 때 발생할 수 있는 문제와 이를 해결할 스크립트를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 20.5</span>
+      <h2 class="slide-title">집단 인지의 승리: 혼자보다 함께일 때 더 지혜롭다</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 CSCL의 3대 핵심 명제</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>상호작용적 의미구성</h3>
+          <p>학습은 머릿속 지식 축적이 아니라 타인과의 대화 속에서 공유된 의미를 깎아 나가는 예술</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>집단 인지의 출현</h3>
+          <p>소집단 대화 턴의 연쇄 속에서 개인의 한계를 뛰어넘는 고차원적 지혜 창발</p>
+        </div>
+        <div class="card">
+          <h3>비계로서의 테크놀로지</h3>
+          <p>지표적 참조, 이중 공간, 협업 스크립트를 통해 원격 참여자 간의 완벽한 동기화 지원</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 20의 모든 핵심 교훈을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>CSCL은 테크놀로지가 고립된 개인주의를 심화시키는 것이 아니라, 인간과 인간을 가장 깊은 지적 연대로 묶어줄 수 있음을 증명했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"여러분이 운영하는 온라인 교육 플랫폼에 가장 먼저 도입하고 싶은 CSCL 기능은 무엇인가요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 21 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part IV</span>
+      <h2 class="slide-title">다음 여정: Chapter 21 논쟁을 통한 학습 (Arguing to Learn)</h2>
+      <p class="slide-subtitle">제리 안드리센(Jerry Andriessen) & 마이클 베이커(Michael Baker)의 논증 학습</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 20 vs Ch 21 연계성</h3>
+          <ul>
+            <li><strong>Ch 20 CSCL</strong>: 컴퓨터 매개 협력 학습의 전반적 상호작용 메커니즘과 집단 인지</li>
+            <li><strong>Ch 21 Arguing to Learn</strong>: 협력 학습의 핵심 동력인 <strong>논증(Argumentation), 툴민 논증 구도, 다이어그램 기반 논쟁 소프트웨어</strong>의 심층 탐구</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 Part IV 협력 학습의 정점</h3>
+          <p>지식구축(Ch 19) ➔ CSCL(Ch 20) ➔ 논쟁학습(Ch 21)으로 이어지는 깊은 담화적 탐구의 여정</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 20을 마무리하고, 다음 챕터인 Chapter 21(Arguing to Learn)과의 이론적 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>툴민(Toulmin) 논증 모델과 컴퓨터 기반 논쟁 도구(Digalo, Argunet 등) 연구로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 21을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 20: Computer-Supported Collaborative Learning (Stahl, Koschmann, & Suthers)</div>
-    <div class="footer-center" id="slide-counter">01 / 08</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
