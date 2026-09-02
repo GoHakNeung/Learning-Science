@@ -212,203 +212,469 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 29 · Part VI Equity & Diversity</span>
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 29 · Part VI Context</span>
       <h1 class="slide-title">Learning as a Cultural Process</h1>
-      <p class="slide-subtitle">문화적 과정으로서의 학습: 다양성을 통한 교육 형평성의 실현 — 결핍 모델을 넘어 자산 기반 교육으로</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+      <p class="slide-subtitle">문화적 과정으로서의 학습: 다양성을 통한 교육 형평성의 실현 — 결핍 모델을 넘어 자산 기반 학습으로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Na'ilah Suad Nasir, Ann S. Rosebery, Beth Warren, & Carol D. Lee</strong></p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 591–611)</p>
+          <p><strong>Na'ilah Suad Nasir</strong> (Spencer Foundation)<br/><strong>Ann S. Rosebery</strong> (TERC)<br/><strong>Beth Warren</strong> (Boston Univ)<br/><strong>Carol D. Lee</strong> (Northwestern Univ)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 29</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (29.0 ~ 29.4)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>29.0 결핍 모델 비판</strong> ➔ 자산 기반 교육학 (Asset-Based)</li>
-            <li><strong>29.1 일상 실천 속 학습 조건</strong>: 가시성, 유연한 궤적, 즉각적 피드백</li>
-            <li><strong>29.2 교과 지식과의 교차</strong>: Cheche Konnen, 문화적 모델링</li>
-            <li><strong>29.3 형평성 학습 환경 설계</strong>: 정체성 통합 & 관계적 문화</li>
+            <li><strong>문화(Culture)의 재정의</strong>: 정적 인종 범주에서 역동적 실천의 레퍼토리로</li>
+            <li><strong>결핍 모델(Deficit) 비판</strong>: 자산 기반 교육학(Asset-Based Pedagogies)</li>
+            <li><strong>일상 실천과 교과 지식 연결</strong>: Cheche Konnen, 문화적 모델링, 거리 수학</li>
+            <li><strong>형평성 학습 환경 설계</strong>: 제3의 공간(Third Space)과 문화 감응 컴퓨팅</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 제6부(Moving Learning Sciences Research into the Classroom)의 첫 번째 챕터로, 문화가 정적 범주가 아니라 동적 실천 레퍼토리이며 교육 형평성의 핵심 자산임을 밝힙니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>나이라 나시르(Spencer Foundation 회장)와 캐롤 리 교수는 문화적 학습과학의 세계적 권위자들입니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>인간의 모든 학습이 근본적으로 '문화적 과정(Cultural Process)'임을 밝히고, 소수자 학생들의 일상 문화 자원을 학술적 배움의 지적 디딤돌로 전환하는 형평성 교육학을 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>나이라 나시르(Spencer Foundation 총재)와 캐롤 리 교수 등 4명의 세계적 석학이 공동 집필한 문화와 형평성 학습과학의 정수입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"소수자 학생들의 일상 언어와 대중문화 지식은 교실에서 배척해야 할 장애물일까요, 아니면 최고의 지적 자산일까요?"로 시작하세요.</p>
+        <p>"다문화 가정이나 소외계층 학생들의 일상 지식과 방언은 교실에서 고쳐야 할 '결함'일까요, 활용해야 할 '자산'일까요?"로 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: 29.0 Deficit Model to Asset-Based -->
+    <!-- Slide 2: Redefining Culture -->
     <section class="slide" data-index="1">
-      <span class="slide-badge">패러다임 전환 · Section 29.0</span>
-      <h2 class="slide-title">29.0 결핍 모델(Deficit)에서 자산 기반(Asset-Based) 관점으로</h2>
-      <p class="slide-subtitle">문화는 고정된 인구통계 범주가 아닌 '역동적 실천의 레퍼토리(Repertoires of Practice)'</p>
+      <span class="slide-badge">문화의 재정의 · Section 29.0</span>
+      <h2 class="slide-title">문화에 대한 학습과학의 재정의: 동적 실천의 레퍼토리</h2>
+      <p class="slide-subtitle">피부색이나 국적이라는 정적 상자를 깨고, 살아 숨 쉬는 역사적 실천으로</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">❌ 전통적 결핍 모델 (Deficit Model)</h3>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 과거: 정적 범주로서의 문화 (Static Traits)</h3>
           <ul>
-            <li>소수자/소외 계층 학생들의 학업 부진을 <strong>'가정 환경의 문화적 결손'이나 '언어적 결함'</strong>으로 귀인</li>
-            <li>학교 표준 규범에 무조건 동화(Assimilation)되도록 강요</li>
+            <li>"아시아인은 수학을 잘하고, 흑인은 운동을 잘한다" 식의 고정관념</li>
+            <li>문화를 개인의 뇌 속에 고정된 유전적·인종적 속성으로 환원</li>
+            <li>개별 학생의 독창성과 가변성을 질식시킴</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">✅ 자산 기반 교육학 (Asset-Based)</h3>
+          <h3 style="color: var(--accent-emerald);">✨ 현재: 실천의 레퍼토리 (Repertoires of Practice)</h3>
           <ul>
-            <li>학생들이 이미 체화하고 있는 일상 문화 지식(농구, 음악, 모국어)을 <strong>고차 학문 개념의 강력한 출발점이자 지적 자산으로 활용</strong></li>
-            <li>다양성을 통한 진정한 교육 형평성(Equity) 추구</li>
+            <li>인간이 공동체 안에서 역사적으로 축적된 <strong>도구, 언어, 가치관을 매개로 세상과 상호작용하는 역동적 삶의 방식</strong> (Gutiérrez & Rogoff, 2003)</li>
+            <li>학습자는 상황에 따라 여러 문화적 레퍼토리를 넘나들며 유연하게 참여</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>29.0절의 결핍 모델 비판과 자산 기반 교육학(Asset-Based Pedagogies)으로의 패러다임 전환을 명확히 합니다.</p>
+        <p>문화를 정적 특성(Static Traits)이 아닌 '역동적 실천의 레퍼토리(Repertoires of Practice)'로 재개념화합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>거티에레즈(Gutierrez)와 로고프(Rogoff)의 이론: 문화는 피부색이 아니라, 사람들이 일상에서 문제를 해결하기 위해 사용하는 도구와 실천의 레퍼토리입니다.</p>
+        <p>구티에레즈와 로고프(2003): 사람을 문화적 상자에 가두지 말고, 그 사람이 어떤 문화적 실천들에 참여해왔는지를 관찰해야 합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>학교가 비주류 학생들의 지식을 어떻게 '결손'으로 낙인찍어 왔는지 비판적으로 토론하세요.</p>
+        <p>자신이 일상에서 참여하는 여러 문화(학교 문화, 게임 커뮤니티 문화, 가족 문화)의 서로 다른 언어 규범을 비교해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 29.1 4 Powerful Conditions in Everyday Practice -->
+    <!-- Slide 3: Deficit vs Asset-Based Pedagogies -->
     <section class="slide" data-index="2">
-      <span class="slide-badge">일상 학습 조건 · Section 29.1</span>
-      <h2 class="slide-title">29.1 일상 실천 속에서 나타나는 4대 강력한 학습 조건</h2>
-      <p class="slide-subtitle">농구, 도미노, 사탕 판매, 미용 실천에서 발견되는 놀라운 인지적 숙달 (Nasir, 2012)</p>
-      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
-        <div class="card highlight-card">
-          <h3>1. 기본 심리 욕구 충족 (Basic Needs)</h3>
-          <p>소속감(Belonging), 유능감, 자율성이 실천 공동체 속에서 온전히 충족되어 높은 몰입도 유발</p>
+      <span class="slide-badge">패러다임 대전환 · Section 29.0</span>
+      <h2 class="slide-title">결핍 모델(Deficit)에서 자산 기반 교육학(Asset-Based)으로</h2>
+      <p class="slide-subtitle">"학생에게 무엇이 부족한가?"에서 "학생이 무엇을 이미 가지고 있는가?"로의 전환</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 결핍 모델 (Deficit Model)</h3>
+          <ul>
+            <li>소외계층 아동의 학업 부진을 '가정환경의 빈곤, 언어 자극 부족, 문화적 결손' 탓으로 돌림</li>
+            <li>처방: 학생의 기존 문화를 지우고 주류 백인/중산층 문화를 일방적으로 주입</li>
+          </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 도메인 구조의 가시화 (Visibility)</h3>
-          <p>게임 판, 점수표, 도구를 통해 복잡한 인과 관계와 전략적 구조가 눈앞에 직관적으로 드러남</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3. 유능성을 향한 유연한 궤적</h3>
-          <p>초보자에서 전문가로 나아가는 정당한 주변적 참여(Lave & Wenger) 경로 개방</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">4. 시의적절하고 유연한 피드백</h3>
-          <p>지필 시험 점수가 아니라 '실시간 게임과 작업 흐름' 속에서 맥락화된 적응형 피드백 제공</p>
+          <h3 style="color: var(--accent-emerald);">💎 자산 기반 교육학 (Asset-Based Pedagogies)</h3>
+          <ul>
+            <li>학생들이 가정과 거리에서 체화한 **풍부한 일상 언어와 실천 경험을 최고의 지적 자산(Funds of Knowledge)**으로 인정</li>
+            <li>처방: 일상 지식과 학술적 지식을 연결하는 의미 있는 교량(Bridge) 구축</li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>29.1절(29.1.1~29.1.4)의 일상 실천 속 4대 학습 조건을 분석합니다.</p>
+        <p>교육학 역사상 가장 해로운 편견이었던 결핍 모델(Deficit Model)을 통렬히 비판하고 자산 기반 접근을 확립합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>나시르(Nasir, 2000, 2012)의 실증 연구: 학교 수학 수업에서 낙제하던 학생들이 길거리 농구 코트에서는 슛 성공률과 평균 득점을 암산으로 완벽히 계산해 냅니다.</p>
+        <p>몰(Luis Moll, 1992)의 '지식의 기금(Funds of Knowledge)': 노동 계층 가정에도 농업, 기계 수리, 건축 등 놀라운 문화적 지식 자산이 축적되어 있습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>학교 수업이 왜 이러한 4대 학습 조건을 놓치고 있는지 비교하세요.</p>
+        <p>우리 교실의 학생들이 가진 취미나 게임 지식을 정규 수업의 강력한 자산으로 바꿀 아이디어를 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: 29.2 Intersections with Science & Literacy -->
+    <!-- Slide 4: 4 Conditions of Everyday Learning -->
     <section class="slide" data-index="3">
-      <span class="slide-badge">교과 교차 · Section 29.2</span>
-      <h2 class="slide-title">29.2 일상 문화 실천과 학교 교과 지식의 교차 연결</h2>
-      <p class="slide-subtitle">Cheche Konnen 과학 탐구 프로젝트 & 캐롤 리의 문화적 모델링 (Cultural Modeling)</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🧪 29.2.1 과학교육: Cheche Konnen 프로젝트</h3>
-          <ul>
-            <li>아이티계 이민자 학생들의 물 맛과 냄새에 대한 감각적 일상 언어를 <strong>수질 오염 화학 분석의 과학적 가설로 전환</strong> (Rosebery & Warren)</li>
-            <li>모국어 담화를 과학적 탐구 담화의 비계로 활용</li>
-          </ul>
+      <span class="slide-badge">일상 실천의 힘 · Section 29.1</span>
+      <h2 class="slide-title">거리와 일상 실천 속에서 나타나는 4대 강력한 학습 조건</h2>
+      <p class="slide-subtitle">아이들은 농구 코트와 도미노 게임에서 왜 자발적으로 천재적인 몰입을 보이는가?</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr); font-size: 0.85rem;">
+        <div class="card">
+          <h3>1. 기본 욕구 충족</h3>
+          <p>소속감, 유능감, 자율성이 실천 공동체 속에서 온전히 보장됨</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">📚 29.2.2 문학교육: 문화적 모델링 (Carol Lee)</h3>
-          <ul>
-            <li>아프리카계 학생들의 일상 랩 가사와 비유 언어(Signifying) 분석 능력을 <strong>토니 모리슨 고전문학 해석의 비계로 활용</strong></li>
-            <li>문학적 추론 능력의 비약적 향상 입증</li>
-          </ul>
+        <div class="card highlight-card">
+          <h3>2. 도메인 가시화</h3>
+          <p>게임 규칙, 점수판, 신체 동작을 통해 복잡한 전략이 눈앞에 가시화</p>
+        </div>
+        <div class="card">
+          <h3>3. 유연한 숙달 궤적</h3>
+          <p>초보자에서 에이스로 성장하는 역할 이동 경로 개방 (LPP)</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>4. 실시간 피드백</h3>
+          <p>시험 점수가 아닌 게임 흐름 속에서 즉각적·적응적 피드백 수용</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>29.2절의 핵심 사례인 Cheche Konnen 프로젝트와 캐롤 리의 문화적 모델링(Cultural Modeling)을 분석합니다.</p>
+        <p>학교 밖 일상 실천(농구, 도미노, 사탕 판매)이 왜 학교 교실보다 훨씬 더 강력한 학습 환경인지를 4대 조건으로 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>캐롤 리(Carol D. Lee)의 발견: 학생들은 이미 일상에서 고도의 비유와 풍자를 능숙하게 해독하고 있습니다. 단지 학교 텍스트와의 연결 다리가 없었을 뿐입니다.</p>
+        <p>나시르(Nasir, 2002): 농구 코트의 청소년들은 복잡한 백분율 통계와 기하학적 궤적 계산을 자발적으로 수행하며 깊은 전문가로 성장합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>학생들의 대중문화(K-pop, 웹툰)를 정규 국어/문학 수업의 비계로 활용하는 방안을 논의하세요.</p>
+        <p>학교 수업에 '도메인 가시화'와 '실시간 피드백' 조건을 어떻게 도입할 수 있을지 토론하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: 29.3 Designing Equitable Learning Environments -->
+    <!-- Slide 5: Cheche Konnen Project -->
     <section class="slide" data-index="4">
-      <span class="slide-badge">환경 설계 원리 · Section 29.3</span>
-      <h2 class="slide-title">29.3 형평성 있는 학습 환경 설계를 위한 4대 원리</h2>
-      <p class="slide-subtitle">모든 학습자의 문화적 정체성과 학문적 유능성이 함께 꽃피는 교실 생태계 (Nasir et al.)</p>
-      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
-        <div class="card highlight-card">
-          <h3>1. 문화적 지식의 공식 자산화</h3>
-          <p>학생의 모국어, 방언, 일상 경험을 배척하지 않고 교과 탐구의 공식적 출발점으로 인정</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 관계적 교실 담화 문화 구축</h3>
-          <p>지배-복종을 탈피하고 상호 존중과 신뢰를 바탕으로 심리적 안전감을 주는 학습 공동체</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3. 다중양식 참여 및 평가 경로</h3>
-          <p>단일 지필 시험을 넘어 구두 발표, 시각 디자인, 디지털 제작 등 다원적 수행 평가 도입</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">4. 문화적-학문적 정체성 통합</h3>
-          <p>'과학자로서의 나'와 '내 문화의 나'가 충돌하지 않고 융합되도록 지원하는 정체성 비계</p>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>29.3절의 형평성 있는 학습 환경 설계 4대 원리를 정리합니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>학습자가 "내가 수학을 잘하려면 내 민족적 정체성을 버려야 한다"고 느끼는 순간 학업 이탈이 발생합니다. 정체성의 융합이 학습의 핵심 전제입니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>다문화 학생들을 위한 포용적 수업 설계 원리를 토론하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 6: Summary & Looking Ahead to Ch 30 -->
-    <section class="slide" data-index="5">
-      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 29.4</span>
-      <h2 class="slide-title">29.4 Chapter 29 총괄 결론 & Chapter 30 동기 연구 예고</h2>
-      <p class="slide-subtitle">문화적 과정으로서의 학습에서 내적 열정과 참여를 설계하는 '흥미·동기 연구'로!</p>
+      <span class="slide-badge">교과 융합 ① 과학 · Section 29.2.1</span>
+      <h2 class="slide-title">Cheche Konnen 프로젝트: 아이티 이민 아동의 수질 과학</h2>
+      <p class="slide-subtitle">로즈베리와 워렌(Rosebery & Warren)의 문화 감응적 과학교육 랜드마크</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🌟 Ch 29 문화적 학습 연구의 핵심 교훈</h3>
+          <h3>💧 탐구의 시작과 일상 담화</h3>
           <ul>
-            <li>1. 결핍 모델을 버리고 자산 기반 관점을 취하라</li>
-            <li>2. 일상 실천의 가시성과 유연한 궤적을 교실에 구현하라</li>
-            <li>3. Cheche Konnen과 문화적 모델링으로 학문을 연결하라</li>
-            <li>4. 다양성을 통한 진정한 교육 형평성을 실현하라</li>
+            <li>아이티계 이민자 학생들의 일상 논쟁: <em>"학교 1층 정수기 물이 3층 정수기 물보다 훨씬 시원하고 달콤해!"</em></li>
+            <li>기존 교사는 이를 "쓸데없는 잡담"으로 묵살했으나, 연구팀은 이를 **진지한 과학적 탐구 질문**으로 승격시킴</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 30 예고: 흥미, 동기, 참여 (Meaningful Learning)</h3>
-          <p><strong>K. Ann Renninger & Sanna Järvelä</strong></p>
-          <p>학습자의 4단계 흥미 발달 모델과 협력적 동기 조절(SSRL)! 의미 있는 학습 설계를 향하여!</p>
+        <div class="card">
+          <h3>🔬 학술적 화학 탐구로의 도약</h3>
+          <ul>
+            <li>학생들이 맹검 맛 테스트(Blind taste test) 설계 ➔ 수온, 염도, 잔류 염소 농도 화학 측정</li>
+            <li><strong>자신들의 일상 감각 언어를 엄밀한 과학적 가설과 데이터 분석으로 훌륭하게 전환</strong></li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 29(29.0~29.4)를 정리하고 다음 Chapter 30(의미 있는 학습 설계: 흥미, 동기, 참여)을 예고합니다.</p>
+        <p>과학교육과 문화적 학습의 전설적인 랜드마크인 'Cheche Konnen(아이티 크리올어로 "지식을 찾아서")' 프로젝트를 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 30은 레닌저와 예르벨라 교수가 밝히는 흥미(Interest)와 동기(Motivation)의 다단계 조절 메커니즘을 다룹니다.</p>
+        <p>워렌과 로즈베리(2001): 학생들의 일상 감각 언어는 과학적 담화와 대립되지 않으며, 탐구의 가장 훌륭한 시발점이 됩니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>다음 Chapter 30으로 나아갑니다.</p>
+        <p>학생들의 급식 메뉴 품평이나 일상 불만을 과학적 데이터 탐구 프로젝트로 연결하는 수업을 기획해 보세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 6: Cultural Modeling in Literacy -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">교과 융합 ② 문학 · Section 29.2.2</span>
+      <h2 class="slide-title">캐롤 리(Carol D. Lee)의 문화적 모델링(Cultural Modeling)</h2>
+      <p class="slide-subtitle">힙합과 랩 배틀의 언어유희를 고전문학의 복선과 은유 분석으로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎤 시그니파잉(Signifying) 분석</h3>
+          <ul>
+            <li>아프리카계 청소년들의 일상 대화에 내재된 고도의 이중 의미, 반어, 풍자 구조 해독</li>
+            <li>학생들에게 자신들이 이미 **'고도의 문학 비평가'**임을 깨닫게 함</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>📚 정규 문학 텍스트 해석</h3>
+          <ul>
+            <li>토니 모리슨의 『빌러비드(Beloved)』나 셰익스피어 텍스트의 다층적 상징 해석에 전이</li>
+            <li><strong>소수자 학생들의 고전문학 독해 점수 40% 이상 향상</strong> 실증 (Lee, 2007)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>캐롤 리 교수의 문화적 모델링(Cultural Modeling) 이론이 문학 교육에서 어떻게 학업 성취 격차를 해소했는지 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학생들이 일상에서 즐기는 랩 음악의 라임과 펀치라인은 본질적으로 시(Poetry)의 은유 구조와 완벽히 동일합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>청소년들이 사용하는 인터넷 밈(Meme)의 풍자 구조를 국어 시간 수사학 수업에 활용하는 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Street Mathematics & Transfer -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">교과 융합 ③ 수학 · Section 29.2.3</span>
+      <h2 class="slide-title">거리 수학(Street Math)과 일상 통계의 대수학 전이</h2>
+      <p class="slide-subtitle">누네스(Nunes) 등의 브라질 거리 사탕 판매 아동 연구와 농구 통계</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 학교 시험에서의 참패 (35% 정답률)</h3>
+          <ul>
+            <li>종이 시험지 위의 형식적 분수·비율 계산 수식: <code>3/4 × 12 = ?</code></li>
+            <li>공식을 암기하지 못해 대부분 오답 제출</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 거리 시장에서의 완벽한 계산 (98% 정답률)</h3>
+          <ul>
+            <li>사탕 4개 묶음 3세트 판매 및 거스름돈 암산: <strong>비례 추론 100% 성공</strong></li>
+            <li>상황에 닻을 내린 인지(Situated Cognition)를 정규 대수학 방정식으로 연결하는 비계 필요</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>수학 학습과학의 고전 연구인 누네스, 슐리만, 카라헤르(Nunes et al., 1993)의 '거리 수학(Street Mathematics)' 연구를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>아동들은 수학적 능력이 없는 것이 아니라, '추상적 기호 문법'과 '자신의 직관적 셈법'을 연결하는 다리를 제공받지 못했을 뿐입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>초등 분수 수업에서 '피자 나누기'나 '용돈 쇼핑'과 같은 현실적 맥락을 도입할 때의 유의점을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Third Space Theory -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">제3의 공간 · Section 29.2</span>
+      <h2 class="slide-title">크리스 구티에레즈(Kris Gutiérrez)의 '제3의 공간(Third Space)'</h2>
+      <p class="slide-subtitle">제1공간(학생의 일상 문화)과 제2공간(학교의 공식 지식)이 만나 빚어내는 변혁적 배움</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>제1의 공간 (First Space)</h3>
+          <p>학생들의 가정, 동네 친구, 대중문화, 모국어/방언 등 <strong>비형식적 삶의 공간</strong></p>
+        </div>
+        <div class="card">
+          <h3>제2의 공간 (Second Space)</h3>
+          <p>학교 교과서, 공식 교육과정, 표준어 등 <strong>제도적 지배 공간</strong></p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>✨ 제3의 공간 (Third Space)</h3>
+          <p>두 공간이 만나 충돌하고 융합하며 <strong>새로운 비판적 의미와 정체성이 창발하는 혼종적(Hybrid) 학습 생태계</strong></p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>사회문화적 학습 이론의 핵심 개념인 크리스 구티에레즈(Kris Gutiérrez, 2008)의 '제3의 공간(Third Space)' 이론을 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>제3의 공간에서는 교사의 일방적 훈화도, 학생의 산만한 잡담도 아닌, 양자의 지식이 동등하게 존중받으며 고차원적 개념으로 융합됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교실 안에서 '제3의 공간'을 창출하기 위해 교사가 내려놓아야 할 권위와 도입해야 할 대화 규칙을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: 4 Principles of Equitable Design -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">형평성 설계 · Section 29.3</span>
+      <h2 class="slide-title">형평성 있는 학습 환경 설계를 위한 4대 원리</h2>
+      <p class="slide-subtitle">다양성을 결함이 아닌 혁신의 원천으로 삼는 교수설계 나침반</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr); font-size: 0.85rem;">
+        <div class="card highlight-card">
+          <h3>1. 문화 지식 자산화</h3>
+          <p>학생의 배경 지식을 교과 탐구의 핵심 출발점으로 공인</p>
+        </div>
+        <div class="card">
+          <h3>2. 관계적 교실 담화</h3>
+          <p>상호 존중과 신뢰를 바탕으로 심리적 안전감 보장</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 다중양식 참여</h3>
+          <p>글쓰기, 그림, 코딩, 연극 등 다양한 표현 경로 제공</p>
+        </div>
+        <div class="card">
+          <h3>4. 정체성 통합 비계</h3>
+          <p>'학문적 유능성'과 '자신의 문화적 정체성'을 조화롭게 일치</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 29.3절에서 제시하는 형평성 학습 환경의 4대 설계 원리를 체계화합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>형평성(Equity)은 모든 학생에게 똑같은 것을 주는 '기계적 평등(Equality)'이 아니라, 각 학생의 문화적 배경에 맞추어 맞춤형 비계를 제공하는 정의(Justice)입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>평가 방식에서 지필고사 외에 '다중양식 포트폴리오'를 도입할 때의 장단점을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Culturally Relevant Pedagogy -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">문화 감응 교육 · Section 29.3</span>
+      <h2 class="slide-title">글로리아 래드슨-빌링스의 문화 감응 교수법 (CRP)</h2>
+      <p class="slide-subtitle">학업적 성공, 문화적 역량, 비판적 의식의 3대 기둥 (Ladson-Billings, 1995)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 학업적 성공</h3>
+          <p><strong>Academic Success</strong><br/>모든 학생이 높은 수준의 학술적 개념과 문해력을 성취하도록 스캐폴딩</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 문화적 유능감</h3>
+          <p><strong>Cultural Competence</strong><br/>자신의 모문화에 대한 자긍심을 유지하면서 주류 학문 문화를 유창하게 구사</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>3. 비판적 의식</h3>
+          <p><strong>Critical Consciousness</strong><br/>사회적 불평등과 부정의를 비판적으로 분석하고 개선하는 시민성 함양</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>문화 감응 교수법(Culturally Relevant Pedagogy: CRP)의 3대 핵심 요소를 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>래드슨-빌링스(1995): 진정한 교육은 학생이 학교에서 성공하기 위해 자신의 문화적 뿌리를 부정하게 만들어서는 안 됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다문화 학생이 많은 교실에서 '문화적 유능감'과 '학업적 성공'을 동시에 달성하는 수업 전략을 제안하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: EdTech and Cultural Scaffolding -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">에듀테크와 문화 · Section 29.4</span>
+      <h2 class="slide-title">다문화 학습자를 위한 맞춤형 에듀테크와 언어 비계</h2>
+      <p class="slide-subtitle">실시간 번역 AI, 다국어 인터페이스, 음성 지원 디지털 교과서</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🌐 다국어 지능형 스캐폴딩</h3>
+          <ul>
+            <li>이중언어(Bilingual) 학습자를 위한 모국어-표준어 상호 전환 툴</li>
+            <li>개념은 모국어로 먼저 이해하고, 학술 표현은 표준어로 점진적 전이</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>📱 문화적 맥락화 디지털 콘텐츠</h3>
+          <ul>
+            <li>다양한 인종, 국가, 문화적 배경의 주인공이 등장하는 시뮬레이션</li>
+            <li>소외계층 아동의 시각적 대표성(Representation) 보장</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>에듀테크 기술이 언어와 문화적 장벽을 허무는 데 어떻게 기여할 수 있는지 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>기술은 중립적이지 않습니다. 서구 중심적 알고리즘 편향을 걷어내고 다문화 학습자를 포용하는 기술 설계가 필수적입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>외국인 이주민 자녀를 위한 한국어/다국어 AI 튜터 시스템의 기능 요구사항을 도출해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Teacher Implicit Bias -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">교사 편향 극복 · Section 29.4</span>
+      <h2 class="slide-title">교사의 무의식적 문화적 편향(Implicit Bias) 극복</h2>
+      <p class="slide-subtitle">피그말리온 효과의 그늘을 걷어내고 모든 학생에게 높은 기대치 부여</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">⚠️ 무의식적 편향과 낮은 기대</h3>
+          <ul>
+            <li>특정 배경 아동에게 교사가 무의식적으로 쉬운 과제만 주거나 질문을 덜 던지는 현상</li>
+            <li>학생은 교사의 낮은 기대를 내면화하여 스스로 학습 포기 (자기실현적 예언)</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>🌟 문화적 공감과 높은 기대 (High Expectations)</h3>
+          <ul>
+            <li>수업 비디오 자가 진단을 통해 자신의 발문 편향을 객관적으로 직면</li>
+            <li><strong>"너는 충분히 이 고차원 문제를 해결할 수 있다"</strong>는 강력한 지적 신뢰와 촘촘한 스캐폴딩 제공</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>교사의 암묵적 편향(Implicit Bias)이 학생 성취에 미치는 영향을 규명하고 이를 치유하는 전문성 개발을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>나시르 등(2022): 진정한 형평성은 동정(Sympathy)이 아니라, 모든 학생의 무한한 지적 잠재력에 대한 확고한 신뢰(High Expectations)입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신도 모르게 가지고 있던 학습자에 대한 무의식적 선입견을 솔직하게 나누어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 29</span>
+      <h2 class="slide-title">문화 감응적 컴퓨팅(CRC)과 민족수학(Ethnomathematics) 코딩</h2>
+      <p class="slide-subtitle">론 에글래시(Ron Eglash)의 아프리카 전통 문양 프랙탈 코딩(CSDT)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🧶 CSDT (Culturally Situated Design Tools)</h3>
+          <ul>
+            <li><strong>아프리카 헤어스타일(Cornrows)과 직조 패턴</strong>에 숨겨진 기하학적 프랙탈과 재귀(Recursion) 알고리즘 발견</li>
+            <li>학생들이 자바스크립트로 전통 문양을 직접 코딩하며 알고리즘 원리 습득</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 문화적 자긍심과 CS 성취</h3>
+          <p>"우리 조상들의 문화 속에 이미 첨단 컴퓨터 알고리즘이 들어있었다!" ➔ 소수자 학생들의 **컴퓨터 과학 참여율과 전공 진학률 3배 이상 폭증**</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>론 에글래시 교수의 '문화 상황적 디자인 도구(CSDT)' 프로젝트를 통해 문화와 SW 코딩 교육의 완벽한 융합 사례를 소개합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>에글래시(Eglash, 2006): 컴퓨터 과학을 백인 남성의 전유물이 아닌, 인류의 다양한 문화적 유산과 연결할 때 진정한 교육 형평성이 달성됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>한국의 전통 단청 문양이나 한복 격자 패턴을 엔트리/파이썬으로 코딩하는 수업을 기획해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 29.5</span>
+      <h2 class="slide-title">다양성은 결함이 아니라 가장 위대한 지적 자산이다</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 문화와 형평성의 3대 나침반</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>실천의 레퍼토리</h3>
+          <p>모든 인간은 문화적 실천을 통해 배우며, 일상 지식은 학술 학습의 훌륭한 원자재</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>제3의 공간 창출</h3>
+          <p>교과 지식과 일상 문화를 결합하여 모든 학생의 목소리가 살아 숨 쉬는 생태계 구축</p>
+        </div>
+        <div class="card">
+          <h3>문화 감응적 형평성</h3>
+          <p>학생의 정체성을 긍정하며 높은 학업 성취와 사회 비판적 안목을 동시에 선물하기</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 29의 모든 핵심 교훈을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>다양성을 존중하는 것은 단순한 도덕적 미덕이 아니라, 교실 전체의 지적 깊이를 비약적으로 풍요롭게 만드는 학습과학의 강력한 엔진입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"오늘 수업을 통해 '형평성 있는 교육'에 대한 여러분의 생각이 어떻게 바뀌었나요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 30 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part VI</span>
+      <h2 class="slide-title">다음 여정: Chapter 30 유의미한 학교 개혁과 설계</h2>
+      <p class="slide-subtitle">Design-Based Approaches to Meaningful School Learning (Paul Cobb & Melissa Gresalfi)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 29 vs Ch 30 연계성</h3>
+          <ul>
+            <li><strong>Ch 29 문화적 프로세스</strong>: 학습자의 문화적 자산, 형평성, 제3의 공간</li>
+            <li><strong>Ch 30 유의미한 학교 설계</strong>: 교실 환경을 유의미한 배움의 장으로 전면 재설계하는 <strong>수업 실험(Classroom Design Experiments), 규범과 실천의 제도화</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 Part VI 거시적 시스템 혁신의 전개</h3>
+          <p>문화(29) ➔ 학교설계(30) ➔ 교사학습(31) ➔ 정책과 RPP(32) ➔ 미래(33)로 이어지는 대단원</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 29를 마무리하고, 다음 챕터인 Chapter 30(Design-Based Approaches to Meaningful School Learning)과의 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>폴 콥 교수와 멜리사 그레살피 교수의 교실 생태계 디자인 실험 연구로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 30을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 29: Learning as a Cultural Process (Nasir, Rosebery, Warren, & Lee)</div>
-    <div class="footer-center" id="slide-counter">01 / 06</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
