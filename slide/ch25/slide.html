@@ -226,277 +226,476 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 25 · Part V Complex Systems</span>
-      <h1 class="slide-title">Complex Systems and the Learning Sciences</h1>
-      <p class="slide-subtitle">복잡계와 학습과학: 교육적, 이론적, 방법론적 함의 — 넷로고(NetLogo)와 창발적 사고에서 교육 시스템 모델링으로</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 25 · Part V Disciplines</span>
+      <h1 class="slide-title">Complex Systems and Learning Sciences</h1>
+      <p class="slide-subtitle">복잡계와 학습과학: 넷로고(NetLogo)와 창발적 사고에서 교육 시스템의 복잡계 모델링으로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Michael J. Jacobson</strong> (Univ. of Sydney) & <strong>Uri Wilensky</strong> (Northwestern Univ.)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 515–536)</p>
+          <p><strong>Michael J. Jacobson</strong> (University of Sydney)<br/><strong>Uri Wilensky</strong> (Northwestern University)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 25</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (25.0 ~ 25.3)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>25.0 복잡계와 창발</strong>: 중앙 통제자 없는 자발적 거시 질서</li>
-            <li><strong>25.1.1 인지적 난제</strong>: 중앙집중 편향 & 시계태엽 결정론</li>
-            <li><strong>25.1.2 넷로고 (NetLogo)</strong>, 중간 레벨, 허브넷, 지식 재구조화</li>
-            <li><strong>25.2 교육 시스템 복잡계</strong> (Table 25.1) & 시뮬레이션 방법론</li>
-          </ul>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 에이전트 기반 모델링의 창시자 유리 윌렌스키 교수와 복잡계 교육학자 마이클 제이콥슨 교수가 집필한 챕터로, 복잡계(Complex Systems)와 창발(Emergence) 개념의 학습 및 교육 시스템 복잡계 분석을 다룹니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>넷로고(NetLogo)는 전 세계 수백만 명의 학생과 과학자들이 사용하는 대표적인 복잡계 시뮬레이션 환경으로, 선형적 사고를 탈피하여 창발적 인과를 이해하도록 돕습니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"새 떼가 하늘에서 환상적인 군무를 출 때, 맨 앞에서 지휘하는 대장 새가 있을까요?"라는 질문으로 시작하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 2: 25.0 What is a Complex System & Emergence -->
-    <section class="slide" data-index="1">
-      <span class="slide-badge">기본 개념 · Section 25.0</span>
-      <h2 class="slide-title">25.0 복잡계(Complex System)와 창발(Emergence)</h2>
-      <p class="slide-subtitle">개별 에이전트들의 국소적 상호작용에서 자발적으로 피어나는 거시적 질서 (Jacobson & Wilensky)</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>🐜 복잡계의 본질적 특징</h3>
-          <ul>
-            <li><strong>에이전트 (Agents)</strong>: 개미, 분자, 세포, 구매자, 학생 등 다수의 독립적 행위자</li>
-            <li><strong>국소적 규칙 (Local Rules)</strong>: 중앙의 지시 없이 주변 이웃과의 간단한 상호작용 규칙만 준수</li>
-            <li><strong>피드백 루프 (Feedback)</strong>: 양의 피드백(증폭)과 음의 피드백(안정화)의 공존</li>
-          </ul>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">✨ 창발 (Emergence) 현상</h3>
-          <ul>
-            <li>미시 수준의 단순한 규칙들이 누적되어, <strong>거시 수준에서 질적으로 완전히 새로운 패턴과 질서가 자발적 출현</strong></li>
-            <li>예시: 교통 정체, 개미 군집의 다리 건설, 시장 가격 형성, 뇌 신경망의 의식</li>
+            <li><strong>복잡계(Complex Systems)와 창발</strong>: 중앙 통제 없는 미시 상호작용과 거시 패턴</li>
+            <li><strong>중앙 집중 편향(Centralized Mindset)</strong>: 시계태엽식 사고의 한계와 탈중심적 전환</li>
+            <li><strong>넷로고(NetLogo) & HubNet</strong>: 에이전트 기반 모델링과 체화된 참여 시뮬레이션</li>
+            <li><strong>교육 시스템의 복잡계 모델링</strong>: 비선형 동역학, 임계점, 재구조화(Restructuration)</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>25.0절의 복잡계(Complex Systems)와 창발(Emergence)의 기본 정의를 설명합니다.</p>
+        <p>복잡계 과학(Complex Systems)이 학생들의 인지적 사고방식(창발적 사고)을 어떻게 혁신하며, 교육 시스템 자체를 복잡계로 이해하는 연구 방법론을 학습합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>전통 과학의 환원주의(Reductionism)는 전체를 쪼개어 이해하려 했으나, 복잡계 과학은 "전체는 부분의 합보다 크다(The whole is greater than the sum of its parts)"는 원리를 입증합니다.</p>
+        <p>노스웨스턴 대학교 유리 윌렌스키(Uri Wilensky) 교수는 넷로고(NetLogo)의 개발자이자 복잡계 교육학의 세계적 최고 권위자이며, 마이클 제이콥슨 교수는 복잡계 인지 연구를 선도해왔습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>환원주의와 창발주의의 세계관 차이를 대조해 보세요.</p>
+        <p>"철새들의 군무(Flocking)나 교통 체증은 리더 새나 신호등이 지시하지 않는데 왜 질서 있는 패턴이 생길까요?"로 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 25.1.1 Cognitive Challenges & Biases -->
+    <!-- Slide 2: Definition of Complex Systems -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">학문적 정의 · Section 25.0</span>
+      <h2 class="slide-title">복잡계(Complex System)란 무엇인가? 미시 규칙과 거시 창발</h2>
+      <p class="slide-subtitle">수많은 개별 행위자의 국소적 상호작용에서 솟아나는 거시적 질서(Emergence)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🐜 미시 수준 (Micro-Level Agents)</h3>
+          <ul>
+            <li>개미, 분자, 세포, 개별 운전자, 학생 등 수많은 단순 행위자</li>
+            <li>전체 그림을 모른 채 오직 **단순한 국소 규칙(Local Rules)**에만 반응:
+              <br/><em>"앞차와 2m 간격 유지", "페로몬 냄새를 따라가기"</em>
+            </li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-indigo);">
+          <h3 style="color: var(--accent-indigo);">🌊 거시 수준 (Macro-Level Emergence)</h3>
+          <ul>
+            <li>개별 행위자의 특성에는 전혀 없던 <strong>새로운 거시적 패턴 창발</strong>:
+              <br/><em>개미집 건축, 유령 교통 체증, 시장 가격 형성, 뇌의 의식</em>
+            </li>
+            <li>중앙 지도자(Leader)나 마스터 플랜 없이 자발적으로 자기조직화(Self-Organization)됨</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>복잡계의 본질인 '창발(Emergence)'과 '탈중심적 자기조직화(Self-Organization)'의 원리를 명쾌히 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>윌렌스키(1999): "창발(Emergence)이란 부분들의 단순한 합을 뛰어넘는 전체의 새로운 속성이며, 21세기 과학의 가장 심오한 통찰이다."</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 몸의 면역계가 중앙 뇌의 지시 없이 바이러스를 퇴치하는 자기조직화 사례를 연결하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Cognitive Challenges & Biases -->
     <section class="slide" data-index="2">
       <span class="slide-badge">인지적 난제 · Section 25.1.1</span>
-      <h2 class="slide-title">25.1.1 복잡계 개념 학습의 3대 인지적 장벽</h2>
-      <p class="slide-subtitle">인간의 뇌가 가진 뿌리 깊은 직관적 사고 편향 (Resnick & Wilensky, 1998)</p>
-      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">1. 중앙 집중 편향 (Centralized)</h3>
-          <p>모든 패턴과 질서에는 반드시 명령을 내리는 리더나 중앙 제어자가 존재할 것이라는 맹신</p>
+      <h2 class="slide-title">직관적 결정론 편향 vs 복잡계 창발적 사고</h2>
+      <p class="slide-subtitle">미첼 레스닉(Mitchel Resnick)의 중앙 집중 편향(Centralized Mindset) 비판</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 초보자의 중앙 집중 편향 (Centralized Mindset)</h3>
+          <ul>
+            <li><strong>리더 가정</strong>: "우두머리 새가 방향을 지시할 것이다", "여왕개미가 명령을 내린다"</li>
+            <li><strong>시계태엽 결정론</strong>: 단 하나의 단일 원인이 단 하나의 비례적 결과를 낳는다는 착각</li>
+            <li><strong>하향식 사고(Top-down)</strong>: 패턴이 있으면 반드시 설계자가 존재한다고 믿음</li>
+          </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">2. 시계태엽 결정론 (Clockwork)</h3>
-          <p>모든 원인과 결과는 1:1로 비례하고 직선적으로 예측 가능하다는 기계론적 고정관념</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3. 거시 인과 우선 편향</h3>
-          <p>거시 수준의 결과가 미시 에이전트를 지시한다고 거꾸로 생각하는 하향식 원인 귀인</p>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 복잡계적 사고 (Emergent Mindset)</h3>
+          <ul>
+            <li><strong>탈중심적 분산 사고</strong>: 리더 없이 규칙의 상호작용으로 질서 형성</li>
+            <li><strong>비선형 인과율</strong>: 작은 요동이 거대한 시스템 붕괴를 초래(나비효과/임계점)</li>
+            <li><strong>상향식 창발(Bottom-up)</strong>: 미시 상호작용에서 거시 패턴이 출현함을 직관화</li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>25.1.1절에 제시된 학습자의 직관적 사고 편향(Centralized mindset, Clockwork determinism)을 다룹니다.</p>
+        <p>인간이 왜 복잡계 현상을 이해하기 어려워하는지 '중앙 집중 편향(Centralized Mindset)'의 인지적 원인을 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>미첼 레스닉(Mitchel Resnick, 1996)의 발견: 사람들은 새 떼나 개미 군집을 볼 때 "대장 개미가 명령한다"고 착각합니다. 이 편향을 깨는 것이 학습과학의 핵심 과제입니다.</p>
+        <p>레스닉(Resnick, 1994)의 『Turtles, Termites, and Traffic Jams』: 사람들은 복잡한 패턴을 보면 무의식적으로 지휘관을 상상하도록 진화적 편향을 지니고 있습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>신호등이 고장 났을 때 자발적으로 교통 흐름이 생기는 현상과 신호등 통제를 비교하세요.</p>
+        <p>고속도로에서 사고가 나지 않았는데도 차가 막히는 '유령 정체'의 원인을 탈중심적 관점으로 설명해 보게 하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: 25.1.2 NetLogo & Agent-Based Modeling -->
+    <!-- Slide 4: Conceptual Change Debate: Chi vs Wilensky -->
     <section class="slide" data-index="3">
-      <span class="slide-badge">넷로고 모델링 · Section 25.1.2</span>
-      <h2 class="slide-title">25.1.2 넷로고 (NetLogo)와 에이전트 기반 모델링 (ABM)</h2>
-      <p class="slide-subtitle">거북이(Turtles)와 패치(Patches)의 국소 규칙으로 창발을 직접 조작하고 관찰 (Wilensky, 1999)</p>
+      <span class="slide-badge">개념 변화 논쟁 · Section 25.1.1</span>
+      <h2 class="slide-title">복잡계 개념 변화 논쟁: 미셸 치(Chi) vs 유리 윌렌스키</h2>
+      <p class="slide-subtitle">급진적 범주 전환인가, 아니면 에이전트 기반 인지 자원의 연결인가?</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>🐢 넷로고(NetLogo) 아키텍처</h3>
+        <div class="card">
+          <h3>⚡ 미셸 치 (Michelene Chi, 2012)</h3>
           <ul>
-            <li><strong>거북이 (Turtles)</strong>: 이동하며 상호작용하는 에이전트 (새, 차량, 바이러스)</li>
-            <li><strong>패치 (Patches)</strong>: 지형과 환경을 구성하는 정적 에이전트 (풀밭, 도로)</li>
-            <li><strong>관찰자 (Observer)</strong>: 전체 파라미터를 조절하고 그래프/데이터 출력</li>
+            <li><strong>급진적 범주 전환 (Radical Category Shift)</strong> 주장</li>
+            <li>직접-인과 스키마(Direct)와 창발-인과 스키마(Emergent)는 완전히 다른 존재론적 범주</li>
+            <li>기존 도식을 통째로 부수고 새로운 창발 범주를 주입해야 함</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">💡 구성주의적 마이크로월드</h3>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>🔗 유리 윌렌스키 (Uri Wilensky, 2008)</h3>
           <ul>
-            <li>학생들이 슬라이더를 움직여 감염률과 이동 속도를 조절</li>
-            <li>단순한 에이전트 코드 몇 줄로 <strong>복잡한 사회·자연 현상을 직접 프로그래밍(Constructionism)</strong></li>
+            <li><strong>연결주의 인지 자원 (Connected Chemistry)</strong> 주장</li>
+            <li>학생들은 이미 일상에서 분산 상호작용에 대한 풍부한 인지 자원(Resources) 보유</li>
+            <li>에이전트 기반 모델을 통해 <strong>에이전트의 시점을 체화(Agent-based perspective)</strong>하면서 자연스럽게 창발 개념 구성 가능</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>25.1.2절의 넷로고(NetLogo) 에이전트 기반 모델링(ABM) 시스템 아키텍처를 설명합니다.</p>
+        <p>학습과학의 대표적 학술 논쟁인 미셸 치와 유리 윌렌스키의 복잡계 개념 변화 모델을 비교 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>넷로고는 파페트(Seymour Papert)의 구성주의 마이크로월드 철학을 복잡계로 확장한 도구로, 학생들이 에이전트의 시점에서 '생각해보기(Thinking like a wolf or sheep)'를 가능하게 합니다.</p>
+        <p>윌렌스키는 에이전트의 눈높이에서 규칙을 시뮬레이션할 때, 학생들이 급진적 점프 없이도 창발적 사고에 부드럽게 안착함을 실증했습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>NetLogo 웹 버전(netlogoweb.org)을 직접 시연하며 늑대-양 생태계 모델을 보여주세요.</p>
+        <p>수학·과학 개념 변화에서 '오개념을 깨뜨리기'와 '기존 직관을 재구성하기' 중 어느 접근이 더 효과적일지 토론하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: 25.1.2 Mid-Level & LevelSpace -->
+    <!-- Slide 5: Landmark Platform NetLogo -->
     <section class="slide" data-index="4">
-      <span class="slide-badge">인지 비계 · Section 25.1.2</span>
-      <h2 class="slide-title">25.1.2 '중간 레벨(Mid-Level)'과 LevelSpace 다중 레벨</h2>
-      <p class="slide-subtitle">미시(에이전트)와 거시(전체 시스템) 사이의 인지적 간극을 잇는 가교 (Levy & Wilensky, 2008)</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">🌉 중간 레벨 (Mid-Level)의 인지적 가치</h3>
-          <ul>
-            <li>개별 분자 1개(미시)와 방 안 전체의 기압(거시)을 바로 연결하면 인지 과부하 발생</li>
-            <li><strong>"작은 분자 무리의 충돌 덩어리"</strong>라는 중간 레벨을 구성하게 할 때 개념 전이 성공</li>
-          </ul>
+      <span class="slide-badge">랜드마크 플랫폼 · Section 25.1.2</span>
+      <h2 class="slide-title">넷로고(NetLogo) 에이전트 기반 모델링의 혁명</h2>
+      <p class="slide-subtitle">거북이(Turtles), 패치(Patches), 링크(Links)로 코딩하는 가상 복잡계 우주</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card highlight-card">
+          <h3>🐢 1. 거북이 (Turtles)</h3>
+          <p><strong>이동하는 행위자</strong><br/>개미, 분자, 자동차, 바이러스 감염자 등 자율적으로 이동하고 판단</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🌳 LevelSpace 다중 레벨 모델링</h3>
-          <ul>
-            <li>모델 전체가 다시 상위 모델의 에이전트가 되는 계층적 트리 구조 지원 (Hjorth et al., 2020)</li>
-            <li>세포 ➔ 장기 ➔ 인체 ➔ 생태계로 이어지는 다중 레벨 복잡계 통합 탐구</li>
-          </ul>
+        <div class="card">
+          <h3>🟩 2. 패치 (Patches)</h3>
+          <p><strong>환경 격자</strong><br/>풀밭의 풀, 도로의 아스팔트, 페로몬 냄새가 퍼지는 2D/3D 공간</p>
         </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>25.1.2절의 레비와 윌렌스키(Levy & Wilensky, 2008)의 '중간 레벨(Mid-Level)' 이론과 LevelSpace를 다룹니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>중간 레벨은 학습자가 복잡계를 다룰 때 작업기억의 한계를 극복하고 멘탈 모델을 형성할 수 있도록 돕는 가장 강력한 개념적 비계입니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>중간 레벨 비계가 컴퓨터 네트워크 계층(OSI 7계층)과 어떻게 닮았는지 논의하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 6: 25.1.2 HubNet & Restructurations -->
-    <section class="slide" data-index="5">
-      <span class="slide-badge">체화와 재구조화 · Section 25.1.2</span>
-      <h2 class="slide-title">25.1.2 허브넷(HubNet) 참여형 시뮬레이션 & 지식 재구조화</h2>
-      <p class="slide-subtitle">온몸으로 체화하는 복잡계(HubNet)와 지식 도메인의 표현 양식 혁신 (Wilensky & Papert)</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">📱 허브넷 (HubNet) 참여형 시뮬레이션</h3>
+          <h3>🔗 3. 링크 (Links)</h3>
+          <p><strong>연결망 관계</strong><br/>친구 관계, 인터넷 네트워크, 단백질 결합 등 에이전트 간의 관계망</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전 세계 학습과학 및 복잡계 연구의 표준 시뮬레이션 플랫폼인 넷로고(NetLogo)의 3대 객체 구조를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>넷로고는 수천 줄의 미분방정식 없이도 단 10줄의 에이전트 규칙 코딩으로 기체 열역학, 생태계 먹이사슬, 경제 시장을 시뮬레이션할 수 있게 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>NetLogo 웹 버전(netlogoweb.org)의 'Flocking' 또는 'Wolf Sheep Predation' 모델을 직접 시연해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: The Discovery of Mid-Level -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">인지적 디딤돌 · Section 25.1.2</span>
+      <h2 class="slide-title">중간 레벨(Mid-Level)의 발견: 인지 부하의 획기적 경감</h2>
+      <p class="slide-subtitle">샤론 레비 & 유리 윌렌스키(Levy & Wilensky, 2008)의 인지적 징검다리 모델</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 미시-거시 간의 거대한 인지적 간극 (Gap)</h3>
           <ul>
-            <li>교실 전체 학생이 각자의 스마트폰으로 전염병 확산의 개별 에이전트가 되어 접속</li>
-            <li>자신의 이동과 접촉이 전체 감염자 곡선(거시)에 미치는 영향을 온몸으로 체화</li>
+            <li>개별 기체 분자 1개의 충돌(Micro)에서 용기 전체의 기압(Macro)으로 바로 도약할 때 학생들은 극심한 인지 과부하를 겪음</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-blue);">
-          <h3 style="color: var(--accent-blue);">🔄 지식 재구조화 (Restructurations)</h3>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">🌉 중간 레벨(Mid-Level) 징검다리</h3>
           <ul>
-            <li>미적분과 고등 통계학 없이는 불가능했던 통계역학과 유전학을, <strong>넷로고 계산 모델을 통해 중학생도 탐구 가능하게 재구조화</strong> (Wilensky, 2020)</li>
+            <li><strong>'작은 분자 무리(Cluster/Group of molecules)'</strong>라는 가상의 중간 층위 도입</li>
+            <li>"분자 무리가 벽을 세게 밀면 ➔ 벽 전체의 기압이 올라간다"는 단계적 인과 추론 성공</li>
+            <li>복잡계 개념 이해도 60% 이상 향상 실증</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>25.1.2절의 HubNet 참여형 시뮬레이션과 윌렌스키-파페트(Wilensky & Papert, 2010)의 지식 재구조화(Restructurations) 이론을 설명합니다.</p>
+        <p>미시-거시 인과 추론의 인지적 어려움을 해결하는 '중간 레벨(Mid-Level)' 이론의 설계 원리를 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>재구조화는 아라비아 숫자의 발명이 나눗셈을 소수 학자에서 일반 대중의 기술로 바꾼 것처럼, 계산 모델이 인류의 지식 표현 방식을 근본적으로 대중화함을 의미합니다.</p>
+        <p>레비와 윌렌스키(2008): 학습자는 한 번에 수만 개의 에이전트를 추적할 수 없습니다. '중간 단위'로 묶어 표상할 때 비로소 창발의 기제가 투명해집니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>복잡한 수학 공식을 시뮬레이션 코드로 바꾸었을 때 생기는 학습의 민주화를 강조하세요.</p>
+        <p>사회 현상(예: 여론 형성)을 설명할 때 '개인'과 '국가' 사이에 '소모임/동호회(중간 레벨)'를 도입하는 인지적 비계를 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 7: 25.2.1 Educational Complex Systems (Table 25.1) -->
+    <!-- Slide 7: HubNet Participatory Simulations -->
     <section class="slide" data-index="6">
-      <span class="slide-badge">교육 시스템 복잡계 · Section 25.2.1</span>
-      <h2 class="slide-title">25.2.1 교육 환경 자체를 복잡계로 모델링하기 (Table 25.1)</h2>
-      <p class="slide-subtitle">학습자, 교사, 학교, 정책이 상호작용하며 진화하는 복합 적응 시스템 (Jacobson et al., 2016)</p>
-      <div class="table-container">
-        <table class="styled-table">
-          <thead>
-            <tr>
-              <th>복잡계 핵심 관점</th>
-              <th>자연/물리 복잡계 사례</th>
-              <th>학습 및 교육 시스템 적용 사례</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>1. 행위자 (Agents)</strong></td>
-              <td>개미, 뉴런, 구매자</td>
-              <td>학생, 교사, AI 튜터, 학부모</td>
-            </tr>
-            <tr>
-              <td><strong>2. 자기조직화 & 창발</strong></td>
-              <td>새 떼 군무, 결정 형성</td>
-              <td><strong>개념 변화의 '아하!' 순간, 소집단 집단 지성</strong></td>
-            </tr>
-            <tr>
-              <td><strong>3. 비선형 동역학</strong></td>
-              <td>기후 임계점(Tipping point)</td>
-              <td>작은 힌트가 만드는 비약적 학습 도약 / 오개념 고착</td>
-            </tr>
-            <tr>
-              <td><strong>4. 다중 레벨 피드백</strong></td>
-              <td>생태계 먹이사슬 환류</td>
-              <td>교실 담화 ➔ 학교 문화 ➔ 국가 교육과정 정책 환류</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>25.2.1절의 핵심인 Table 25.1(교육 시스템 복잡계 프레임워크)을 분석합니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>제이콥슨(Jacobson et al., 2016)의 기여: 교육 연구에서 왜 어떤 정책은 성공하고 어떤 정책은 실패하는가? 교육 시스템 자체가 비선형 피드백을 가진 복잡계이기 때문입니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>선형적 교육 평가의 한계와 복잡계적 생태계 평가의 필요성을 연결하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 8: Summary & Looking Ahead to Ch 26 -->
-    <section class="slide" data-index="7">
-      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 25.3</span>
-      <h2 class="slide-title">25.3 Chapter 25 총괄 결론 & Chapter 26 역사 학습 예고</h2>
-      <p class="slide-subtitle">복잡계의 시뮬레이션에서 과거 사료의 비판적 해석, '역사 학습 연구(Carretero)'로!</p>
+      <span class="slide-badge">체화된 시뮬레이션 · Section 25.1.2</span>
+      <h2 class="slide-title">허브넷(HubNet) 참여형 시뮬레이션: 온몸으로 배우는 복잡계</h2>
+      <p class="slide-subtitle">윌렌스키와 스트룹(Wilensky & Stroup, 2000)의 실시간 다중 모바일 네트워크</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🌟 Ch 25 복잡계 학습의 핵심 교훈</h3>
+          <h3>🎮 시스템 작동 방식</h3>
           <ul>
-            <li>1. 중앙 통제자 편향을 버리고 창발적 인과를 보라</li>
-            <li>2. 넷로고(NetLogo) ABM으로 미시 규칙을 조작하라</li>
-            <li>3. 중간 레벨(Mid-Level) 비계로 인지 부하를 줄여라</li>
-            <li>4. 지식 재구조화로 난해한 도메인을 대중화하라</li>
+            <li>교실 앞 대형 스크린에 넷로고 가상 세계 렌더링</li>
+            <li>모든 학생이 스마트폰으로 접속하여 화면 속 <strong>거북이 1마리씩을 직접 조종</strong></li>
+            <li>자신이 교통 체증을 유발하는 자동차 운전자나 바이러스 전파자가 됨</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 26 예고: 역사 학습 (Learning History)</h3>
-          <p><strong>Mario Carretero & Everardo Perez-Manjarrez</strong></p>
-          <p>국가주의 서사 암기에서 탈피! 상충하는 1차 사료(Primary Sources)의 비판적 해석과 역사적 사고력의 세계로!</p>
+        <div class="card">
+          <h3>🎯 체화 인지(Embodied Cognition)의 극치</h3>
+          <ul>
+            <li>1인칭 시점의 국소 행동(Micro)과 교실 전체 화면의 거시 패턴(Macro)을 실시간 비교</li>
+            <li><strong>"내가 브레이크를 밟았더니 3분 뒤 뒤쪽 100m 지점에서 거대한 정체 파동이 발생했다!"</strong> 체득</li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 25(25.0~25.3)를 마무리하고 다음 Chapter 26(역사 학습 연구)을 예고합니다.</p>
+        <p>체화 인지(Ch 15)와 모바일 학습(Ch 18)이 복잡계 과학과 융합된 HubNet 참여형 시뮬레이션을 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 26은 역사를 정답이 있는 과거 사실이 아니라, 다양한 사료를 비판적으로 대조하고 해석하는 '역사적 사고력(Historical Thinking)'으로 다룹니다.</p>
+        <p>허브넷은 학생들이 직접 복잡계의 살아있는 구성요소가 됨으로써, 추상적인 비선형 피드백 루프를 온몸의 감각운동으로 체화하게 합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>다음 Chapter 26으로 나아갑니다.</p>
+        <p>전염병 방역 정책 수업에서 HubNet 시뮬레이션을 활용해 백신 접종률과 집단면역 형성의 관계를 실습하는 방안을 논의하세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 8: Wilensky & Papert's Restructurations -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">지식 재구조화 · Section 25.1.2</span>
+      <h2 class="slide-title">윌렌스키와 페퍼트의 '재구조화(Restructurations)' 이론</h2>
+      <p class="slide-subtitle">새로운 표현 매체(계산 모델)의 발명이 학문 분야 자체의 학습 용이성을 혁명</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>📜 과거: 미적분과 수식의 장벽</h3>
+          <ul>
+            <li>전통적으로 통계역학, 전자기학, 진화생물학은 대학 수준의 편미분방정식을 풀어야만 접근 가능했음</li>
+            <li>수학적 난도로 인해 대다수 초·중등 학생에게 접근 불가능한 지식 영역</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>🚀 현재: 계산 에이전트 기반 재구조화</h3>
+          <ul>
+            <li><strong>미분방정식을 몰라도 넷로고 에이전트 규칙 코딩으로 동일한 물리 법칙 탐구 가능</strong></li>
+            <li>학문 지식의 표현 양식(Representation)이 바뀌면서 <strong>도메인 전체의 학습 진입로가 혁명적으로 낮아짐</strong> (Wilensky & Papert, 2010)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학의 위대한 메타 이론인 '재구조화(Restructurations)'의 개념과 역사적 의의를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>아라비아 숫자의 발명이 나눗셈을 '천재의 전유물'에서 '초등학생의 산수'로 재구조화했듯, 에이전트 모델링은 복잡계 과학을 보편적 기본 교양으로 재구조화했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>인공지능과 비주얼 프로그래밍이 앞으로 어떤 대학 수준 학문들을 초·중등 수준으로 재구조화할지 전망해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Education Systems as Complex Systems -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">교육 시스템 복잡계 ① · Section 25.2.1</span>
+      <h2 class="slide-title">교육 시스템 자체를 복잡계로 바라보기 (Table 25.1)</h2>
+      <p class="slide-subtitle">교실, 학교, 교육청, 사회가 다층적으로 얽힌 생태계적 이해</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr); font-size: 0.85rem;">
+        <div class="card">
+          <h3>1. 다중 행위자</h3>
+          <p>학생, 교사, 학부모, 정책 입안자, AI 시스템의 상호작용</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 다층 구조 (Multi-level)</h3>
+          <p>미시(개별 인지) ➔ 중시(교실 담화) ➔ 거시(학교 문화/정책)</p>
+        </div>
+        <div class="card">
+          <h3>3. 피드백 루프</h3>
+          <p>교사의 발문과 학생 반응 간의 정적/부적 피드백 순환</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>4. 집단 지성 창발</h3>
+          <p>소집단 대화에서 새로운 개념적 돌파구의 자발적 형성</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>원서 Table 25.1을 바탕으로 복잡계 이론을 '학생의 학습 내용'뿐 아니라 '교육 시스템 자체'를 분석하는 틀로 확장합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>제이콥슨(Jacobson et al., 2016): 교실은 기계처럼 예측 가능한 공장이 아니라, 살아 숨 쉬는 다층적 복잡 적응계(Complex Adaptive System)입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>단순한 '수업 규칙 하나 변경'이 교실 전체 문화에 어떤 예상치 못한 나비효과를 일으키는지 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Nonlinear Dynamics & Policy Resistance -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">교육 시스템 복잡계 ② · Section 25.2.1</span>
+      <h2 class="slide-title">비선형 동역학, 임계점, 그리고 정책 저항(Policy Resistance)</h2>
+      <p class="slide-subtitle">왜 하향식 교육 개혁은 번번이 실패하고 기존 상태로 되돌아가는가?</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 교육 정책의 정책 저항 (Policy Resistance)</h3>
+          <ul>
+            <li>위에서 내리꽂는 일방적 하향식(Top-down) 개혁 정책</li>
+            <li>교실 내부의 복잡한 사회문화적 피드백 루프에 부딪혀 원래의 보수적 상태로 회귀(Homeostasis)</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>🌊 임계점(Tipping Point)과 상향식 혁신</h3>
+          <ul>
+            <li>개별 교사들의 작은 실천과 비공식 네트워크가 임계치(Critical Mass)를 넘을 때 시스템 전체의 급격한 문화 전환 창발</li>
+            <li><strong>지속 가능한 교육 혁신을 위한 복잡계적 정책 설계 필수</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>복잡계 관점이 교육 정책과 학교 개혁 실패의 원인을 어떻게 명쾌하게 설명하는지 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>선형적 계획주의는 복잡계에서 반드시 실패합니다. 국소적 성공 사례를 확산시키고 임계점을 유도하는 복잡계적 리더십이 요구됩니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교 현장에서 시도된 다양한 교육 혁신 정책들이 왜 흐지부지되었는지 복잡계 관점에서 진단해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Computational Simulation Methodology -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">새로운 방법론 · Section 25.2.2</span>
+      <h2 class="slide-title">통계적 선형 모델(GLM)을 넘어선 계산 시뮬레이션 연구</h2>
+      <p class="slide-subtitle">학습과학 연구 방법론의 제3의 길: 연역과 귀납을 융합하는 생성적(Generative) 모델링</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <h3>📊 전통적 선형 통계 (GLM/회귀분석)</h3>
+          <ul>
+            <li>변수 간의 독립성과 선형성을 가정 (가정 자체가 복잡계 현실과 모순)</li>
+            <li>과정(Process)의 역동성을 무시하고 정적 상관관계만 도출</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>💻 생성적 에이전트 기반 시뮬레이션 (ABM)</h3>
+          <ul>
+            <li>실제 교실 담화 데이터를 바탕으로 <strong>가상의 학생/교사 에이전트 모델 구축</strong></li>
+            <li>다양한 교수법과 스캐폴딩 조건에서 어떤 집단 패턴이 창발하는지 가상 실험(In Silico) 수행</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학 연구 방법론으로서 에이전트 기반 시뮬레이션(ABM)의 강력한 잠재력을 소개합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>에프스타인(Epstein): "설명할 수 없다면 생성해보라(Grow it)." 계산 시뮬레이션은 이론의 타당성을 검증하는 가장 엄밀한 도구입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교육 정책을 도입하기 전에 컴퓨터 시뮬레이션으로 부작용을 사전 테스트하는 미래 연구를 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: AI and Complex Learning Ecosystems -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">인공지능과 복잡계 · Section 25.3</span>
+      <h2 class="slide-title">AI 에이전트와 인간 학습자의 복합 상호작용 생태계</h2>
+      <p class="slide-subtitle">인간-AI 하이브리드 교실에서 창발하는 차세대 협력 지능</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>다자간 AI 튜터 에이전트</h3>
+          <p>모둠 토론에 참여하는 소크라틱 AI 에이전트들이 담화의 흐름을 조율</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>적응형 거시 패턴 감지</h3>
+          <p>교실 전체의 혼란도와 참여 불평등을 실시간 감지하여 교사에게 알림</p>
+        </div>
+        <div class="card">
+          <h3>창발적 지식 네트워크</h3>
+          <p>인간과 인공지능이 공동으로 구축해 나가는 다층적 지식 생태계</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>복잡계 이론이 생성형 AI 시대의 하이브리드 교실을 설계하는 데 제공하는 나침반을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>AI는 단독 채점관이 아니라, 교실 생태계의 상호작용을 풍성하게 만드는 또 하나의 유기적 에이전트여야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교실에 생성형 AI가 도입되었을 때 발생할 수 있는 예상치 못한 집단적 행동 패턴을 예측해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 25</span>
+      <h2 class="slide-title">넷로고 코딩을 통한 복잡계 프로그래밍 교육</h2>
+      <p class="slide-subtitle">객체지향 패러다임을 넘어선 에이전트 기반 컴퓨팅 사고(Agent-based CT)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 넷로고 기본 문법의 단순함과 우아함</h3>
+          <ul>
+            <li><code>ask turtles [ fd 1 rt random 30 ]</code> : 모든 거북이에게 전진과 회전 명령</li>
+            <li><code>if any? other turtles-here [ die ]</code> : 충돌 시 생존/소멸 규칙</li>
+            <li>단 5줄의 코드로 전염병 감염과 백신 접종 시뮬레이터 제작</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 컴퓨팅 사고력의 확장</h3>
+          <p>순차적 알고리즘(Sequential Algorithm)을 넘어 <strong>수천 개의 독립적 프로세스가 동시 병렬 실행되는 동시성(Concurrency)과 창발성</strong> 체득</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>복잡계 프로그래밍 교육이 컴퓨터 과학 교육에 주는 독보적 가치(병렬 컴퓨팅과 에이전트 사고)를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>넷로고는 명령형/절차적 코딩의 지루함을 벗어나, 학생이 직접 '살아있는 생태계'를 창조하는 창작자로서의 성취감을 선사합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>초·중등 SW 교육에 넷로고 블록 코딩(NetTango)을 도입하는 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 25.4</span>
+      <h2 class="slide-title">탈중심적 사고: 21세기 복합 사회를 헤쳐갈 시스템 문해력</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 복잡계의 3대 핵심 나침반</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>창발의 직관화</h3>
+          <p>중앙 집중 편향을 깨고 미시 규칙의 상호작용에서 거시 패턴이 출현함을 이해</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>지식의 재구조화</h3>
+          <p>넷로고와 계산 모델을 통해 난해한 첨단 과학을 모든 학생의 손안에 쥐어주기</p>
+        </div>
+        <div class="card">
+          <h3>생태계적 정책 설계</h3>
+          <p>교육 시스템을 다층적 복잡계로 이해하여 지속 가능한 상향식 혁신 임계점 견인</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 25의 모든 핵심 교훈을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>기후 변화, 전염병 팬데믹, 경제 양극화 등 21세기의 모든 난제는 복잡계 문제입니다. 복잡계적 사고는 미래 시민의 필수 생존 역량입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"오늘 수업을 통해 세상을 바라보는 여러분의 렌즈가 '시계태엽'에서 '복잡계'로 어떻게 바뀌었나요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 26 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part V</span>
+      <h2 class="slide-title">다음 여정: Chapter 26 역사 학습 (History Learning)</h2>
+      <p class="slide-subtitle">샘 와인버그(Sam Wineburg) & 마리오 카레테로(Mario Carretero)의 역사적 사고</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 25 vs Ch 26 연계성</h3>
+          <ul>
+            <li><strong>Ch 25 복잡계 학습</strong>: 자연과 사회 시스템의 시뮬레이션 및 창발적 메커니즘</li>
+            <li><strong>Ch 26 역사 학습</strong>: 과거 인간 사건에 대한 <strong>1차 사료 비판(Sourcing), 맥락화(Contextualization), 교차 대조(Corroboration)</strong>의 인문학적 전문성</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 Part V 인문·사회 분야로의 지평 확장</h3>
+          <p>수학(23) ➔ 과학(24) ➔ 복잡계(25) ➔ 역사(26) ➔ 리터러시(27) ➔ 예술(28)로 이어지는 심층 탐구</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 25를 마치고, 다음 챕터인 Chapter 26(Learning History)과의 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>스탠퍼드 대학교 샘 와인버그 교수의 『역사적 사고와 다른 부자연스러운 행동들』 연구로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 26을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 25: Complex Systems and the Learning Sciences (Jacobson & Wilensky)</div>
-    <div class="footer-center" id="slide-counter">01 / 08</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
