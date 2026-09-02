@@ -212,232 +212,474 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
+    <section class="slide" data-index="0">
       <span class="slide-badge">Chapter 16 · Part III Technology</span>
       <h1 class="slide-title">Tangible and Full-Body Interfaces in Learning</h1>
       <p class="slide-subtitle">탠저블 및 전신 인터페이스: 모니터를 넘어선 촉각, 공예, 그리고 신체 공간 상호작용</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Narcis Parés</strong> (UPF) & <strong>Michael Eisenberg</strong> (CU Boulder, 1953–2019)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 321–339)</p>
+          <p><strong>Narcis Parés</strong> (Universitat Pompeu Fabra)<br/><strong>Michael Eisenberg</strong> (UC Boulder, 1953–2019)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 16</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (16.0 ~ 16.5)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>16.0 데스크톱 상자의 탈출</strong>: 물리적 사물과 전신 공간으로의 확장</li>
-            <li><strong>16.1 4대 기술 기둥</strong>: 패브리케이션, 임베디드, 스마트 신소재, 공간 비전</li>
-            <li><strong>16.2 물리와 계산의 융합</strong>: 계산적 공예(LilyPad), 전신 공간(안개의 나라)</li>
-            <li><strong>16.3 학습과학 기여</strong>: 체화 인지, 공간 건축 설계, 탠저블 연구 스타일</li>
-            <li><strong>16.4 발전적 쟁점</strong>: 인지적 한계 극복 및 DIY 메이커 커뮤니티</li>
+            <li><strong>데스크톱 상자의 탈출</strong>: 모니터 안의 기호를 벗어나 손으로 만지는 물리적 컴퓨팅</li>
+            <li><strong>4대 기술 축</strong>: 디지털 패브리케이션, 임베디드 컴퓨팅, 스마트 신소재, 공간 광학</li>
+            <li><strong>계산적 공예 (Computational Crafts)</strong>: 릴리패드 아두이노와 포용적 메이커 교육</li>
+            <li><strong>전신 상호작용 (Full-Body Spaces)</strong>: 안개의 나라(Lands of Fog)와 자폐 아동 협업</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 교육용 컴퓨터가 2D 유리 화면과 키보드의 한계를 벗어나, 손으로 만지는 물리적 공예품과 전신 공간 속에서 체화된 학습을 지원하는 '탠저블 인터페이스'의 전모를 탐구합니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>2019년 작고하신 마이클 아이젠버그 교수는 계산적 공예(Computational Crafts) 분야를 창시한 거인이며, 나르시스 파레스 교수는 대규모 전신 인터랙션 공간의 세계적 개척자입니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>2D 모니터와 마우스에 갇혀 있던 컴퓨터 교육을 실물 조작물(Tangibles), 공예(Crafts), 전신 인터랙션 공간(Full-body spaces)으로 확장하는 탠저블 컴퓨팅의 패러다임을 이해합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>마이클 아이젠버그(1953~2019) 교수는 종이 공학, 스마트 섬유, 3D 패브리케이션을 학습과학에 도입한 전설적인 석학이며, 나르시스 파레스 교수는 대규모 전신 가상 환경을 개척했습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"왜 아이들은 화면 속 3D 블록보다 손으로 만지는 실제 나무 블록에서 기하학을 더 직관적으로 배울까요?"라는 질문으로 시작하세요.</p>
+        <p>"왜 아이들은 화면 속 3D 큐브를 돌리는 것보다 나무 블록을 손으로 직접 만질 때 더 깊이 배울까요?"라는 질문으로 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: 16.1 Major Technological Themes -->
+    <!-- Slide 2: Escaping the Desktop Box -->
     <section class="slide" data-index="1">
-      <span class="slide-badge">기술 기둥 · Section 16.1</span>
-      <h2 class="slide-title">16.1 탠저블 & 전신 인터페이스의 4대 핵심 기술 기둥</h2>
-      <p class="slide-subtitle">디지털 계산을 물리적 사물과 공간의 구조 속에 직접 심어 넣는 하드웨어 혁신</p>
-      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
-        <div class="card highlight-card">
-          <h3>16.1.1 디지털 패브리케이션 (Fabrication)</h3>
-          <p>3D 프린터, 레이저 커터, CNC 밀링, 계산적 종이접기(Orihedra)를 통한 수학 다면체 및 물리 모델 제작</p>
+      <span class="slide-badge">문제의식 · Section 16.0</span>
+      <h2 class="slide-title">스크린의 감옥에서 물리적 세계로: 데스크톱 상자의 탈출</h2>
+      <p class="slide-subtitle">지난 50년간의 2D GUI(Graphic User Interface) 한계 극복</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 2D 데스크톱 상자 (Desktop Box)</h3>
+          <ul>
+            <li>신체를 책상 앞에 고정시키고 시각과 검지 손가락 클릭만 사용</li>
+            <li>실세계의 풍부한 촉각(Tactile), 무게감, 3차원 공간 감각의 박탈</li>
+            <li>추상적 기호와 일상 물질 세계 간의 심각한 인지적 단절</li>
+          </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">16.1.2 임베디드 컴퓨팅 (Embedded)</h3>
-          <p>아두이노, 마이크로비트, 릴리패드 등 초소형 마이크로컨트롤러를 블록과 인형에 내장하여 지능 부여</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">16.1.3 스마트 신소재 (Novel Materials)</h3>
-          <p>전도성 실, 감온 변색 잉크, 형상기억합금 등 재료의 물리적 물성 자체가 회로와 센서로 작동</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">16.1.4 광학 및 공간 추적 (Optics & Tracking)</h3>
-          <p>컴퓨터 비전 카메라, 프로젝션 매핑, 키넥트를 통해 교실 바닥과 벽면 전체를 대형 인터랙티브 스크린화</p>
+          <h3 style="color: var(--accent-emerald);">🖐️ 탠저블 & 전신 인터페이스 (TUI)</h3>
+          <ul>
+            <li>컴퓨터의 지능이 실물 블록, 종이, 옷감, 놀이터 바닥 속에 스며듦</li>
+            <li>손으로 쥐고, 접고, 꿰매며, 온몸으로 뛰어다니는 자연스러운 체화 상호작용</li>
+            <li><strong>"물질성(Materiality)과 공간성이 곧 학습의 가장 강력한 비계이다"</strong></li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>16.1절의 4대 하드웨어 기술 축(패브리케이션, 임베디드 칩, 스마트 신소재, 광학 공간 추적)을 체계적으로 설명합니다.</p>
+        <p>기존 데스크톱 GUI의 신체성 배제 문제를 지적하고, 탠저블 인터페이스가 제공하는 물리적-디지털 융합 가치를 밝힙니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>이 4가지 기술의 발전으로 인해 컴퓨터는 책상 위 모니터에서 벗어나 옷감, 종이, 교실 바닥 자체가 되었습니다.</p>
+        <p>탠저블 사용자 인터페이스(TUI: Tangible User Interface)는 히로시 이시(Hiroshi Ishii, MIT Media Lab)가 주창한 개념으로, 비트(Bits)와 원자(Atoms)를 하나로 결합합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>각 기술이 어떻게 결합되어 창의적 학습 도구가 되는지 다음 슬라이드들에서 살펴봅니다.</p>
+        <p>유아 교육의 프뢰벨 은물(Gifts)과 몬테소리 교구가 현대 탠저블 컴퓨팅과 어떻게 연결되는지 비교해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 16.2.1 Computational Crafts & LilyPad -->
+    <!-- Slide 3: 4 Technological Themes -->
     <section class="slide" data-index="2">
-      <span class="slide-badge">계산적 공예 · Section 16.2.1</span>
-      <h2 class="slide-title">16.2.1 계산적 공예 (Computational Crafts) & 릴리패드</h2>
-      <p class="slide-subtitle">전통 손공예(바느질, 자수, 종이접기)와 컴퓨터 프로그래밍의 창의적 융합 (Buechley, 2008)</p>
+      <span class="slide-badge">기술 체계 · Section 16.1</span>
+      <h2 class="slide-title">탠저블 & 전신 인터페이스의 4대 핵심 기술 기둥</h2>
+      <p class="slide-subtitle">물리적 학습 환경을 혁신하는 4가지 상호작용 하드웨어 공학</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card">
+          <h3>1. 디지털 패브리케이션</h3>
+          <p>3D 프린터, 레이저 커터, 종이접기 공학으로 수학적 실물 교구 제작</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 임베디드 컴퓨팅</h3>
+          <p>아두이노, 마이크로비트, 센서를 인형과 블록에 내장하여 지능 부여</p>
+        </div>
+        <div class="card">
+          <h3>3. 스마트 신소재</h3>
+          <p>전도성 실, 형상기억합금, 변색 잉크 등 물질 자체가 회로로 작동</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>4. 공간 광학 & 트래킹</h3>
+          <p>프로젝션 매핑과 카메라 비전으로 벽과 바닥 전체를 인터랙티브화</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>탠저블 학습 환경을 구현하는 4대 기술 영역(패브리케이션, 임베디드, 신소재, 공간 트래킹)의 구조를 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>이 4가지 기술은 독립적으로 쓰이지 않고 상호 융합되어(예: 3D 프린팅된 블록에 센서를 넣고 프로젝션 맵핑과 연동) 몰입형 학습 생태계를 구성합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교 메이커스페이스에서 이 4가지 기술 축 중 어떤 것들이 이미 도입되어 있는지 점검해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Digital Fabrication -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">기술 ① · Section 16.1</span>
+      <h2 class="slide-title">디지털 패브리케이션과 수학·과학 메이커 공학</h2>
+      <p class="slide-subtitle">추상적 기하학과 역학 메커니즘을 실제 물리적 오브젝트로 렌더링</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🧵 릴리패드 아두이노 (LilyPad Arduino)</h3>
+          <h3>🖨️ 3D 프린팅 & 레이저 커팅의 교육적 힘</h3>
           <ul>
-            <li>전도성 실(Conductive thread)로 옷감 위에 회로를 자수 놓아 웨어러블 컴퓨터 제작</li>
-            <li>LED, 가속도 센서, 부저를 섬유와 결합하여 인터랙티브 의류/가방 제작</li>
+            <li>학생이 CAD 소프트웨어로 설계한 다면체나 기어 장치를 1시간 만에 실물로 제작</li>
+            <li><strong>즉각적 물리적 검증</strong>: "내가 설계한 기어가 왜 맞물려 돌아가지 않는가?"를 실물로 즉시 디버깅</li>
+            <li>기하학적 공리와 물리 법칙의 체화된 이해 촉진</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>📜 종이 공학(Paper Engineering) & 오리가미</h3>
+          <ul>
+            <li>저비용 종이 접기(Origami)와 팝업북(Pop-up book) 설계에 수학 알고리즘 적용</li>
+            <li>고가의 기기 없이도 모든 학생이 3차원 공간 변환을 탐구 가능</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>디지털 패브리케이션이 어떻게 학생을 수동적 소비자에서 '창의적 생산자(Maker)'로 변혁하는지 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>아이젠버그 교수는 "패브리케이션은 머릿속 수학적 아이디어를 손으로 만지는 실제 우주로 번역하는 연금술"이라고 역설했습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>3D 프린터가 학교에 보급되었음에도 단순 기념품 출력에 머무는 한계를 극복할 수학 연계 프로젝트를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Embedded Computing & Novel Materials -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">기술 ② & ③ · Section 16.1</span>
+      <h2 class="slide-title">임베디드 컴퓨팅과 스마트 신소재 (Novel Materials)</h2>
+      <p class="slide-subtitle">물질의 물성(Materiality) 자체가 전자 회로와 센서가 되는 세상</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>⚡ 1. 전도성 섬유 & 실</h3>
+          <p>전선 대신 실과 바늘로 천 위에 전자 회로를 수놓는 스마트 의류 제작</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>🌡️ 2. 감온 변색 & 스마트 잉크</h3>
+          <p>손의 체온이나 전류가 흐르면 색깔이 변하는 종이 회로 인터페이스</p>
+        </div>
+        <div class="card">
+          <h3>🔩 3. 형상기억합금 (SMA)</h3>
+          <p>전류를 가하면 스스로 구부러지고 펼쳐지는 인공 근육 및 종이 로봇</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>딱딱한 플라스틱 전자 부품을 벗어나 섬유, 종이, 액체 잉크가 센서와 액추에이터가 되는 신소재 탠저블 기술을 소개합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>스마트 신소재는 전자공학의 진입 장벽을 극적으로 낮추며, 미술과 과학이 완벽히 융합된 창의적 학습 경험을 제공합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>전도성 펜(Circuit Scribe)으로 종이 위에 회로를 그려 전구를 켜는 실험의 직관적 학습 효과를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Spatial Optics and Tracking -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">기술 ④ · Section 16.1</span>
+      <h2 class="slide-title">공간 광학 프로젝션 매핑과 모션 트래킹</h2>
+      <p class="slide-subtitle">교실의 벽, 바닥, 모래상자 전체를 대화형 증강 학습 환경으로 변환</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🏖️ 증강 모래상자 (Augmented Sandbox)</h3>
+          <ul>
+            <li>모래를 손으로 쌓으면 고도에 따라 등고선과 지형 색상이 실시간 투영됨</li>
+            <li>손으로 골을 파면 가상의 빗물이 흘러내려 호수가 형성되는 유역 시뮬레이션</li>
+            <li>지형학과 수문학의 지질학적 메커니즘을 촉각으로 완벽 체득</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🏃 인터랙티브 플로어 (Interactive Floors)</h3>
+          <ul>
+            <li>바닥에 투영된 행성 궤도 위를 학생들이 직접 걸어 다니며 만유인력 법칙 체득</li>
+            <li>소집단 학생들이 신체 위치를 바꾸며 협력적으로 복잡계 문제 해결</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>공간 증강 현실(SAR: Spatial Augmented Reality)과 카메라 트래킹이 결합된 대규모 탠저블 환경의 설계 원리를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학생들은 HMD 고글을 쓰지 않고도 자신의 육안으로 물리적 모래를 만지며 디지털 시뮬레이션과 실시간 상호작용합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>증강 모래상자를 활용한 지리/환경 수업의 학생 몰입도와 개념 형성 과정을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Computational Crafts & LilyPad -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">융합 패러다임 · Section 16.2.1</span>
+      <h2 class="slide-title">계산적 공예(Computational Crafts)와 스마트 섬유</h2>
+      <p class="slide-subtitle">레아 뷰클리(Leah Buechley)의 릴리패드 아두이노(LilyPad Arduino) 혁명</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🧵 계산적 공예의 정의 (Eisenberg, 2013)</h3>
+          <ul>
+            <li>전통적인 손공예(바느질, 자수, 종이접기, 목공)와 마이크로컨트롤러 코딩의 융합</li>
+            <li>차가운 기계 중심의 컴퓨터 공학에 따뜻한 촉각적 감성과 예술적 미학 부여</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-indigo);">
+          <h3 style="color: var(--accent-indigo);">👗 릴리패드 아두이노 (LilyPad Arduino)</h3>
+          <ul>
+            <li>옷감에 꿰맬 수 있는 둥근 세탁 가능 마이크로보드와 센서 생태계</li>
+            <li>자전거 안전 재킷(방향 지시등이 켜지는 옷), 음악 연주 장갑 제작 프로젝트</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>마이클 아이젠버그와 레아 뷰클리가 개척한 '계산적 공예'의 개념과 교육적 가치를 조망합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>릴리패드는 단순한 툴킷이 아니라, 공학 교육의 문화적 규범을 바꾼 역사적 발명품입니다. 공예와 코딩의 결합은 학습자에게 깊은 개인적 의미(Personal Meaning)를 부여합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 일상에서 입는 옷이나 가방에 어떤 스마트 기능을 코딩으로 구현하고 싶은지 아이디어를 나누어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Inclusive Computing through E-Textiles -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">포용적 교육 · Section 16.2.1</span>
+      <h2 class="slide-title">스마트 섬유(E-Textiles)를 통한 포용적 컴퓨팅</h2>
+      <p class="slide-subtitle">컴퓨터 과학 교육의 성별 격차와 다양성 장벽을 허무는 혁신적 경로</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 기존 로보틱스/코딩 교육의 편향</h3>
+          <ul>
+            <li>로봇 배틀, 자동차 조립, 슈팅 게임 중심의 커리큘럼</li>
+            <li>여학생과 예술 성향 학습자들에게 "나와는 맞지 않는 분야"라는 소외감 유발</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🌟 포용적 컴퓨팅 (Inclusive Computing)</h3>
+          <h3 style="color: var(--accent-emerald);">✨ E-Textiles 기반 포용적 컴퓨팅 (Kafai et al.)</h3>
           <ul>
-            <li>남성 중심적인 딱딱한 로보틱스 문화 탈피</li>
-            <li>여학생과 예술 지향적 학습자들을 컴퓨터 과학으로 대거 유입시킨 혁신적 계기</li>
+            <li>패션, 인형, 인터랙티브 퀼트 제작을 통해 코딩과 회로를 학습</li>
+            <li><strong>여학생 참여율 및 흥미도 80% 이상 급증</strong> 실증 (Buechley et al., 2008)</li>
+            <li>컴퓨터 과학의 진입로(On-ramps)를 다변화하는 대표적 성공 사례</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>16.2.1절의 전자 섬유(E-textiles) 및 계산적 공예를 통한 포용적 컴퓨팅 교육의 의의를 분석합니다.</p>
+        <p>E-Textiles가 컴퓨터 교육의 성별 격차를 줄이고 다양한 문화적 배경의 학습자를 끌어들이는 포용적 기제로 작동함을 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>바느질과 회로 배선은 구조적으로 동일합니다. 전통적 가사 공예 기술이 첨단 컴퓨터 하드웨어 엔지니어링과 만나는 순간, 학습자의 정체성 확장이 일어납니다.</p>
+        <p>야스민 카파이(Yasmin Kafai) 교수의 연구: 전통 공예 기술을 가진 학습자가 자신의 지적 자산을 살려 첨단 컴퓨팅에 성공적으로 안착함을 증명했습니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>소프트웨어 교육에서 예술과 공예를 융합하는 메이커 활동의 가치를 조명하세요.</p>
+        <p>SW 교육 커리큘럼에서 남녀 모든 학생이 몰입할 수 있는 포용적 프로젝트 테마를 기획해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: 16.2.2 & 16.2.3 Full-Body Spaces & Body Augmentation -->
-    <section class="slide" data-index="3">
-      <span class="slide-badge">전신 인터랙션 · Section 16.2.2~16.2.3</span>
-      <h2 class="slide-title">16.2.2 전신 공간 '안개의 나라' & 16.2.3 신체 증강</h2>
-      <p class="slide-subtitle">자폐 아동의 사회적 협력을 이끄는 인터랙티브 방과 웨어러블 생체 데이터 (Parés et al.)</p>
+    <!-- Slide 9: Lands of Fog Interactive Playground -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">전신 상호작용 · Section 16.2.2</span>
+      <h2 class="slide-title">전신 인터랙티브 공간: '안개의 나라(Lands of Fog)'</h2>
+      <p class="slide-subtitle">나르시스 파레스(Narcis Parés)의 대규모 전신 협업 가상 환경</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🌫️ 16.2.2 안개의 나라 (The Lands of Fog)</h3>
+          <h3>🌫️ 시스템 공간 아키텍처</h3>
           <ul>
-            <li>대형 바닥 프로젝션과 천장 모션 트래킹 카메라 설치</li>
-            <li>아이들이 물리적 손전등을 함께 비출 때만 환상적인 가상 생물이 출현</li>
-            <li>자폐 아동의 <strong>공동 주의집중(Joint Attention)</strong>과 신체적 공조율 자연 유도</li>
+            <li>6m × 6m 바닥 전체에 안개 낀 신비한 가상 숲을 4K 프로젝션으로 투영</li>
+            <li>아동들은 천장에 설치된 IR 카메라로 추적되는 <strong>물리적 빛의 지팡이(Tangible Wand)</strong>를 쥐고 이동</li>
+            <li>신체의 달리기, 제스처, 위치 이동이 실시간 가상 환경에 반영됨</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">💓 16.2.3 신체 증강 (Body Augmentation)</h3>
+        <div class="card">
+          <h3>🤝 협력적 게임 메커니즘</h3>
           <ul>
-            <li>웨어러블 심박수, 가속도, 피부 전도도 센서 장착</li>
-            <li>자신의 신체 생체 신호를 실시간 데이터로 시각화하여 과학적 탐구 수행</li>
+            <li>혼자 빛을 비추면 아무것도 보이지 않음</li>
+            <li><strong>두 아동이 함께 지팡이를 모으고 공동으로 움직일 때만 숨겨진 신비한 반딧불이와 가상 생물이 출현</strong></li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>16.2.2절의 전신 인터랙션 공간과 16.2.3절의 신체 증강 웨어러블을 통한 사회적 협력 촉진 메커니즘을 설명합니다.</p>
+        <p>파레스 교수가 개발한 대표적 전신 상호작용 환경 '안개의 나라(The Lands of Fog)'의 구조와 사회적 인터랙션 설계를 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>컴퓨터가 1인용 고립 도구가 아니라, 다수의 신체가 공간 속에서 상호작용하도록 중재하는 '사회적 접착제'가 될 수 있음을 입증합니다.</p>
+        <p>인터페이스 자체가 협력(Collocation & Joint Action)을 강제하도록 물리적-디지털 규칙을 설계하여 자발적인 상호작용을 유도합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>특수교육 및 유아교육에서 전신 공간 인터랙션의 교육적 가능성을 토론하세요.</p>
+        <p>이러한 전신 놀이터가 스마트폰에 중독된 현대 아동들의 사회성 발달에 어떤 긍정적 효과를 줄지 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: 16.3 What Tangibles Offer to Learning Sciences -->
-    <section class="slide" data-index="4">
-      <span class="slide-badge">학습과학 기여 · Section 16.3</span>
-      <h2 class="slide-title">16.3 탠저블 & 전신 인터페이스가 학습과학에 미친 기여</h2>
-      <p class="slide-subtitle">체화 인지의 구현, 아동의 공간 건축 설계, 그리고 '탠저블 연구 스타일'</p>
+    <!-- Slide 10: Special Education for ASD Children -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">특수교육 접목 · Section 16.2.2</span>
+      <h2 class="slide-title">자폐 스펙트럼(ASD) 아동을 위한 전신 협업 비계</h2>
+      <p class="slide-subtitle">언어적 지시 없이 신체적 행동 동기화로 사회적 유대감과 공동 주의집중 형성</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 감각 과부하 제거</h3>
+          <p>얼굴을 마주보는 부담(Eye-contact anxiety) 없이 바닥의 가상 객체를 함께 바라보며 <strong>삼각 주의집중(Triadic Attention)</strong> 형성</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 신체적 공명 (Resonance)</h3>
+          <p>지팡이의 진동 피드백과 동료 아동의 신체 움직임을 직관적으로 모방하며 <strong>상호주관성</strong> 체득</p>
+        </div>
+        <div class="card">
+          <h3>3. 실증 연구 성과</h3>
+          <p>일반 아동과의 자발적 대화와 협업 놀이 빈도가 <strong>통계적으로 유의미하게 3배 이상 증가</strong> (Parés et al., 2013)</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전신 탠저블 환경이 자폐 아동의 사회성 결핍을 치료하고 비장애 아동과의 통합 교육을 촉진하는 실증적 효과를 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>전통적 언어 치료와 달리, 비언어적 신체 협응을 먼저 유도함으로써 ASD 아동이 느끼는 심리적 불안을 최소화합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>특수교육 대상 학생들을 위한 테크놀로지 설계에서 '신체성'이 왜 핵심 고려사항이어야 하는지 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Embodied Cognition and Tangible Affordances -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">학습과학 기여 · Section 16.3.1</span>
+      <h2 class="slide-title">체화 인지의 물리적 구현: 탠저블 3대 어포던스</h2>
+      <p class="slide-subtitle">모니터 픽셀이 제공할 수 없는 물질적 인터페이스의 독보적 인지적 가치</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="card highlight-card">
-          <h3>16.3.1 체화 인지와의 연결</h3>
-          <p>3차원 다면체 모델(Orihedra) 조작을 통해 기하학적 대칭성과 공간 직관을 손끝으로 체화</p>
+          <h3>1. 접근성 (Accessibility)</h3>
+          <p>마우스 조작 기술이 없는 영유아나 장애인도 손으로 집어 올리는 직관적 상호작용 가능</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">16.3.2 아동의 공간 건축 설계</h3>
-          <p>스크린 너머 박물관, 놀이터, 교실 공간 배치(Spatial layout)와 신체적 여건(Affordances) 설계</p>
+        <div class="card">
+          <h3>2. 행동-지각 결합 (Action)</h3>
+          <p>물체의 무게, 표면 질감, 기계적 마찰력이 두뇌의 감각운동 스키마를 직접 자극</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">16.3.3 탠저블 연구 스타일</h3>
-          <p>물질성 중심(Material-centric), 참여적 디자인(Participatory Design), 학제적 공예 융합</p>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 협력적 연계 (Association)</h3>
+          <p>하나의 마우스를 독점하는 데스크톱과 달리, <strong>여러 명이 동시에 둘러앉아 동시 조작(Co-located)</strong> 가능</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>16.3절의 3대 하위 항목(16.3.1 체화 인지 연결, 16.3.2 아동의 공간 설계, 16.3.3 탠저블 연구 스타일)을 완벽하게 분석합니다.</p>
+        <p>탠저블 인터페이스가 갖는 3대 인지적 어포던스(접근성, 행동-지각 결합, 동시 조작 협력)를 정리합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>탠저블 연구는 단순히 새로운 기기를 만드는 것이 아니라, 학습자가 물리적 환경 및 타인과 관계 맺는 '공간적 앎의 양식'을 재설계하는 혁신입니다.</p>
+        <p>탠저블 교구는 여러 학생이 물리적으로 동일한 공간에서 서로의 손동작을 보며 협동할 수 있게 하는 '사회적 가시성(Social Visibility)'을 극대화합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>교실 책걸상 배치가 학생들의 인지 활동에 미치는 공간적 영향을 논의하세요.</p>
+        <p>태블릿 PC 1인 1기기 보급이 오히려 교실 내 학생 간 협업을 저해할 수 있는 역설적 상황을 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 6: 16.4 Developing Issues & Cognitive Limitations -->
-    <section class="slide" data-index="5">
-      <span class="slide-badge">발전적 쟁점 · Section 16.4</span>
-      <h2 class="slide-title">16.4 발전적 쟁점: 인지적 한계와 DIY 메이커 커뮤니티</h2>
-      <p class="slide-subtitle">물리적 조작의 한계를 극복하는 하이브리드 설계와 팹랩(FabLab) 메이커 문화</p>
+    <!-- Slide 12: Spatial Learning Sciences & Maker Culture -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">공간 학습과학 · Section 16.3.2</span>
+      <h2 class="slide-title">아동의 공간 설계와 메이커 문화(DIY)의 통합</h2>
+      <p class="slide-subtitle">교실 배치를 넘어 박물관, 도서관, 놀이터 전체를 학습 생태계로 건축</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">16.4.1 탠저블의 인지적 한계와 극복</h3>
+        <div class="card">
+          <h3>🏛️ 공간적 학습과학 (Spatial Learning Sciences)</h3>
           <ul>
-            <li><strong>물리적 확장성의 한계</strong>: 우주 스케일이나 미시 원자를 물리 블록으로 다 만들기에는 공간/비용적 제약</li>
-            <li><strong>하이브리드 사다리 처방</strong>: <strong>탠저블(물리 직관) ➔ 시뮬레이션(디지털 확장) ➔ 기호 표상(수학 공식/코드)</strong></li>
+            <li>가구의 높이, 벽면의 디스플레이, 이동 동선이 학생들의 탐구 담화를 규정함</li>
+            <li>물리적 공간 자체가 학습의 촉진자이자 세 번째 교사(The Third Teacher, Malaguzzi)</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">16.4.2 DIY 메이커 커뮤니티 (FabLabs)</h3>
+          <h3>🛠️ 메이커 문화와 팹랩(FabLab)</h3>
           <ul>
-            <li>오픈소스 하드웨어와 팹랩(FabLab)을 통한 기술의 민주화</li>
-            <li>소비자(Consumer)에서 직접 도구를 만드는 창작자(Maker)로의 전환</li>
+            <li>'스스로 만들기(DIY: Do It Yourself)'와 '함께 만들기(DIT: Do It Together)'</li>
+            <li>물리적 시제품을 만들고 실패하며 반복 개선하는 <strong>구성주의적 팅커링(Tinkering)</strong> 실천</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>16.4.1절의 인지적 한계(하이브리드 사다리)와 16.4.2절의 DIY 메이커 커뮤니티(FabLab)를 고찰합니다.</p>
+        <p>탠저블 컴퓨팅이 교실 건축 공간 및 메이커 문화와 어떻게 결합되는지 거시적 관점을 제시합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>물리적 조작으로 직관을 다진 후, 디지털 시뮬레이션과 추상 기호로 부드럽게 전이시키는 하이브리드 설계가 핵심입니다.</p>
+        <p>시모어 페퍼트의 '구축주의(Constructionism)': 학습은 학습자가 외부에 공유 가능한 실물 산출물(아티팩트)을 손으로 직접 만들 때 가장 효과적으로 일어납니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>학교 현장에서 메이커스페이스를 효과적으로 운영하는 방안을 토론하세요.</p>
+        <p>학교 도서관이나 유휴 교실을 학생 중심의 탠저블 메이커스페이스로 리모델링하는 아이디어를 제안해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 7: Summary & Looking Ahead to Ch 17 -->
-    <section class="slide" data-index="6">
-      <span class="slide-badge">결론 & 다음 챕터 예고 · Part III</span>
-      <h2 class="slide-title">Chapter 16 총괄 결론 & Chapter 17 증강현실(AR) 예고</h2>
-      <p class="slide-subtitle">물리적 사물과 디지털 정보가 시각적으로 완벽히 오버레이되는 증강현실의 세계로!</p>
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 16</span>
+      <h2 class="slide-title">피지컬 컴퓨팅과 블록형 프로그래밍의 시너지</h2>
+      <p class="slide-subtitle">스크래치(Scratch), 마이크로비트, 센서 보드를 활용한 초·중등 SW 교육</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🌟 Ch 16 탠저블 인터페이스의 핵심 교훈</h3>
+          <h3>🔌 피지컬 컴퓨팅 프로젝트 사례</h3>
           <ul>
-            <li>1. 컴퓨터를 데스크톱 상자 밖으로 꺼내라</li>
-            <li>2. 전통 공예(전자 섬유)와 코딩의 융합으로 다양성을 포용하라</li>
-            <li>3. 전신 인터랙션 공간으로 사회적 협력을 이끌어라</li>
-            <li>4. 물리-디지털 하이브리드로 추상화를 완성하라</li>
+            <li><strong>스마트 화분</strong>: 토양 수분 센서로 습도를 측정하고 모터로 물을 주는 코딩</li>
+            <li><strong>신체 반응 게임기</strong>: 가속도 센서와 버튼을 몸에 달고 점프하며 조작하는 체감형 게임</li>
+            <li><strong>지능형 스마트 홈</strong>: 온습도/조도 센서와 서보 모터로 자동 창문 제어</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 17 예고: 증강현실과 학습과학</h3>
-          <p><strong>Bertrand Schneider & Iulian Radu</strong></p>
-          <p>물리적 현실 위에 3D 홀로그램 정보를 덧씌우는 증강현실(AR)이 인지 부하와 공간 지각에 미치는 혁명적 영향!</p>
+        <div class="card">
+          <h3>🎯 교육적 가치</h3>
+          <ul>
+            <li>화면 안의 가상 스프라이트를 넘어 <strong>실제 물리 세계를 제어하는 성취감</strong> 획득</li>
+            <li>변수, 조건문, 루프, 이벤트 등의 추상적 알고리즘이 물리적 행동으로 즉각 시각화됨</li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 16(16.0~16.5)의 전 섹션을 총괄 정리하고 Chapter 17(Augmented Reality)로 이어지는 다리를 놓습니다.</p>
+        <p>탠저블 인터페이스가 초·중·고 소프트웨어 및 피지컬 컴퓨팅 교육 현장에 적용된 표준 모델을 분석합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 17은 물리적 사물(Chapter 16) 위에 3D 시각 정보를 실시간 오버레이하는 증강현실의 세계로 나아갑니다.</p>
+        <p>학생들은 모니터 속 에러 메시지보다, 실제 모터가 돌지 않거나 전구에 불이 들어오지 않는 물리적 피드백을 통해 훨씬 더 끈기 있게 디버깅에 몰입합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>다음 Chapter 17로 자연스럽게 전환하세요.</p>
+        <p>엔트리(Entry)나 스크래치와 연동할 수 있는 가장 효과적인 초등 피지컬 컴퓨팅 교구를 비교해 보세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 16.4</span>
+      <h2 class="slide-title">마이클 아이젠버그의 유산: 손과 마음이 하나 되는 배움</h2>
+      <p class="slide-subtitle">탠저블 및 전신 인터페이스가 미래 학습과학에 남긴 3대 나침반</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>원자의 귀환</h3>
+          <p>디지털 비트의 가상성에 갇히지 않고 물리적 원자(Atoms)의 물질성과 촉각을 교육에 복원</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>포용적 참여</h3>
+          <p>공예와 웨어러블을 통해 여성, 아동, 장애인을 컴퓨터 과학의 주체적 창작자로 포용</p>
+        </div>
+        <div class="card">
+          <h3>공간의 확장</h3>
+          <p>책상 위 1인용 화면을 넘어 온몸으로 함께 뛰노는 협력적 인터랙티브 학습 생태계 구축</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 16의 모든 교훈을 종합하고, 고 마이클 아이젠버그 교수의 학술적 유산을 기립니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>탠저블 인터페이스는 "기술이 발전할수록 우리는 스크린을 덜 쳐다보고 세상을 더 깊이 만져야 한다"는 심오한 인간 중심 교육 철학을 담고 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"여러분이 디자인하고 싶은 미래 교실의 탠저블 교구는 어떤 모습인가요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 17 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part III</span>
+      <h2 class="slide-title">다음 여정: Chapter 17 증강현실과 학습 (Augmented Reality)</h2>
+      <p class="slide-subtitle">마튜 디덴부르(Matt Dunleavy) & 크리스 데디(Chris Dede)의 증강현실 교육 패러다임</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 16 vs Ch 17 연계성</h3>
+          <ul>
+            <li><strong>Ch 16 탠저블 인터페이스</strong>: 물리적 조작물과 스마트 소재, 신체 공간을 활용한 체화 학습</li>
+            <li><strong>Ch 17 증강현실(AR)</strong>: 실세계 물리적 환경 위에 디지털 정보와 가상 시뮬레이션을 실시간 오버레이하는 몰입형 탐구</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 Part III 테크놀로지의 비약</h3>
+          <p>물리적 교구(Ch 16) ➔ 증강현실(Ch 17) ➔ 모바일 무봉제 학습(Ch 18)으로 이어지는 21세기 테크놀로지 생태계</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 16을 마치고, 다음 챕터인 Chapter 17(Augmented Reality in Education)과의 유기적 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>하버드 대학교 크리스 데디(Chris Dede) 교수의 에코모바일(EcoMOBILE) 등 AR 야외 생태 탐구 연구가 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 17을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 16: Tangible and Full-Body Interfaces in Learning (Parés & Eisenberg)</div>
-    <div class="footer-center" id="slide-counter">01 / 07</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
