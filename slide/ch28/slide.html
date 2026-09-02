@@ -212,223 +212,485 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 28 · Part V Arts Learning</span>
-      <h1 class="slide-title">Arts Education and the Learning Sciences</h1>
-      <p class="slide-subtitle">예술 교육과 학습과학: 스튜디오 사고의 습관, 표상 생성, 그리고 메이커 운동의 융합</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 28 · Part V Disciplines</span>
+      <h1 class="slide-title">Arts Education & Learning Sciences</h1>
+      <p class="slide-subtitle">예술 교육과 학습과학: 스튜디오 사고의 습관, 다중양식 표상 생성, 그리고 메이커 운동</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Erica Rosenfeld Halverson</strong> (Univ. of Wisconsin–Madison) & <strong>Kimberly M. Sheridan</strong> (George Mason Univ.)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 571–589)</p>
+          <p><strong>Erica Rosenfeld Halverson</strong> (Univ of Wisconsin–Madison)<br/><strong>Kimberly M. Sheridan</strong> (George Mason Univ)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 28</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (28.0 ~ 28.4)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>28.0 예술 교과의 3대 고유성</strong>: 형식과 내용, 청중 소통, 정체성</li>
-            <li><strong>28.2 표상 생성 & 정체성 발달</strong>: 탈유형화(Detypification)</li>
-            <li><strong>28.2.4 스튜디오 사고의 습관</strong> (Studio Habits of Mind 8대 역량)</li>
-            <li><strong>28.3 스튜디오 비평 (Critique)</strong> & <strong>메이커 운동</strong> 융합</li>
+            <li><strong>예술 교과의 고유성</strong>: 형식과 내용의 일체화 & 실제 청중과의 소통</li>
+            <li><strong>하버드 프로젝트 제로 & 스튜디오 씽킹</strong>: 8대 스튜디오 사고 습관(SHoM)</li>
+            <li><strong>표상 생성과 정체성 발달</strong>: 디지털 스토리텔링과 자아 탐색</li>
+            <li><strong>스튜디오 비평과 메이커 운동</strong>: 점수 없는 과정 중심 평가와 피지컬 창작</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 Part V(교과 지식 학습)의 최종 장으로, 예술 학습이 단순한 감정 표현이나 기능 습득을 넘어 고차원적 인지 습관(Studio Habits of Mind)과 메이커 창작 실천의 핵심임을 밝힙니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>에리카 할버슨 교수와 킴벌리 셰리던 교수는 하버드 프로젝트 제로와 메이커 무브먼트의 선구자들입니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>예술 교육이 단순한 감정 분출이나 기교 습득을 넘어, 고차원적 상징 조작, 스튜디오 사고 습관(SHoM), 정체성 형성, 메이커 운동과 직결되는 인지·사회적 학문임을 이해합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>에리카 할버슨과 킴벌리 셰리던 교수는 하버드 프로젝트 제로 출신의 대표적 예술 학습과학 및 메이커 교육 연구자들입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"예술 수업에서 배우는 가장 중요한 생각하는 힘은 무엇일까요?"라는 질문으로 시작하세요.</p>
+        <p>"미술이나 음악 수업에서 학생들은 과연 어떤 '사고력(Thinking)'을 훈련하는 것일까요?"로 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: 28.0 Distinct Features of Arts Learning -->
+    <!-- Slide 2: Nature of Arts Learning -->
     <section class="slide" data-index="1">
       <span class="slide-badge">예술의 고유성 · Section 28.0</span>
-      <h2 class="slide-title">28.0 예술 학습의 3대 고유 특성</h2>
-      <p class="slide-subtitle">다른 교과와 예술을 구별 짓는 본질적인 인지·표현적 차별성 (Halverson & Sheridan)</p>
+      <h2 class="slide-title">예술 학습은 무엇이 특별한가? 3대 고유 특성</h2>
+      <p class="slide-subtitle">다른 교과와 구별되는 예술 창작의 인식론적 독창성</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="card highlight-card">
           <h3>1. 형식과 내용의 불가분성</h3>
-          <p>예술에서 표현 형식(Form)과 의미 내용(Content)은 분리되지 않음. 매체의 물리적·디지털 속성 자체가 메시지를 형성</p>
+          <p>예술에서 매체(붓, 점토, 악기, 픽셀)의 물리적 속성 자체가 전하고자 하는 메시지를 형성</p>
+        </div>
+        <div class="card">
+          <h3>2. 실제 청중과의 소통</h3>
+          <p>교실 서랍에 갇히는 시험지가 아니라, <strong>실제 관객(Audience)의 정서적 반응</strong>을 이끌어내는 열린 인공물</p>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 실제 청중과의 소통</h3>
-          <p>시험지 답안이 아니라, 실제 관객/청중(Audience)에게 공개되고 반응과 대화를 이끌어내는 외현적 인공물 산출</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3. 정체성 구성의 중심성</h3>
-          <p>창작을 통해 자신의 개인적, 문화적, 사회적 자아와 가치관을 능동적으로 탐색하고 재구성</p>
+          <h3>3. 정체성 탐색의 중심성</h3>
+          <p>"나는 누구인가?" 자전적 스토리와 문화적 소속감을 매개하는 <strong>자아 형성의 핵심 무대</strong></p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>28.0절의 도입부에서 예술 교과가 지닌 3가지 고유한 본질적 특성을 명확히 정립합니다.</p>
+        <p>예술 학습이 다른 학문 분과와 구별되는 3대 본질적 특성을 규명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>예술은 다른 학문을 위한 도구(수학 성적을 올려주는 수단 등)가 아니라, 그 자체로 고유한 인식론적 가치를 지닌 상징 체계입니다.</p>
+        <p>맥루한의 "미디어는 메시지다"처럼, 예술에서는 어떤 도구와 양식으로 표현하느냐 자체가 곧 사고의 내용이 됩니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>도구적 예술 교육론(Arts transfer)의 한계를 비판하세요.</p>
+        <p>자신의 감정을 말로 표현할 때와 그림/음악으로 표현할 때의 질적 차이를 비교해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 28.2.1 Creating Representations & Identity -->
+    <!-- Slide 3: Historical Evolution of Arts Research -->
     <section class="slide" data-index="2">
-      <span class="slide-badge">표상과 정체성 · Section 28.2.1 & 28.2.2</span>
-      <h2 class="slide-title">28.2 표상 생성(Representation)과 정체성 발달</h2>
-      <p class="slide-subtitle">매체와의 끊임없는 대화(Halverson, 2013)와 낙인 정체성의 탈유형화 (Detypification)</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>🎨 28.2.1 표상 생성의 순환 루프</h3>
-          <ul>
-            <li><strong>아이디어 구상 ➔ 매체 도구 조작 ➔ 외부 표상 ➔ 청중 반응</strong></li>
-            <li>디지털 툴(영상, 음향)이나 물리적 재료의 저항(Resistance)과 가능성을 탐색하며 생각 고도화</li>
-          </ul>
+      <span class="slide-badge">역사적 진화 · Section 28.1</span>
+      <h2 class="slide-title">예술 학습 연구의 역사적 진화: 낭만주의에서 인지 혁명으로</h2>
+      <p class="slide-subtitle">하버드 프로젝트 제로(Project Zero)와 상징 체계(Symbol Systems) 인지 연구</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 낭만주의적 표현주의</h3>
+          <p><strong>감정의 분출 (1950s)</strong><br/>예술을 타고난 천재의 비이성적 영감이나 주관적 감정 표현으로 치부</p>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-rose);">
-          <h3 style="color: var(--accent-rose);">🪞 28.2.2 탈유형화 (Detypification)</h3>
-          <ul>
-            <li>사회적 편견이나 낙인찍힌 정체성을 예술적 서사(연극, 시, 힙합)로 재해석</li>
-            <li>자신의 억압된 경험을 <strong>주체적이고 긍정적인 문화적 정체성으로 승화</strong> (Halverson, 2010)</li>
-          </ul>
+        <div class="card highlight-card">
+          <h3>2. 학문 중심 인지 혁명</h3>
+          <p><strong>Project Zero (1970s~)</strong><br/>넬슨 굿맨과 하워드 가드너: 예술은 고차원적 상징 기호 조작 인지 학문</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 스튜디오와 메이커</h3>
+          <p><strong>Studio Thinking & Maker (2000s~)</strong><br/>스튜디오 사고 습관(SHoM)과 디지털 피지컬 메이커 창작의 융합</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>28.2.1절의 표상 생성(Creating Representations)과 28.2.2절의 탈유형화(Detypification)를 다룹니다.</p>
+        <p>예술 교육이 비이성적 감정 훈련에서 엄밀한 인지적 상징 체계 연구로 거듭난 학문적 역사를 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>할버슨의 연구: 소수자 청소년들이 디지털 스토리텔링과 공연 예술을 통해 고정관념화된 사회적 자아를 깨뜨리고 건강한 자아 정체성을 획득합니다.</p>
+        <p>굿맨(Nelson Goodman, 1968)의 『Languages of Art』: 예술적 창작과 감상은 과학적 탐구만큼이나 엄격한 인지적 기호 해석 과정입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>창작 과정에서 매체와 마주칠 때 일어나는 인지적 갈등과 해결을 설명하세요.</p>
+        <p>"예술가도 과학자처럼 가설을 세우고 실험을 할까?"라는 질문을 던져보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: 28.2.4 Studio Habits of Mind -->
+    <!-- Slide 4: Creating Representations -->
     <section class="slide" data-index="3">
-      <span class="slide-badge">스튜디오 사고 습관 · Section 28.2.4</span>
-      <h2 class="slide-title">28.2.4 스튜디오 사고의 습관 (Studio Habits of Mind)</h2>
-      <p class="slide-subtitle">하버드 프로젝트 제로가 규명한 예술가들의 8대 핵심 인지 습관 (Hetland, Winner et al., 2013)</p>
-      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <span class="slide-badge">표상 생성 · Section 28.2.1</span>
+      <h2 class="slide-title">표상 생성(Creating Representations)과 매체의 대화</h2>
+      <p class="slide-subtitle">도구와 매체의 저항(Resistance) 및 어포던스와 씨름하는 순환적 과정</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>1. 관찰하기 (Observe)</h3>
-          <p>대상의 세부 디테일과 관계를 편견 없이 주의 깊게 시각화</p>
+          <h3>🎨 도구와의 끊임없는 대화 (Halverson, 2013)</h3>
+          <ul>
+            <li>머릿속 아이디어를 물감, 점토, 비디오 타임라인에 올리는 순간 매체의 물리적 한계에 부딪힘</li>
+            <li><strong>매체의 저항과 피드백을 수용하며 원래 아이디어를 지속적으로 수정·재구성</strong></li>
+            <li>내적 멘탈 모델과 외적 인공물 간의 끊임없는 상호작용</li>
+          </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 구상하기 (Envision)</h3>
-          <p>눈앞에 없는 다음 작업 단계나 결과를 머릿속으로 시각적 상상</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3. 표현하기 (Express)</h3>
-          <p>개인적 감정과 의미를 작품의 조형적 형식에 담아내기</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">4. 반성하기 (Reflect)</h3>
-          <p>자신의 작업 과정을 메타인지적으로 비판하고 평가하기</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-blue);">
-          <h3>5. 탐색하기 (Stretch & Explore)</h3>
-          <p>실패를 두려워하지 않고 새로운 재료와 기법을 과감히 실험</p>
-        </div>
-        <div class="card highlight-card">
-          <h3>6. 몰입과 끈기 (Engage & Persist)</h3>
-          <p>어려운 과제에 인내심을 갖고 끝까지 몰입하여 완성</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">7. 기법 습득 (Develop Craft)</h3>
-          <p>도구의 적절한 사용법과 스튜디오 안전 규범 체화</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">8. 예술계 이해 (Understand World)</h3>
-          <p>예술사의 맥락과 현대 미술 커뮤니티의 담화 파악</p>
+        <div class="card">
+          <h3>🎯 학습과학적 의의</h3>
+          <p>외재화(Externalization)와 반성적 성찰(Reflection-in-action, Schön)이 가장 역동적으로 일어나는 최고의 구성주의 현장</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>28.2.4절의 가장 핵심적인 이론인 하버드 프로젝트 제로의 8대 스튜디오 사고의 습관(Studio Habits of Mind)을 전수 분석합니다.</p>
+        <p>도널드 숀의 '행위 중 성찰(Reflection-in-action)'과 할버슨의 '표상 생성 프로세스'를 연결하여 예술 창작의 인지적 메커니즘을 규명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>스튜디오 해빗은 예술뿐 아니라 소프트웨어 엔지니어링, 건축, 과학 연구 등 모든 창의적 문제 해결 분야로 전이되는 메타 인지 습관입니다.</p>
+        <p>예술가는 머릿속 완성품을 그대로 출력하는 프린터가 아닙니다. 매체와 붓질을 주고받으며 그림과 끊임없이 대화하는 탐구자입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>8가지 습관 중 '구상하기(Envisioning)'와 '탐색하기(Stretch & Explore)'가 디자인 씽킹과 어떻게 맞닿아 있는지 논의하세요.</p>
+        <p>조각이나 그림을 그리다가 실수로 빗나간 붓질이 새로운 영감으로 발전했던 경험을 나누어 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: 28.3 Studio Critique & Maker Movement -->
+    <!-- Slide 5: Identity Work through the Arts -->
     <section class="slide" data-index="4">
-      <span class="slide-badge">비평과 메이커 · Section 28.3 & 28.4</span>
-      <h2 class="slide-title">28.3 스튜디오 비평(Critique)과 메이커 운동(Maker Movement)</h2>
-      <p class="slide-subtitle">형성평가로서의 스튜디오 비평 문화와 디지털 피지컬 창작의 결합 (Halverson & Peppler)</p>
+      <span class="slide-badge">정체성 발달 · Section 28.2.2</span>
+      <h2 class="slide-title">자전적 스토리텔링과 예술을 통한 정체성 변혁</h2>
+      <p class="slide-subtitle">낙인찍힌 정체성을 긍정적으로 재구성하는 탈유형화(Detypification)</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">🗣️ 스튜디오 비평 (Studio Critique) 문화</h3>
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">⚠️ 사회적 낙인과 고정관념</h3>
           <ul>
-            <li>단순 채점이 아니라, 창작자와 동료들이 둘러앉아 작품의 의도와 표현 전략을 심층 토론</li>
-            <li>비판을 수용하고 다음 단계로 리팩터링하는 <strong>메타인지적 반성 공동체</strong></li>
+            <li>빈곤층, 소수민족 청소년들에게 가해지는 "문제아, 학업 실패자"라는 외부의 편견과 라벨링</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">🛠️ 메이커 운동 (Maker Movement)과의 융합</h3>
+          <h3 style="color: var(--accent-emerald);">🛡️ 예술을 통한 자아 재작성 (Halverson)</h3>
           <ul>
-            <li>아두이노, 3D 프린터, 직물 공예(E-textiles)를 결합한 피지컬 메이커스페이스</li>
-            <li>예술적 표현과 공학적 코딩이 만나는 <strong>궁극의 구성주의 학습 환경</strong> (Sheridan et al.)</li>
+            <li>힙합 음악 작곡, 다큐멘터리 영상 제작, 자전적 연극 공연</li>
+            <li>자신의 아픔과 상처를 예술적 서사로 승화하며 <strong>'유능한 이야기의 창작자'로서 새로운 자아 정체성 획득</strong></li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>28.3절의 스튜디오 비평(Critique) 평가 원리와 28.4절의 메이커 운동(Maker Movement) 융합을 다룹니다.</p>
+        <p>예술 활동이 취약계층 청소년들의 정서적 치유와 정체성 회복(Identity Work)에 미치는 지대한 영향을 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>스튜디오 비평은 소프트웨어 공학의 코드 리뷰(Code Review)와 본질적으로 동일하며, 학습자가 자신의 창작물을 객관화하여 바라보게 합니다.</p>
+        <p>할버슨(2013): 청소년들은 예술 작품을 창작함으로써 세상이 자신에게 씌운 굴레(낙인)를 벗어던지고 스스로를 새롭게 정의합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>메이커스페이스에서 예술적 감수성과 공학적 프로그래밍이 어떻게 시너지를 내는지 설명하세요.</p>
+        <p>학생들에게 '나의 인생 그래프를 그림과 음악으로 표현하기' 활동의 교육적 가치를 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 6: Summary & Looking Ahead to Part VI -->
+    <!-- Slide 6: Multimodal Language Development -->
     <section class="slide" data-index="5">
-      <span class="slide-badge">Part V 완결 & Part VI 예고 · Section 28.4</span>
-      <h2 class="slide-title">28.4 Part V 교과 지식 완결 & Part VI 현장 적용 예고</h2>
-      <p class="slide-subtitle">수학·과학·복잡계·역사·문해력·예술을 관통한 Part V 완결! 제6부 교실 적용과 미래로!</p>
+      <span class="slide-badge">다중양식성 · Section 28.2.3</span>
+      <h2 class="slide-title">다중양식(Multimodality) 표현과 상징 체계의 통합</h2>
+      <p class="slide-subtitle">시각, 청각, 신체적 동작과 언어적 표현의 상호 호혜적 인지 발달</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>비언어적 상징 표상</h3>
+          <p>언어로 다 표현할 수 없는 복합적인 감정과 멘탈 모델을 색채와 멜로디로 구체화</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>양식 간 번역 (Transduction)</h3>
+          <p>음악의 리듬을 그림으로 시각화하고, 연극의 동작을 대본 글자로 번역하는 인지 훈련</p>
+        </div>
+        <div class="card">
+          <h3>전인적 소통 역량</h3>
+          <p>문자 중심의 편협한 학업 능력을 넘어 다감각적 융합 표현 역량 완성</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>예술이 다양한 감각 양식 간의 상호 변환(Transduction)을 통해 두뇌의 연결망을 어떻게 확장하는지 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>건터 크레스(Gunther Kress): 서로 다른 기호 양식을 넘나드는 능력(Transmodal transduction)은 현대 지식 사회의 핵심 지능입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>시(Poem)를 읽고 이를 행위 예술이나 추상화로 표현하는 융합 수업을 구상해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Studio Habits of Mind (SHoM) -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">스튜디오 사고 습관 · Section 28.2.4</span>
+      <h2 class="slide-title">하버드 프로젝트 제로의 8대 스튜디오 사고 습관</h2>
+      <p class="slide-subtitle">헤틀랜드, 위너, 셰리던(Hetland et al., 2013)의 Studio Habits of Mind (SHoM)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr); font-size: 0.85rem;">
+        <div class="card">
+          <h3>1. 기교 발달</h3>
+          <p><strong>Develop Craft</strong><br/>도구와 재료의 숙련된 기법 습득</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 몰입과 끈기</h3>
+          <p><strong>Engage & Persist</strong><br/>실패와 실수를 딛고 끝까지 완성</p>
+        </div>
+        <div class="card">
+          <h3>3. 마음속 구상</h3>
+          <p><strong>Envision</strong><br/>눈앞에 없는 형상을 머릿속에 시각화</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>4. 내면 표현</h3>
+          <p><strong>Express</strong><br/>의미와 정서를 작품에 담아내기</p>
+        </div>
+        <div class="card">
+          <h3>5. 면밀한 관찰</h3>
+          <p><strong>Observe</strong><br/>일상의 세부를 편견 없이 깊게 응시</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>6. 반성적 평가</h3>
+          <p><strong>Reflect</strong><br/>자신의 작업 과정 비판적 성찰</p>
+        </div>
+        <div class="card">
+          <h3>7. 경계 탐색</h3>
+          <p><strong>Stretch & Explore</strong><br/>실패를 두려워 않고 새로운 시도</p>
+        </div>
+        <div class="card">
+          <h3>8. 세계 이해</h3>
+          <p><strong>Understand World</strong><br/>예술계와 사회문화적 맥락 파악</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전 세계 예술 및 창의성 교육의 바이블인 하버드 8대 스튜디오 사고 습관(SHoM)의 각 요소를 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>헤틀랜드 등(2013): 미술 수업에서 기르는 이 8가지 습관은 미술관을 넘어 과학 탐구, 수학적 문제해결, 일상 삶 전체로 전이되는 범학문적 사고 습관입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>8가지 습관 중 소프트웨어 개발이나 과학 실험에 가장 필요한 습관 2가지를 꼽아보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Role of Authentic Audience -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">학습 환경 설계 ① · Section 28.3.1</span>
+      <h2 class="slide-title">실제 청중(Authentic Audience)과 공공 전시의 교육적 힘</h2>
+      <p class="slide-subtitle">닫힌 교실을 넘어 지역사회와 온라인 대중에게 공개되는 인공물</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 청중 없는 닫힌 교실 과제</h3>
+          <ul>
+            <li>오직 '선생님의 채점과 점수'만을 의식한 최소한의 기계적 과제 수행</li>
+            <li>성취감과 진정성의 결여, 제출 후 즉시 쓰레기통으로 직행</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 실제 청중(Audience)을 향한 창작</h3>
+          <ul>
+            <li>학교 복도 갤러리 전시, 지역사회 연극 공연, 유튜브/웹 공개</li>
+            <li><strong>"실제 사람들이 내 작품을 보고 감동할 것이다"</strong>라는 강력한 책임감과 장인정신(Craftsmanship) 발현</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>실제 청중(Authentic Audience)의 존재가 학생들의 몰입도와 창작물의 품질을 어떻게 비약적으로 끌어올리는지 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>할버슨과 셰리던(2022): 청중의 피드백을 받는 경험은 학생을 '미성숙한 학습자'에서 '사회적 메시지를 던지는 어엿한 창작자'로 승격시킵니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들의 과제를 학기 말에 온라인 가상 미술관(Artsteps 등)에 전시하는 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Studio Critique & Assessment -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">학습 환경 설계 ② · Section 28.3.2</span>
+      <h2 class="slide-title">점수 없는 평가: 스튜디오 비평(Studio Critique)</h2>
+      <p class="slide-subtitle">동료와 전문가가 모여 작품의 강점과 진화를 논의하는 메타인지적 축제</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 기술적 관찰 (Describing)</h3>
+          <p>"이 작품의 색상 대비와 구도에서 무엇이 보이는가?" 객관적 사실 기술</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 의도와 효과 해석 (Interpreting)</h3>
+          <p>"작가가 전달하려는 감정과 의도가 관객에게 어떻게 와닿는가?"</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 발전적 제언 (Next Steps)</h3>
+          <p>"다음 버전에서 어떤 기법을 시도하면 메시지가 더 강렬해질까?"</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>예술 대학과 스튜디오에서 쓰이는 '스튜디오 비평(Critique)'의 3단계 프로토콜과 교육적 가치를 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>비평은 인신공격이 아니라, 작품을 매개로 서로의 메타인지와 시각적 안목을 공유하는 최고의 형성평가(Formative Assessment)입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>교실에서 비평 세션을 운영할 때 '따뜻한 칭찬과 날카로운 피드백의 균형'을 잡는 규칙을 설계해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Maker Movement & Physical Computing -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">메이커 융합 · Section 28.4</span>
+      <h2 class="slide-title">예술과 메이커 운동(Maker Movement)의 아름다운 통섭</h2>
+      <p class="slide-subtitle">3D 프린팅, 아두이노, E-텍스타일로 확장된 21세기 스튜디오 공학</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>🌟 Part V 6대 교과 지식 학습 총결산</h3>
+          <h3>🧵 융합 창작 (STEAM Maker)</h3>
           <ul>
-            <li>• <strong>Ch 23 수학</strong>: 코모그니션 & 담화 오케스트레이션</li>
-            <li>• <strong>Ch 24 과학</strong>: NGSS 3D 학습 & 지식 통합</li>
-            <li>• <strong>Ch 25 복잡계</strong>: NetLogo 창발 & 지식 재구조화</li>
-            <li>• <strong>Ch 26 역사</strong>: 1차 사료 비판 & 마스터 내러티브 해체</li>
-            <li>• <strong>Ch 27 문해력</strong>: 독해 SOI 모델 & 작문 3단계</li>
-            <li>• <strong>Ch 28 예술</strong>: 스튜디오 사고의 습관 & 메이커 운동</li>
+            <li><strong>릴리패드 E-텍스타일</strong>: 전도성 실로 바느질하여 빛나는 인터랙티브 패션 의류 제작</li>
+            <li><strong>키네틱 아트(Kinetic Art)</strong>: 모터와 센서를 결합해 관객의 움직임에 반응하여 춤추는 조각품</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Part VI 대단원 예고: 연구의 교실 확산</h3>
-          <p><strong>Moving Learning Sciences Research into the Classroom</strong></p>
+        <div class="card">
+          <h3>🚀 예술이 공학을 구원한다</h3>
+          <p>딱딱하고 차가운 전자 회로와 코딩에 <strong>미적 감수성과 인간적 스토리텔링</strong>을 부여하여, 여학생과 다양한 배경의 학습자들을 기술 창작의 세계로 대거 유입</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>할버슨과 페플러(Peppler)의 대표 연구인 예술과 메이커 운동의 결합 모델을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>메이커 운동은 공학(Engineering)과 공예(Craft/Art)의 경계를 허물며, 학습과학의 '신체화된 구성주의(Constructionism)'를 가장 완벽하게 실현하고 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>미술 시간과 정보(컴퓨터) 시간을 융합한 '스마트 조명 램프 만들기' 프로젝트를 기획해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Youth Digital Storytelling -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">디지털 스토리텔링 · Section 28.4</span>
+      <h2 class="slide-title">청소년 디지털 비디오 제작과 참여적 미디어 문화</h2>
+      <p class="slide-subtitle">스마트폰 카메라와 영상 편집 툴로 제작하는 사회 비판 다큐멘터리</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>콘텐츠 소비자에서 생산자로</h3>
+          <p>유튜브와 틱톡을 단순히 소비하던 청소년들이 자신의 목소리를 담는 영상 디렉터로 전환</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>영상 문법과 편집의 인지</h3>
+          <p>컷 편집, BGM 선곡, 자막 타이밍을 조율하며 관객의 시선과 감정을 지휘하는 고차원 인지</p>
+        </div>
+        <div class="card">
+          <h3>사회적 이슈 공론화</h3>
+          <p>학교 폭력, 청소년 인권, 기후 위기를 다룬 단편 영화를 제작해 영화제 출품</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>디지털 영상 제작이 청소년들의 미디어 리터러시와 사회 참여 의식을 어떻게 고취하는지 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>할버슨(2012): 영상 편집 소프트웨어의 타임라인(Timeline)은 시간과 공간, 소리를 직조하는 현대 청소년들의 가장 강력한 지적 마이크로월드입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들에게 교과 지식을 60초 숏폼 다큐멘터리로 제작하게 하는 수업 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Improvisation & Keith Sawyer -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">창의성과 즉흥성 · Section 28.4</span>
+      <h2 class="slide-title">키스 소여(Keith Sawyer)의 재즈 즉흥 연주와 협력적 창의성</h2>
+      <p class="slide-subtitle">악보 없는 즉흥 연주(Improvisation)처럼 살아 숨 쉬는 창의적 수업의 미학</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎷 재즈 앙상블의 'Yes, and...' 규칙</h3>
           <ul>
-            <li>• <strong>Ch 29 문화와 형평성</strong> (Nasir et al.)</li>
-            <li>• <strong>Ch 30 흥미, 동기, 참여</strong> (Renninger & Järvelä)</li>
-            <li>• <strong>Ch 31 교사 전문성 개발</strong> (Fishman et al.)</li>
-            <li>• <strong>Ch 32 교육 정책과 RPP</strong> (Penuel et al.)</li>
-            <li>• <strong>Ch 33 학습과학 2020s 미래</strong> (Sawyer)</li>
+            <li>동료 연주자가 던진 낯선 멜로디(불협화음)를 거부하지 않고 수용(Yes)하여 새로운 리듬으로 발전(And)</li>
+            <li>개별 연주자의 계획을 초월하여 <strong>집단 전체에서 창발하는 집단 천재성(Group Genius)</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>👩‍🏫 훈련된 즉흥 수업 (Disciplined Improvisation)</h3>
+          <ul>
+            <li>교사는 경직된 각본을 일방적으로 읊는 연극배우가 아님</li>
+            <li>교육과정의 기본 구조(Structure) 위에서 학생들의 돌발 반응에 유연하게 대처하는 <strong>'재즈 연주자'</strong>여야 함 (Sawyer, 2011)</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Part V(교과 지식 학습: Ch 23~28)의 6개 챕터 대장정을 완결하고, 제3판의 최종 대단원인 Part VI(Moving Learning Sciences Research into the Classroom: Ch 29~33)를 예고합니다.</p>
+        <p>학습과학의 창시자이자 본 핸드북의 편저자인 키스 소여(Keith Sawyer) 교수의 즉흥 연주 및 집단 창의성 이론을 다룹니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Part V는 수학, 과학, 복잡계, 역사, 문해력, 예술 등 인간의 모든 핵심 지식 영역에 학습과학이 어떻게 적용되는지 입증했습니다. Part VI는 이를 실제 학교 현장과 정책으로 확산하는 방안을 다룹니다.</p>
+        <p>창의성은 고립된 천재의 번뜩임이 아니라, 소집단 상호작용 속에서 불꽃처럼 튀는 '협력적 즉흥(Collaborative Improvisation)'의 산물입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>Part V의 6개 교과 챕터가 공유하는 공통적인 학습과학적 원리(체화, 담화, 비계, 도구 매개)를 요약해 보세요.</p>
+        <p>수업 중 학생들의 엉뚱한 질문을 가로막지 않고 창의적인 탐구로 전환시키는 교사의 즉흥 발문법을 연습해 보세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 28</span>
+      <h2 class="slide-title">크리에이티브 코딩(Creative Coding)과 생성 예술</h2>
+      <p class="slide-subtitle">Processing과 p5.js로 구현하는 코드 기반 시각 예술</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 알고리즘 생성 예술 (Generative Art)</h3>
+          <ul>
+            <li>삼각함수(Sin, Cos)와 난수(Perlin Noise) 알고리즘으로 자연의 유기적 패턴(바람, 파도, 나무) 렌더링</li>
+            <li>수학과 코딩이 가장 아름다운 시각 예술로 승화되는 순간 체험</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 컴퓨팅 사고와 예술의 시너지</h3>
+          <p>정답이 정해진 알고리즘 문제풀이의 피로감을 벗어나, <strong>"나만의 아름다움을 코드로 창조한다"는 강력한 내적 동기와 심미적 효능감</strong> 제공</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>소프트웨어 교육에서 예술과 코딩의 융합인 '크리에이티브 코딩(Creative Coding)'의 교육적 효과를 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>MIT 미디어랩의 케이시 리스(Casey Reas)와 벤 프라이가 개발한 Processing은 전 세계 아티스트와 디자이너들의 표준 코딩 언어입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>수학의 프랙탈(Fractal) 도형을 p5.js 코드로 구현하여 인터랙티브 디지털 미술관을 만드는 프로젝트를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Grand Finale of Part V Disciplinary Learning -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">Part V 총괄 · Section 28.5</span>
+      <h2 class="slide-title">Part V 교과별 학습 대단원 결론: 학문적 전문성의 완성</h2>
+      <p class="slide-subtitle">학습과학이 밝혀낸 6대 학문 분야별 고유한 사고와 실천</p>
+      <div class="card-grid" style="grid-template-columns: repeat(6, 1fr); font-size: 0.75rem;">
+        <div class="card">
+          <h3>Ch 23. 수학</h3>
+          <p>코모그니션 담화와 사회수학적 규범</p>
+        </div>
+        <div class="card">
+          <h3>Ch 24. 과학</h3>
+          <p>NGSS 3차원 실천과 모델 기반 탐구</p>
+        </div>
+        <div class="card">
+          <h3>Ch 25. 복잡계</h3>
+          <p>넷로고 ABM과 창발적 탈중심 사고</p>
+        </div>
+        <div class="card">
+          <h3>Ch 26. 역사</h3>
+          <p>1차 사료 비판과 역사적 공감</p>
+        </div>
+        <div class="card">
+          <h3>Ch 27. 리터러시</h3>
+          <p>SOI 독해와 지식 변형 작문</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>Ch 28. 예술</h3>
+          <p>스튜디오 사고 습관과 메이커 창작</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Part V (Learning Disciplinary Knowledge: Ch 23~28) 6개 장의 대단원 결론을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>진정한 학습이란 모든 과목을 획일적으로 암기하는 것이 아니라, 각 학문 분야 고유의 렌즈(수학자, 과학자, 역사가, 작가, 예술가)를 갈아 끼우며 세상을 다채롭게 탐색하는 것입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>6개 교과 분야 중 여러분의 전공 영역에 가장 깊은 통찰을 준 챕터와 그 이유를 나누어 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Part VI Chapter 29 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 파트 예고 · Part VI</span>
+      <h2 class="slide-title">다음 여정: Part VI 학교와 사회 속의 학습 & Chapter 29</h2>
+      <p class="slide-subtitle">Part VI: Moving Learning into the System & Chapter 29: Learning as a Cultural Process (Na'ilah Suad Nasir et al.)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🏛️ Part VI 학교와 사회 속의 학습 대장정</h3>
+          <ul>
+            <li><strong>Ch 29 문화적 프로세스로서의 학습</strong>: 문화 감응 교육, 제3의 공간(Third Space)</li>
+            <li><strong>Ch 30 유의미한 학교 개혁과 설계</strong>: 교실 생태계와 디자인 실험(Cobb)</li>
+            <li><strong>Ch 31 교사 학습과 전문성</strong>: 비디오 클럽과 교사 학습 공동체</li>
+            <li><strong>Ch 32 교육 정책과 RPP</strong>: 연구자-현장 파트너십과 시스템 스케일업</li>
+            <li><strong>Ch 33 학습과학의 미래</strong>: 키스 소여의 10대 미개척 프런티어</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 개별 교과를 넘어 교육 시스템 전체의 변혁으로</h3>
+          <p>개인과 교과를 넘어, 학교와 정책, 사회와 문화라는 거시적 생태계 차원에서 학습을 변혁하는 마지막 대단원으로 진입합니다.</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Part V 교과별 학습을 마치고, 마지막 대단원인 Part VI (Moving Learning into the System) 및 Chapter 29(Learning as a Cultural Process)로의 도약을 예고합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>나이라 수아드 나시르(Na'ilah Suad Nasir) 교수와 캐롤 리, 크리스 구티에레즈 교수의 명저로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>Part VI를 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 28: Arts Education and the Learning Sciences (Halverson & Sheridan)</div>
-    <div class="footer-center" id="slide-counter">01 / 06</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
