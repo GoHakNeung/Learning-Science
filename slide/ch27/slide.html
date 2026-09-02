@@ -226,253 +226,469 @@
     </div>
   </header>
 
-  <main id="stage">
-
+  <main id="presentation-container">
     <!-- Slide 1: Cover -->
-    <section class="slide active" data-index="0">
-      <span class="slide-badge">Chapter 27 · Part V Literacy Learning</span>
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 27 · Part V Disciplines</span>
       <h1 class="slide-title">Learning to Be Literate</h1>
       <p class="slide-subtitle">문해력 학습의 인지과학과 사회문화적 실천: 읽기 유창성, 독해 과정, 그리고 작문 인지 모델</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
         <div class="card highlight-card">
           <h3>👥 저자 및 출처</h3>
-          <p><strong>Peter Smagorinsky</strong> (Univ. of Georgia) & <strong>Richard E. Mayer</strong> (UC Santa Barbara)</p>
-          <p>『The Cambridge Handbook of the Learning Sciences』 (3rd Ed., 2022, pp. 554–570)</p>
+          <p><strong>Peter Smagorinsky</strong> (University of Georgia)<br/><strong>Richard E. Mayer</strong> (UC Santa Barbara)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 27</p>
         </div>
         <div class="card">
-          <h3>🎯 챕터 핵심 아젠다 (27.0 ~ 27.3)</h3>
+          <h3>🎯 챕터 핵심 아젠다</h3>
           <ul>
-            <li><strong>27.1.1 일반 인지 문해 (Mayer)</strong>: 유창성, 독해 SOI, 작문 3단계</li>
-            <li><strong>27.1.2 과제 특정 장르 지식</strong>: 에세이/과학 보고서 스키마</li>
-            <li><strong>27.1.3 공동체 문화 지식 (Smagorinsky)</strong>: 비고츠키 사회문화</li>
-            <li><strong>27.2 인지와 사회문화의 통합</strong>: 다중 문해력 (Multiliteracies)</li>
+            <li><strong>3대 문해 지식</strong>: 일반 인지 문해력 + 과제 장르 지식 + 공동체 사회문화 실천</li>
+            <li><strong>읽기 인지 모델</strong>: 음소 인식 유창성 & 메이어(Mayer)의 SOI 독해 모델</li>
+            <li><strong>작문 인지 모델</strong>: 플라워-헤이즈의 계획-변환-검토 & 지식 변형(Transforming)</li>
+            <li><strong>다중문해력(Multiliteracies)</strong>: 디지털 미디어 융합과 문화적 모델링</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락 (Context & Goal)</h4>
-        <p>본 장은 인지심리학의 대가 리처드 메이어 교수와 문학교육학자 피터 스마고린스키 교수가 공저한 챕터로, 읽기와 쓰기의 인지적 정보처리 메커니즘과 사회문화적 담화 실천을 통합합니다.</p>
-        <h4>📖 원문 심층 학술 해설 (Detailed Academic Commentary)</h4>
-        <p>문해력(Literacy)은 단순한 언어 해독을 넘어, 인지적 선택-조직-통합(SOI)과 문화적 장르 규칙의 체화를 포괄합니다.</p>
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>문해력(Literacy)이 단순한 글자 읽기 기술이 아니라, 메이어의 엄밀한 '인지 정보처리'와 스마고린스키의 '사회문화적 장르 실천'이 융합된 고차원 복합 지식임을 이해합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>멀티미디어 학습의 거장 리처드 메이어와 사회문화적 작문 교육의 대가 피터 스마고린스키 교수가 공동 집필한 문해 학습과학의 결정판입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>"글을 읽는 것과 글을 쓰는 것은 두뇌 속에서 어떤 인지적 차이가 있을까요?"라는 질문으로 시작하세요.</p>
+        <p>"글을 읽는다는 것은 활자를 소리로 바꾸는 것일까요, 아니면 저자와 보이지 않는 대화를 나누는 것일까요?"로 시작하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 2: 27.1.1 Mayer's 3 Content Areas (Table 27.1) -->
+    <!-- Slide 2: Nature of Literacy -->
     <section class="slide" data-index="1">
-      <span class="slide-badge">인지과학 문해 · Section 27.1.1 (Table 27.1)</span>
-      <h2 class="slide-title">27.1.1 인지과학적 문해 학습의 3대 영역 (Table 27.1)</h2>
-      <p class="slide-subtitle">읽기 유창성, 읽기 독해, 작문의 목표 과제와 인지적 본질 (Richard E. Mayer)</p>
-      <div class="table-container">
-        <table class="styled-table">
-          <thead>
-            <tr>
-              <th>문해 영역 (Content Area)</th>
-              <th>목표 과제 (Target Task)</th>
-              <th>핵심 인지 메커니즘 및 하위 과정</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>1. 읽기 유창성<br/>(Reading Fluency)</strong></td>
-              <td>인쇄된 단어를 소리 내어 발음하기<br/>(Pronouncing a printed word)</td>
-              <td>• 음소 인식 (Phonemic awareness)<br/>• 단어 해독 (Word decoding)<br/>• 무오류 자동화 낭독 (Table 27.2)</td>
-            </tr>
-            <tr>
-              <td><strong>2. 읽기 독해<br/>(Reading Comprehension)</strong></td>
-              <td>인쇄된 지문의 의미를 심층 이해하기<br/>(Comprehending a printed passage)</td>
-              <td>• <strong>선택-조직-통합 (SOI 모델)</strong><br/>• 글 구조(Prose structure) 파악<br/>• 추론(Inference) & 메타인지 조절 (Table 27.3)</td>
-            </tr>
-            <tr>
-              <td><strong>3. 작문<br/>(Writing)</strong></td>
-              <td>논리적인 서면 에세이/글을 생성하기<br/>(Producing a written essay)</td>
-              <td>• <strong>계획하기 (Planning)</strong><br/>• <strong>변환하기 (Translating)</strong><br/>• <strong>검토하기 (Reviewing)</strong> (Table 27.4)</td>
-            </tr>
-          </tbody>
-        </table>
+      <span class="slide-badge">학문적 정의 · Section 27.0</span>
+      <h2 class="slide-title">5,500년 문자 발명과 문해력의 다차원적 본질</h2>
+      <p class="slide-subtitle">생물학적 말하기와 달리 문자는 훈련을 통해 습득해야 하는 문화적 인공기술</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🧠 인지과학적 렌즈 (Richard Mayer)</h3>
+          <ul>
+            <li>인쇄된 시각 기호를 음운으로 변환하고(Decoding) 작업기억에서 멘탈 모델로 통합하는 정보처리</li>
+            <li><strong>읽기 유창성, 독해 SOI 모델, 작문 순환 모델</strong></li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--accent-indigo);">
+          <h3 style="color: var(--accent-indigo);">👥 사회문화적 렌즈 (Peter Smagorinsky)</h3>
+          <ul>
+            <li>특정 문화 공동체와 학문 분과(Discipline) 안에서 타인과 소통하고 의미를 협상하는 실천</li>
+            <li><strong>장르 규범, 문화적 모델링, 권력 관계 비판</strong></li>
+          </ul>
+        </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>27.1.1절의 핵심인 Table 27.1(인지과학적 문해 학습 3대 영역)을 구조화합니다.</p>
+        <p>문해력을 인지과학적 측면(메이어)과 사회문화적 측면(스마고린스키)의 양 날개로 통합 조망합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>리처드 메이어는 문해력을 읽기 유창성(하위 처리), 독해(상위 인지 처리), 작문(생성적 문제해결)으로 명확히 구분하여 인지 모델을 제시합니다.</p>
+        <p>인간의 뇌에는 '읽기 전용 유전자'가 없습니다. 문해력은 뇌의 시각 피질과 언어 피질을 후천적으로 재배선하는 문화적 산물입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>이어지는 슬라이드에서 유창성, 독해, 작문의 세부 메커니즘을 하나씩 분석합니다.</p>
+        <p>수학 교과서를 읽는 방식과 소설책을 읽는 방식이 왜 근본적으로 다른지 학생들과 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 3: 27.1.1 Reading Fluency (Table 27.2) -->
+    <!-- Slide 3: 3 Types of Literate Knowledge -->
     <section class="slide" data-index="2">
-      <span class="slide-badge">읽기 유창성 · Section 27.1.1 (Table 27.2)</span>
-      <h2 class="slide-title">Table 27.2 읽기 유창성(Reading Fluency)의 기본 인지 과정</h2>
-      <p class="slide-subtitle">음소 분절에서 단어 자동 해독으로 이어지는 뇌의 부호화 경로 (Mayer, 2008)</p>
+      <span class="slide-badge">지식 체계 · Section 27.1</span>
+      <h2 class="slide-title">문해 학습을 구성하는 3대 지식 체계 (27.1)</h2>
+      <p class="slide-subtitle">일반 인지 ➔ 과제 특정 장르 ➔ 공동체 사회문화 실천</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="card highlight-card">
-          <h3>1. 음소 인식 (Phonemes)</h3>
-          <p><strong>과제 예시</strong>: 첫 음소 치환</p>
-          <p>"ball" 단어를 듣고 /b/ 음소를 /t/로 바꾸어 "tall"로 발음하기 (음운론적 인식)</p>
+          <h3>1. 일반 인지 문해력</h3>
+          <p><strong>General Cognitive</strong><br/>음소 인식, 단어 해독, 사전지식 통합, 글 개요 계획하기 등 보편 인지</p>
+        </div>
+        <div class="card">
+          <h3>2. 과제 특정 장르 지식</h3>
+          <p><strong>Task-Specific Genre</strong><br/>과학 실험 보고서, 법률 변론문, 역사 사료 비판문 등 <strong>교과별 고유 서사 규칙</strong></p>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 단어 해독 (Decoding)</h3>
-          <p><strong>과제 예시</strong>: 단어 식별 & 공격</p>
-          <p>인쇄된 단어 'CAT' 또는 가상의 비단어(Non-word) 'BLUD'를 규칙에 맞게 발음</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3. 유창한 자동화 낭독</h3>
-          <p><strong>과제 예시</strong>: 문단 고속 낭독</p>
-          <p>작업기억의 부하 없이 빠르고 정확하게 전체 지문을 읽어내어 고차 독해 자원 확보</p>
+          <h3>3. 공동체 문화 실천</h3>
+          <p><strong>Sociocultural Practices</strong><br/>지역사회, 세대, 온라인 하위문화의 정체성과 가치가 텍스트를 매개하는 양식</p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>27.1.1절의 Table 27.2(읽기 유창성의 기본 인지 과정)를 다룹니다.</p>
+        <p>문해력을 구성하는 3단계 위계적 지식 체계를 정립합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>하위 해독 과정이 자동화(Automaticity)되지 않으면, 작업기억 용량이 해독에 모두 소진되어 고차원적 의미 독해(Comprehension)가 불가능해집니다.</p>
+        <p>단순히 국어 시험 점수가 높다고 해서 과학 논문을 잘 쓰는 것이 아닙니다. 교과별 고유한 '과제 특정 장르 지식'이 결합되어야 합니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>초등 저학년 난독증(Dyslexia) 치료에서 음소 훈련의 중요성을 언급하세요.</p>
+        <p>각 교과목(수학, 과학, 역사, 컴퓨터)마다 요구되는 독특한 읽기/쓰기 스타일을 비교해 보세요.</p>
       </div>
     </section>
 
-    <!-- Slide 4: 27.1.1 Reading Comprehension SOI Model (Table 27.3) -->
+    <!-- Slide 4: Reading Fluency & Decoding -->
     <section class="slide" data-index="3">
-      <span class="slide-badge">독해 인지 모델 · Section 27.1.1 (Table 27.3)</span>
-      <h2 class="slide-title">Table 27.3 읽기 독해의 선택-조직-통합 (SOI) 인지 모델</h2>
-      <p class="slide-subtitle">텍스트 표면을 넘어 심층 '상황 모델(Situation Model)'을 능동적으로 구축 (Mayer, 2011)</p>
-      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <span class="slide-badge">읽기 유창성 · Section 27.1.1</span>
+      <h2 class="slide-title">음소 인식(Phonemic Awareness)과 자동화된 단어 해독</h2>
+      <p class="slide-subtitle">읽기 유창성이 확보되지 않으면 작업기억이 포화되어 의미 독해가 불가능하다 (Table 27.2)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card highlight-card">
-          <h3>1. 선택 (Selecting)</h3>
-          <p>텍스트 지문에서 핵심 개념과 중심 문장을 선별하여 작업기억에 적재</p>
+          <h3>🔤 4단계 유창성 발달 (Table 27.2)</h3>
+          <ul>
+            <li><strong>1. 음소 인식</strong>: 단어가 개별 소리(Phonemes)들로 쪼개짐을 자각 ('cat' = /k/, /æ/, /t/)</li>
+            <li><strong>2. 단어 식별</strong>: 글자와 소리의 일대일 대응 파닉스(Phonics) 숙달</li>
+            <li><strong>3. 비단어 공격(Word Attack)</strong>: 낯선 단어도 규칙에 따라 정확히 발음</li>
+            <li><strong>4. 자동화된 유창성</strong>: 의식적 노력 없이 눈으로 스캔하며 1초에 수 단어 즉각 해독</li>
+          </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 조직 (Organizing)</h3>
-          <p>선택된 명제들을 원인-결과, 비교-대조의 구조(Prose Structure)로 체계화</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">3. 통합 (Integrating)</h3>
-          <p>장기기억의 사전 지식(Prior Knowledge)과 결합하여 심층 멘탈 모델 완성</p>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">4. 메타인지 조절</h3>
-          <p>자신의 독해 이해도를 모니터링하고 막히는 부분을 재독·수리(Repair)</p>
+        <div class="card">
+          <h3>⚡ 인지 부하 이론과의 연결</h3>
+          <p>단어 해독이 자동화(Automaticity)되지 못한 아동은 작업기억 용량의 90%를 글자 읽기에 소진하여, <strong>문장의 '의미(Meaning)'를 파악할 인지 자원이 완전히 고갈됨</strong></p>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>27.1.1절의 Table 27.3(읽기 독해의 4대 인지 과정: Mayer의 SOI 모델)을 분석합니다.</p>
+        <p>읽기 유창성(Reading Fluency)이 왜 깊은 독해(Comprehension)를 위한 필수 전제조건인지 인지부하 관점에서 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>능숙한 독자는 글을 수동적으로 스캔하지 않고, 사전 지식을 동원해 글의 논리 구조를 능동적으로 재구성(Generative Processing)합니다.</p>
+        <p>메이어(Table 27.2): 난독증이나 읽기 부진의 80% 이상은 음소 인식의 결함에서 출발합니다. 조기 파닉스 스캐폴딩이 결정적입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>교과서 요약하기 활동이 어떻게 SOI 모델의 '선택과 조직'을 촉진하는지 설명하세요.</p>
+        <p>초등 저학년 읽기 지도에서 유창성 낭독 훈련의 중요성을 논의하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 5: 27.1.1 Cognitive Writing Model (Table 27.4) -->
+    <!-- Slide 5: Mayer's SOI Model of Reading -->
     <section class="slide" data-index="4">
-      <span class="slide-badge">작문 인지 모델 · Section 27.1.1 (Table 27.4)</span>
-      <h2 class="slide-title">Table 27.4 작문의 3대 인지 과정 (Flower & Hayes 모델)</h2>
-      <p class="slide-subtitle">계획하기, 변환하기, 검토하기가 끊임없이 반복 순환하는 문제해결 과정 (Smagorinsky & Mayer)</p>
+      <span class="slide-badge">독해 SOI 모델 · Section 27.1.1</span>
+      <h2 class="slide-title">리처드 메이어(Mayer)의 독해 인지 모델: SOI 프레임워크</h2>
+      <p class="slide-subtitle">선택(Selecting) ➔ 조직(Organizing) ➔ 통합(Integrating) ➔ 조절(Regulating) (Table 27.3)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card">
+          <h3>1. 선택 (Selecting)</h3>
+          <p>텍스트에서 가장 중요한 핵심 단어와 핵심 명제(Idea Units)를 필터링</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 조직 (Organizing)</h3>
+          <p>선택된 명제들을 인과적·위계적 구조도(Prose Structure)로 뼈대 구축</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>3. 통합 (Integrating)</h3>
+          <p>장기기억의 사전 지식(Schema)과 결합하여 깊은 <strong>상황 모델(Situation Model)</strong> 완성</p>
+        </div>
+        <div class="card">
+          <h3>4. 조절 (Regulating)</h3>
+          <p>메타인지 모니터링: "내가 지금 제대로 이해하고 있는가?" 점검 및 다시 읽기</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>리처드 메이어의 고전적 독해 모델인 SOI(Selecting, Organizing, Integrating) 프레임워크를 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>텍스트를 단순히 눈으로 훑는 것은 독해가 아닙니다. 저자의 명제를 추출하여 내 머릿속 지식망에 닻을 내리는 능동적 인지 구성 과정입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들에게 독해 후 '요약 마인드맵(조직)'을 그리게 하는 활동의 인지적 효과를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Cognitive Processes of Writing -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">작문 인지 과정 · Section 27.1.1</span>
+      <h2 class="slide-title">플라워 & 헤이즈(Flower & Hayes)의 작문 3단계 모델</h2>
+      <p class="slide-subtitle">계획하기(Planning) ➔ 변환하기(Translating) ➔ 검토하기(Reviewing) (Table 27.4)</p>
       <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
-        <div class="card highlight-card" style="border-color: var(--accent-blue);">
+        <div class="card highlight-card">
           <h3>1. 계획하기 (Planning)</h3>
           <ul>
-            <li><strong>생성 (Generating)</strong>: 장기기억에서 아이디어 인출</li>
-            <li><strong>조직 (Organizing)</strong>: 논리적 개요(Outline) 작성</li>
-            <li><strong>목표 설정 (Goal Setting)</strong>: 독자 고려</li>
+            <li><strong>아이디어 생성</strong>: 장기기억에서 관련 경험 검색</li>
+            <li><strong>목표 설정</strong>: 독자와 목적 분석</li>
+            <li><strong>개요 조직</strong>: 논리적 목차 구조화</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>2. 변환하기 (Translating)</h3>
+          <ul>
+            <li>머릿속의 비선형적 사고망을 <strong>선형적 문법 텍스트 문장으로 부호화(Encoding)</strong></li>
+            <li>어휘 선택, 맞춤법, 문장 결합</li>
           </ul>
         </div>
         <div class="card highlight-card" style="border-color: var(--accent-emerald);">
-          <h3 style="color: var(--accent-emerald);">2. 변환하기 (Translating)</h3>
+          <h3>3. 검토하기 (Reviewing)</h3>
           <ul>
-            <li>머릿속의 비선형적 사고를 <strong>선형적 문법 텍스트로 부호화(Encoding)</strong></li>
-            <li>어휘 선택, 문장 구문 구성, 타이핑/필기</li>
-          </ul>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-amber);">
-          <h3 style="color: var(--accent-amber);">3. 검토하기 (Reviewing)</h3>
-          <ul>
-            <li><strong>읽기 (Reading)</strong>: 작성된 초안 점검</li>
-            <li><strong>수정 (Editing)</strong>: 논리적 비약과 문법 오류 진단 및 리팩터링</li>
+            <li>작성된 글을 객관적 독자의 시선으로 다시 읽기(Reading)</li>
+            <li>논리적 비약과 결함을 진단하고 수정(Editing/Refining)</li>
           </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>27.1.1절의 Table 27.4(작문의 3대 인지 과정)와 플라워-헤이즈(Flower & Hayes) 모델을 해설합니다.</p>
+        <p>인지심리학 역사상 가장 영향력 있는 작문 모델인 플라워와 헤이즈(Flower & Hayes, 1981)의 순환적 작문 과정을 설명합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>작문은 선형적이지 않습니다. 문장을 쓰다가도(Translating) 다시 새로운 아이디어를 떠올리고(Planning), 즉시 앞 문장을 수정(Reviewing)하는 끊임없는 순환적 인지 과정입니다.</p>
+        <p>작문은 1 ➔ 2 ➔ 3으로 끝나는 일직선이 아닙니다. 글을 쓰는 도중에도 끊임없이 계획을 수정하고 되돌아가는 고도의 재귀적(Recursive) 인지 활동입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>소프트웨어 개발의 기획-코딩-코드리뷰 사이클과 작문 모델을 대조해 보세요.</p>
+        <p>학생들이 작문할 때 '개요 짜기(계획)'와 '퇴고(검토)'를 건너뛰고 바로 본문부터 쓰는 습관을 교정하는 비계를 토론하세요.</p>
       </div>
     </section>
 
-    <!-- Slide 6: 27.1.2 & 27.1.3 Genre & Community Knowledge -->
-    <section class="slide" data-index="5">
-      <span class="slide-badge">장르와 사회문화 · Section 27.1.2 & 27.1.3</span>
-      <h2 class="slide-title">27.1.2 과제 특정 장르 지식 & 27.1.3 공동체 문화 실천</h2>
-      <p class="slide-subtitle">학문 장르의 구조적 규칙(Hillocks)과 비고츠키적 문화 매개 담화 (Smagorinsky)</p>
-      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>📐 27.1.2 과제 특정 장르 지식</h3>
-          <ul>
-            <li>에세이, 과학 실험 보고서, 문학 비평 등 <strong>각 학문 도메인 고유의 서사 규범 체화</strong> (Hillocks)</li>
-            <li>단순 작문 기술이 아닌 '학문적 담화 프로토콜' 학습</li>
-          </ul>
-        </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🌐 27.1.3 공동체 문화 실천</h3>
-          <ul>
-            <li>텍스트는 문화적 정체성과 권력 관계를 매개함 (Vygotsky)</li>
-            <li>학교 표준 규범의 지배성을 성찰하고 <strong>다중 문해력(Multiliteracies)</strong> 수용</li>
-          </ul>
-        </div>
-      </div>
-      <div class="presenter-note" style="display:none;">
-        <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>27.1.2절(과제 특정 장르 지식)과 27.1.3절(공동체 특정 문화 지식)을 분석합니다.</p>
-        <h4>📖 원문 심층 학술 해설</h4>
-        <p>피터 스마고린스키 교수는 메이어의 순수 인지 모델에 비고츠키적 사회문화주의를 접목하여, 글쓰기가 사회적 맥락과 장르 속에서 일어남을 강조합니다.</p>
-        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>장르에 대한 이해 없는 글쓰기 지도의 한계를 지적하세요.</p>
-      </div>
-    </section>
-
-    <!-- Slide 7: Summary & Looking Ahead to Ch 28 -->
+    <!-- Slide 7: Knowledge Telling vs Transforming -->
     <section class="slide" data-index="6">
-      <span class="slide-badge">결론 & 다음 챕터 예고 · Section 27.3</span>
-      <h2 class="slide-title">27.3 Chapter 27 총괄 결론 & Chapter 28 예술 교육 예고</h2>
-      <p class="slide-subtitle">문해력의 텍스트 구성에서 창의적 시각 표현, Part V 최종 장 '예술 교육 연구'로!</p>
+      <span class="slide-badge">작문 발달 · Section 27.1.1</span>
+      <h2 class="slide-title">지식 나열(Knowledge Telling) vs 지식 변형(Transforming)</h2>
+      <p class="slide-subtitle">베레이터와 스카다말리아(Bereiter & Scardamalia, 1987)의 작문 전문성 이론</p>
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="card highlight-card">
-          <h3>🌟 Ch 27 문해력 학습 연구의 핵심 교훈</h3>
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 초보자: 지식 나열 (Knowledge Telling)</h3>
           <ul>
-            <li>1. 유창성 자동화로 고차원 독해 인지 자원을 확보하라</li>
-            <li>2. 독해의 SOI(선택-조직-통합) 모델을 훈련하라</li>
-            <li>3. 작문의 계획-변환-검토 순환 루프를 체화하라</li>
-            <li>4. 도메인별 장르 규칙과 사회문화적 실천을 통합하라</li>
+            <li>"주제에 대해 내가 아는 것을 생각나는 대로 줄줄 써 내려감"</li>
+            <li>독자의 수준, 글의 논리 구조, 수사학적 설득력을 전혀 고려하지 않음</li>
+            <li>글을 쓰고 나서도 필자 자신의 사고에는 아무런 변화가 없음</li>
           </ul>
         </div>
-        <div class="card highlight-card" style="border-color: var(--accent-violet);">
-          <h3 style="color: var(--accent-violet);">🚀 Chapter 28 예고: 예술 교육 (Arts Education)</h3>
-          <p><strong>Erica Rosenfeld Halverson & Kimberly M. Sheridan</strong></p>
-          <p>스튜디오 사고의 습관(Studio Habits of Mind: 관찰, 구상, 표현, 반성, 탐색)과 메이커 운동의 융합! Part V 대단원의 완결!</p>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 전문가: 지식 변형 (Knowledge Transforming)</h3>
+          <ul>
+            <li><strong>내용 공간(Content Space)과 수사 공간(Rhetorical Space) 간의 끊임없는 상호작용</strong></li>
+            <li>"독자를 설득하려면 내 아이디어를 어떻게 재구성해야 하는가?" 고민</li>
+            <li><strong>글을 쓰는 과정 자체를 통해 자신의 지식이 새롭게 재구조화되고 진화함</strong></li>
+          </ul>
         </div>
       </div>
       <div class="presenter-note" style="display:none;">
         <h4>🎯 강의 목표 및 핵심 맥락</h4>
-        <p>Chapter 27(27.0~27.3)을 정리하고 Part V의 최종장인 Chapter 28(예술 교육과 학습과학)을 예고합니다.</p>
+        <p>초보 작문자(Knowledge Telling)와 전문가 작문자(Knowledge Transforming)의 결정적 인지 차이를 명쾌히 대조합니다.</p>
         <h4>📖 원문 심층 학술 해설</h4>
-        <p>Chapter 28은 예술 교육이 단순한 감상이나 기능 습득이 아니라, 창의적 문제 해결과 메이커 실천의 인지적 기반임을 밝힙니다.</p>
+        <p>스카다말리아와 베레이터: 진정한 글쓰기는 '이미 알고 있는 것을 배설하는 것'이 아니라 '글을 쓰면서 새로운 지식을 창조하고 변형하는 것'입니다.</p>
         <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
-        <p>다음 Chapter 28로 나아갑니다.</p>
+        <p>학생들에게 "글을 쓰기 전과 글을 다 쓴 후 여러분의 생각이 어떻게 달라졌는가?"를 성찰하게 하는 과제를 제안하세요.</p>
       </div>
     </section>
 
-  </main>
+    <!-- Slide 8: Disciplinary Genre Knowledge -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">교과별 문해력 · Section 27.1.2</span>
+      <h2 class="slide-title">교과별 장르 문해력(Disciplinary Literacy)과 비계</h2>
+      <p class="slide-subtitle">학문 분야마다 고유한 언어적 문법, 서사 구조, 정당화 규칙</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>과학 장르 (Science)</h3>
+          <p><strong>수동태, 객관적 수치, IMRaD 구조</strong><br/>(서론, 방법, 결과, 고찰)와 증거 기반 CER 논증</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>역사 장르 (History)</h3>
+          <p><strong>사료 인용, 시대적 맥락화, 다원적 관점</strong><br/>가상 역사와 복합 인과 내러티브 서술</p>
+        </div>
+        <div class="card">
+          <h3>문학 비평 장르 (Literature)</h3>
+          <p><strong>은유, 복선, 상징 해석, 인물 심리 분석</strong><br/>텍스트의 심층 테마에 대한 수사학적 비평</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>각 학문 분야(과학, 역사, 문학)마다 글을 쓰는 장르적 문법과 프로토콜이 다름을 이해하고 '교과별 문해력'의 필요성을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>샤나한(Shanahan & Shanahan, 2008): 기본 문해력(초등) ➔ 중간 문해력(중등) ➔ 교과 전문 문해력(고등/전문가)으로 피라미드가 좁아집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>과학 보고서를 문학 소설처럼 감정적으로 썼을 때 발생하는 학술적 소통 실패 사례를 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Sociocultural Practices & Identity -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">사회문화적 실천 · Section 27.1.3</span>
+      <h2 class="slide-title">비고츠키 사회문화주의: 문화적 도구와 정체성</h2>
+      <p class="slide-subtitle">피터 스마고린스키의 문화-역사적 활동 이론(CHAT) 관점의 문해력</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🛠️ 매개된 활동 (Mediated Action)</h3>
+          <ul>
+            <li>글과 텍스트는 중립적인 정보가 아니라, <strong>특정 문화 공동체의 역사와 권력 관계가 응축된 '매개 도구(Mediational Tools)'</strong></li>
+            <li>어떤 텍스트를 읽고 쓰는가는 학습자가 "나는 어떤 사람인가"를 규정하는 **정체성 형성(Identity Construction)**과 직결</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🛡️ 비판적 문해력 (Critical Literacy)</h3>
+          <p>텍스트 뒤에 숨겨진 지배 계급의 이데올로기, 젠더 편향, 인종적 선입견을 비판적으로 해체하고 재작성하는 역량</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>스마고린스키 교수의 비고츠키 사회문화주의 및 CHAT(문화역사적 활동이론) 기반 문해력 모델을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>프레이리(Paulo Freire): "글을 읽는 것은 세상을 읽는 것(Reading the word is reading the world)이다." 문해력은 사회 변혁의 열쇠입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>대중 광고나 미디어 뉴스에 숨겨진 프레임과 편향을 비판적으로 읽어내는 비판적 리터러시 활동을 구안하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Multiliteracies & Digital Media -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">다중문해력 · Section 27.2</span>
+      <h2 class="slide-title">뉴런던그룹(New London Group)의 다중문해력(Multiliteracies)</h2>
+      <p class="slide-subtitle">텍스트를 넘어 이미지, 오디오, 인터랙티브 웹이 융합된 다중양식(Multimodality)</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 언어 양식 (Linguistic)</h3>
+          <p>전통적인 글자, 어휘, 문법, 서사 구조</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 시각·공간 양식 (Visual)</h3>
+          <p>이미지, 다이어그램, 인포그래픽, UI 레이아웃, 컬러</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>3. 동적·제스처 양식 (Gestural)</h3>
+          <p>유튜브 영상, 팟캐스트 오디오, 하이퍼링크 상호작용</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>디지털 시대의 필수 패러다임인 뉴런던그룹(1996)의 '다중문해력(Multiliteracies)' 이론을 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>21세기의 리터러시는 인쇄된 종이책만 읽는 것이 아닙니다. 텍스트, 이미지, 비디오가 복합 결합된 멀티모달 콘텐츠를 비판적으로 해석하고 창작하는 역량입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들의 전통 독후감을 '1분 숏폼 영상 북트레일러 제작'으로 바꾸었을 때 발휘되는 다중문해력을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Cultural Modeling Carol D. Lee -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">문화적 모델링 · Section 27.2</span>
+      <h2 class="slide-title">캐롤 리(Carol D. Lee)의 문화적 모델링(Cultural Modeling)</h2>
+      <p class="slide-subtitle">아동의 일상 대화와 힙합 문화를 정규 고전문학 해석의 지적 징검다리로 활용</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎤 시그니파잉(Signifying)과 일상 은유</h3>
+          <ul>
+            <li>아프리카계 미국 청소년들이 일상 대화에서 사용하는 정교한 풍자, 은유, 반어법(Signifying)</li>
+            <li>기존 학교는 이를 '비표준적 속어'로 배척했으나, 캐롤 리는 이를 **고도의 문학적 수사 자원**으로 재평가</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🌉 셰익스피어 고전문학으로의 전이</h3>
+          <p>일상 풍자 대화의 은유 구조를 먼저 분석하게 한 후 토니 모리슨과 셰익스피어 텍스트에 적용 ➔ <strong>소외계층 학생들의 문학 독해력 급상승</strong> 실증 (Lee, 2007)</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>문화 감응 교수법의 대표 모델인 캐롤 리 교수의 '문화적 모델링(Cultural Modeling)' 이론을 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>학생들의 문화적 배경은 학습의 결손(Deficit)이 아니라, 고차원 학술 지식으로 건너가는 강력한 인지적 자산(Asset/Fund of Knowledge)입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>K-pop 가사나 웹툰의 복선/은유를 국어 시간 고전문학 수업의 도입부로 활용하는 방안을 모색하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: AI & Prompt Literacy -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">인공지능과 문해력 · Section 27.3</span>
+      <h2 class="slide-title">생성형 AI 시대의 프롬프트 문해력과 비판적 글쓰기</h2>
+      <p class="slide-subtitle">LLM(ChatGPT)과 협업하는 차세대 작문 프로세스</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>프롬프트 엔지니어링</h3>
+          <p>AI에게 명확한 맥락, 역할, 제약조건을 지시하는 정밀한 서면 의사소통 역량</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>비판적 팩트체크</h3>
+          <p>AI가 생성한 초안의 할루시네이션, 논리적 비약, 편향을 선별하는 <strong>고도화된 검토(Reviewing)</strong></p>
+        </div>
+        <div class="card">
+          <h3>공동 저자십 (Co-authorship)</h3>
+          <p>AI의 브레인스토밍을 바탕으로 인간 고유의 통찰과 독창적 내러티브 융합</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>생성형 AI 시대에 작문의 핵심 역량이 '단순 타이핑'에서 '프롬프트 설계 및 비판적 퇴고/검토(Reviewing)'로 진화함을 밝힙니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>AI가 초안을 1초 만에 써주는 시대일수록, 학생에게는 텍스트의 진위와 품질을 판별하는 '메타인지적 검토 능력'이 더욱 절실해집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학생들에게 AI가 쓴 글을 첨삭하고 오류를 찾아내는 'AI 글 디버깅' 과제를 제안하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 27</span>
+      <h2 class="slide-title">코드 리딩(Code Reading)과 소프트웨어 문서화 문해력</h2>
+      <p class="slide-subtitle">프로그래밍 언어를 읽고 쓰는 행위는 리터러시 인지 모델의 완벽한 확장</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 코드 독해의 SOI 모델</h3>
+          <ul>
+            <li><strong>Selecting</strong>: 핵심 함수 정의와 루프 조건문 식별</li>
+            <li><strong>Organizing</strong>: 제어 흐름도(Control Flow Graph)로 머릿속 추상화</li>
+            <li><strong>Integrating</strong>: 소프트웨어 아키텍처 및 알고리즘 라이브러리와 매핑</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>📝 기술 문서화 (Technical Writing)</h3>
+          <ul>
+            <li>API 도큐멘테이션 및 클린 코드 주석 작성 역량</li>
+            <li>개발자 커뮤니티(GitHub)의 지식 변형(Transforming) 실천</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>문해력의 인지 모델(SOI, 지식 변형)이 소프트웨어 엔지니어링의 코드 읽기 및 도큐멘테이션에 어떻게 1:1로 적용되는지 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>전문 개발자는 코드 작성 시간보다 남이 짠 코드를 '읽고 이해하는(Code Reading)' 데 5배 이상의 시간을 씁니다. 코드 리터러시가 핵심입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>코딩 교육에서 코드 작성뿐 아니라 '오픈소스 코드 리뷰 및 해설문 쓰기'를 도입하는 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 27.4</span>
+      <h2 class="slide-title">텍스트를 넘어 세상을 비판적으로 읽고 쓰는 주체</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 문해력 학습의 3대 나침반</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>인지적 유창성과 독해</h3>
+          <p>자동화된 해독과 메이어의 SOI 모델을 통해 능동적 상황 모델 구축</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>지식 변형 작문</h3>
+          <p>내용과 수사 공간의 상호작용을 통해 글을 쓰며 자신의 생각을 진화시키기</p>
+        </div>
+        <div class="card">
+          <h3>다중양식과 문화적 실천</h3>
+          <p>디지털 미디어와 문화적 자산을 포용하여 사회적 주체로 성장</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 27의 모든 핵심 통찰을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>문해력은 단순히 지식을 수동적으로 흡수하는 그릇이 아니라, 인간이 언어와 미디어를 쥐고 자신의 삶과 세계를 새롭게 직조해 나가는 가장 강력한 힘입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"여러분이 생각하는 21세기 진정한 문해력자(Literate Person)의 조건은 무엇인가요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 28 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part V</span>
+      <h2 class="slide-title">다음 여정: Chapter 28 예술 학습 (Arts Learning)</h2>
+      <p class="slide-subtitle">에리카 할버슨(Erica Halverson) & 킴벌리 셰리던(Kimberly Sheridan)의 예술 학습과학</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 27 vs Ch 28 연계성</h3>
+          <ul>
+            <li><strong>Ch 27 리터러시 학습</strong>: 문자, 언어, 디지털 다중양식 텍스트의 해석과 작문</li>
+            <li><strong>Ch 28 예술 학습</strong>: 미술, 연극, 음악, 미디어 제작을 통한 <strong>스튜디오 사고 습관(Studio Habits of Mind), 예술적 체화 표상, 창의적 정체성</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 Part V 교과별 학습의 예술적 완성</h3>
+          <p>수학(23) ➔ 과학(24) ➔ 복잡계(25) ➔ 역사(26) ➔ 리터러시(27) ➔ 예술(28)로 완성되는 전인적 학습과학의 정수</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 27을 마치고, Part V의 마지막 장인 Chapter 28(Arts Learning)과의 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>하버드 프로젝트 제로(Project Zero)의 스튜디오 사고 습관(SHoM)과 청소년 미디어 창작 연구로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 28을 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
 
   <footer>
     <div class="footer-left">Chapter 27: Learning to Be Literate (Peter Smagorinsky & Richard E. Mayer)</div>
-    <div class="footer-center" id="slide-counter">01 / 07</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
     <div class="nav-buttons">
       <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
       <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
