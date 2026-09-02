@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 31: Advances in Teacher Learning Research</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-violet: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-violet: #6366f1;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.55;
+    }
+
+    #progress-container {
+      width: 100%; height: 5px; background: var(--border-color);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transition: width 0.3s ease;
+    }
+
+    header {
+      padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 50;
+      background: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+    }
+    .book-title {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-controls { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;
+    }
+    .ctrl-btn:hover { background: var(--border-color); transform: translateY(-1px); }
+    .ctrl-btn.active-notes { background: var(--accent-amber); color: #000; font-weight: 700; border-color: var(--accent-amber); }
+
+    #stage {
+      flex: 1; position: relative; overflow: hidden; display: flex;
+      justify-content: center; align-items: center; padding: 1rem 2rem 3rem 2rem;
+    }
+
+    .slide {
+      position: absolute; width: 94%; max-width: 1280px; height: 90%;
+      opacity: 0; transform: translateX(40px) scale(0.98); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      overflow-y: auto; padding: 1rem;
+    }
+    .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+
+    .slide-badge {
+      display: inline-block; align-self: flex-start; padding: 0.2rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15); border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;
+    }
+
+    .card-grid {
+      display: grid; gap: 0.85rem; width: 100%; margin-top: 0.4rem;
+    }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1rem 1.15rem; box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; gap: 0.35rem; backdrop-filter: blur(8px);
+    }
+    .card h3 {
+      font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .card ul { margin-left: 1.2rem; }
+    .card strong { color: var(--text-primary); }
+
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid var(--accent-blue);
+    }
+
+    footer {
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-primary); border-top: 1px solid var(--border-color); z-index: 50;
+    }
+    .footer-left { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-center { font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); }
+    .nav-buttons { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--accent-blue); color: #000; }
+
+    /* Presenter Notes Drawer */
+    #notes-drawer {
+      position: fixed; right: -520px; top: 0; width: 500px; height: 100vh;
+      background: var(--bg-secondary); border-left: 2px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 150;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    #notes-drawer.open { right: 0; }
+
+    .drawer-header {
+      padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary);
+    }
+    .drawer-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-amber); display: flex; align-items: center; gap: 0.4rem; }
+    .drawer-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .action-btn {
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;
+    }
+    .action-btn:hover { background: var(--border-color); }
+    .close-drawer { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem; }
+    .close-drawer:hover { color: var(--text-primary); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .note-view {
+      font-size: 0.88rem; line-height: 1.6; color: var(--text-primary);
+    }
+    .note-view h4 {
+      font-size: 0.95rem; font-weight: 700; color: var(--accent-blue); margin: 0.8rem 0 0.3rem 0;
+      border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem;
+    }
+    .note-view h4:first-child { margin-top: 0; }
+    .note-view p { color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view ul { margin-left: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .note-view strong { color: var(--text-primary); }
+
+    .note-editor {
+      width: 100%; height: 100%; display: none; flex-direction: column; gap: 0.5rem;
+    }
+    .note-editor.active { display: flex; }
+    .note-textarea {
+      flex: 1; width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-family: var(--font-sans);
+      font-size: 0.85rem; padding: 0.8rem; line-height: 1.5; resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header>
+    <div class="book-title">The Cambridge Handbook of the Learning Sciences (3rd Ed.)</div>
+    <div class="header-controls">
+      <button class="ctrl-btn" id="theme-btn" title="테마 변경 (단축키: 🌓)">🌓 테마</button>
+      <button class="ctrl-btn" id="notes-btn" title="발표자 노트 (단축키: N)">📝 발표자 노트 (N)</button>
+      <button class="ctrl-btn" id="fs-btn" title="전체화면 (단축키: F)">⛶ 전체화면 (F)</button>
+    </div>
+  </header>
+
+  <main id="presentation-container">
+    <!-- Slide 1: Cover -->
+    <section class="slide" data-index="0">
+      <span class="slide-badge">Chapter 31 · Part VI Context</span>
+      <h1 class="slide-title">Advances in Teacher Learning Research</h1>
+      <p class="slide-subtitle">학습과학에서의 교사 학습 연구 발전: 교사를 학습자로 보기 — 분산된 전문성과 교사용 교육과정 자료</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--space-4);">
+        <div class="card highlight-card">
+          <h3>👥 저자 및 출처</h3>
+          <p><strong>Barry J. Fishman</strong> (Univ of Michigan)<br/><strong>Carol K. K. Chan</strong> (Univ of Hong Kong)<br/><strong>Elizabeth A. Davis</strong> (Univ of Michigan)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><em>The Cambridge Handbook of the Learning Sciences</em> (3rd ed.), Chapter 31</p>
+        </div>
+        <div class="card">
+          <h3>🎯 챕터 핵심 아젠다</h3>
+          <ul>
+            <li><strong>학습자로서의 교사</strong>: 일회성 전달 연수에서 상황적 협력 학습으로</li>
+            <li><strong>비디오 클럽과 수업 주목</strong>: 학생 사고에 집중하는 전문적 안목(Noticing)</li>
+            <li><strong>교사용 교육과정 자료 (Educative Curriculum)</strong>: 교사의 PCK를 스캐폴딩하는 교재</li>
+            <li><strong>실천 기반 리허설 & DBIR</strong>: 수업 시연, 동료 코칭, 네트워크 개선 공동체(NICs)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>교육 개혁의 성패를 가르는 가장 핵심적인 주체인 '교사'를 능동적 인지·사회적 학습자로 규정하고, 학습과학이 밝혀낸 교사 전문성 개발(TPD)의 최신 혁신들을 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>배리 피시먼(DBIR 창시자), 캐롤 챈(지식구축 교사망 대가), 엘리자베스 데이비스(교사용 교육과정 창시자) 교수의 기념비적 공저입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"방학 때 듣는 일회성 강의식 교원 연수는 왜 2학기 교실 수업을 거의 바꾸지 못할까요?"로 토론을 시작하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: Teachers as Learners -->
+    <section class="slide" data-index="1">
+      <span class="slide-badge">학습자로서의 교사 · Section 31.0</span>
+      <h2 class="slide-title">학생의 학습 혁신은 교사의 학습 혁신에서 출발한다</h2>
+      <p class="slide-subtitle">학습과학 이론은 학생뿐 아니라 교사에게도 똑같이 적용되어야 한다</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 교육 정책의 거대한 모순</h3>
+          <ul>
+            <li>학생에게는 "구성주의, 탐구, 협력, 토론으로 배워라"고 요구함</li>
+            <li>정작 교사 연수에서는 강당에 모아놓고 "3시간 동안 가만히 앉아 강의를 들어라"고 주입</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">💡 학습과학의 교사관 (Fishman et al.)</h3>
+          <ul>
+            <li>교사 또한 자신의 실제 수업 실천(Practice) 속에서 동료들과 함께 지식을 구성하는 <strong>능동적 상황적 학습자</strong></li>
+            <li>교사의 배움에도 비계(Scaffolding), 메타인지, 협력 공동체 필수</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학생 중심 구성주의 교육을 하려면 교사 교육 역시 구성주의적이고 협력적으로 재설계되어야 함을 역설합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>피시먼 등(2022): 교사는 수동적인 정책 집행관이 아니라, 복잡한 교실 맥락에 맞추어 교육과정을 재창조하는 '전문 설계자(Curriculum Designer)'입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 참여했던 연수 중 실제로 수업을 바꾸었던 가장 유익했던 연수의 특징을 공유해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Failure of Traditional PD -->
+    <section class="slide" data-index="2">
+      <span class="slide-badge">전통 연수의 한계 · Section 31.0</span>
+      <h2 class="slide-title">일회성 주입식 강연(One-Shot Workshop)의 실패</h2>
+      <p class="slide-subtitle">수천억 원의 예산을 낭비하는 전통적 교원 연수의 3대 결함</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 탈맥락성 (Decontextualized)</h3>
+          <p>내 교실의 구체적 학생 상황과 동떨어진 추상적 일반 이론만 나열</p>
+        </div>
+        <div class="card">
+          <h3>2. 고립성 (Isolated)</h3>
+          <p>연수가 끝나면 다시 닫힌 교실로 돌아가 혼자 씨름하다 포기</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">3. 후속 지원 부재</h3>
+          <p>실제 수업 적용 시 발생하는 실패와 혼란에 대한 지속적 코칭 전무</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전통적 교원 연수(One-shot workshop)의 구조적 실패 원인을 규명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>보르코(Hilda Borko, 2004): 의미 있는 교사 변화를 위해서는 '지속성(Sustained)', '교과 집중(Content-focused)', '협력적 성찰'이 보장되어야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>학교 현장에서 연수 이수 시간(연수 점수) 채우기식 제도의 부작용을 비판적으로 짚어보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Video Clubs & Distributed Expertise -->
+    <section class="slide" data-index="3">
+      <span class="slide-badge">핵심 기둥 ① · Section 31.1.1</span>
+      <h2 class="slide-title">사회적 지원과 분산된 전문성: 비디오 클럽(Video Clubs)</h2>
+      <p class="slide-subtitle">자신의 수업 영상을 동료 교사들과 함께 보며 성찰하는 전문적 학습 공동체(PLC)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>📹 비디오 클럽의 운영 방식</h3>
+          <ul>
+            <li>교사가 자신의 교실 수업 중 5~10분 분량의 하이라이트 영상을 녹화해 옴</li>
+            <li>동료 교사들과 함께 둘러앉아 영상을 보며 특정 대화 지점을 정지하고 분석</li>
+            <li>비판이나 평가가 아니라 <strong>"이 순간 학생들에게 무슨 일이 일어나고 있었는가?"</strong>를 공동 탐구</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 분산된 전문성 (Distributed Expertise)</h3>
+          <p>한 명의 완벽한 멘토가 가르치는 것이 아니라, 참여 교사들 각자의 다양한 관점이 융합되어 교실 전체의 지혜로 창발</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>교사 학습의 가장 강력한 실천 도구인 '비디오 클럽(Video Clubs)'의 구조와 사회적 학습 효과를 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>비디오는 교실의 복잡한 상호작용을 '다시 재생하고 천천히 뜯어볼 수 있는 영구적 인공물'로 만들어 줍니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>동료에게 자신의 수업 비디오를 공개할 때 느끼는 불안감을 해소하기 위한 안전한 규칙을 수립하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Professional Teacher Noticing -->
+    <section class="slide" data-index="4">
+      <span class="slide-badge">수업 주목 역량 · Section 31.1.1</span>
+      <h2 class="slide-title">미리엄 셔린(Miriam Sherin)의 교사 수업 주목(Teacher Noticing)</h2>
+      <p class="slide-subtitle">"교사의 행동"에서 "학생의 사고(Student Thinking)"로 시선의 코페르니쿠스적 전환</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 초보 교사의 시선 (Self-focused)</h3>
+          <ul>
+            <li>"내가 판서를 예쁘게 썼는가?", "목소리가 너무 크진 않았나?", "수업 진도를 다 끝냈는가?"</li>
+            <li>오직 교사 자신의 행동과 통제에만 모든 주의 집중</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 숙련된 교사의 전문적 주목 (Student-focused)</h3>
+          <ul>
+            <li><strong>"저 학생이 던진 오답 속에 어떤 기발한 직관적 아이디어가 숨어 있는가?"</strong></li>
+            <li>학생들의 미묘한 담화 턴과 개념적 혼란 신호를 예리하게 포착(Attending)하고 해석(Interpreting)하여 적시에 개입(Deciding)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>미리엄 셔린과 반 에스(van Es & Sherin, 2008)의 '교사 수업 주목(Teacher Noticing)' 3단계 모델을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>전문적 수업 주목 역량(Professional Noticing)은 단순 관찰이 아니라, 학생의 발언을 교과 핵심 개념(DCI)과 연결하여 즉각적 교수 결정을 내리는 지적 능력입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>수업 중 한 학생이 엉뚱한 오답을 말했을 때, 그것을 단순 오답으로 넘기지 않고 학급 전체의 탐구로 승격시키는 발문을 연습하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Knowledge Building Teacher Network -->
+    <section class="slide" data-index="5">
+      <span class="slide-badge">교사 지식 구축 · Section 31.1.1</span>
+      <h2 class="slide-title">캐롤 챈(Carol Chan)의 지식 창조 교사 네트워크 (KBTN)</h2>
+      <p class="slide-subtitle">홍콩과 글로벌 교사들이 온라인 지식 포럼(Knowledge Forum)에서 협력적 수업 설계</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>수업 설계 아이디어 공유</h3>
+          <p>교사들이 자신이 만든 혁신적 단원 계획과 학생 활동지를 포럼에 노트로 등록</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>아이디어 개선 (Improvement)</h3>
+          <p>동료 교사들이 피드백을 달고 비판적 보완을 거쳐 공동의 '우수 수업 모델'로 승격</p>
+        </div>
+        <div class="card">
+          <h3>공동체 책무성</h3>
+          <p>"모든 교사가 함께 전문성을 키운다"는 집단 인지(Group Cognition) 실천</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 19의 지식 구축(Knowledge Building) 원리가 교사 전문성 개발에 적용된 KBTN 네트워크 사례를 분석합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>챈(Chan, 2011): 교사들이 학생에게 지식 구축을 가르치려면, 교사 스스로가 온라인 지식 구축 공동체의 생산적 멤버가 되어보아야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>우리 학교/교육청에서 교사 수업 자료 공유 플랫폼을 '단순 다운로드 게시판'에서 '협력적 지식 구축 포럼'으로 바꾸는 방안을 토론하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Practice-Based Teacher Education & Rehearsals -->
+    <section class="slide" data-index="6">
+      <span class="slide-badge">실천 기반 교사 교육 · Section 31.1.2</span>
+      <h2 class="slide-title">핵심 실천 리허설(Rehearsals)과 실시간 동료 코칭</h2>
+      <p class="slide-subtitle">수술실 시뮬레이션처럼 안전한 환경에서 고난도 발문과 담화 조율 반복 훈련</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎭 리허설(Rehearsal) 시뮬레이션</h3>
+          <ul>
+            <li>예비/현직 교사가 '교사' 역할을 맡고, 동료 교사들이 '다양한 반응을 보이는 학생' 역할을 맡아 10분간 수업 시연</li>
+            <li>수업 도중 지도 교수나 동료가 <strong>"잠깐 스톱! 이 순간 학생에게 어떤 반박 질문을 던지면 좋을까요?"</strong> 즉각 타임아웃 코칭</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 교육적 효과</h3>
+          <p>실제 교실에서 실패할 위험 없이, 고난도 담화 스캐폴딩(Talk Moves)을 근육 기억처럼 체화</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>실천 기반 교사 교육(Practice-Based Teacher Education)의 핵심 도구인 '리허설(Rehearsals)'의 작동 원리를 배웁니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>램퍼트(Magdalene Lampert et al., 2013): 비행기 조종사가 비행 시뮬레이터로 훈련하듯, 교사도 정교한 실천 시뮬레이션을 통해 복잡한 수업 상황 대처 능력을 길러야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>2인 1조로 '학생의 오개념에 대해 질문형 피드백 던지기' 리허설을 3분간 실습해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Educative Curriculum Materials -->
+    <section class="slide" data-index="7">
+      <span class="slide-badge">교사용 교육과정 자료 · Section 31.1.2</span>
+      <h2 class="slide-title">엘리자베스 데이비스의 '교사용 교육과정 자료 (Educative Curricula)'</h2>
+      <p class="slide-subtitle">단순한 학생용 워크시트를 넘어 교사의 교수학적 지식(PCK)을 스캐폴딩하는 교재</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>1. 설계 원리 설명</h3>
+          <p><strong>Rationale</strong><br/>"이 활동을 왜 이 순서로 배치했는지에 대한 학습과학적 인지 원리" 명시</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>2. 학생 사고 예측</h3>
+          <p><strong>Anticipating Ideas</strong><br/>"이 단계에서 학생들이 흔히 겪는 전형적 오개념과 이를 교정할 발문 가이드"</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3>3. 적응적 변형 팁</h3>
+          <p><strong>Adaptation</strong><br/>"학급 수준이 높거나 낮을 때 과제를 어떻게 수정해야 하는가?" 유연한 가이드</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>엘리자베스 데이비스(Elizabeth A. Davis & Krajcik, 2005) 교수의 '교사용 교육과정 자료(Educative Curriculum Materials)' 이론을 학습합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>전통 교사용 지도서가 "진도 순서"만 적어놓은 매뉴얼이었다면, 교사용 교육과정 자료는 교재 자체가 교사를 가르치는(Educative) 멘토 역할을 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신이 제작하는 수업 지도안에 '학생 오개념 예측'과 '설계 근거' 항목을 추가하는 방식을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Fidelity vs Adaptive Enactment -->
+    <section class="slide" data-index="8">
+      <span class="slide-badge">충실도에서 적응으로 · Section 31.1.2</span>
+      <h2 class="slide-title">맹목적 충실도(Fidelity)에서 '적응적 실행(Adaptive Enactment)'으로</h2>
+      <p class="slide-subtitle">교과서를 그대로 읊는 로봇이 아니라 교실 맥락에 맞추어 재설계하는 전문가</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card style-card" style="border-color: var(--accent-rose);">
+          <h3 style="color: var(--accent-rose);">🚫 과거: 엄격한 실행 충실도 (Fidelity of Implementation)</h3>
+          <ul>
+            <li>연구자가 만든 교육과정을 한 글자도 바꾸지 않고 그대로 따라 해야 성공이라고 간주</li>
+            <li>교실의 다양한 학생 특성과 돌발 상황을 무시하여 현장 정착 실패</li>
+          </ul>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-emerald);">
+          <h3 style="color: var(--accent-emerald);">✨ 현재: 적응적 실행 (Adaptive Enactment)</h3>
+          <ul>
+            <li>교육과정의 **핵심 설계 원리(Core Principles)**는 엄격히 유지하되, 세부 활동은 내 학생들의 문화와 수준에 맞추어 유연하게 변형</li>
+            <li><strong>교사의 주체적 전문성(Teacher Agency)의 회복</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>교육과정 실행 연구에서 '충실도(Fidelity)' 모델에서 '적응적 실행(Adaptive Enactment)' 모델로의 패러다임 전환을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>스필레인(James Spillane): 교사는 정책의 단순 소비자가 아니라, 자신의 신념과 교실 맥락을 통해 정책을 번역하고 재창조하는 해석자입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>표준 교육과정을 준수하면서도 교실 현장에 맞게 유연하게 재구성했던 성공 사례를 공유하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 10: CK, PCK, and TPACK -->
+    <section class="slide" data-index="9">
+      <span class="slide-badge">교사 지식 구조 · Section 31.2</span>
+      <h2 class="slide-title">교사 전문성 지식의 3대 축: CK ➔ PCK ➔ TPACK</h2>
+      <p class="slide-subtitle">슐만(Shulman)에서 미슈라 & 쾰러(Mishra & Koehler)로 이어진 교사 지식의 진화</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>교과 내용 지식 (CK)</h3>
+          <p><strong>Content Knowledge</strong><br/>수학, 과학, 역사, 컴퓨터 등 학문 도메인의 심층 전문 지식</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>교수학적 내용 지식 (PCK)</h3>
+          <p><strong>Pedagogical Content (Shulman)</strong><br/>어려운 개념을 학생 눈높이에 맞추어 비유, 예시, 비계로 가르치는 지식</p>
+        </div>
+        <div class="card highlight-card" style="border-color: var(--accent-indigo);">
+          <h3>테크놀로지 교수지식 (TPACK)</h3>
+          <p><strong>TPACK (Mishra & Koehler)</strong><br/>첨단 디지털 에듀테크 도구를 활용해 PCK를 극대화하는 융합 지식</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>교사 지식 연구의 이정표인 리 슐만(Lee Shulman, 1986)의 PCK와 현대의 TPACK 모델을 정립합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>컴퓨터 공학을 전공한 박사(CK)라도 아이들이 왜 반복문에서 헷갈리는지 모르면 수업에 실패합니다. PCK와 TPACK이 교사의 진정한 전문성입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>자신의 전공 교과에서 가장 핵심적인 PCK 노하우 한 가지를 소개해 보세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 11: AI-Assisted TPD and Discourse Analytics -->
+    <section class="slide" data-index="10">
+      <span class="slide-badge">AI와 교사 학습 · Section 31.2</span>
+      <h2 class="slide-title">AI 기반 담화 분석과 온라인 교사 코칭 플랫폼</h2>
+      <p class="slide-subtitle">음성 인식(STT)과 자연어 처리로 수업 중 교사 발화와 학생 참여 실시간 분석</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🎙️ AI 수업 분석 대시보드 (TalkMoves)</h3>
+          <ul>
+            <li>교사 스마트폰 녹음 ➔ AI가 교사의 발화(개방형 질문 vs 폐쇄형 지시) 비율 정량화</li>
+            <li><strong>"선생님이 전체 수업 시간의 85% 동안 혼자 말씀하셨습니다. 학생 대화 시간을 늘려보세요!"</strong> 객관적 데이터 피드백</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🌐 온라인 TPD 커뮤니티</h3>
+          <ul>
+            <li>시공간의 제약 없이 글로벌 교사들과 비디오 클립을 태깅하고 코멘트 교환</li>
+            <li>지속 가능한 평생 교사 학습 생태계 구축</li>
+          </ul>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>최신 생성형 AI 및 음성 분석 기술이 교사의 자기 수업 성찰을 어떻게 혁신하는지 다룹니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>자신의 수업을 객관적 수치(발화 점유율, 개방형 발문 비율)로 마주할 때 교사는 가장 강력한 행동 변화의 동기를 얻습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>AI 수업 피드백 시스템이 교원 평가(감시)로 악용되지 않고 자발적 성찰 도구로 정착하기 위한 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 12: DBIR and Networked Improvement Communities -->
+    <section class="slide" data-index="11">
+      <span class="slide-badge">네트워크 공동체 · Section 31.2</span>
+      <h2 class="slide-title">DBIR & 네트워크 개선 공동체(NICs): 수평적 연구 파트너십</h2>
+      <p class="slide-subtitle">배리 피시먼과 앤서니 브릭(Anthony Bryk)의 지속 가능한 시스템 개혁</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>수평적 파트너십</h3>
+          <p>연구자가 교사를 '연구 대상'으로 삼지 않고, 동등한 공동 연구자로 팀 구성</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>신속한 반복 사이클 (PDSA)</h3>
+          <p>Plan-Do-Study-Act 90일 단기 사이클로 교육과정을 학교 현장에서 검증</p>
+        </div>
+        <div class="card">
+          <h3>시스템 전체 스케일업</h3>
+          <p>1개 학교의 성공을 넘어 교육청 전체로 혁신을 확산시키는 제도적 인프라</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>학습과학의 핵심 정책 프레임워크인 DBIR(Design-Based Implementation Research)과 NICs의 개념을 설명합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>피시먼(Fishman et al., 2013): 교육 연구가 논문으로만 끝나지 않고 실제 학교 시스템을 바꾸려면, 교사와 연구자가 처음부터 끝까지 함께 호흡해야 합니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>대학 연구진과 일선 학교 교사들이 협업할 때 발생하는 문화적 차이를 극복하는 방안을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Application to CS Education -->
+    <section class="slide" data-index="12">
+      <span class="slide-badge">컴퓨터교육 접목 · Chapter 31</span>
+      <h2 class="slide-title">비전공 교사를 위한 SW·AI 코딩 교육 PCK 신장 모델</h2>
+      <p class="slide-subtitle">수학, 과학, 인문 교사들이 컴퓨팅 사고를 융합하는 교사 교육 스캐폴딩</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>💻 CS 교사 교육 3단계 로드맵</h3>
+          <ul>
+            <li><strong>1단계 (체험)</strong>: 블록 코딩과 피지컬 컴퓨팅을 직접 조작해보며 불안감 해소</li>
+            <li><strong>2단계 (PCK 리허설)</strong>: "학생들이 인덱스 에러(Index Error)를 냈을 때 어떤 발문으로 디버깅을 유도할 것인가?" 시연</li>
+            <li><strong>3단계 (Educative 교재)</strong>: 교사용 힌트가 풍부한 융합 SW 수업 지도서 제공</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🎯 교육적 가치</h3>
+          <p>모든 교과 교사가 자신의 수업에 프로그래밍과 데이터 분석을 자연스럽게 녹여내는 **융합 컴퓨팅 교사 역량(TPACK)** 완성</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>전 세계적인 정보·SW 교육 필수화 시대에 비전공 교사들의 컴퓨팅 PCK를 효과적으로 신장시키는 교사 연수 모델을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>얄키(Sentance & Csizmadia, 2017): CS 교육의 성공은 인프라가 아니라 교사의 교수학적 내용 지식(PCK)에 달려 있습니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>초·중등 교사들에게 AI 코딩 연수를 설계할 때 가장 먼저 고려해야 할 진입 장벽을 논의하세요.</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Summary & Core Takeaways -->
+    <section class="slide" data-index="13">
+      <span class="slide-badge">총괄 결론 · Section 31.3</span>
+      <h2 class="slide-title">교사는 지식 전달자가 아닌 평생 탐구하는 반성적 실천가</h2>
+      <p class="slide-subtitle">학습과학자가 기억해야 할 교사 학습의 3대 나침반</p>
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">
+          <h3>비디오 클럽과 수업 주목</h3>
+          <p>자신의 행동 통제를 넘어 학생들의 살아있는 사고와 오개념을 예리하게 포착</p>
+        </div>
+        <div class="card highlight-card">
+          <h3>교사용 교육과정 자료</h3>
+          <p>교재 자체가 교사의 PCK를 스캐폴딩하여 맥락 맞춤형 적응적 실행 지원</p>
+        </div>
+        <div class="card">
+          <h3>분산된 전문성 공동체</h3>
+          <p>고립된 교실의 문을 열고 동료 교사, 연구자들과 함께 평생 학습자로 성장</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 31의 모든 핵심 교훈을 집대성합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>교사가 배움을 멈추는 순간 교육은 화석화됩니다. 교사를 지지하고 격려하는 학습 생태계를 구축하는 것이 교육 개혁의 제1원칙입니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>"오늘 수업을 통해 '훌륭한 교사란 누구인가'에 대한 여러분의 생각이 어떻게 바뀌었나요?"</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Looking Ahead to Chapter 32 -->
+    <section class="slide" data-index="14">
+      <span class="slide-badge">다음 챕터 예고 · Part VI</span>
+      <h2 class="slide-title">다음 여정: Chapter 32 교육 정책과 RPP</h2>
+      <p class="slide-subtitle">Educational Policy and the Learning Sciences: Research-Practice Partnerships (William R. Penuel et al.)</p>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card highlight-card">
+          <h3>🔬 Ch 31 vs Ch 32 연계성</h3>
+          <ul>
+            <li><strong>Ch 31 교사 학습</strong>: 교사의 전문성 발달, 비디오 클럽, 교사용 교재</li>
+            <li><strong>Ch 32 교육 정책과 RPP</strong>: 개별 교실과 학교를 넘어 <strong>교육 정책(Policy), 연구자-현장 실천가 파트너십(RPP), 대규모 시스템 스케일업(Scaling Up)</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 거시적 교육 시스템의 대전환</h3>
+          <p>교실 속 마이크로 혁신이 국가 정책과 대규모 교육 개혁으로 제도화되는 거시적 메커니즘을 탐구합니다.</p>
+        </div>
+      </div>
+      <div class="presenter-note" style="display:none;">
+        <h4>🎯 강의 목표 및 핵심 맥락</h4>
+        <p>Chapter 31을 마무리하고, 다음 챕터인 Chapter 32(Educational Policy and the Learning Sciences)와의 이론적 연계성을 제시합니다.</p>
+        <h4>📖 원문 심층 학술 해설</h4>
+        <p>콜로라도 대학교 윌리엄 페뉴엘(William Penuel) 교수의 연구자-현장 파트너십(RPP)과 시스템 스케일업 연구로 이어집니다.</p>
+        <h4>💡 수업/세미나 진행 팁 & 질문 가이드</h4>
+        <p>다음 Chapter 32를 기대하며 본 강의 슬라이드를 마칩니다.</p>
+      </div>
+    </section>
+</main></main>
+
+  <footer>
+    <div class="footer-left">Chapter 31: Advances in Teacher Learning Research (Fishman, Chan, & Davis)</div>
+    <div class="footer-center" id="slide-counter">01 / 15</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prev-btn" title="이전 슬라이드 (←)">‹</button>
+      <button class="nav-btn" id="next-btn" title="다음 슬라이드 (→ / Space)">›</button>
+    </div>
+  </footer>
+
+  <!-- Presenter Notes Drawer -->
+  <div id="notes-drawer">
+    <div class="drawer-header">
+      <h3>📝 발표자 노트 (Presenter Notes)</h3>
+      <div class="drawer-actions">
+        <button class="action-btn" id="edit-note-btn" onclick="toggleEditNote()">✏️ 편집</button>
+        <button class="action-btn" id="reset-note-btn" onclick="resetCurrentNote()">↺ 초기화</button>
+        <button class="action-btn" id="export-notes-btn" onclick="exportAllNotes()">📥 내보내기</button>
+        <button class="close-drawer" onclick="toggleNotes()">✕</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="note-view" id="drawer-view"></div>
+      <div class="note-editor" id="drawer-editor">
+        <textarea class="note-textarea" id="note-textarea" placeholder="발표자 노트를 편집하세요..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progress-bar');
+    const slideCounter = document.getElementById('slide-counter');
+    const notesDrawer = document.getElementById('notes-drawer');
+    const drawerView = document.getElementById('drawer-view');
+    const drawerEditor = document.getElementById('drawer-editor');
+    const noteTextarea = document.getElementById('note-textarea');
+    const editBtn = document.getElementById('edit-note-btn');
+    const notesBtn = document.getElementById('notes-btn');
+
+    let isEditing = false;
+    const STORAGE_PREFIX = 'ls_ch31_slide_note_';
+
+    function getOriginalNote(index) {
+      const elem = slides[index].querySelector('.presenter-note');
+      return elem ? elem.innerHTML.trim() : '<p>등록된 발표자 노트가 없습니다.</p>';
+    }
+
+    function getSavedNote(index) {
+      return localStorage.getItem(STORAGE_PREFIX + index);
+    }
+
+    function renderNote(index) {
+      const saved = getSavedNote(index);
+      const content = saved !== null ? saved : getOriginalNote(index);
+      drawerView.innerHTML = content;
+      noteTextarea.value = content;
+    }
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideCounter.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+      if (isEditing) {
+        toggleEditNote();
+      }
+      renderNote(currentSlide);
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+    function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+      notesBtn.classList.toggle('active-notes');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleEditNote() {
+      isEditing = !isEditing;
+      if (isEditing) {
+        drawerView.style.display = 'none';
+        drawerEditor.classList.add('active');
+        editBtn.textContent = '💾 저장';
+        editBtn.style.background = 'var(--accent-emerald)';
+        editBtn.style.color = '#000';
+        noteTextarea.focus();
+      } else {
+        const newContent = noteTextarea.value;
+        localStorage.setItem(STORAGE_PREFIX + currentSlide, newContent);
+        drawerView.innerHTML = newContent;
+        drawerView.style.display = 'block';
+        drawerEditor.classList.remove('active');
+        editBtn.textContent = '✏️ 편집';
+        editBtn.style.background = '';
+        editBtn.style.color = '';
+      }
+    }
+
+    function resetCurrentNote() {
+      if (confirm('현재 슬라이드의 발표자 노트를 원본으로 복원하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_PREFIX + currentSlide);
+        renderNote(currentSlide);
+        if (isEditing) toggleEditNote();
+      }
+    }
+
+    function exportAllNotes() {
+      let exportText = `# Chapter 31: Teacher Learning - 발표자 노트 모음\n\n`;
+      slides.forEach((slide, idx) => {
+        const title = slide.querySelector('.slide-title')?.textContent || `Slide ${idx + 1}`;
+        const saved = getSavedNote(idx);
+        const content = saved !== null ? saved : getOriginalNote(idx);
+        exportText += `## Slide ${idx + 1}: ${title}\n\n${content.replace(/<[^>]+>/g, '\n').replace(/\n\s*\n/g, '\n\n')}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Chapter31_Presenter_Notes_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+    document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+    document.getElementById('fs-btn').addEventListener('click', toggleFullScreen);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (notesDrawer.classList.contains('open')) toggleNotes();
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>
